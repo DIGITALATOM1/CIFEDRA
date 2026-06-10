@@ -1,0 +1,16 @@
+:root {
+  --cifedra-ink: #111318;
+  --cifedra-graphite: #272B33;
+  --cifedra-slate: #4A515C;
+  --cifedra-paper: #F7F1E3;
+  --cifedra-white: #FFFFFF;
+  --cifedra-teal: #10B7A6;
+  --cifedra-lime: #B8E986;
+  --cifedra-brass: #C7A663;
+
+  --cifedra-font-ui: "Manrope", "Inter", "Segoe UI", Arial, sans-serif;
+  --cifedra-radius-sm: 8px;
+  --cifedra-radius-md: 14px;
+  --cifedra-radius-lg: 24px;
+  --cifedra-shadow-soft: 0 24px 80px rgba(17, 19, 24, 0.16);
+}
