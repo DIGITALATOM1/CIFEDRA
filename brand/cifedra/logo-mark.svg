@@ -1,11 +1,12 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">CIFEDRA mark</title>
-  <desc id="desc">Organic monoline loop inspired by a hand-drawn orbit and system path.</desc>
+  <desc id="desc">Organic contact route mark for CIFEDRA CONNECT, inspired by a hand-drawn orbit.</desc>
   <rect width="512" height="512" rx="112" fill="#111318"/>
   <path d="M369 147C327 97 238 91 176 137C107 188 89 292 139 364C188 435 293 449 359 392C418 341 421 252 372 207C329 167 255 167 217 210C181 251 189 318 234 345C280 372 340 347 353 298"
         stroke="#F7F1E3" stroke-width="21" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M168 319C217 274 271 239 351 211"
         stroke="#10B7A6" stroke-width="21" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="259" cy="259" r="9" fill="#F7F1E3"/>
   <circle cx="351" cy="211" r="14" fill="#B8E986"/>
   <circle cx="168" cy="319" r="10" fill="#C7A663"/>
 </svg>

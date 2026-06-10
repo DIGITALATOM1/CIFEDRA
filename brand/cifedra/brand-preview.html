@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CIFEDRA Brand Preview</title>
+    <title>CIFEDRA CONNECT Brand Preview</title>
     <link rel="stylesheet" href="./tokens.css">
     <style>
       * {
@@ -143,6 +143,43 @@
         line-height: 1.5;
       }
 
+      .journey {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+      }
+
+      .step {
+        min-height: 142px;
+        padding: 20px;
+        background: #f6f8f8;
+        border-radius: var(--cifedra-radius-sm);
+        border: 1px solid rgba(17, 19, 24, 0.06);
+      }
+
+      .step strong {
+        display: inline-grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        margin-bottom: 16px;
+        border-radius: 50%;
+        background: var(--cifedra-teal);
+        color: var(--cifedra-ink);
+        font-size: 14px;
+      }
+
+      .step h3 {
+        margin: 0 0 8px;
+        font-size: 17px;
+      }
+
+      .step p {
+        margin: 0;
+        color: var(--cifedra-slate);
+        line-height: 1.45;
+      }
+
       @media (max-width: 720px) {
         main {
           width: min(100% - 24px, 1120px);
@@ -163,9 +200,9 @@
   <body>
     <main>
       <section class="hero">
-        <img src="./logo-cifedra-inverted.svg" alt="CIFEDRA logo">
-        <h1>Системная аналитика как живая продуктовая среда.</h1>
-        <p>CIFEDRA превращает разрозненные требования, знания и решения в управляемую систему: SRS, постановки, руководства, релизные заметки и база знаний растут вместе с продуктом.</p>
+        <img src="./logo-cifedra-inverted.svg" alt="CIFEDRA CONNECT logo">
+        <h1>CIFEDRA CONNECT: навигатор полезных людей.</h1>
+        <p>Помогает найти нужного человека для задачи, подготовить разговор и довести контакт до результата.</p>
       </section>
 
       <section class="section">
@@ -175,6 +212,32 @@
           <div class="logo-tile"><img src="./logo-cifedra-cyrillic.svg" alt="ЦИФЕДРА logo"></div>
           <div class="logo-tile dark"><img src="./logo-cifedra-inverted.svg" alt="CIFEDRA inverted logo"></div>
           <div class="logo-tile dark"><img src="./logo-mark.svg" alt="CIFEDRA mark"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Маршрут контакта</h2>
+        <div class="journey">
+          <article class="step">
+            <strong>1</strong>
+            <h3>Задача</h3>
+            <p>Понять, какой человек нужен и для какого результата.</p>
+          </article>
+          <article class="step">
+            <strong>2</strong>
+            <h3>Человек</h3>
+            <p>Найти релевантный контакт и увидеть контекст.</p>
+          </article>
+          <article class="step">
+            <strong>3</strong>
+            <h3>Разговор</h3>
+            <p>Подготовить цель, тезисы, вопросы и следующий шаг.</p>
+          </article>
+          <article class="step">
+            <strong>4</strong>
+            <h3>Результат</h3>
+            <p>Зафиксировать итог контакта и движение задачи.</p>
+          </article>
         </div>
       </section>
 
@@ -195,15 +258,15 @@
         <div class="voice">
           <article>
             <h3>Живой знак</h3>
-            <p>Ручная петля сохраняет энергию референса: движение, путь, перезапуск и развитие.</p>
+            <p>Ручная петля сохраняет энергию референса: движение, путь, контактный маршрут.</p>
           </article>
           <article>
-            <h3>Системный продукт</h3>
-            <p>Акцентная траектория показывает, что хаос требований можно собрать в понятную карту.</p>
+            <h3>Полезные люди</h3>
+            <p>Акцентная траектория показывает поиск человека, подготовку разговора и результат.</p>
           </article>
           <article>
             <h3>Рабочий интерфейс</h3>
-            <p>Палитра и типографика рассчитаны на базы знаний, SRS, постановки и продуктовые панели.</p>
+            <p>Палитра и типографика рассчитаны на карты контактов, подготовку встреч и трекинг итогов.</p>
           </article>
         </div>
       </section>

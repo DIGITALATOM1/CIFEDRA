@@ -1,6 +1,6 @@
 <svg width="1280" height="360" viewBox="0 0 1280 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title id="title">CIFEDRA primary logo</title>
-  <desc id="desc">Primary horizontal logo for CIFEDRA with organic loop mark and uppercase Latin wordmark.</desc>
+  <title id="title">CIFEDRA CONNECT primary logo</title>
+  <desc id="desc">Primary horizontal logo for CIFEDRA CONNECT, a navigator of useful people.</desc>
   <rect width="1280" height="360" rx="0" fill="#F7F1E3"/>
   <g transform="translate(84 54)">
     <rect width="252" height="252" rx="58" fill="#111318"/>
@@ -8,11 +8,14 @@
           stroke="#F7F1E3" stroke-width="10.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M82.7 157.1C106.8 135 133.3 117.7 172.7 104"
           stroke="#10B7A6" stroke-width="10.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="127.6" cy="130.5" r="4.4" fill="#F7F1E3"/>
     <circle cx="172.7" cy="104" r="6.9" fill="#B8E986"/>
     <circle cx="82.7" cy="157.1" r="4.9" fill="#C7A663"/>
   </g>
   <g fill="#111318">
-    <text x="398" y="206" font-family="Manrope, Inter, Arial, sans-serif" font-size="116" font-weight="800" letter-spacing="10">CIFEDRA</text>
-    <text x="405" y="255" font-family="Manrope, Inter, Arial, sans-serif" font-size="28" font-weight="600" letter-spacing="5" fill="#4A515C">SYSTEMS THAT GROW</text>
+    <text x="398" y="178" font-family="Manrope, Inter, Arial, sans-serif" font-size="100" font-weight="800" letter-spacing="7">CIFEDRA</text>
+    <rect x="918" y="104" width="270" height="72" rx="36" fill="#10B7A6"/>
+    <text x="951" y="153" font-family="Manrope, Inter, Arial, sans-serif" font-size="38" font-weight="800" letter-spacing="4" fill="#111318">CONNECT</text>
+    <text x="405" y="241" font-family="Manrope, Inter, Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="2.2" fill="#4A515C">NAVIGATOR OF USEFUL PEOPLE</text>
   </g>
 </svg>
