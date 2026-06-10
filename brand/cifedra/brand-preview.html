@@ -143,6 +143,67 @@
         line-height: 1.5;
       }
 
+      .product-lines {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .line-card {
+        min-height: 420px;
+        padding: 22px;
+        border-radius: var(--cifedra-radius-sm);
+        border: 1px solid rgba(17, 19, 24, 0.08);
+        background: #f6f8f8;
+      }
+
+      .line-card h3 {
+        margin: 0;
+        font-size: 28px;
+        line-height: 1;
+      }
+
+      .line-badge {
+        display: inline-flex;
+        align-items: center;
+        min-height: 32px;
+        margin-bottom: 18px;
+        padding: 0 12px;
+        border-radius: 999px;
+        color: var(--cifedra-ink);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .line-summary {
+        margin: 12px 0 20px;
+        color: var(--cifedra-slate);
+        line-height: 1.5;
+      }
+
+      .category-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .category-list li {
+        padding-top: 10px;
+        border-top: 1px solid rgba(17, 19, 24, 0.08);
+        color: var(--cifedra-graphite);
+        line-height: 1.35;
+      }
+
+      .category-list strong {
+        display: block;
+        color: var(--cifedra-ink);
+        font-size: 15px;
+      }
+
       .journey {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -194,6 +255,10 @@
         .hero p {
           font-size: 17px;
         }
+
+        .product-lines {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
@@ -202,7 +267,51 @@
       <section class="hero">
         <img src="./logo-cifedra-inverted.svg" alt="CIFEDRA CONNECT logo">
         <h1>CIFEDRA CONNECT: навигатор полезных людей.</h1>
-        <p>Помогает найти нужного человека для задачи, подготовить разговор и довести контакт до результата.</p>
+        <p>Помогает найти нужного человека для задачи, подготовить разговор и довести контакт до результата: для жизни, работы и развития навыков.</p>
+      </section>
+
+      <section class="section">
+        <h2>Направления</h2>
+        <div class="product-lines">
+          <article class="line-card">
+            <span class="line-badge" style="background:var(--cifedra-life)">Life</span>
+            <h3>CIFEDRA Life</h3>
+            <p class="line-summary">Люди для жизни, дома и локальной помощи.</p>
+            <ul class="category-list">
+              <li><strong>Home Help</strong>Помощь по дому</li>
+              <li><strong>Local Tasks</strong>Поручения рядом</li>
+              <li><strong>Move & Transport</strong>Переезды и перевозки</li>
+              <li><strong>Care</strong>Забота и уход</li>
+              <li><strong>Local Deals</strong>Локальные сделки</li>
+            </ul>
+          </article>
+
+          <article class="line-card">
+            <span class="line-badge" style="background:var(--cifedra-work)">Work</span>
+            <h3>CIFEDRA Work</h3>
+            <p class="line-summary">Люди для работы, бизнеса, проектов и сделок.</p>
+            <ul class="category-list">
+              <li><strong>Expert Help</strong>Экспертная помощь</li>
+              <li><strong>Task Execution</strong>Исполнение задач</li>
+              <li><strong>Business Deals</strong>Бизнес и сделки</li>
+              <li><strong>Project Team</strong>Команда под проект</li>
+              <li><strong>Company Knowledge</strong>Люди внутри компании</li>
+            </ul>
+          </article>
+
+          <article class="line-card">
+            <span class="line-badge" style="background:var(--cifedra-skills)">Skills</span>
+            <h3>CIFEDRA Skills</h3>
+            <p class="line-summary">Люди для обучения, развития и обмена опытом.</p>
+            <ul class="category-list">
+              <li><strong>Mentors</strong>Менторы</li>
+              <li><strong>Learning Help</strong>Обучение</li>
+              <li><strong>Career Help</strong>Карьера</li>
+              <li><strong>Practice Partners</strong>Практика</li>
+              <li><strong>Skill Exchange</strong>Обмен навыками</li>
+            </ul>
+          </article>
+        </div>
       </section>
 
       <section class="section">
@@ -250,6 +359,9 @@
           <div class="swatch light" style="background:#B8E986">Lime <span>#B8E986</span></div>
           <div class="swatch light" style="background:#F7F1E3">Paper <span>#F7F1E3</span></div>
           <div class="swatch" style="background:#C7A663">Brass <span>#C7A663</span></div>
+          <div class="swatch light" style="background:#58C7B6">Life <span>#58C7B6</span></div>
+          <div class="swatch" style="background:#6C8CFF">Work <span>#6C8CFF</span></div>
+          <div class="swatch light" style="background:#D7B45A">Skills <span>#D7B45A</span></div>
         </div>
       </section>
 
