@@ -38,3 +38,4 @@ npm run local:stop
 
 - API: `http://localhost:3030`
 - Landing: `http://localhost:4177/web/landing/`
+- Test Console: `http://localhost:4177/web/test-console/`

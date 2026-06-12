@@ -21,6 +21,7 @@
 | --- | --- | --- |
 | API | `http://localhost:3030` | Прототип backend API. |
 | Landing | `http://localhost:4177/web/landing/` | Веб-лендинг с QR-кодами приложений. |
+| Test Console | `http://localhost:4177/web/test-console/` | Ручная проверка сценариев `Life`, `Work`, `Skills`. |
 
 ## Команды
 
@@ -48,6 +49,23 @@ npm run build
 | `Life` | Забрать заказ рядом | `profile_life_anna` |
 | `Work` | Ревью SRS | `profile_work_dmitry` |
 | `Skills` | Подготовка к интервью | `profile_skills_maria` |
+
+## Ручное тестирование
+
+Для ручной проверки открыть:
+
+```text
+http://localhost:4177/web/test-console/
+```
+
+В консоли можно выбрать сценарий, изменить параметры задачи, запустить matching и проверить:
+
+- выбранный профиль;
+- score;
+- recommended action;
+- причины релевантности;
+- риски;
+- brief для контакта.
 
 ## Логи и процессы
 

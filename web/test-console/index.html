@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CIFEDRA Local Test Console</title>
+    <link rel="stylesheet" href="../../brand/cifedra/tokens.css">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="../landing/">
+        <img src="../../brand/cifedra/logo-cifedra-primary.svg" alt="CIFEDRA CONNECT">
+      </a>
+      <div class="status" id="api-status">API: checking</div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Local QA</p>
+          <h1>CIFEDRA Local Test Console</h1>
+          <p>
+            Проверяем `Life`, `Work`, `Skills` локально: задача, матчинг, score, причины,
+            риски и подготовленный brief для контакта.
+          </p>
+        </div>
+        <aside class="endpoint-card">
+          <span>API endpoint</span>
+          <code id="api-url">http://localhost:3030</code>
+        </aside>
+      </section>
+
+      <section class="layout">
+        <aside class="scenario-panel" aria-labelledby="scenario-title">
+          <h2 id="scenario-title">Сценарии</h2>
+          <div class="scenario-list" id="scenario-list"></div>
+        </aside>
+
+        <section class="tester" aria-labelledby="tester-title">
+          <div class="section-heading">
+            <h2 id="tester-title">Задача</h2>
+            <button class="ghost-button" id="reset-button" type="button">Сбросить сценарий</button>
+          </div>
+
+          <form id="need-form">
+            <div class="field-row">
+              <label>
+                Направление
+                <select name="direction">
+                  <option value="life">Life</option>
+                  <option value="work">Work</option>
+                  <option value="skills">Skills</option>
+                </select>
+              </label>
+              <label>
+                Категория
+                <input name="categoryId" type="text" required>
+              </label>
+            </div>
+
+            <label>
+              Заголовок
+              <input name="title" type="text" required>
+            </label>
+
+            <label>
+              Описание
+              <textarea name="description" rows="4" required></textarea>
+            </label>
+
+            <label>
+              Ожидаемый результат
+              <input name="expectedResult" type="text" required>
+            </label>
+
+            <div class="field-row">
+              <label>
+                Теги через запятую
+                <input name="tags" type="text">
+              </label>
+              <label>
+                Приоритет
+                <select name="priority">
+                  <option value="normal">normal</option>
+                  <option value="low">low</option>
+                  <option value="high">high</option>
+                  <option value="urgent">urgent</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="field-row">
+              <label>
+                Город
+                <input name="city" type="text">
+              </label>
+              <label>
+                Район
+                <input name="district" type="text">
+              </label>
+            </div>
+
+            <label class="checkbox-row">
+              <input name="remoteAllowed" type="checkbox">
+              Можно удаленно
+            </label>
+
+            <button class="primary-button" type="submit">Запустить matching</button>
+          </form>
+        </section>
+
+        <section class="results" aria-labelledby="results-title">
+          <h2 id="results-title">Результат</h2>
+          <div id="result-panel" class="empty-state">
+            Выберите сценарий и запустите matching.
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

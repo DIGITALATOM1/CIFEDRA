@@ -3,6 +3,7 @@ import { createServer, type IncomingMessage, type ServerResponse } from "node:ht
 import {
   buildConversationBrief,
   createNeed,
+  demoNeedScenarios,
   demoProfiles,
   directionDefinitions,
   rankProfilesForNeed,
@@ -56,6 +57,13 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
     return;
   }
 
+  if (request.method === "GET" && url.pathname === "/demo/scenarios") {
+    sendJson(response, 200, {
+      scenarios: demoNeedScenarios
+    });
+    return;
+  }
+
   if (request.method === "POST" && url.pathname === "/demo/match") {
     const body = await readJson<Partial<NeedInput>>(request);
     const need = createNeed(normalizeDemoNeed(body));
@@ -74,7 +82,13 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
 
   sendJson(response, 404, {
     error: "Not found",
-    routes: ["GET /health", "GET /directions", "GET /demo/profiles", "POST /demo/match"]
+    routes: [
+      "GET /health",
+      "GET /directions",
+      "GET /demo/profiles",
+      "GET /demo/scenarios",
+      "POST /demo/match"
+    ]
   });
 }
 

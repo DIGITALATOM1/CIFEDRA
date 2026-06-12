@@ -7,7 +7,7 @@ import {
   writeFileSync
 } from "node:fs";
 import { resolve } from "node:path";
-import { spawn } from "node:child_process";
+import { execFileSync, spawn } from "node:child_process";
 import { setTimeout as delay } from "node:timers/promises";
 
 const rootDir = resolve(import.meta.dirname, "../..");
@@ -18,6 +18,11 @@ const apiPort = Number(process.env.CIFEDRA_API_PORT ?? 3030);
 const webPort = Number(process.env.CIFEDRA_WEB_PORT ?? 4177);
 
 mkdirSync(logDir, { recursive: true });
+
+execFileSync("npm", ["-w", "@cifedra/core", "run", "build"], {
+  cwd: rootDir,
+  stdio: "inherit"
+});
 
 const existing = readExistingPids();
 
