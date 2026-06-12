@@ -8,6 +8,12 @@
 http://localhost:4177/web/test-console/
 ```
 
+Техническая диагностика интеграций вынесена отдельно:
+
+```text
+http://localhost:4177/web/test-console/diagnostics.html
+```
+
 По умолчанию консоль подключается к API:
 
 ```text
@@ -27,4 +33,4 @@ http://localhost:4177/web/test-console/?api=http://localhost:3031
 3. Выбрать сценарий `Life`, `Work` или `Skills`.
 4. При необходимости изменить поля задачи.
 5. Нажать `Запустить matching`.
-6. Проверить профиль, score, причины, риски и brief для контакта.
+6. Проверить профиль, score, причины, риски, brief для контакта и внутренние handoff-шаги.

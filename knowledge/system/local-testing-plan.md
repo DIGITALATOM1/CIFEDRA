@@ -24,6 +24,7 @@
 | API | `http://localhost:3030` | Прототип backend API. |
 | Landing | `http://localhost:4177/web/landing/` | Веб-лендинг с QR-кодами приложений. |
 | Test Console | `http://localhost:4177/web/test-console/` | Ручная проверка сценариев `Life`, `Work`, `Skills`. |
+| Integration Diagnostics | `http://localhost:4177/web/test-console/diagnostics.html` | Техническая проверка локальных модулей Plane/Chatwoot. |
 | Plane CE | `http://localhost:8082` | Open source модуль задач и исполнения. |
 | Chatwoot CE | `http://localhost:8083` | Open source модуль чата и concierge. |
 

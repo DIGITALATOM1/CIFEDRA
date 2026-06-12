@@ -51,5 +51,6 @@ npm run integrations:plane:start
 - API: `http://localhost:3030`
 - Landing: `http://localhost:4177/web/landing/`
 - Test Console: `http://localhost:4177/web/test-console/`
+- Integration Diagnostics: `http://localhost:4177/web/test-console/diagnostics.html`
 - Plane CE: `http://localhost:8082`
 - Chatwoot CE: `http://localhost:8083`

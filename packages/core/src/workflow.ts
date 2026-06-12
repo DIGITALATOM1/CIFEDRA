@@ -43,7 +43,7 @@ export function buildIntegrationWorkflow(
 
   return {
     summary:
-      "CIFEDRA держит Need, Match, Prepare и Result в своем ядре; Plane получает задачу исполнения, Chatwoot получает коммуникацию по подготовленному brief.",
+      "CIFEDRA ведет сценарий, а внешние модули подключаются только на шагах исполнения и коммуникации.",
     steps: [
       {
         id: "need",
@@ -76,10 +76,10 @@ export function buildIntegrationWorkflow(
         stage: "execute",
         owner: "plane",
         integrationId: "plane",
-        title: "Plane: задача исполнения",
+        title: "Задача исполнения",
         summary: noCandidate
-          ? "Задача в Plane будет создана после ручного выбора исполнителя."
-          : "Plane фиксирует статус, приоритет, ответственного и следующий шаг исполнения.",
+          ? "Задача будет создана после ручного выбора исполнителя."
+          : "Task-модуль фиксирует статус, приоритет, ответственного и следующий шаг исполнения.",
         status: noCandidate ? "blocked" : "ready",
         localUrl: "http://localhost:8082",
         handoff: candidate && brief ? buildPlaneHandoff(need, candidate, brief) : undefined
@@ -89,9 +89,9 @@ export function buildIntegrationWorkflow(
         stage: "connect",
         owner: "chatwoot",
         integrationId: "chatwoot",
-        title: "Chatwoot: диалог concierge",
+        title: "Диалог concierge",
         summary: canRequestContact
-          ? "Chatwoot получает диалог с goal, контекстом и вопросами из CIFEDRA brief."
+          ? "Chat-модуль получает диалог с goal, контекстом и вопросами из CIFEDRA brief."
           : "Диалог пока не открываем: кандидат требует shortlist/manual review перед контактом.",
         status: noCandidate ? "blocked" : canRequestContact ? "ready" : "planned",
         localUrl: "http://localhost:8083",
@@ -103,7 +103,7 @@ export function buildIntegrationWorkflow(
         owner: "cifedra",
         title: "Result: итог и качество",
         summary:
-          "После статуса Plane и результата диалога Chatwoot CIFEDRA фиксирует outcome, next step и quality score.",
+          "После статуса задачи и результата диалога CIFEDRA фиксирует outcome, next step и quality score.",
         status: noCandidate ? "blocked" : "planned"
       }
     ]

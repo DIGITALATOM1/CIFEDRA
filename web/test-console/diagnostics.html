@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CIFEDRA Integration Diagnostics</title>
+    <link rel="stylesheet" href="../../brand/cifedra/tokens.css">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="../landing/">
+        <img src="../../brand/cifedra/logo-cifedra-primary.svg" alt="CIFEDRA CONNECT">
+      </a>
+      <a class="topbar-link" href="./">Вернуться к сценарию</a>
+    </header>
+
+    <main>
+      <section class="hero compact-hero">
+        <div>
+          <p class="eyebrow">Dev diagnostics</p>
+          <h1>Интеграции CIFEDRA</h1>
+          <p>
+            Техническая проверка локальных open source модулей. Эта страница не является
+            пользовательским сценарием продукта.
+          </p>
+        </div>
+        <aside class="endpoint-card">
+          <span>API endpoint</span>
+          <code id="api-url">http://localhost:3030</code>
+        </aside>
+      </section>
+
+      <section class="integrations diagnostics" aria-labelledby="integrations-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow compact">Open source modules</p>
+            <h2 id="integrations-title">Plane и Chatwoot</h2>
+          </div>
+          <code>npm run integrations:check</code>
+        </div>
+        <div class="integration-grid" id="integration-grid">
+          <div class="empty-state">Загрузка интеграций...</div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./diagnostics.js"></script>
+  </body>
+</html>

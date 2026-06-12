@@ -2,7 +2,6 @@ const apiBaseUrl = new URLSearchParams(window.location.search).get("api") ?? "ht
 
 const state = {
   scenarios: [],
-  integrations: [],
   selectedScenarioId: null
 };
 
@@ -12,8 +11,7 @@ const elements = {
   scenarioList: document.querySelector("#scenario-list"),
   form: document.querySelector("#need-form"),
   resetButton: document.querySelector("#reset-button"),
-  resultPanel: document.querySelector("#result-panel"),
-  integrationGrid: document.querySelector("#integration-grid")
+  resultPanel: document.querySelector("#result-panel")
 };
 
 elements.apiUrl.textContent = apiBaseUrl;
@@ -23,7 +21,6 @@ await boot();
 async function boot() {
   await checkApi();
   await loadScenarios();
-  await loadIntegrations();
   bindEvents();
 }
 
@@ -62,26 +59,6 @@ async function loadScenarios() {
   }
 }
 
-async function loadIntegrations() {
-  try {
-    const response = await fetch(`${apiBaseUrl}/integrations`);
-
-    if (!response.ok) {
-      throw new Error(`Failed to load integrations: ${response.status}`);
-    }
-
-    const payload = await response.json();
-    state.integrations = payload.integrations ?? [];
-    renderIntegrations(payload.localRuntime);
-  } catch (error) {
-    elements.integrationGrid.innerHTML = `
-      <div class="error-state">
-        Не удалось загрузить список интеграций. Проверьте API и endpoint /integrations.
-      </div>
-    `;
-  }
-}
-
 function bindEvents() {
   elements.form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -109,50 +86,6 @@ function renderScenarioList() {
     `;
     button.addEventListener("click", () => selectScenario(scenario.id));
     elements.scenarioList.append(button);
-  }
-}
-
-function renderIntegrations(localRuntime) {
-  elements.integrationGrid.innerHTML = "";
-
-  if (state.integrations.length === 0) {
-    elements.integrationGrid.innerHTML = `<div class="empty-state">Интеграции еще не настроены.</div>`;
-    return;
-  }
-
-  for (const integration of state.integrations) {
-    const card = document.createElement("article");
-    const actions = document.createElement("div");
-    const link = document.createElement("a");
-    const runtime = document.createElement("span");
-
-    card.className = "integration-card";
-    actions.className = "integration-actions";
-    link.href = integration.localUrl;
-    link.target = "_blank";
-    link.rel = "noreferrer";
-    link.textContent = "Открыть локально";
-    runtime.textContent = localRuntime?.required ?? "docker compose";
-    actions.append(link, runtime);
-
-    card.innerHTML = `
-      <div class="integration-head">
-        <div>
-          <span class="integration-kind">${escapeHtml(integration.kind)}</span>
-          <h3>${escapeHtml(integration.name)}</h3>
-        </div>
-        <span class="license-pill">${escapeHtml(integration.license)}</span>
-      </div>
-      <p>${escapeHtml(integration.decision)}</p>
-      <div class="meta">
-        <span class="pill">Runtime: ${escapeHtml(integration.runtime)}</span>
-        <span class="pill">Local: ${escapeHtml(integration.localUrl)}</span>
-      </div>
-      <h4>Роль в CIFEDRA</h4>
-      ${renderList(integration.integrationPattern)}
-    `;
-    card.querySelector(".meta").after(actions);
-    elements.integrationGrid.append(card);
   }
 }
 
@@ -295,10 +228,10 @@ function renderWorkflow(workflow) {
     <article class="workflow-card">
       <div class="workflow-head">
         <div>
-          <h3>Привязка к Plane и Chatwoot</h3>
+          <h3>Внутренние шаги после matching</h3>
           <p>${escapeHtml(workflow.summary)}</p>
         </div>
-        <span class="pill">pre-adapter</span>
+        <span class="pill">handoff draft</span>
       </div>
       <div class="workflow-steps">
         ${workflow.steps.map(renderWorkflowStep).join("")}

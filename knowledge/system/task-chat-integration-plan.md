@@ -55,7 +55,8 @@ npm run integrations:plane:start
 3. Chatwoot CE поднят на `http://localhost:8083`.
 4. CIFEDRA API отдает каталог решений через `GET /integrations`.
 5. `POST /demo/match` возвращает `integrationWorkflow`: привязку шагов `Need -> Match -> Prepare -> Connect -> Result` к Plane task draft и Chatwoot conversation draft.
-6. Test Console показывает карточки Plane CE и Chatwoot CE, а после matching - цепочку шагов с handoff-payload.
+6. Test Console после matching показывает цепочку внутренних шагов с handoff-payload.
+7. Карточки Plane CE и Chatwoot CE вынесены на dev-страницу `http://localhost:4177/web/test-console/diagnostics.html`.
 
 ## Pre-adapter в сценарии
 
