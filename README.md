@@ -15,6 +15,8 @@
 
 Мобильная стратегия: [knowledge/system/mobile-build-plan.md](./knowledge/system/mobile-build-plan.md).
 
+План доработки ядра: [knowledge/system/core-development-plan.md](./knowledge/system/core-development-plan.md).
+
 ## Команды
 
 ```bash
