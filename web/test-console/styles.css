@@ -84,6 +84,11 @@ main {
   text-transform: uppercase;
 }
 
+.eyebrow.compact {
+  margin-bottom: 8px;
+  color: var(--cifedra-slate);
+}
+
 h1,
 h2,
 h3,
@@ -141,7 +146,8 @@ h1 {
 
 .scenario-panel,
 .tester,
-.results {
+.results,
+.integrations {
   padding: 22px;
   border: 1px solid rgba(17, 19, 24, 0.08);
   border-radius: var(--cifedra-radius-md);
@@ -150,8 +156,13 @@ h1 {
 
 .scenario-panel h2,
 .tester h2,
-.results h2 {
+.results h2,
+.integrations h2 {
   font-size: 24px;
+}
+
+.integrations {
+  margin-top: 18px;
 }
 
 .scenario-list {
@@ -291,11 +302,80 @@ textarea {
 }
 
 .match-card,
-.brief-card {
+.brief-card,
+.integration-card {
   padding: 18px;
   border-radius: var(--cifedra-radius-sm);
   border: 1px solid rgba(17, 19, 24, 0.08);
   background: #f6f8f8;
+}
+
+.integration-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.integration-card {
+  display: grid;
+  gap: 14px;
+}
+
+.integration-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.integration-kind,
+.license-pill {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--cifedra-white);
+  color: var(--cifedra-slate);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.integration-card p,
+.integration-card li {
+  color: var(--cifedra-slate);
+  line-height: 1.45;
+}
+
+.integration-card h4 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.integration-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.integration-actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 13px;
+  border-radius: var(--cifedra-radius-sm);
+  background: var(--cifedra-ink);
+  color: var(--cifedra-paper);
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.integration-actions span,
+.integrations code {
+  color: var(--cifedra-slate);
+  font-size: 13px;
 }
 
 .match-head {
@@ -360,6 +440,10 @@ textarea {
 
 @media (max-width: 1120px) {
   .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .integration-grid {
     grid-template-columns: 1fr;
   }
 }

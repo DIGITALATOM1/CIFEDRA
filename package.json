@@ -15,7 +15,13 @@
     "local:start": "node scripts/local/start.mjs",
     "local:stop": "node scripts/local/stop.mjs",
     "local:restart": "npm run local:stop && npm run local:start",
-    "local:smoke": "node scripts/local/smoke-test.mjs"
+    "local:smoke": "node scripts/local/smoke-test.mjs",
+    "docker:install": "node scripts/local/install-docker-desktop.mjs",
+    "integrations:check": "node scripts/integrations/check.mjs",
+    "integrations:install": "node scripts/integrations/install.mjs",
+    "integrations:chatwoot:start": "node scripts/integrations/chatwoot-start.mjs",
+    "integrations:plane:install": "node scripts/integrations/plane-install.mjs",
+    "integrations:plane:start": "node scripts/integrations/plane-start.mjs"
   },
   "devDependencies": {
     "@types/node": "^25.9.3",

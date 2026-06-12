@@ -6,6 +6,7 @@ import {
   demoNeedScenarios,
   demoProfiles,
   directionDefinitions,
+  integrationDefinitions,
   rankProfilesForNeed,
   type NeedInput
 } from "@cifedra/core";
@@ -64,6 +65,17 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
     return;
   }
 
+  if (request.method === "GET" && url.pathname === "/integrations") {
+    sendJson(response, 200, {
+      integrations: integrationDefinitions,
+      localRuntime: {
+        required: "docker compose",
+        dataPolicy: "runtime state and secrets stay in .local and are not committed"
+      }
+    });
+    return;
+  }
+
   if (request.method === "POST" && url.pathname === "/demo/match") {
     const body = await readJson<Partial<NeedInput>>(request);
     const need = createNeed(normalizeDemoNeed(body));
@@ -87,6 +99,7 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
       "GET /directions",
       "GET /demo/profiles",
       "GET /demo/scenarios",
+      "GET /integrations",
       "POST /demo/match"
     ]
   });

@@ -5,6 +5,7 @@ import {
   buildConversationBrief,
   createNeed,
   demoProfiles,
+  integrationDefinitions,
   rankProfilesForNeed,
   recordContactResult
 } from "../src/index.ts";
@@ -60,4 +61,13 @@ test("records a contact result and clamps quality score", () => {
 
   assert.equal(result.qualityScore, 100);
   assert.equal(result.outcome, "agreed");
+});
+
+test("declares the local task and chat integrations", () => {
+  const integrationIds = integrationDefinitions.map((integration) => integration.id);
+
+  assert.deepEqual(integrationIds, ["plane", "chatwoot"]);
+  assert.equal(integrationDefinitions[0]?.kind, "tasks");
+  assert.equal(integrationDefinitions[1]?.kind, "chat");
+  assert.ok(integrationDefinitions.every((integration) => integration.runtime === "docker-compose"));
 });

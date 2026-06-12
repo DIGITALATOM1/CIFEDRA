@@ -12,6 +12,8 @@
 - доменной логики `Need -> Match -> Prepare -> Connect -> Result`;
 - API-прототипа;
 - лендинга;
+- локального Docker runtime для open source модулей;
+- интеграций с задачами и чатом;
 - сценариев по каждому направлению;
 - будущих требований к мобильному приложению, backoffice и concierge.
 
@@ -22,6 +24,8 @@
 | API | `http://localhost:3030` | Прототип backend API. |
 | Landing | `http://localhost:4177/web/landing/` | Веб-лендинг с QR-кодами приложений. |
 | Test Console | `http://localhost:4177/web/test-console/` | Ручная проверка сценариев `Life`, `Work`, `Skills`. |
+| Plane CE | `http://localhost:8082` | Open source модуль задач и исполнения. |
+| Chatwoot CE | `http://localhost:8083` | Open source модуль чата и concierge. |
 
 ## Команды
 
@@ -30,6 +34,17 @@ npm install
 npm run local:start
 npm run local:smoke
 npm run local:stop
+```
+
+Интеграции:
+
+```bash
+npm run docker:install
+npm run integrations:check
+npm run integrations:install
+npm run integrations:chatwoot:start
+npm run integrations:plane:install
+npm run integrations:plane:start
 ```
 
 Дополнительные проверки:
@@ -90,3 +105,4 @@ http://localhost:4177/web/test-console/
 5. API-контракты.
 6. Минимальный mobile UX.
 7. Решение по backoffice и support/concierge.
+8. Локальная проверка Plane CE и Chatwoot CE как сменяемых модулей.
