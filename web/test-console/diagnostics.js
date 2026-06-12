@@ -2,12 +2,14 @@ const apiBaseUrl = new URLSearchParams(window.location.search).get("api") ?? "ht
 
 const elements = {
   apiUrl: document.querySelector("#api-url"),
-  integrationGrid: document.querySelector("#integration-grid")
+  integrationGrid: document.querySelector("#integration-grid"),
+  integrationStatus: document.querySelector("#integration-status")
 };
 
 elements.apiUrl.textContent = apiBaseUrl;
 
 await loadIntegrations();
+await loadIntegrationStatus();
 
 async function loadIntegrations() {
   try {
@@ -26,6 +28,63 @@ async function loadIntegrations() {
       </div>
     `;
   }
+}
+
+async function loadIntegrationStatus() {
+  try {
+    const response = await fetch(`${apiBaseUrl}/integrations/status`);
+
+    if (!response.ok) {
+      throw new Error(`Failed to load integration status: ${response.status}`);
+    }
+
+    const status = await response.json();
+    renderIntegrationStatus(status);
+  } catch (error) {
+    elements.integrationStatus.innerHTML = `
+      <div class="error-state">
+        Не удалось загрузить статус adapter-слоя. Проверьте API и endpoint /integrations/status.
+      </div>
+    `;
+  }
+}
+
+function renderIntegrationStatus(status) {
+  elements.integrationStatus.innerHTML = `
+    <article class="integration-card">
+      <div class="integration-head">
+        <div>
+          <span class="integration-kind">tasks</span>
+          <h3>Plane handoff</h3>
+        </div>
+        <span class="license-pill">${escapeHtml(status.plane.mode)}</span>
+      </div>
+      <p>Base URL: ${escapeHtml(status.plane.baseUrl)}</p>
+      ${renderMissingConfig(status.plane.missingConfig)}
+    </article>
+    <article class="integration-card">
+      <div class="integration-head">
+        <div>
+          <span class="integration-kind">chat</span>
+          <h3>Chatwoot handoff</h3>
+        </div>
+        <span class="license-pill">${escapeHtml(status.chatwoot.mode)}</span>
+      </div>
+      <p>Base URL: ${escapeHtml(status.chatwoot.baseUrl)}</p>
+      ${renderMissingConfig(status.chatwoot.missingConfig)}
+    </article>
+  `;
+}
+
+function renderMissingConfig(keys) {
+  if (!keys?.length) {
+    return `<p>Live-конфигурация заполнена. Для реальной отправки нужен флаг CIFEDRA_INTEGRATIONS_LIVE=1.</p>`;
+  }
+
+  return `
+    <h4>Для live-режима нужно заполнить</h4>
+    ${renderList(keys)}
+  `;
 }
 
 function renderIntegrations(integrations, localRuntime) {

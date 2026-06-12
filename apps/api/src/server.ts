@@ -1,5 +1,6 @@
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 
+import { createIntegrationHandoff, getIntegrationStatus } from "./integration-handoff.js";
 import {
   buildConversationBrief,
   buildIntegrationWorkflow,
@@ -77,6 +78,11 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
     return;
   }
 
+  if (request.method === "GET" && url.pathname === "/integrations/status") {
+    sendJson(response, 200, getIntegrationStatus());
+    return;
+  }
+
   if (request.method === "POST" && url.pathname === "/demo/match") {
     const body = await readJson<Partial<NeedInput>>(request);
     const need = createNeed(normalizeDemoNeed(body));
@@ -95,6 +101,16 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
     return;
   }
 
+  if (request.method === "POST" && url.pathname === "/demo/handoff") {
+    const body = await readJson<Parameters<typeof createIntegrationHandoff>[0]>(request);
+    const handoff = await createIntegrationHandoff(body);
+
+    sendJson(response, 200, {
+      handoff
+    });
+    return;
+  }
+
   sendJson(response, 404, {
     error: "Not found",
     routes: [
@@ -103,6 +119,8 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
       "GET /demo/profiles",
       "GET /demo/scenarios",
       "GET /integrations",
+      "GET /integrations/status",
+      "POST /demo/handoff",
       "POST /demo/match"
     ]
   });

@@ -57,10 +57,12 @@ npm run integrations:plane:start
 5. `POST /demo/match` возвращает `integrationWorkflow`: привязку шагов `Need -> Match -> Prepare -> Connect -> Result` к Plane task draft и Chatwoot conversation draft.
 6. Test Console после matching показывает цепочку внутренних шагов с handoff-payload.
 7. Карточки Plane CE и Chatwoot CE вынесены на dev-страницу `http://localhost:4177/web/test-console/diagnostics.html`.
+8. `POST /demo/handoff` принимает результат предыдущих шагов и сохраняет локальный transfer package в `.local/handoffs/`.
+9. `GET /integrations/status` показывает, какие env-переменные нужны для live-создания записей.
 
 ## Pre-adapter в сценарии
 
-Текущая реализация не создает реальные записи в Plane/Chatwoot автоматически. Она проверяет продуктовую механику привязки:
+Текущая реализация по умолчанию не создает реальные записи в Plane/Chatwoot автоматически. Она проверяет продуктовую механику привязки и сохраняет пакет передачи:
 
 | Шаг CIFEDRA | Владелец | Что происходит |
 | --- | --- | --- |
@@ -71,17 +73,34 @@ npm run integrations:plane:start
 | `Connect` | Chatwoot CE | Готовим draft диалога: inbox, contact, goal, context, first message, risks. |
 | `Result` | CIFEDRA Core | Ожидаем outcome из задачи/диалога и фиксируем качество. |
 
+## Live-режим
+
+Чтобы adapter начал создавать реальные записи, нужно явно включить live-режим:
+
+```bash
+CIFEDRA_INTEGRATIONS_LIVE=1
+```
+
+Plane:
+
+- `CIFEDRA_PLANE_API_KEY`
+- `CIFEDRA_PLANE_WORKSPACE_SLUG`
+- `CIFEDRA_PLANE_PROJECT_ID`
+
+Chatwoot:
+
+- `CIFEDRA_CHATWOOT_API_TOKEN`
+- `CIFEDRA_CHATWOOT_ACCOUNT_ID`
+- `CIFEDRA_CHATWOOT_INBOX_ID`
+- `CIFEDRA_CHATWOOT_CONTACT_ID`
+
 ## Следующие задачи
 
-1. Создать первый Chatwoot inbox `CIFEDRA Concierge`.
+1. Создать первый Chatwoot inbox `CIFEDRA Concierge` и тестовый contact.
 2. Создать первый Plane workspace/project для направлений `Life`, `Work`, `Skills`.
-3. Добавить в CIFEDRA API адаптеры:
-   - `POST /integrations/tasks`
-   - `POST /integrations/chat/conversations`
-   - `GET /integrations/status`
-4. Связать результат matching с действием:
-   - `request_contact` -> conversation in Chatwoot;
-   - `manual_review` / `planned_execution` -> task in Plane.
+3. Заполнить env-переменные live-режима.
+4. Протестировать создание реального Plane work item и Chatwoot conversation.
+5. Вернуть outcome из Plane/Chatwoot в `Result`.
 
 ## Лицензионные замечания
 

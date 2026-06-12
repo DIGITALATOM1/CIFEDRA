@@ -6,9 +6,13 @@ await checkLanding();
 await checkTestConsole();
 
 const scenarios = await getScenarios();
+let firstScenarioResult = null;
 for (const scenario of scenarios) {
-  await checkScenario(scenario);
+  const result = await checkScenario(scenario);
+  firstScenarioResult ??= result;
 }
+
+await checkHandoff(firstScenarioResult);
 
 console.log("Local smoke tests passed for Life / Work / Skills.");
 
@@ -72,10 +76,45 @@ async function checkScenario(scenario) {
   );
 
   assert(body.firstBrief?.questions?.length >= 3, `${scenario.title}: first brief is incomplete`);
+  assert(
+    body.integrationWorkflow?.steps?.some((step) => step.id === "plane-task"),
+    `${scenario.title}: Plane handoff step is missing`
+  );
+  assert(
+    body.integrationWorkflow?.steps?.some((step) => step.id === "chatwoot-conversation"),
+    `${scenario.title}: Chatwoot handoff step is missing`
+  );
 
   console.log(
     `${scenario.title}: ${firstProfileId}, score ${body.matches[0].score}, action ${body.matches[0].recommendedAction}`
   );
+
+  return body;
+}
+
+async function checkHandoff(matchResult) {
+  for (const stepId of ["plane-task", "chatwoot-conversation"]) {
+    const response = await fetch(`${apiBaseUrl}/demo/handoff`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        stepId,
+        need: matchResult.need,
+        match: matchResult.matches[0],
+        brief: matchResult.firstBrief
+      })
+    });
+
+    assert(response.ok, `${stepId}: /demo/handoff failed with ${response.status}`);
+
+    const body = await response.json();
+    assert(body.handoff?.status === "draft_saved", `${stepId}: expected draft_saved handoff`);
+    assert(body.handoff?.localRecordPath?.startsWith(".local/handoffs/"), `${stepId}: local handoff path missing`);
+  }
+
+  console.log("Integration handoff drafts passed for Plane / Chatwoot.");
 }
 
 function assert(condition, message) {

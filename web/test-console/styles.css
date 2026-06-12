@@ -325,7 +325,8 @@ textarea {
   background: #f6f8f8;
 }
 
-.integration-grid {
+.integration-grid,
+.status-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
@@ -587,17 +588,68 @@ textarea {
   white-space: pre-wrap;
 }
 
-.workflow-actions a {
+.workflow-actions a,
+.handoff-button {
   display: inline-flex;
   align-items: center;
   min-height: 36px;
   padding: 0 12px;
+  border: 0;
   border-radius: var(--cifedra-radius-sm);
   background: var(--cifedra-ink);
   color: var(--cifedra-paper);
   font-size: 13px;
   font-weight: 900;
   text-decoration: none;
+  cursor: pointer;
+}
+
+.handoff-button {
+  background: var(--cifedra-teal);
+  color: var(--cifedra-ink);
+}
+
+.handoff-button:disabled {
+  cursor: wait;
+  opacity: 0.64;
+}
+
+.handoff-result {
+  display: none;
+  padding: 12px;
+  border-radius: var(--cifedra-radius-sm);
+  background: #f6f8f8;
+  color: var(--cifedra-slate);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.handoff-result.pending,
+.handoff-result.draft_saved,
+.handoff-result.created,
+.handoff-result.failed {
+  display: grid;
+  gap: 5px;
+}
+
+.handoff-result.created {
+  background: #e7faf7;
+  color: #0f695d;
+}
+
+.handoff-result.failed {
+  background: #ffece8;
+  color: #7c2116;
+}
+
+.handoff-result strong,
+.handoff-result p {
+  margin: 0;
+}
+
+.handoff-result code {
+  color: inherit;
+  word-break: break-all;
 }
 
 @media (max-width: 1120px) {
@@ -605,7 +657,8 @@ textarea {
     grid-template-columns: 1fr;
   }
 
-  .integration-grid {
+  .integration-grid,
+  .status-grid {
     grid-template-columns: 1fr;
   }
 }

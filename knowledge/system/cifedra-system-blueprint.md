@@ -54,6 +54,8 @@ apps/api
 | `GET` | `/demo/profiles` | Демо-профили для проверки matching. |
 | `GET` | `/demo/scenarios` | Демо-сценарии `Life`, `Work`, `Skills` для smoke-тестов и test console. |
 | `POST` | `/demo/match` | Создать демо-задачу, подобрать людей, собрать first brief и integration workflow для Plane/Chatwoot. |
+| `POST` | `/demo/handoff` | Передать данные предыдущих шагов в adapter Plane/Chatwoot; в draft-режиме сохранить пакет в `.local/handoffs/`. |
+| `GET` | `/integrations/status` | Проверить режим adapter-слоя и недостающую live-конфигурацию. |
 
 Пример запроса:
 

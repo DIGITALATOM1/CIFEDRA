@@ -2,7 +2,8 @@ const apiBaseUrl = new URLSearchParams(window.location.search).get("api") ?? "ht
 
 const state = {
   scenarios: [],
-  selectedScenarioId: null
+  selectedScenarioId: null,
+  currentResult: null
 };
 
 const elements = {
@@ -103,6 +104,7 @@ function selectScenario(scenarioId) {
   }
 
   fillForm(scenario.input);
+  state.currentResult = null;
   elements.resultPanel.className = "empty-state";
   elements.resultPanel.textContent = "Сценарий загружен. Запустите matching.";
 }
@@ -141,6 +143,7 @@ async function runMatch() {
       throw new Error(result.error ?? `API error ${response.status}`);
     }
 
+    state.currentResult = result;
     renderResult(result);
   } catch (error) {
     showError(error instanceof Error ? error.message : "Неизвестная ошибка matching");
@@ -217,6 +220,7 @@ function renderResult(result) {
     </article>
     ${renderWorkflow(result.integrationWorkflow)}
   `;
+  bindWorkflowActions();
 }
 
 function renderWorkflow(workflow) {
@@ -245,6 +249,9 @@ function renderWorkflowStep(step) {
   const link = step.localUrl
     ? `<a href="${escapeAttribute(step.localUrl)}" target="_blank" rel="noreferrer">Открыть ${escapeHtml(step.owner)}</a>`
     : "";
+  const transferButton = step.handoff
+    ? `<button class="handoff-button" type="button" data-step-id="${escapeAttribute(step.id)}">Передать данные</button>`
+    : "";
 
   return `
     <section class="workflow-step ${escapeAttribute(step.status)}">
@@ -256,8 +263,78 @@ function renderWorkflowStep(step) {
       <h4>${escapeHtml(step.title)}</h4>
       <p>${escapeHtml(step.summary)}</p>
       ${handoff}
-      ${link ? `<div class="workflow-actions">${link}</div>` : ""}
+      ${
+        link || transferButton
+          ? `<div class="workflow-actions">${transferButton}${link}</div>`
+          : ""
+      }
+      <div class="handoff-result" data-step-result="${escapeAttribute(step.id)}"></div>
     </section>
+  `;
+}
+
+function bindWorkflowActions() {
+  for (const button of elements.resultPanel.querySelectorAll(".handoff-button")) {
+    button.addEventListener("click", async () => {
+      await sendHandoff(button);
+    });
+  }
+}
+
+async function sendHandoff(button) {
+  const stepId = button.dataset.stepId;
+  const resultTarget = elements.resultPanel.querySelector(`[data-step-result="${cssEscape(stepId)}"]`);
+
+  if (!state.currentResult || !stepId || !resultTarget) {
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Передаем...";
+  resultTarget.textContent = "Формируем пакет передачи из предыдущих шагов...";
+  resultTarget.className = "handoff-result pending";
+
+  try {
+    const response = await fetch(`${apiBaseUrl}/demo/handoff`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        stepId,
+        need: state.currentResult.need,
+        match: state.currentResult.matches?.[0],
+        brief: state.currentResult.firstBrief
+      })
+    });
+    const payload = await response.json();
+
+    if (!response.ok) {
+      throw new Error(payload.error ?? `API error ${response.status}`);
+    }
+
+    resultTarget.className = `handoff-result ${escapeAttribute(payload.handoff.status)}`;
+    resultTarget.innerHTML = renderHandoffOutcome(payload.handoff);
+  } catch (error) {
+    resultTarget.className = "handoff-result failed";
+    resultTarget.textContent = error instanceof Error ? error.message : "Ошибка передачи handoff";
+  } finally {
+    button.disabled = false;
+    button.textContent = "Передать данные";
+  }
+}
+
+function renderHandoffOutcome(handoff) {
+  const missing = handoff.missingConfig?.length
+    ? `<p>Для live-режима не хватает: ${escapeHtml(handoff.missingConfig.join(", "))}</p>`
+    : "";
+
+  return `
+    <strong>${escapeHtml(handoff.status)} · ${escapeHtml(handoff.mode)}</strong>
+    <p>${escapeHtml(handoff.message)}</p>
+    <p>Источник: ${escapeHtml(handoff.source.needId)} -> ${escapeHtml(handoff.source.profileId)}</p>
+    <p>Локальная запись: <code>${escapeHtml(handoff.localRecordPath)}</code></p>
+    ${missing}
   `;
 }
 
@@ -307,4 +384,8 @@ function escapeHtml(value) {
 
 function escapeAttribute(value) {
   return escapeHtml(value);
+}
+
+function cssEscape(value) {
+  return String(value).replaceAll('"', '\\"');
 }
