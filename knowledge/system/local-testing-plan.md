@@ -1,0 +1,74 @@
+# CIFEDRA CONNECT: локальное тестирование
+
+Дата: 2026-06-12
+Статус: local testing plan v0.1
+
+## Решение
+
+До завершения локального тестирования по направлениям `Life`, `Work`, `Skills` не размещаем систему на стороннем сервере и не готовим публикацию в App Store / Google Play.
+
+Локальный контур нужен для проверки:
+
+- доменной логики `Need -> Match -> Prepare -> Connect -> Result`;
+- API-прототипа;
+- лендинга;
+- сценариев по каждому направлению;
+- будущих требований к мобильному приложению, backoffice и concierge.
+
+## Локальные сервисы
+
+| Сервис | URL | Назначение |
+| --- | --- | --- |
+| API | `http://localhost:3030` | Прототип backend API. |
+| Landing | `http://localhost:4177/web/landing/` | Веб-лендинг с QR-кодами приложений. |
+
+## Команды
+
+```bash
+npm install
+npm run local:start
+npm run local:smoke
+npm run local:stop
+```
+
+Дополнительные проверки:
+
+```bash
+npm run typecheck
+npm test
+npm run build
+```
+
+## Smoke-тесты
+
+`npm run local:smoke` проверяет:
+
+| Направление | Сценарий | Ожидаемый профиль |
+| --- | --- | --- |
+| `Life` | Забрать заказ рядом | `profile_life_anna` |
+| `Work` | Ревью SRS | `profile_work_dmitry` |
+| `Skills` | Подготовка к интервью | `profile_skills_maria` |
+
+## Логи и процессы
+
+Локальные процессы пишут PID и логи в `.local/`:
+
+```text
+.local/pids.json
+.local/logs/api.log
+.local/logs/web.log
+```
+
+Папка `.local/` не коммитится в Git.
+
+## Правило перехода к внешней публикации
+
+К стороннему серверу, сборке мобильных приложений и публикации в магазинах переходим только после того, как локально будут приняты:
+
+1. `Life` MVP flow.
+2. `Work` MVP flow.
+3. `Skills` MVP flow.
+4. Общая доменная модель.
+5. API-контракты.
+6. Минимальный mobile UX.
+7. Решение по backoffice и support/concierge.

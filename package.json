@@ -11,7 +11,11 @@
     "build": "npm -w @cifedra/core run build && npm -w @cifedra/api run build",
     "typecheck": "npm -w @cifedra/core run typecheck && npm -w @cifedra/core run build && npm -w @cifedra/api run typecheck",
     "test": "npm -w @cifedra/core run test",
-    "dev:api": "npm -w @cifedra/api run dev"
+    "dev:api": "npm -w @cifedra/api run dev",
+    "local:start": "node scripts/local/start.mjs",
+    "local:stop": "node scripts/local/stop.mjs",
+    "local:restart": "npm run local:stop && npm run local:start",
+    "local:smoke": "node scripts/local/smoke-test.mjs"
   },
   "devDependencies": {
     "@types/node": "^25.9.3",

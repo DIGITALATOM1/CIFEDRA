@@ -28,6 +28,11 @@ server.listen(port, () => {
 async function routeRequest(request: IncomingMessage, response: ServerResponse): Promise<void> {
   const url = new URL(request.url ?? "/", `http://${request.headers.host ?? "localhost"}`);
 
+  if (request.method === "OPTIONS") {
+    sendEmpty(response, 204);
+    return;
+  }
+
   if (request.method === "GET" && url.pathname === "/health") {
     sendJson(response, 200, {
       status: "ok",
@@ -108,7 +113,20 @@ async function readJson<T>(request: IncomingMessage): Promise<T> {
 function sendJson(response: ServerResponse, statusCode: number, payload: unknown): void {
   response.writeHead(statusCode, {
     "content-type": "application/json; charset=utf-8",
-    "access-control-allow-origin": "*"
+    ...corsHeaders()
   });
   response.end(`${JSON.stringify(payload, null, 2)}\n`);
+}
+
+function sendEmpty(response: ServerResponse, statusCode: number): void {
+  response.writeHead(statusCode, corsHeaders());
+  response.end();
+}
+
+function corsHeaders(): Record<string, string> {
+  return {
+    "access-control-allow-origin": "*",
+    "access-control-allow-methods": "GET,POST,OPTIONS",
+    "access-control-allow-headers": "content-type"
+  };
 }

@@ -23,3 +23,18 @@ npm run dev:api
 ```
 
 API-прототип по умолчанию запускается на `http://localhost:3030`.
+
+## Локальный контур тестирования
+
+До внешнего размещения и публикации приложений тестируем продукт локально.
+
+```bash
+npm run local:start
+npm run local:smoke
+npm run local:stop
+```
+
+Локальные URL:
+
+- API: `http://localhost:3030`
+- Landing: `http://localhost:4177/web/landing/`
