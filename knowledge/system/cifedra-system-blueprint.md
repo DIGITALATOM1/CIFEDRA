@@ -1,7 +1,7 @@
 # CIFEDRA CONNECT: системный blueprint
 
-Дата: 2026-06-12
-Статус: initial design + implementation scaffold v0.1
+Дата: 2026-06-13
+Статус: initial design + implementation scaffold v0.2
 
 ## Назначение
 
@@ -23,7 +23,7 @@ Need -> Match -> Prepare -> Connect -> Result
 | --- | --- | --- |
 | `CIFEDRA Core` | Начали реализацию | Самописный TypeScript-пакет `packages/core`. |
 | `API Prototype` | Начали реализацию | Минимальный Node.js API `apps/api` поверх core. |
-| `Mobile App` | Следующий этап | React Native + Expo. |
+| `Mobile App` | Спроектирован путь сборки | React Native + Expo; подробный план: [mobile-build-plan.md](./mobile-build-plan.md). |
 | `Core Data` | Следующий этап | PostgreSQL/Supabase, после утверждения модели данных. |
 | `Backoffice` | Следующий этап | Baserow OSE для ручного пилота и операционных таблиц. |
 | `Support / Concierge` | Следующий этап | Chatwoot CE для поддержки и concierge-сценариев. |
@@ -78,6 +78,6 @@ curl -X POST http://localhost:3030/demo/match \
 2. Уточнить сущности и статусы: `Need`, `Profile`, `Match`, `Shortlist`, `Conversation`, `Result`, `TrustSignal`.
 3. Добавить persistent storage: PostgreSQL/Supabase migrations.
 4. Добавить нормальный API-слой с OpenAPI-спецификацией.
-5. Начать `apps/mobile` на React Native + Expo.
+5. Подготовить SRS `Mobile MVP` и после него начать `apps/mobile` на React Native + Expo.
 6. Спроектировать Baserow pilot tables для ручного подбора.
 7. Спроектировать Chatwoot concierge flow отдельно от будущего direct product chat.

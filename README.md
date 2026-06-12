@@ -13,6 +13,8 @@
 | `apps/api/` | Минимальный API-прототип поверх `@cifedra/core`. |
 | `scripts/integrations/` | Подготовка и проверка локальных open source интеграций. |
 
+Мобильная стратегия: [knowledge/system/mobile-build-plan.md](./knowledge/system/mobile-build-plan.md).
+
 ## Команды
 
 ```bash
