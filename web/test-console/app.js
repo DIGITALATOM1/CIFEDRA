@@ -282,6 +282,69 @@ function renderResult(result) {
       <h3>Следующий шаг</h3>
       <p>${escapeHtml(brief.nextStep)}</p>
     </article>
+    ${renderWorkflow(result.integrationWorkflow)}
+  `;
+}
+
+function renderWorkflow(workflow) {
+  if (!workflow?.steps?.length) {
+    return "";
+  }
+
+  return `
+    <article class="workflow-card">
+      <div class="workflow-head">
+        <div>
+          <h3>Привязка к Plane и Chatwoot</h3>
+          <p>${escapeHtml(workflow.summary)}</p>
+        </div>
+        <span class="pill">pre-adapter</span>
+      </div>
+      <div class="workflow-steps">
+        ${workflow.steps.map(renderWorkflowStep).join("")}
+      </div>
+    </article>
+  `;
+}
+
+function renderWorkflowStep(step) {
+  const handoff = step.handoff ? renderHandoff(step.handoff) : "";
+  const link = step.localUrl
+    ? `<a href="${escapeAttribute(step.localUrl)}" target="_blank" rel="noreferrer">Открыть ${escapeHtml(step.owner)}</a>`
+    : "";
+
+  return `
+    <section class="workflow-step ${escapeAttribute(step.status)}">
+      <div class="workflow-step-head">
+        <span class="stage-badge">${escapeHtml(step.stage)}</span>
+        <span class="owner-badge ${escapeAttribute(step.owner)}">${escapeHtml(step.owner)}</span>
+        <span class="status-badge">${escapeHtml(step.status)}</span>
+      </div>
+      <h4>${escapeHtml(step.title)}</h4>
+      <p>${escapeHtml(step.summary)}</p>
+      ${handoff}
+      ${link ? `<div class="workflow-actions">${link}</div>` : ""}
+    </section>
+  `;
+}
+
+function renderHandoff(handoff) {
+  return `
+    <details class="handoff" open>
+      <summary>${escapeHtml(handoff.target)}: ${escapeHtml(handoff.title)}</summary>
+      <dl>
+        ${handoff.fields
+          .map(
+            (field) => `
+              <div>
+                <dt>${escapeHtml(field.label)}</dt>
+                <dd>${escapeHtml(field.value)}</dd>
+              </div>
+            `
+          )
+          .join("")}
+      </dl>
+    </details>
   `;
 }
 
@@ -307,4 +370,8 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+function escapeAttribute(value) {
+  return escapeHtml(value);
 }

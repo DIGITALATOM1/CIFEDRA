@@ -80,7 +80,8 @@ http://localhost:4177/web/test-console/
 - recommended action;
 - причины релевантности;
 - риски;
-- brief для контакта.
+- brief для контакта;
+- workflow-привязку к Plane task draft и Chatwoot conversation draft.
 
 ## Логи и процессы
 

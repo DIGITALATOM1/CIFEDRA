@@ -54,7 +54,21 @@ npm run integrations:plane:start
 2. Plane CE поднят на `http://localhost:8082`.
 3. Chatwoot CE поднят на `http://localhost:8083`.
 4. CIFEDRA API отдает каталог решений через `GET /integrations`.
-5. Test Console показывает карточки Plane CE и Chatwoot CE.
+5. `POST /demo/match` возвращает `integrationWorkflow`: привязку шагов `Need -> Match -> Prepare -> Connect -> Result` к Plane task draft и Chatwoot conversation draft.
+6. Test Console показывает карточки Plane CE и Chatwoot CE, а после matching - цепочку шагов с handoff-payload.
+
+## Pre-adapter в сценарии
+
+Текущая реализация не создает реальные записи в Plane/Chatwoot автоматически. Она проверяет продуктовую механику привязки:
+
+| Шаг CIFEDRA | Владелец | Что происходит |
+| --- | --- | --- |
+| `Need` | CIFEDRA Core | Фиксируем потребность, направление, категорию, ожидаемый результат. |
+| `Match` | CIFEDRA Core | Выбираем кандидата и recommended action. |
+| `Prepare` | CIFEDRA Core | Формируем brief для контакта. |
+| `Execute` | Plane CE | Готовим draft задачи: title, priority, assignee hint, description, labels. |
+| `Connect` | Chatwoot CE | Готовим draft диалога: inbox, contact, goal, context, first message, risks. |
+| `Result` | CIFEDRA Core | Ожидаем outcome из задачи/диалога и фиксируем качество. |
 
 ## Следующие задачи
 

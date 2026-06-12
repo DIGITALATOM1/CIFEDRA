@@ -53,7 +53,7 @@ apps/api
 | `GET` | `/directions` | Справочник направлений и категорий. |
 | `GET` | `/demo/profiles` | Демо-профили для проверки matching. |
 | `GET` | `/demo/scenarios` | Демо-сценарии `Life`, `Work`, `Skills` для smoke-тестов и test console. |
-| `POST` | `/demo/match` | Создать демо-задачу, подобрать людей и собрать first brief. |
+| `POST` | `/demo/match` | Создать демо-задачу, подобрать людей, собрать first brief и integration workflow для Plane/Chatwoot. |
 
 Пример запроса:
 

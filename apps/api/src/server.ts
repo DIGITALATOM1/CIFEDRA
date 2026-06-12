@@ -2,6 +2,7 @@ import { createServer, type IncomingMessage, type ServerResponse } from "node:ht
 
 import {
   buildConversationBrief,
+  buildIntegrationWorkflow,
   createNeed,
   demoNeedScenarios,
   demoProfiles,
@@ -83,11 +84,13 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
       limit: 5,
       minScore: 25
     });
+    const firstBrief = matches[0] ? buildConversationBrief(need, matches[0]) : null;
 
     sendJson(response, 200, {
       need,
       matches,
-      firstBrief: matches[0] ? buildConversationBrief(need, matches[0]) : null
+      firstBrief,
+      integrationWorkflow: buildIntegrationWorkflow(need, matches[0], firstBrief)
     });
     return;
   }

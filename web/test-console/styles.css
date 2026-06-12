@@ -303,6 +303,7 @@ textarea {
 
 .match-card,
 .brief-card,
+.workflow-card,
 .integration-card {
   padding: 18px;
   border-radius: var(--cifedra-radius-sm);
@@ -436,6 +437,153 @@ textarea {
 
 .brief-card li + li {
   margin-top: 6px;
+}
+
+.workflow-card {
+  display: grid;
+  gap: 16px;
+}
+
+.workflow-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.workflow-head p {
+  margin-top: 8px;
+  color: var(--cifedra-slate);
+  line-height: 1.45;
+}
+
+.workflow-steps {
+  display: grid;
+  gap: 12px;
+}
+
+.workflow-step {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid rgba(17, 19, 24, 0.08);
+  border-left: 5px solid var(--cifedra-slate);
+  border-radius: var(--cifedra-radius-sm);
+  background: var(--cifedra-white);
+}
+
+.workflow-step.done {
+  border-left-color: var(--cifedra-teal);
+}
+
+.workflow-step.ready {
+  border-left-color: var(--cifedra-lime);
+}
+
+.workflow-step.planned {
+  border-left-color: #f3bc45;
+}
+
+.workflow-step.blocked {
+  border-left-color: #d75b47;
+}
+
+.workflow-step-head,
+.workflow-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.workflow-step h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.workflow-step p {
+  color: var(--cifedra-slate);
+  line-height: 1.45;
+}
+
+.stage-badge,
+.owner-badge,
+.status-badge {
+  display: inline-flex;
+  min-height: 25px;
+  align-items: center;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: #eef2f1;
+  color: var(--cifedra-slate);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.owner-badge.cifedra {
+  background: #e7faf7;
+  color: #0f695d;
+}
+
+.owner-badge.plane {
+  background: #eef1ff;
+  color: #3943a2;
+}
+
+.owner-badge.chatwoot {
+  background: #edf7ff;
+  color: #16608c;
+}
+
+.handoff {
+  border-radius: var(--cifedra-radius-sm);
+  background: #f6f8f8;
+}
+
+.handoff summary {
+  padding: 11px 12px;
+  cursor: pointer;
+  color: var(--cifedra-ink);
+  font-weight: 900;
+}
+
+.handoff dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0 12px 12px;
+}
+
+.handoff dl div {
+  display: grid;
+  gap: 3px;
+}
+
+.handoff dt {
+  color: var(--cifedra-slate);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.handoff dd {
+  margin: 0;
+  color: var(--cifedra-ink);
+  font-size: 13px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.workflow-actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: var(--cifedra-radius-sm);
+  background: var(--cifedra-ink);
+  color: var(--cifedra-paper);
+  font-size: 13px;
+  font-weight: 900;
+  text-decoration: none;
 }
 
 @media (max-width: 1120px) {

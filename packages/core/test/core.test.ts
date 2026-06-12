@@ -3,6 +3,7 @@ import test from "node:test";
 
 import {
   buildConversationBrief,
+  buildIntegrationWorkflow,
   createNeed,
   demoProfiles,
   integrationDefinitions,
@@ -70,4 +71,30 @@ test("declares the local task and chat integrations", () => {
   assert.equal(integrationDefinitions[0]?.kind, "tasks");
   assert.equal(integrationDefinitions[1]?.kind, "chat");
   assert.ok(integrationDefinitions.every((integration) => integration.runtime === "docker-compose"));
+});
+
+test("binds match flow to Plane and Chatwoot handoffs", () => {
+  const need = createNeed({
+    direction: "work",
+    categoryId: "work.expert-help",
+    title: "Нужно ревью SRS",
+    description: "Нужно проверить SRS и найти слабые места перед передачей в разработку.",
+    expectedResult: "Список замечаний и правок",
+    tags: ["srs", "review"]
+  });
+  const [candidate] = rankProfilesForNeed(need, demoProfiles);
+  const brief = buildConversationBrief(need, candidate);
+  const workflow = buildIntegrationWorkflow(need, candidate, brief);
+
+  assert.deepEqual(
+    workflow.steps.map((step) => step.id),
+    ["need", "match", "prepare", "plane-task", "chatwoot-conversation", "result"]
+  );
+  assert.equal(workflow.steps.find((step) => step.id === "plane-task")?.status, "ready");
+  assert.equal(workflow.steps.find((step) => step.id === "chatwoot-conversation")?.status, "ready");
+  assert.equal(workflow.steps.find((step) => step.id === "plane-task")?.handoff?.target, "Plane issue draft");
+  assert.equal(
+    workflow.steps.find((step) => step.id === "chatwoot-conversation")?.handoff?.target,
+    "Chatwoot conversation draft"
+  );
 });
