@@ -1,7 +1,7 @@
 # CIFEDRA CONNECT: план доработки ядра
 
 Дата: 2026-06-13
-Статус: core work plan v0.2
+Статус: core work plan v0.3
 Фокус чата: доработка `CIFEDRA Core`
 
 ## Назначение
@@ -24,6 +24,7 @@ Need -> Match -> Prepare -> Connect -> Result
 | --- | --- |
 | `domain.ts` | Базовые типы `Need`, `Profile`, `MatchCandidate`, `ConversationBrief`, `ContactResult`. |
 | `catalog.ts` | Справочник направлений и категорий. |
+| `decisions.ts` | Пользовательские решения по кандидатам и построение shortlist. |
 | `need.ts` | Создание и валидация потребности. |
 | `lifecycle.ts` | Допустимые переходы `NeedStatus` и helpers жизненного цикла. |
 | `matching.ts` | Базовый скоринг профилей и объяснение релевантности. |
@@ -43,8 +44,7 @@ Need -> Match -> Prepare -> Connect -> Result
 
 | Пробел | Почему важно |
 | --- | --- |
-| Нет отдельной сущности `Shortlist`. | Для mobile MVP нужны свайпы, сравнение кандидатов и выбор нескольких людей. |
-| Нет сущности `Decision / Swipe`. | Сейчас recommended action есть у системы, но нет пользовательского действия: accept, reject, save, request contact. |
+| `Decision / Shortlist` только начат. | Базовые типы и функции есть, но еще нужно связать их с mobile UI, API хранения и conversation. |
 | Нет сущности `Conversation`. | Chatwoot handoff есть, но core не хранит состояние коммуникации. |
 | Lifecycle для `Need` только начат. | Переходы уже оформлены, но еще нужно связать их с persistent storage, conversation и result. |
 | Нет модели `Result` как части workflow. | ContactResult есть, но нет связи с conversation, match quality и следующим действием. |
@@ -91,12 +91,14 @@ Need created
 
 Задачи:
 
-1. Добавить типы `CandidateDecision`, `DecisionType`, `Shortlist`.
-2. Поддержать действия: `viewed`, `saved`, `rejected`, `requested_contact`.
-3. Добавить функцию построения shortlist из решений пользователя.
-4. Добавить тесты по `Life`, `Work`, `Skills`.
+1. Добавить типы `CandidateDecision`, `DecisionType`, `Shortlist`. Выполнено.
+2. Поддержать действия: `viewed`, `saved`, `rejected`, `requested_contact`. Выполнено.
+3. Добавить функцию построения shortlist из решений пользователя. Выполнено.
+4. Добавить тесты по `Life`, `Work`, `Skills`. Выполнено.
 
 Ожидаемый результат: mobile сможет показывать карточки, сохранять выбор и передавать выбранного кандидата в `Prepare`.
+
+Текущий результат: `buildRecommendedDecisions` и `buildShortlist` дают первый контракт для mobile/cards flow, `/demo/match` возвращает `decisions` и `shortlist`.
 
 ### Итерация 3. Conversation core model
 
@@ -152,18 +154,18 @@ Need created
 
 Ожидаемый результат: можно безопасно начинать `apps/mobile`.
 
-## План на следующий рабочий день
+## Следующий рабочий фокус
 
-Начать с Итерации 1 и не распыляться.
+Начать Итерацию 3: `Conversation core model`.
 
 Порядок:
 
-1. Прочитать `packages/core/src/domain.ts`, `need.ts`, `workflow.ts`, `core.test.ts`.
-2. Уточнить `NeedStatus` и допустимые переходы.
-3. Реализовать lifecycle helpers в core.
-4. Добавить тесты на переходы.
-5. Прогнать `npm run typecheck`, `npm test`, `npm run build`.
-6. Закоммитить и отправить изменения в GitHub.
+1. Прочитать `domain.ts`, `decisions.ts`, `prepare.ts`, `workflow.ts`.
+2. Добавить типы `Conversation`, `ConversationState`, `ConversationChannel`.
+3. Создать conversation draft из `ConversationBrief` и выбранного `CandidateDecision`.
+4. Подготовить совместимость с Chatwoot handoff.
+5. Добавить тесты и обновить `/demo/match` или отдельный demo endpoint, если нужен API-контракт.
+6. Прогнать `npm run typecheck`, `npm test`, `npm run build`, `npm run local:smoke`.
 
 ## Правило для этого чата
 

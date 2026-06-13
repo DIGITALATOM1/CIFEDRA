@@ -4,9 +4,12 @@ import test from "node:test";
 import {
   buildConversationBrief,
   buildIntegrationWorkflow,
+  buildRecommendedDecisions,
+  buildShortlist,
   canTransitionNeedStatus,
   createDraftNeed,
   createNeed,
+  demoNeedScenarios,
   demoProfiles,
   integrationDefinitions,
   markNeedConnected,
@@ -14,6 +17,7 @@ import {
   markNeedReadyForMatch,
   markNeedResolved,
   rankProfilesForNeed,
+  recordCandidateDecision,
   recordContactResult
 } from "../src/index.ts";
 
@@ -100,6 +104,67 @@ test("builds a conversation brief from a match", () => {
   assert.equal(brief.needId, need.id);
   assert.equal(brief.profileId, "profile_skills_maria");
   assert.ok(brief.questions.length >= 3);
+});
+
+test("builds shortlists from recommended candidate decisions across directions", () => {
+  for (const scenario of demoNeedScenarios) {
+    const need = markNeedMatched(createNeed(scenario.input));
+    const matches = rankProfilesForNeed(need, demoProfiles);
+    const decisions = buildRecommendedDecisions(need, matches);
+    const shortlist = buildShortlist(need, matches, decisions);
+
+    assert.equal(shortlist.needId, need.id);
+    assert.equal(shortlist.items[0]?.profileId, scenario.expectedProfileId);
+    assert.equal(shortlist.items[0]?.position, 1);
+    assert.ok(
+      shortlist.items.every(
+        (item) => item.decision === "requested_contact" || item.decision === "saved"
+      )
+    );
+  }
+});
+
+test("uses latest candidate decision and excludes rejected candidates from shortlist", () => {
+  const need = markNeedMatched(
+    createNeed({
+      direction: "work",
+      categoryId: "work.expert-help",
+      title: "Нужно ревью SRS",
+      description: "Нужно проверить требования перед передачей в разработку.",
+      expectedResult: "Список замечаний и правок",
+      tags: ["srs", "requirements", "review"]
+    })
+  );
+  const matches = rankProfilesForNeed(need, demoProfiles, {
+    minScore: 0
+  });
+  const firstProfileId = matches[0]?.profile.id;
+
+  assert.ok(firstProfileId);
+
+  const decisions = [
+    recordCandidateDecision(
+      {
+        needId: need.id,
+        profileId: firstProfileId,
+        decision: "saved",
+        matchScore: matches[0]?.score
+      },
+      new Date("2026-06-13T09:00:00.000Z")
+    ),
+    recordCandidateDecision(
+      {
+        needId: need.id,
+        profileId: firstProfileId,
+        decision: "rejected",
+        matchScore: matches[0]?.score
+      },
+      new Date("2026-06-13T09:01:00.000Z")
+    )
+  ];
+  const shortlist = buildShortlist(need, matches, decisions);
+
+  assert.equal(shortlist.items.some((item) => item.profileId === firstProfileId), false);
 });
 
 test("marks resolved needs as completed in workflow", () => {

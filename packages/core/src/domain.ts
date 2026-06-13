@@ -104,6 +104,36 @@ export interface MatchCandidate {
   explanation: MatchExplanation;
 }
 
+export type DecisionType = "viewed" | "saved" | "rejected" | "requested_contact";
+
+export interface CandidateDecisionInput {
+  needId: string;
+  profileId: string;
+  decision: DecisionType;
+  matchScore?: number;
+  note?: string;
+}
+
+export interface CandidateDecision extends CandidateDecisionInput {
+  id: string;
+  decidedAt: string;
+}
+
+export interface ShortlistItem {
+  profileId: string;
+  score: number;
+  decision: Extract<DecisionType, "saved" | "requested_contact">;
+  position: number;
+  reasons: string[];
+}
+
+export interface Shortlist {
+  id: string;
+  needId: string;
+  items: ShortlistItem[];
+  createdAt: string;
+}
+
 export interface ConversationBrief {
   needId: string;
   profileId: string;

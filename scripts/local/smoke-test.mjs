@@ -76,6 +76,11 @@ async function checkScenario(scenario) {
   );
 
   assert(body.need?.status === "matched", `${scenario.title}: expected need status matched`);
+  assert(body.decisions?.length >= 1, `${scenario.title}: expected candidate decisions`);
+  assert(
+    body.shortlist?.items?.[0]?.profileId === scenario.expectedProfileId,
+    `${scenario.title}: expected shortlist to start with ${scenario.expectedProfileId}`
+  );
   assert(body.firstBrief?.questions?.length >= 3, `${scenario.title}: first brief is incomplete`);
   assert(
     body.integrationWorkflow?.steps?.some((step) => step.id === "plane-task"),

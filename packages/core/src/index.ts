@@ -1,4 +1,5 @@
 export * from "./catalog.js";
+export * from "./decisions.js";
 export * from "./domain.js";
 export * from "./fixtures.js";
 export * from "./integrations.js";

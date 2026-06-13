@@ -35,6 +35,7 @@ Need -> Match -> Prepare -> Connect -> Result
 packages/core
   src/domain.ts      - доменные типы
   src/catalog.ts     - направления и категории
+  src/decisions.ts   - решения по кандидатам и shortlist
   src/need.ts        - создание и валидация задачи
   src/lifecycle.ts   - переходы статусов Need
   src/matching.ts    - базовый скоринг и ранжирование профилей
@@ -54,7 +55,7 @@ apps/api
 | `GET` | `/directions` | Справочник направлений и категорий. |
 | `GET` | `/demo/profiles` | Демо-профили для проверки matching. |
 | `GET` | `/demo/scenarios` | Демо-сценарии `Life`, `Work`, `Skills` для smoke-тестов и test console. |
-| `POST` | `/demo/match` | Создать демо-задачу, подобрать людей, собрать first brief и integration workflow для Plane/Chatwoot. |
+| `POST` | `/demo/match` | Создать демо-задачу, подобрать людей, вернуть decisions, shortlist, first brief и integration workflow для Plane/Chatwoot. |
 | `POST` | `/demo/handoff` | Передать данные предыдущих шагов в adapter Plane/Chatwoot; в draft-режиме сохранить пакет в `.local/handoffs/`. |
 | `GET` | `/integrations/status` | Проверить режим adapter-слоя и недостающую live-конфигурацию. |
 

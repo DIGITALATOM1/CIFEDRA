@@ -4,6 +4,8 @@ import { createIntegrationHandoff, getIntegrationStatus } from "./integration-ha
 import {
   buildConversationBrief,
   buildIntegrationWorkflow,
+  buildRecommendedDecisions,
+  buildShortlist,
   createNeed,
   demoNeedScenarios,
   demoProfiles,
@@ -92,11 +94,15 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
       minScore: 25
     });
     const need = matches.length > 0 ? markNeedMatched(createdNeed) : createdNeed;
+    const decisions = buildRecommendedDecisions(need, matches);
+    const shortlist = buildShortlist(need, matches, decisions);
     const firstBrief = matches[0] ? buildConversationBrief(need, matches[0]) : null;
 
     sendJson(response, 200, {
       need,
       matches,
+      decisions,
+      shortlist,
       firstBrief,
       integrationWorkflow: buildIntegrationWorkflow(need, matches[0], firstBrief)
     });
