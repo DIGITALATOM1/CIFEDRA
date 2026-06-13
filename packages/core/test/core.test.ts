@@ -4,6 +4,7 @@ import test from "node:test";
 import {
   buildConversationBrief,
   buildIntegrationWorkflow,
+  buildMatchQualitySignal,
   buildRecommendedDecisions,
   buildShortlist,
   canTransitionConversationState,
@@ -24,7 +25,8 @@ import {
   markConversationWaitingUser,
   rankProfilesForNeed,
   recordCandidateDecision,
-  recordContactResult
+  recordContactResult,
+  resolveNeedFromContactResult
 } from "../src/index.ts";
 
 test("creates a valid work need and ranks a relevant profile", () => {
@@ -323,13 +325,111 @@ test("records a contact result and clamps quality score", () => {
   const result = recordContactResult({
     needId: "need_demo",
     profileId: "profile_demo",
+    conversationId: "conversation_demo",
+    decisionId: "decision_demo",
     outcome: "agreed",
     summary: "Договорились о следующем шаге.",
+    matchScore: 101,
     qualityScore: 140
   });
 
   assert.equal(result.qualityScore, 100);
+  assert.equal(result.matchScore, 100);
   assert.equal(result.outcome, "agreed");
+  assert.equal(result.nextStep, "Зафиксировать договоренность и следующий операционный шаг.");
+});
+
+test("resolves need from conversation result and creates quality signal", () => {
+  const need = markNeedMatched(
+    createNeed({
+      direction: "work",
+      categoryId: "work.expert-help",
+      title: "Нужно ревью SRS",
+      description: "Нужно проверить требования перед передачей в разработку.",
+      expectedResult: "Список замечаний и правок",
+      tags: ["srs", "requirements", "review"]
+    })
+  );
+  const [candidate] = rankProfilesForNeed(need, demoProfiles);
+  assert.ok(candidate);
+
+  const [decision] = buildRecommendedDecisions(need, [candidate]);
+  const brief = buildConversationBrief(need, candidate);
+  const draft = createConversationDraft({
+    need,
+    candidate,
+    decision,
+    brief
+  });
+  const opened = markConversationOpened(draft);
+  const conversation = markConversationResolved(opened, new Date("2026-06-13T12:00:00.000Z"));
+  const result = recordContactResult(
+    {
+      needId: need.id,
+      profileId: candidate.profile.id,
+      conversationId: conversation.id,
+      decisionId: decision.id,
+      outcome: "agreed",
+      summary: "Договорились о ревью требований.",
+      matchScore: candidate.score
+    },
+    new Date("2026-06-13T12:01:00.000Z")
+  );
+  const resolvedNeed = resolveNeedFromContactResult(
+    need,
+    conversation,
+    result,
+    new Date("2026-06-13T12:02:00.000Z")
+  );
+  const signal = buildMatchQualitySignal(result, new Date("2026-06-13T12:03:00.000Z"));
+
+  assert.equal(resolvedNeed.status, "resolved");
+  assert.equal(result.qualityScore, 90);
+  assert.equal(signal.impact, "positive");
+  assert.equal(signal.resultId, result.id);
+  assert.equal(signal.conversationId, conversation.id);
+  assert.equal(signal.decisionId, decision.id);
+});
+
+test("rejects result resolution for unresolved conversations", () => {
+  const need = markNeedMatched(
+    createNeed({
+      direction: "life",
+      categoryId: "life.local-tasks",
+      title: "Нужно забрать заказ рядом",
+      description: "Нужно забрать заказ в районе и передать мне вечером.",
+      expectedResult: "Заказ забран и передан",
+      tags: ["delivery", "local help", "errands"],
+      location: {
+        city: "Moscow",
+        district: "Tverskoy"
+      }
+    })
+  );
+  const [candidate] = rankProfilesForNeed(need, demoProfiles);
+  assert.ok(candidate);
+
+  const [decision] = buildRecommendedDecisions(need, [candidate]);
+  const brief = buildConversationBrief(need, candidate);
+  const conversation = createConversationDraft({
+    need,
+    candidate,
+    decision,
+    brief
+  });
+  const result = recordContactResult({
+    needId: need.id,
+    profileId: candidate.profile.id,
+    conversationId: conversation.id,
+    decisionId: decision.id,
+    outcome: "needs_follow_up",
+    summary: "Нужно уточнить время контакта."
+  });
+
+  assert.throws(
+    () => resolveNeedFromContactResult(need, conversation, result),
+    /unresolved conversation/
+  );
 });
 
 test("declares the local task and chat integrations", () => {

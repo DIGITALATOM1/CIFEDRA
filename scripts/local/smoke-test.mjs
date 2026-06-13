@@ -13,6 +13,7 @@ for (const scenario of scenarios) {
 }
 
 await checkHandoff(firstScenarioResult);
+await checkResult(firstScenarioResult);
 
 console.log("Local smoke tests passed for Life / Work / Skills.");
 
@@ -130,6 +131,33 @@ async function checkHandoff(matchResult) {
   }
 
   console.log("Integration handoff drafts passed for Plane / Chatwoot.");
+}
+
+async function checkResult(matchResult) {
+  const response = await fetch(`${apiBaseUrl}/demo/result`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({
+      need: matchResult.need,
+      conversation: matchResult.firstConversationDraft,
+      outcome: "agreed",
+      summary: "Договорились о следующем шаге.",
+      matchScore: matchResult.matches[0].score
+    })
+  });
+
+  assert(response.ok, `/demo/result failed with ${response.status}`);
+
+  const body = await response.json();
+
+  assert(body.need?.status === "resolved", "Expected resolved need after contact result");
+  assert(body.conversation?.state === "resolved", "Expected resolved conversation after contact result");
+  assert(body.result?.qualityScore >= 90, "Expected positive result quality score");
+  assert(body.qualitySignal?.impact === "positive", "Expected positive match quality signal");
+
+  console.log("Contact result quality loop passed.");
 }
 
 function assert(condition, message) {

@@ -86,6 +86,7 @@ http://localhost:4177/web/test-console/
 - brief для контакта;
 - workflow-привязку к Plane task draft и Chatwoot conversation draft;
 - передачу handoff-пакета из предыдущих шагов через `POST /demo/handoff`.
+- возврат результата контакта в core через `POST /demo/result` и match quality signal.
 
 ## Логи и процессы
 

@@ -1,7 +1,7 @@
 # CIFEDRA CONNECT: план доработки ядра
 
 Дата: 2026-06-13
-Статус: core work plan v0.4
+Статус: core work plan v0.5
 Фокус чата: доработка `CIFEDRA Core`
 
 ## Назначение
@@ -30,7 +30,7 @@ Need -> Match -> Prepare -> Connect -> Result
 | `lifecycle.ts` | Допустимые переходы `NeedStatus` и helpers жизненного цикла. |
 | `matching.ts` | Базовый скоринг профилей и объяснение релевантности. |
 | `prepare.ts` | Подготовка brief для контакта. |
-| `result.ts` | Фиксация результата контакта. |
+| `result.ts` | Фиксация результата контакта, next step, quality score и match quality signal. |
 | `workflow.ts` | Связка core-сценария с Plane/Chatwoot handoff. |
 | `fixtures.ts` | Демо-профили для локальных сценариев. |
 
@@ -48,7 +48,7 @@ Need -> Match -> Prepare -> Connect -> Result
 | `Decision / Shortlist` только начат. | Базовые типы и функции есть, но еще нужно связать их с mobile UI, API хранения и conversation. |
 | `Conversation` только начат. | Core уже хранит draft/state, но outcome и связь с `Result` еще нужно реализовать. |
 | Lifecycle для `Need` только начат. | Переходы уже оформлены, но еще нужно связать их с persistent storage, conversation и result. |
-| Нет модели `Result` как части workflow. | ContactResult есть, но нет связи с conversation, match quality и следующим действием. |
+| `Result / quality loop` только начат. | Результат уже связан с conversation/decision и quality signal, но еще не влияет на scoring правил. |
 | Нет direction-specific rules. | `Life`, `Work`, `Skills` пока различаются в основном fixture-данными и категориями. |
 | Нет API-contract-first слоя. | Mobile и будущий backend должны опираться на устойчивые DTO/контракты. |
 
@@ -123,12 +123,15 @@ Need created
 
 Задачи:
 
-1. Расширить `ContactResult`: связать с `conversationId`, `matchScore`, `decisionId`.
-2. Добавить outcome mapping: `agreed`, `not_relevant`, `no_response`, `needs_follow_up`, `needs_another_person`.
-3. Добавить правила следующего шага после результата.
-4. Подготовить первый quality signal для будущей аналитики.
+1. Расширить `ContactResult`: связать с `conversationId`, `matchScore`, `decisionId`. Выполнено.
+2. Добавить outcome mapping: `agreed`, `not_relevant`, `no_response`, `needs_follow_up`, `needs_another_person`. Выполнено.
+3. Добавить правила следующего шага после результата. Выполнено.
+4. Подготовить первый quality signal для будущей аналитики. Выполнено.
+5. Связать resolved conversation с `Need` lifecycle и `Result`. Выполнено.
 
 Ожидаемый результат: core фиксирует не просто факт общения, а полезность подбора.
+
+Текущий результат: `/demo/result` принимает conversation draft, закрывает conversation, записывает `ContactResult`, возвращает `MatchQualitySignal` и переводит `Need` в `resolved`.
 
 ### Итерация 5. Direction-specific rules
 
@@ -159,15 +162,15 @@ Need created
 
 ## Следующий рабочий фокус
 
-Начать Итерацию 4: `Result and quality loop`.
+Начать Итерацию 5: `Direction-specific rules`.
 
 Порядок:
 
-1. Прочитать `domain.ts`, `conversation.ts`, `result.ts`, `workflow.ts`.
-2. Расширить `ContactResult` связью с `conversationId`, `decisionId`, `matchScore`.
-3. Добавить правила next step после outcome.
-4. Подготовить первый quality signal для matching.
-5. Связать resolved conversation с `Need` lifecycle и `Result`.
+1. Прочитать `matching.ts`, `catalog.ts`, `fixtures.ts`, `core.test.ts`.
+2. Вынести scoring rules по направлениям.
+3. Усилить `Life`: география, срочность, доверие.
+4. Усилить `Work`: роль, SRS/проектный контекст, company knowledge.
+5. Усилить `Skills`: уровень, формат занятий, цель развития.
 6. Прогнать `npm run typecheck`, `npm test`, `npm run build`, `npm run local:smoke`.
 
 ## Правило для этого чата

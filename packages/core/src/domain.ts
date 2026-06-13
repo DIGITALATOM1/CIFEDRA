@@ -188,13 +188,34 @@ export type ContactOutcome =
 export interface ContactResultInput {
   needId: string;
   profileId: string;
+  conversationId?: string;
+  decisionId?: string;
   outcome: ContactOutcome;
   summary: string;
+  matchScore?: number;
   nextStep?: string;
   qualityScore?: number;
 }
 
 export interface ContactResult extends ContactResultInput {
   id: string;
+  nextStep: string;
+  qualityScore: number;
   recordedAt: string;
+}
+
+export type MatchQualityImpact = "positive" | "neutral" | "negative";
+
+export interface MatchQualitySignal {
+  id: string;
+  resultId: string;
+  needId: string;
+  profileId: string;
+  conversationId?: string;
+  decisionId?: string;
+  outcome: ContactOutcome;
+  matchScore?: number;
+  qualityScore: number;
+  impact: MatchQualityImpact;
+  createdAt: string;
 }

@@ -4,6 +4,7 @@ import { createIntegrationHandoff, getIntegrationStatus } from "./integration-ha
 import {
   buildConversationBrief,
   buildIntegrationWorkflow,
+  buildMatchQualitySignal,
   buildRecommendedDecisions,
   buildShortlist,
   createConversationDraft,
@@ -12,8 +13,15 @@ import {
   demoProfiles,
   directionDefinitions,
   integrationDefinitions,
+  markConversationOpened,
+  markConversationResolved,
   markNeedMatched,
   rankProfilesForNeed,
+  recordContactResult,
+  resolveNeedFromContactResult,
+  type ContactOutcome,
+  type Conversation,
+  type Need,
   type NeedInput
 } from "@cifedra/core";
 
@@ -133,6 +141,31 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
     return;
   }
 
+  if (request.method === "POST" && url.pathname === "/demo/result") {
+    const body = await readJson<DemoResultRequest>(request);
+    const conversation = resolveDemoConversation(body.conversation);
+    const result = recordContactResult({
+      needId: body.need.id,
+      profileId: conversation.profileId,
+      conversationId: conversation.id,
+      decisionId: conversation.decisionId,
+      outcome: body.outcome ?? "agreed",
+      summary: body.summary ?? "Договорились о следующем шаге.",
+      matchScore: body.matchScore,
+      qualityScore: body.qualityScore
+    });
+    const need = resolveNeedFromContactResult(body.need, conversation, result);
+    const qualitySignal = buildMatchQualitySignal(result);
+
+    sendJson(response, 200, {
+      need,
+      conversation,
+      result,
+      qualitySignal
+    });
+    return;
+  }
+
   sendJson(response, 404, {
     error: "Not found",
     routes: [
@@ -143,9 +176,19 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
       "GET /integrations",
       "GET /integrations/status",
       "POST /demo/handoff",
-      "POST /demo/match"
+      "POST /demo/match",
+      "POST /demo/result"
     ]
   });
+}
+
+interface DemoResultRequest {
+  readonly need: Need;
+  readonly conversation: Conversation;
+  readonly outcome?: ContactOutcome;
+  readonly summary?: string;
+  readonly matchScore?: number;
+  readonly qualityScore?: number;
 }
 
 function normalizeDemoNeed(body: Partial<NeedInput>): NeedInput {
@@ -162,6 +205,18 @@ function normalizeDemoNeed(body: Partial<NeedInput>): NeedInput {
     priority: body.priority,
     tags: body.tags ?? ["analysis", "requirements", "review"]
   };
+}
+
+function resolveDemoConversation(conversation: Conversation): Conversation {
+  if (conversation.state === "resolved") {
+    return conversation;
+  }
+
+  if (conversation.state === "draft") {
+    return markConversationResolved(markConversationOpened(conversation));
+  }
+
+  return markConversationResolved(conversation);
 }
 
 async function readJson<T>(request: IncomingMessage): Promise<T> {

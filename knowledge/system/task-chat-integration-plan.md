@@ -62,6 +62,7 @@ npm run integrations:plane:start
 8. `POST /demo/handoff` принимает результат предыдущих шагов и сохраняет локальный transfer package в `.local/handoffs/`.
 9. `GET /integrations/status` показывает, какие env-переменные нужны для live-создания записей.
 10. `Conversation` теперь создается в `CIFEDRA Core` как draft и может передаваться в Chatwoot adapter как product-owned контекст.
+11. `POST /demo/result` закрывает demo conversation и возвращает result/quality signal в `CIFEDRA Core`.
 
 ## Pre-adapter в сценарии
 
@@ -75,7 +76,7 @@ npm run integrations:plane:start
 | `Conversation draft` | CIFEDRA Core | Создаем product-owned conversation state и first message для канала связи. |
 | `Execute` | Plane CE | Готовим draft задачи: title, priority, assignee hint, description, labels. |
 | `Connect` | Chatwoot CE | Готовим draft диалога: inbox, contact, goal, context, first message, risks. |
-| `Result` | CIFEDRA Core | Ожидаем outcome из задачи/диалога и фиксируем качество. |
+| `Result` | CIFEDRA Core | Фиксируем outcome, next step, quality score и match quality signal. |
 
 ## Live-режим
 
