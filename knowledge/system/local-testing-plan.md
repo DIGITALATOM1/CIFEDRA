@@ -11,6 +11,7 @@
 
 - доменной логики `Need -> Match -> Prepare -> Connect -> Result`;
 - API-прототипа;
+- локальной регистрации и авторизации CIFEDRA Auth;
 - лендинга;
 - локального Docker runtime для open source модулей;
 - интеграций с задачами и чатом;
@@ -24,6 +25,7 @@
 | Сервис | URL | Назначение |
 | --- | --- | --- |
 | API | `http://localhost:3030` | Прототип backend API. |
+| CIFEDRA Auth | `http://localhost:3030/auth/status` | Локальная регистрация, login, bearer-session и identity claims. |
 | Landing | `http://localhost:4177/web/landing/` | Веб-лендинг с QR-кодами приложений. |
 | Test Console | `http://localhost:4177/web/test-console/` | Ручная проверка сценариев `Life`, `Work`, `Skills`. |
 | Integration Diagnostics | `http://localhost:4177/web/test-console/diagnostics.html` | Техническая проверка локальных модулей Plane/Chatwoot. |
@@ -69,6 +71,10 @@ npm run build
 
 `npm run local:smoke` проверяет:
 
+| Контур | Ожидаемый результат |
+| --- | --- |
+| `CIFEDRA Auth` | Регистрация временного пользователя, bearer-session, `/auth/me`, integration identity. |
+
 | Направление | Сценарий | Ожидаемый профиль |
 | --- | --- | --- |
 | `Life` | Забрать заказ рядом | `profile_life_anna` |
@@ -85,6 +91,8 @@ http://localhost:4177/web/test-console/
 
 В консоли можно выбрать сценарий, изменить параметры задачи, запустить matching и проверить:
 
+- регистрацию/вход CIFEDRA user;
+- передачу CIFEDRA actor в `POST /demo/match` и `POST /demo/handoff`;
 - выбранный профиль;
 - score;
 - recommended action;
@@ -94,6 +102,8 @@ http://localhost:4177/web/test-console/
 - workflow-привязку к Plane task draft и Chatwoot conversation draft;
 - передачу handoff-пакета из предыдущих шагов через `POST /demo/handoff`.
 - возврат результата контакта в core через `POST /demo/result` и match quality signal.
+
+Локальное auth-хранилище находится в `.local/auth/store.json` и не коммитится в Git.
 
 ## Логи и процессы
 

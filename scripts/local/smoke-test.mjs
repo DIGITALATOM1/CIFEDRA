@@ -1,9 +1,14 @@
 const apiBaseUrl = process.env.CIFEDRA_API_URL ?? "http://localhost:3030";
 const webUrl = process.env.CIFEDRA_WEB_URL ?? "http://localhost:4177/web/landing/";
+const smokePassword = "SmokePassword123!";
+
+let authToken = null;
+let authUser = null;
 
 await checkHealth();
 await checkLanding();
 await checkTestConsole();
+await checkAuth();
 
 const scenarios = await getScenarios();
 let firstScenarioResult = null;
@@ -44,6 +49,44 @@ async function checkTestConsole() {
 
   const html = await response.text();
   assert(html.includes("CIFEDRA Local Test Console"), "Test console title text not found");
+  assert(html.includes("CIFEDRA Auth"), "Auth console section not found");
+}
+
+async function checkAuth() {
+  const statusResponse = await fetch(`${apiBaseUrl}/auth/status`);
+  assert(statusResponse.ok, `GET /auth/status failed with ${statusResponse.status}`);
+
+  const email = `smoke-${Date.now()}@cifedra.local`;
+  const registerResponse = await fetch(`${apiBaseUrl}/auth/register`, {
+    method: "POST",
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      email,
+      displayName: "Smoke User",
+      password: smokePassword,
+      roles: ["operator"]
+    })
+  });
+
+  assert(registerResponse.ok, `POST /auth/register failed with ${registerResponse.status}`);
+
+  const registerBody = await registerResponse.json();
+  assert(registerBody.token, "Expected auth token after register");
+  assert(registerBody.user?.email === email, "Expected registered auth user email");
+
+  authToken = registerBody.token;
+  authUser = registerBody.user;
+
+  const meResponse = await fetch(`${apiBaseUrl}/auth/me`, {
+    headers: authHeaders()
+  });
+  assert(meResponse.ok, `GET /auth/me failed with ${meResponse.status}`);
+
+  const meBody = await meResponse.json();
+  assert(meBody.user?.email === email, "Expected /auth/me to return current user");
+  assert(meBody.integrationIdentity?.provider === "cifedra", "Expected CIFEDRA identity");
+
+  console.log(`Auth registration passed for ${email}.`);
 }
 
 async function getScenarios() {
@@ -60,9 +103,7 @@ async function getScenarios() {
 async function checkScenario(scenario) {
   const response = await fetch(`${apiBaseUrl}/demo/match`, {
     method: "POST",
-    headers: {
-      "content-type": "application/json"
-    },
+    headers: authHeaders(true),
     body: JSON.stringify(scenario.input)
   });
 
@@ -99,6 +140,7 @@ async function checkScenario(scenario) {
     body.integrationWorkflow?.steps?.some((step) => step.id === "chatwoot-conversation"),
     `${scenario.title}: Chatwoot handoff step is missing`
   );
+  assert(body.actor?.email === authUser.email, `${scenario.title}: expected auth actor`);
 
   console.log(
     `${scenario.title}: ${firstProfileId}, score ${body.matches[0].score}, action ${body.matches[0].recommendedAction}`
@@ -111,9 +153,7 @@ async function checkHandoff(matchResult) {
   for (const stepId of ["plane-task", "chatwoot-conversation"]) {
     const response = await fetch(`${apiBaseUrl}/demo/handoff`, {
       method: "POST",
-      headers: {
-        "content-type": "application/json"
-      },
+      headers: authHeaders(true),
       body: JSON.stringify({
         stepId,
         need: matchResult.need,
@@ -137,6 +177,7 @@ async function checkHandoff(matchResult) {
       `${stepId}: unexpected ${body.handoff.mode}/${body.handoff.status} handoff`
     );
     assert(body.handoff?.localRecordPath?.startsWith(".local/handoffs/"), `${stepId}: local handoff path missing`);
+    assert(body.handoff?.source?.actor?.email === authUser.email, `${stepId}: auth actor missing`);
   }
 
   console.log("Integration handoff checks passed for Plane / Chatwoot.");
@@ -145,9 +186,7 @@ async function checkHandoff(matchResult) {
 async function checkResult(matchResult) {
   const response = await fetch(`${apiBaseUrl}/demo/result`, {
     method: "POST",
-    headers: {
-      "content-type": "application/json"
-    },
+    headers: jsonHeaders(),
     body: JSON.stringify({
       need: matchResult.need,
       conversation: matchResult.firstConversationDraft,
@@ -173,4 +212,19 @@ function assert(condition, message) {
   if (!condition) {
     throw new Error(message);
   }
+}
+
+function authHeaders(withJson = false) {
+  return {
+    ...jsonHeaders(withJson),
+    authorization: `Bearer ${authToken}`
+  };
+}
+
+function jsonHeaders(include = true) {
+  return include
+    ? {
+        "content-type": "application/json"
+      }
+    : {};
 }

@@ -3,13 +3,15 @@ const apiBaseUrl = new URLSearchParams(window.location.search).get("api") ?? "ht
 const elements = {
   apiUrl: document.querySelector("#api-url"),
   integrationGrid: document.querySelector("#integration-grid"),
-  integrationStatus: document.querySelector("#integration-status")
+  integrationStatus: document.querySelector("#integration-status"),
+  authStatus: document.querySelector("#auth-status")
 };
 
 elements.apiUrl.textContent = apiBaseUrl;
 
 await loadIntegrations();
 await loadIntegrationStatus();
+await loadAuthStatus();
 
 async function loadIntegrations() {
   try {
@@ -49,6 +51,25 @@ async function loadIntegrationStatus() {
   }
 }
 
+async function loadAuthStatus() {
+  try {
+    const response = await fetch(`${apiBaseUrl}/auth/status`);
+
+    if (!response.ok) {
+      throw new Error(`Failed to load auth status: ${response.status}`);
+    }
+
+    const status = await response.json();
+    renderAuthStatus(status);
+  } catch (error) {
+    elements.authStatus.innerHTML = `
+      <div class="error-state">
+        Не удалось загрузить auth-статус. Проверьте API и endpoint /auth/status.
+      </div>
+    `;
+  }
+}
+
 function renderIntegrationStatus(status) {
   elements.integrationStatus.innerHTML = `
     <article class="integration-card">
@@ -72,6 +93,27 @@ function renderIntegrationStatus(status) {
       </div>
       <p>Base URL: ${escapeHtml(status.chatwoot.baseUrl)}</p>
       ${renderMissingConfig(status.chatwoot.missingConfig, status.chatwoot.mode)}
+    </article>
+  `;
+}
+
+function renderAuthStatus(status) {
+  elements.authStatus.innerHTML = `
+    <article class="integration-card">
+      <div class="integration-head">
+        <div>
+          <span class="integration-kind">auth</span>
+          <h3>CIFEDRA Auth</h3>
+        </div>
+        <span class="license-pill">${escapeHtml(status.mode)}</span>
+      </div>
+      <p>Provider: ${escapeHtml(status.provider)}</p>
+      <div class="meta">
+        <span class="pill">Users: ${escapeHtml(status.userCount)}</span>
+        <span class="pill">Active sessions: ${escapeHtml(status.activeSessionCount)}</span>
+        <span class="pill">Store: ${escapeHtml(status.storePath)}</span>
+      </div>
+      <p>${escapeHtml(status.integrationPolicy)}</p>
     </article>
   `;
 }

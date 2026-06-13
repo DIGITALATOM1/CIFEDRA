@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  buildIntegrationIdentity,
   buildConversationBrief,
   buildIntegrationWorkflow,
   buildMatchQualitySignal,
@@ -9,6 +10,7 @@ import {
   buildShortlist,
   canTransitionConversationState,
   canTransitionNeedStatus,
+  createAuthUser,
   createConversationDraft,
   createDraftNeed,
   createNeed,
@@ -23,11 +25,74 @@ import {
   markConversationOpened,
   markConversationResolved,
   markConversationWaitingUser,
+  normalizeAuthEmail,
   rankProfilesForNeed,
   recordCandidateDecision,
   recordContactResult,
   resolveNeedFromContactResult
 } from "../src/index.ts";
+
+test("creates a normalized auth user and integration identity", () => {
+  const user = createAuthUser(
+    {
+      email: " User@Example.COM ",
+      displayName: "  Test User  ",
+      password: "Password123!",
+      roles: ["client", "operator", "operator"]
+    },
+    "usr_demo",
+    new Date("2026-06-13T07:00:00.000Z")
+  );
+  const identity = buildIntegrationIdentity(user);
+
+  assert.equal(user.email, "user@example.com");
+  assert.equal(user.displayName, "Test User");
+  assert.deepEqual(user.roles, ["client", "operator"]);
+  assert.equal(user.createdAt, "2026-06-13T07:00:00.000Z");
+  assert.equal(identity.provider, "cifedra");
+  assert.equal(identity.claims.subject, "usr_demo");
+  assert.equal(identity.claims.email, "user@example.com");
+});
+
+test("rejects invalid auth registration input", () => {
+  assert.equal(normalizeAuthEmail(" ADMIN@CIFEDRA.LOCAL "), "admin@cifedra.local");
+  assert.throws(
+    () =>
+      createAuthUser(
+        {
+          email: "invalid",
+          displayName: "A User",
+          password: "Password123!"
+        },
+        "usr_invalid"
+      ),
+    /Auth email is invalid/
+  );
+  assert.throws(
+    () =>
+      createAuthUser(
+        {
+          email: "user@example.com",
+          displayName: "A",
+          password: "Password123!"
+        },
+        "usr_invalid"
+      ),
+    /displayName/
+  );
+  assert.throws(
+    () =>
+      createAuthUser(
+        {
+          email: "user@example.com",
+          displayName: "A User",
+          password: "short"
+        },
+        "usr_invalid"
+      ),
+    /password/
+  );
+});
 
 test("creates a valid work need and ranks a relevant profile", () => {
   const need = createNeed({

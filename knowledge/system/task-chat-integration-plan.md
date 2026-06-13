@@ -68,6 +68,7 @@ npm run integrations:plane:start
 11. `POST /demo/result` закрывает demo conversation и возвращает result/quality signal в `CIFEDRA Core`.
 12. `integrations:chatwoot:bootstrap` автоматически создает Chatwoot account, admin user, API inbox, contact и API token, а также закрывает Chatwoot installation onboarding.
 13. `local:start` автоматически подхватывает `.local/integrations/chatwoot/cifedra.env`, поэтому Chatwoot handoff может работать в live-режиме без ручного копирования настроек.
+14. `CIFEDRA Auth` добавляет actor в handoff: Chatwoot получает `cifedra_actor_*` custom attributes, Plane получает actor в описание задачи.
 
 ## Pre-adapter в сценарии
 

@@ -4,6 +4,7 @@ import { join } from "node:path";
 
 import {
   buildIntegrationWorkflow,
+  type AuthPrincipal,
   type Conversation,
   type ConversationBrief,
   type MatchCandidate,
@@ -20,6 +21,7 @@ interface IntegrationHandoffInput {
   readonly match: MatchCandidate;
   readonly brief: ConversationBrief;
   readonly conversation?: Conversation;
+  readonly actor?: AuthPrincipal;
 }
 
 interface ExternalRequestDraft {
@@ -42,6 +44,7 @@ interface IntegrationHandoffResult {
     readonly profileId: string;
     readonly direction: string;
     readonly categoryId: string;
+    readonly actor?: AuthPrincipal;
   };
   readonly localRecordPath: string;
   readonly externalRequest: ExternalRequestDraft;
@@ -137,7 +140,8 @@ export async function createIntegrationHandoff(input: IntegrationHandoffInput): 
       needId: input.need.id,
       profileId: input.match.profile.id,
       direction: input.need.direction,
-      categoryId: input.need.categoryId
+      categoryId: input.need.categoryId,
+      actor: input.actor
     },
     localRecordPath: await saveHandoffRecord(id, {
       input,
@@ -157,18 +161,23 @@ export async function createIntegrationHandoff(input: IntegrationHandoffInput): 
 
 function buildPlaneRequest(input: IntegrationHandoffInput, handoffId: string): ExternalRequestDraft {
   const fields = input.brief.context.join("\n");
+  const actorLine = input.actor
+    ? `Requested by: ${input.actor.displayName} (${input.actor.email}, ${input.actor.id})`
+    : "Requested by: anonymous local demo user";
   const body = {
     name: `[${input.need.direction.toUpperCase()}] ${input.need.title}`,
     description_html: [
       `<p>${escapeHtml(input.need.description)}</p>`,
       `<p><strong>Expected result:</strong> ${escapeHtml(input.need.expectedResult)}</p>`,
       `<p><strong>Matched profile:</strong> ${escapeHtml(input.match.profile.displayName)}</p>`,
+      `<p><strong>CIFEDRA actor:</strong> ${escapeHtml(actorLine)}</p>`,
       `<pre>${escapeHtml(fields)}</pre>`
     ].join("\n"),
     description_stripped: [
       input.need.description,
       `Expected result: ${input.need.expectedResult}`,
       `Matched profile: ${input.match.profile.displayName} (${input.match.profile.id})`,
+      actorLine,
       fields
     ].join("\n\n"),
     priority: mapPlanePriority(input.need.priority),
@@ -200,7 +209,11 @@ function buildChatwootRequest(input: IntegrationHandoffInput, handoffId: string)
       cifedra_profile_id: input.match.profile.id,
       cifedra_conversation_id: input.conversation?.id,
       cifedra_direction: input.need.direction,
-      cifedra_category_id: input.need.categoryId
+      cifedra_category_id: input.need.categoryId,
+      cifedra_actor_user_id: input.actor?.id,
+      cifedra_actor_email: input.actor?.email,
+      cifedra_actor_name: input.actor?.displayName,
+      cifedra_actor_roles: input.actor?.roles.join(",")
     },
     message: {
       content: firstMessage
@@ -227,7 +240,11 @@ function buildChatwootFirstMessage(input: IntegrationHandoffInput): string {
     ...input.brief.context,
     "",
     "Вопросы:",
-    ...input.brief.questions.map((question, index) => `${index + 1}. ${question}`)
+    ...input.brief.questions.map((question, index) => `${index + 1}. ${question}`),
+    "",
+    input.actor
+      ? `Инициатор в CIFEDRA: ${input.actor.displayName} (${input.actor.email}).`
+      : "Инициатор в CIFEDRA: локальный demo user без авторизации."
   ].join("\n");
 }
 

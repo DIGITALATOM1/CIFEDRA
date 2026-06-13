@@ -17,6 +17,8 @@
 
 План доработки ядра: [knowledge/system/core-development-plan.md](./knowledge/system/core-development-plan.md).
 
+План единой авторизации: [knowledge/system/auth-integration-plan.md](./knowledge/system/auth-integration-plan.md).
+
 ## Команды
 
 ```bash
@@ -54,6 +56,7 @@ npm run integrations:plane:start
 Локальные URL:
 
 - API: `http://localhost:3030`
+- Auth status: `http://localhost:3030/auth/status`
 - Landing: `http://localhost:4177/web/landing/`
 - Test Console: `http://localhost:4177/web/test-console/`
 - Integration Diagnostics: `http://localhost:4177/web/test-console/diagnostics.html`

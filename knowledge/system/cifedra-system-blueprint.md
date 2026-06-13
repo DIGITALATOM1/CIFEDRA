@@ -23,6 +23,7 @@ Need -> Match -> Prepare -> Connect -> Result
 | --- | --- | --- |
 | `CIFEDRA Core` | Активное направление доработки | Самописный TypeScript-пакет `packages/core`; план: [core-development-plan.md](./core-development-plan.md). |
 | `API Prototype` | Начали реализацию | Минимальный Node.js API `apps/api` поверх core. |
+| `CIFEDRA Auth` | Начали реализацию | Единая регистрация/авторизация и principal для интеграций; план: [auth-integration-plan.md](./auth-integration-plan.md). |
 | `Mobile App` | Спроектирован путь сборки | React Native + Expo; подробный план: [mobile-build-plan.md](./mobile-build-plan.md). |
 | `Core Data` | Следующий этап | PostgreSQL/Supabase, после утверждения модели данных. |
 | `Backoffice` | Следующий этап | Baserow OSE для ручного пилота и операционных таблиц. |
@@ -33,6 +34,7 @@ Need -> Match -> Prepare -> Connect -> Result
 
 ```text
 packages/core
+  src/auth.ts       - модель CIFEDRA user/principal/integration identity
   src/domain.ts      - доменные типы
   src/catalog.ts     - направления и категории
   src/conversation.ts - модель conversation и состояния коммуникации
@@ -46,18 +48,24 @@ packages/core
 
 apps/api
   src/server.ts      - минимальный HTTP API для проверки core-сценария
+  src/auth-store.ts  - локальная регистрация, login и bearer-session в .local/auth
 ```
 
 ## API-прототип
 
 | Метод | URL | Назначение |
 | --- | --- | --- |
+| `GET` | `/auth/status` | Статус локального auth-хранилища и policy интеграций. |
+| `POST` | `/auth/register` | Зарегистрировать CIFEDRA user и получить bearer-session. |
+| `POST` | `/auth/login` | Авторизоваться по email/password. |
+| `GET` | `/auth/me` | Получить текущего пользователя и integration identity claims. |
+| `POST` | `/auth/logout` | Отозвать текущую bearer-session. |
 | `GET` | `/health` | Проверка доступности сервиса. |
 | `GET` | `/directions` | Справочник направлений и категорий. |
 | `GET` | `/demo/profiles` | Демо-профили для проверки matching. |
 | `GET` | `/demo/scenarios` | Демо-сценарии `Life`, `Work`, `Skills` для smoke-тестов и test console. |
 | `POST` | `/demo/match` | Создать демо-задачу, подобрать людей, вернуть decisions, shortlist, first brief, conversation draft и integration workflow для Plane/Chatwoot. |
-| `POST` | `/demo/handoff` | Передать данные предыдущих шагов в adapter Plane/Chatwoot; в draft-режиме сохранить пакет в `.local/handoffs/`. |
+| `POST` | `/demo/handoff` | Передать данные предыдущих шагов и CIFEDRA actor в adapter Plane/Chatwoot; в draft-режиме сохранить пакет в `.local/handoffs/`. |
 | `POST` | `/demo/result` | Закрыть demo conversation, записать результат контакта, вернуть resolved need и match quality signal. |
 | `GET` | `/integrations/status` | Проверить режим adapter-слоя и недостающую live-конфигурацию. |
 

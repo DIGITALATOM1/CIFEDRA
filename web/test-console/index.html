@@ -31,6 +31,42 @@
         </aside>
       </section>
 
+      <section class="auth-panel" aria-labelledby="auth-title">
+        <div>
+          <p class="eyebrow compact">CIFEDRA Auth</p>
+          <h2 id="auth-title">Единый пользователь</h2>
+          <p id="auth-state">Проверяем локальную регистрацию и авторизацию.</p>
+        </div>
+        <form id="auth-form" class="auth-form">
+          <label>
+            Email
+            <input name="email" type="email" autocomplete="email" required>
+          </label>
+          <label>
+            Имя
+            <input name="displayName" type="text" autocomplete="name">
+          </label>
+          <label>
+            Пароль
+            <input name="password" type="password" autocomplete="current-password" required>
+          </label>
+          <label>
+            Роль
+            <select name="role">
+              <option value="client">client</option>
+              <option value="helper">helper</option>
+              <option value="operator">operator</option>
+              <option value="admin">admin</option>
+            </select>
+          </label>
+          <div class="auth-actions">
+            <button class="primary-button" id="register-button" type="button">Регистрация</button>
+            <button class="ghost-button" id="login-button" type="button">Войти</button>
+            <button class="ghost-button" id="logout-button" type="button">Выйти</button>
+          </div>
+        </form>
+      </section>
+
       <section class="layout">
         <aside class="scenario-panel" aria-labelledby="scenario-title">
           <h2 id="scenario-title">Сценарии</h2>
@@ -119,6 +155,6 @@
       </section>
     </main>
 
-    <script type="module" src="./app.js"></script>
+    <script type="module" src="./app.js?v=auth-v1"></script>
   </body>
 </html>

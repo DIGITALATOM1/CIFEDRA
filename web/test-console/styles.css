@@ -158,6 +158,52 @@ h1 {
   margin-top: 24px;
 }
 
+.auth-panel {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: end;
+  margin-top: 18px;
+  padding: 22px;
+  border: 1px solid rgba(17, 19, 24, 0.08);
+  border-radius: var(--cifedra-radius-md);
+  background: var(--cifedra-white);
+}
+
+.auth-panel h2 {
+  margin-bottom: 8px;
+  font-size: 24px;
+}
+
+.auth-panel p {
+  display: grid;
+  gap: 5px;
+  color: var(--cifedra-slate);
+  line-height: 1.45;
+}
+
+.auth-panel p strong {
+  color: var(--cifedra-ink);
+}
+
+.auth-form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+.auth-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.auth-actions .primary-button,
+.auth-actions .ghost-button {
+  min-height: 42px;
+  padding: 0 12px;
+}
+
 .scenario-panel,
 .tester,
 .results,
@@ -654,6 +700,11 @@ textarea {
 
 @media (max-width: 1120px) {
   .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-panel,
+  .auth-form {
     grid-template-columns: 1fr;
   }
 

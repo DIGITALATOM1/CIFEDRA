@@ -2,6 +2,15 @@ import { createServer, type IncomingMessage, type ServerResponse } from "node:ht
 
 import { createIntegrationHandoff, getIntegrationStatus } from "./integration-handoff.js";
 import {
+  AuthError,
+  getAuthContextFromHeader,
+  getAuthStatus,
+  loginLocalUser,
+  logoutLocalSession,
+  registerLocalUser,
+  type AuthLoginInput
+} from "./auth-store.js";
+import {
   buildConversationBrief,
   buildIntegrationWorkflow,
   buildMatchQualitySignal,
@@ -13,6 +22,7 @@ import {
   demoProfiles,
   directionDefinitions,
   integrationDefinitions,
+  type AuthRegistrationInput,
   markConversationOpened,
   markConversationResolved,
   markNeedMatched,
@@ -31,6 +41,13 @@ const server = createServer(async (request, response) => {
   try {
     await routeRequest(request, response);
   } catch (error) {
+    if (error instanceof AuthError) {
+      sendJson(response, error.statusCode, {
+        error: error.message
+      });
+      return;
+    }
+
     sendJson(response, 500, {
       error: error instanceof Error ? error.message : "Unknown server error"
     });
@@ -84,8 +101,49 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
       integrations: integrationDefinitions,
       localRuntime: {
         required: "docker compose",
-        dataPolicy: "runtime state and secrets stay in .local and are not committed"
+        dataPolicy: "runtime state and secrets stay in .local and are not committed",
+        authProvider: "cifedra-local-auth"
       }
+    });
+    return;
+  }
+
+  if (request.method === "GET" && url.pathname === "/auth/status") {
+    sendJson(response, 200, await getAuthStatus());
+    return;
+  }
+
+  if (request.method === "POST" && url.pathname === "/auth/register") {
+    const body = await readJson<AuthRegistrationInput>(request);
+    const session = await registerLocalUser(body);
+
+    sendJson(response, 201, session);
+    return;
+  }
+
+  if (request.method === "POST" && url.pathname === "/auth/login") {
+    const body = await readJson<AuthLoginInput>(request);
+    const session = await loginLocalUser(body);
+
+    sendJson(response, 200, session);
+    return;
+  }
+
+  if (request.method === "GET" && url.pathname === "/auth/me") {
+    const authContext = await requireAuthContext(request);
+
+    sendJson(response, 200, {
+      user: authContext.principal,
+      integrationIdentity: authContext.integrationIdentity
+    });
+    return;
+  }
+
+  if (request.method === "POST" && url.pathname === "/auth/logout") {
+    const revoked = await logoutLocalSession(request.headers.authorization);
+
+    sendJson(response, 200, {
+      revoked
     });
     return;
   }
@@ -96,6 +154,7 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
   }
 
   if (request.method === "POST" && url.pathname === "/demo/match") {
+    const authContext = await getAuthContextFromHeader(request.headers.authorization);
     const body = await readJson<Partial<NeedInput>>(request);
     const createdNeed = createNeed(normalizeDemoNeed(body));
     const matches = rankProfilesForNeed(createdNeed, demoProfiles, {
@@ -126,14 +185,19 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
       shortlist,
       firstBrief,
       firstConversationDraft,
-      integrationWorkflow: buildIntegrationWorkflow(need, matches[0], firstBrief)
+      integrationWorkflow: buildIntegrationWorkflow(need, matches[0], firstBrief),
+      actor: authContext?.principal ?? null
     });
     return;
   }
 
   if (request.method === "POST" && url.pathname === "/demo/handoff") {
+    const authContext = await getAuthContextFromHeader(request.headers.authorization);
     const body = await readJson<Parameters<typeof createIntegrationHandoff>[0]>(request);
-    const handoff = await createIntegrationHandoff(body);
+    const handoff = await createIntegrationHandoff({
+      ...body,
+      actor: authContext?.principal
+    });
 
     sendJson(response, 200, {
       handoff
@@ -169,6 +233,11 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
   sendJson(response, 404, {
     error: "Not found",
     routes: [
+      "GET /auth/status",
+      "POST /auth/register",
+      "POST /auth/login",
+      "GET /auth/me",
+      "POST /auth/logout",
       "GET /health",
       "GET /directions",
       "GET /demo/profiles",
@@ -180,6 +249,16 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
       "POST /demo/result"
     ]
   });
+}
+
+async function requireAuthContext(request: IncomingMessage) {
+  const authContext = await getAuthContextFromHeader(request.headers.authorization);
+
+  if (!authContext) {
+    throw new AuthError(401, "Authorization required");
+  }
+
+  return authContext;
 }
 
 interface DemoResultRequest {
@@ -252,6 +331,6 @@ function corsHeaders(): Record<string, string> {
   return {
     "access-control-allow-origin": "*",
     "access-control-allow-methods": "GET,POST,OPTIONS",
-    "access-control-allow-headers": "content-type"
+    "access-control-allow-headers": "authorization,content-type"
   };
 }
