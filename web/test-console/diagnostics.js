@@ -60,7 +60,7 @@ function renderIntegrationStatus(status) {
         <span class="license-pill">${escapeHtml(status.plane.mode)}</span>
       </div>
       <p>Base URL: ${escapeHtml(status.plane.baseUrl)}</p>
-      ${renderMissingConfig(status.plane.missingConfig)}
+      ${renderMissingConfig(status.plane.missingConfig, status.plane.mode)}
     </article>
     <article class="integration-card">
       <div class="integration-head">
@@ -71,14 +71,16 @@ function renderIntegrationStatus(status) {
         <span class="license-pill">${escapeHtml(status.chatwoot.mode)}</span>
       </div>
       <p>Base URL: ${escapeHtml(status.chatwoot.baseUrl)}</p>
-      ${renderMissingConfig(status.chatwoot.missingConfig)}
+      ${renderMissingConfig(status.chatwoot.missingConfig, status.chatwoot.mode)}
     </article>
   `;
 }
 
-function renderMissingConfig(keys) {
+function renderMissingConfig(keys, mode) {
   if (!keys?.length) {
-    return `<p>Live-конфигурация заполнена. Для реальной отправки нужен флаг CIFEDRA_INTEGRATIONS_LIVE=1.</p>`;
+    return mode === "live"
+      ? `<p>Live-конфигурация заполнена. Adapter будет создавать записи во внешнем модуле.</p>`
+      : `<p>Live-конфигурация заполнена. Для реальной отправки нужен флаг CIFEDRA_INTEGRATIONS_LIVE=1.</p>`;
   }
 
   return `

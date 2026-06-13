@@ -46,6 +46,7 @@ npm run docker:install
 npm run integrations:check
 npm run integrations:install
 npm run integrations:chatwoot:start
+npm run integrations:chatwoot:bootstrap
 npm run integrations:plane:install
 npm run integrations:plane:start
 ```

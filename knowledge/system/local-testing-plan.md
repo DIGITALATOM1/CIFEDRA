@@ -46,9 +46,16 @@ npm run docker:install
 npm run integrations:check
 npm run integrations:install
 npm run integrations:chatwoot:start
+npm run integrations:chatwoot:bootstrap
 npm run integrations:plane:install
 npm run integrations:plane:start
 ```
+
+`integrations:chatwoot:bootstrap` создает локальный Chatwoot account, администратора,
+API inbox `CIFEDRA Concierge`, тестовый contact и файл `.local/integrations/chatwoot/cifedra.env`.
+Также bootstrap закрывает installation onboarding в Chatwoot, поэтому `http://localhost:8083`
+открывает login, а не страницу первичной настройки.
+`npm run local:start` автоматически подхватывает этот файл для live handoff в Chatwoot.
 
 Дополнительные проверки:
 

@@ -126,11 +126,20 @@ async function checkHandoff(matchResult) {
     assert(response.ok, `${stepId}: /demo/handoff failed with ${response.status}`);
 
     const body = await response.json();
-    assert(body.handoff?.status === "draft_saved", `${stepId}: expected draft_saved handoff`);
+    assert(
+      body.handoff?.mode === "draft" || body.handoff?.mode === "live",
+      `${stepId}: expected draft or live handoff mode`
+    );
+    assert(
+      body.handoff.mode === "live"
+        ? body.handoff.status === "created"
+        : body.handoff.status === "draft_saved",
+      `${stepId}: unexpected ${body.handoff.mode}/${body.handoff.status} handoff`
+    );
     assert(body.handoff?.localRecordPath?.startsWith(".local/handoffs/"), `${stepId}: local handoff path missing`);
   }
 
-  console.log("Integration handoff drafts passed for Plane / Chatwoot.");
+  console.log("Integration handoff checks passed for Plane / Chatwoot.");
 }
 
 async function checkResult(matchResult) {

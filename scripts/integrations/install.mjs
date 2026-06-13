@@ -97,7 +97,10 @@ function configureChatwootCompose(composePath) {
 
   content = content.replaceAll("127.0.0.1:3000:3000", "127.0.0.1:8083:3000");
   content = content.replaceAll("3000:3000", "127.0.0.1:8083:3000");
-  content = content.replaceAll("POSTGRES_PASSWORD=", "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}");
+  content = content.replace(
+    /^(\s*-\s*POSTGRES_PASSWORD=).*$/m,
+    "$1${POSTGRES_PASSWORD}"
+  );
   content = content.replace(/^version:\s*['"]?\d(?:\.\d+)?['"]?\n\n?/m, "");
 
   writeFileSync(composePath, content);

@@ -20,6 +20,7 @@
     "integrations:check": "node scripts/integrations/check.mjs",
     "integrations:install": "node scripts/integrations/install.mjs",
     "integrations:chatwoot:start": "node scripts/integrations/chatwoot-start.mjs",
+    "integrations:chatwoot:bootstrap": "node scripts/integrations/chatwoot-bootstrap.mjs",
     "integrations:plane:install": "node scripts/integrations/plane-install.mjs",
     "integrations:plane:start": "node scripts/integrations/plane-start.mjs"
   },

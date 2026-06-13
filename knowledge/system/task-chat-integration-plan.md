@@ -40,6 +40,7 @@ npm run docker:install
 npm run integrations:check
 npm run integrations:install
 npm run integrations:chatwoot:start
+npm run integrations:chatwoot:bootstrap
 npm run integrations:plane:install
 npm run integrations:plane:start
 ```
@@ -49,6 +50,8 @@ npm run integrations:plane:start
 - `.local/integrations/plane-selfhost/setup.sh` - официальный установщик Plane CE.
 - `.local/integrations/chatwoot/.env` - локальная конфигурация Chatwoot.
 - `.local/integrations/chatwoot/docker-compose.yaml` - compose-файл Chatwoot.
+- `.local/integrations/chatwoot/cifedra.env` - live-настройки adapter-слоя CIFEDRA для Chatwoot.
+- `.local/integrations/chatwoot/bootstrap.json` - локальные учетные данные администратора Chatwoot.
 
 ## Текущий локальный статус
 
@@ -63,6 +66,8 @@ npm run integrations:plane:start
 9. `GET /integrations/status` показывает, какие env-переменные нужны для live-создания записей.
 10. `Conversation` теперь создается в `CIFEDRA Core` как draft и может передаваться в Chatwoot adapter как product-owned контекст.
 11. `POST /demo/result` закрывает demo conversation и возвращает result/quality signal в `CIFEDRA Core`.
+12. `integrations:chatwoot:bootstrap` автоматически создает Chatwoot account, admin user, API inbox, contact и API token, а также закрывает Chatwoot installation onboarding.
+13. `local:start` автоматически подхватывает `.local/integrations/chatwoot/cifedra.env`, поэтому Chatwoot handoff может работать в live-режиме без ручного копирования настроек.
 
 ## Pre-adapter в сценарии
 
@@ -99,12 +104,23 @@ Chatwoot:
 - `CIFEDRA_CHATWOOT_INBOX_ID`
 - `CIFEDRA_CHATWOOT_CONTACT_ID`
 
+Для локального Chatwoot эти значения заполняются автоматически:
+
+```bash
+npm run integrations:chatwoot:bootstrap
+npm run local:restart
+```
+
+Bootstrap включает `CIFEDRA_INTEGRATIONS_LIVE=1` только в локальном файле
+`.local/integrations/chatwoot/cifedra.env`. Plane при этом остается в draft-режиме,
+пока для него не заполнены собственные live-настройки.
+
 ## Следующие задачи
 
-1. Создать первый Chatwoot inbox `CIFEDRA Concierge` и тестовый contact.
+1. Протестировать создание реального Chatwoot conversation из `POST /demo/handoff`.
 2. Создать первый Plane workspace/project для направлений `Life`, `Work`, `Skills`.
-3. Заполнить env-переменные live-режима.
-4. Протестировать создание реального Plane work item и Chatwoot conversation.
+3. Заполнить env-переменные live-режима Plane.
+4. Протестировать создание реального Plane work item.
 5. Вернуть outcome из Plane/Chatwoot в `Result`.
 
 ## Лицензионные замечания
