@@ -1,7 +1,7 @@
 # CIFEDRA CONNECT: план доработки ядра
 
 Дата: 2026-06-13
-Статус: core work plan v0.1
+Статус: core work plan v0.2
 Фокус чата: доработка `CIFEDRA Core`
 
 ## Назначение
@@ -25,6 +25,7 @@ Need -> Match -> Prepare -> Connect -> Result
 | `domain.ts` | Базовые типы `Need`, `Profile`, `MatchCandidate`, `ConversationBrief`, `ContactResult`. |
 | `catalog.ts` | Справочник направлений и категорий. |
 | `need.ts` | Создание и валидация потребности. |
+| `lifecycle.ts` | Допустимые переходы `NeedStatus` и helpers жизненного цикла. |
 | `matching.ts` | Базовый скоринг профилей и объяснение релевантности. |
 | `prepare.ts` | Подготовка brief для контакта. |
 | `result.ts` | Фиксация результата контакта. |
@@ -45,7 +46,7 @@ Need -> Match -> Prepare -> Connect -> Result
 | Нет отдельной сущности `Shortlist`. | Для mobile MVP нужны свайпы, сравнение кандидатов и выбор нескольких людей. |
 | Нет сущности `Decision / Swipe`. | Сейчас recommended action есть у системы, но нет пользовательского действия: accept, reject, save, request contact. |
 | Нет сущности `Conversation`. | Chatwoot handoff есть, но core не хранит состояние коммуникации. |
-| Нет явного lifecycle для `Need`. | Статусы есть, но переходы между ними не оформлены правилами. |
+| Lifecycle для `Need` только начат. | Переходы уже оформлены, но еще нужно связать их с persistent storage, conversation и result. |
 | Нет модели `Result` как части workflow. | ContactResult есть, но нет связи с conversation, match quality и следующим действием. |
 | Нет direction-specific rules. | `Life`, `Work`, `Skills` пока различаются в основном fixture-данными и категориями. |
 | Нет API-contract-first слоя. | Mobile и будущий backend должны опираться на устойчивые DTO/контракты. |
@@ -75,12 +76,14 @@ Need created
 
 Задачи:
 
-1. Описать статусы `NeedStatus` и допустимые переходы.
-2. Добавить функции переходов: `markMatched`, `markConnected`, `markResolved`.
-3. Добавить тесты на допустимые и недопустимые переходы.
-4. Обновить `workflow.ts`, чтобы статусы шагов брались из состояния core.
+1. Описать статусы `NeedStatus` и допустимые переходы. Выполнено.
+2. Добавить функции переходов: `markNeedMatched`, `markNeedConnected`, `markNeedResolved`. Выполнено.
+3. Добавить тесты на допустимые и недопустимые переходы. Выполнено.
+4. Обновить `workflow.ts`, чтобы статусы шагов брались из состояния core. Выполнено.
 
 Ожидаемый результат: сценарий перестает быть только набором функций и становится управляемым lifecycle.
+
+Текущий результат: `Need` проходит переходы `draft -> ready_for_match -> matched -> connected -> resolved`, invalid transitions запрещены, demo API после successful matching возвращает `need.status = matched`.
 
 ### Итерация 2. Decision / Shortlist
 

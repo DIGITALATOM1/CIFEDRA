@@ -4,9 +4,15 @@ import test from "node:test";
 import {
   buildConversationBrief,
   buildIntegrationWorkflow,
+  canTransitionNeedStatus,
+  createDraftNeed,
   createNeed,
   demoProfiles,
   integrationDefinitions,
+  markNeedConnected,
+  markNeedMatched,
+  markNeedReadyForMatch,
+  markNeedResolved,
   rankProfilesForNeed,
   recordContactResult
 } from "../src/index.ts";
@@ -30,6 +36,51 @@ test("creates a valid work need and ranks a relevant profile", () => {
   assert.equal(matches[0]?.recommendedAction, "request_contact");
 });
 
+test("moves a need through the core lifecycle", () => {
+  const draft = createDraftNeed(
+    {
+      direction: "work",
+      categoryId: "work.expert-help",
+      title: "Нужно ревью SRS",
+      description: "Нужно проверить требования перед передачей в разработку.",
+      expectedResult: "Список замечаний и правок"
+    },
+    new Date("2026-06-13T08:00:00.000Z")
+  );
+
+  const ready = markNeedReadyForMatch(draft, new Date("2026-06-13T08:01:00.000Z"));
+  const matched = markNeedMatched(ready, new Date("2026-06-13T08:02:00.000Z"));
+  const connected = markNeedConnected(matched, new Date("2026-06-13T08:03:00.000Z"));
+  const resolved = markNeedResolved(connected, new Date("2026-06-13T08:04:00.000Z"));
+
+  assert.equal(draft.status, "draft");
+  assert.equal(ready.status, "ready_for_match");
+  assert.equal(matched.status, "matched");
+  assert.equal(connected.status, "connected");
+  assert.equal(resolved.status, "resolved");
+  assert.equal(resolved.updatedAt, "2026-06-13T08:04:00.000Z");
+  assert.equal(canTransitionNeedStatus("matched", "connected"), true);
+  assert.equal(canTransitionNeedStatus("matched", "resolved"), false);
+});
+
+test("rejects invalid need lifecycle transitions", () => {
+  const need = createNeed({
+    direction: "life",
+    categoryId: "life.local-tasks",
+    title: "Забрать заказ",
+    description: "Нужно забрать заказ рядом с домом.",
+    expectedResult: "Заказ доставлен"
+  });
+
+  assert.throws(() => markNeedResolved(need), /Cannot move need/);
+
+  const matched = markNeedMatched(need);
+  const connected = markNeedConnected(matched);
+  const resolved = markNeedResolved(connected);
+
+  assert.throws(() => markNeedMatched(resolved), /Cannot move need/);
+});
+
 test("builds a conversation brief from a match", () => {
   const need = createNeed({
     direction: "skills",
@@ -49,6 +100,28 @@ test("builds a conversation brief from a match", () => {
   assert.equal(brief.needId, need.id);
   assert.equal(brief.profileId, "profile_skills_maria");
   assert.ok(brief.questions.length >= 3);
+});
+
+test("marks resolved needs as completed in workflow", () => {
+  const need = createNeed({
+    direction: "work",
+    categoryId: "work.expert-help",
+    title: "Нужно ревью SRS",
+    description: "Нужно проверить требования перед передачей в разработку.",
+    expectedResult: "Список замечаний и правок",
+    tags: ["srs", "requirements", "review"]
+  });
+  const [candidate] = rankProfilesForNeed(need, demoProfiles);
+  assert.ok(candidate);
+
+  const matched = markNeedMatched(need);
+  const connected = markNeedConnected(matched);
+  const resolved = markNeedResolved(connected);
+  const brief = buildConversationBrief(resolved, candidate);
+  const workflow = buildIntegrationWorkflow(resolved, candidate, brief);
+
+  assert.equal(workflow.steps.find((step) => step.id === "chatwoot-conversation")?.status, "done");
+  assert.equal(workflow.steps.find((step) => step.id === "result")?.status, "done");
 });
 
 test("records a contact result and clamps quality score", () => {

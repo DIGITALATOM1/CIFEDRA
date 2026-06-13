@@ -1,4 +1,5 @@
 import type { ConversationBrief, MatchCandidate, Need } from "./domain.js";
+import { isNeedStatusAtLeast } from "./lifecycle.js";
 
 export type WorkflowStage = "need" | "match" | "prepare" | "connect" | "execute" | "result";
 
@@ -40,6 +41,10 @@ export function buildIntegrationWorkflow(
   const noCandidate = !candidate || !brief;
   const action = candidate?.recommendedAction ?? "review_manually";
   const canRequestContact = action === "request_contact";
+  const isReadyForMatch = isNeedStatusAtLeast(need.status, "ready_for_match");
+  const isMatched = isNeedStatusAtLeast(need.status, "matched") || Boolean(candidate);
+  const isConnected = isNeedStatusAtLeast(need.status, "connected");
+  const isResolved = need.status === "resolved";
 
   return {
     summary:
@@ -51,7 +56,7 @@ export function buildIntegrationWorkflow(
         owner: "cifedra",
         title: "Need: постановка потребности",
         summary: `${need.title} -> ${need.expectedResult}`,
-        status: "done"
+        status: isReadyForMatch ? "done" : "ready"
       },
       {
         id: "match",
@@ -61,7 +66,7 @@ export function buildIntegrationWorkflow(
         summary: candidate
           ? `${candidate.profile.displayName}, score ${candidate.score}%, action ${candidate.recommendedAction}`
           : "Нет кандидата для автоматической привязки.",
-        status: candidate ? "done" : "blocked"
+        status: candidate ? "done" : isReadyForMatch ? "ready" : "planned"
       },
       {
         id: "prepare",
@@ -69,7 +74,7 @@ export function buildIntegrationWorkflow(
         owner: "cifedra",
         title: "Prepare: brief контакта",
         summary: brief ? brief.nextStep : "Brief не сформирован, нужен ручной разбор.",
-        status: brief ? "done" : "blocked"
+        status: brief ? "done" : isMatched ? "ready" : "planned"
       },
       {
         id: "plane-task",
@@ -80,7 +85,7 @@ export function buildIntegrationWorkflow(
         summary: noCandidate
           ? "Задача будет создана после ручного выбора исполнителя."
           : "Task-модуль фиксирует статус, приоритет, ответственного и следующий шаг исполнения.",
-        status: noCandidate ? "blocked" : "ready",
+        status: noCandidate ? "blocked" : isResolved ? "done" : "ready",
         localUrl: "http://localhost:8082",
         handoff: candidate && brief ? buildPlaneHandoff(need, candidate, brief) : undefined
       },
@@ -93,7 +98,7 @@ export function buildIntegrationWorkflow(
         summary: canRequestContact
           ? "Chat-модуль получает диалог с goal, контекстом и вопросами из CIFEDRA brief."
           : "Диалог пока не открываем: кандидат требует shortlist/manual review перед контактом.",
-        status: noCandidate ? "blocked" : canRequestContact ? "ready" : "planned",
+        status: noCandidate ? "blocked" : isConnected ? "done" : canRequestContact ? "ready" : "planned",
         localUrl: "http://localhost:8083",
         handoff: candidate && brief ? buildChatwootHandoff(need, candidate, brief) : undefined
       },
@@ -104,7 +109,7 @@ export function buildIntegrationWorkflow(
         title: "Result: итог и качество",
         summary:
           "После статуса задачи и результата диалога CIFEDRA фиксирует outcome, next step и quality score.",
-        status: noCandidate ? "blocked" : "planned"
+        status: isResolved ? "done" : isConnected ? "ready" : noCandidate ? "blocked" : "planned"
       }
     ]
   };

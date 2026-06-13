@@ -1,8 +1,16 @@
-import { directionIds, type Need, type NeedInput } from "./domain.js";
+import { directionIds, type Need, type NeedInput, type NeedStatus } from "./domain.js";
 import { isKnownCategory } from "./catalog.js";
 import { createId, toIsoString, uniqueTokens } from "./utils.js";
 
 export function createNeed(input: NeedInput, now: Date = new Date()): Need {
+  return createNeedWithStatus(input, "ready_for_match", now);
+}
+
+export function createDraftNeed(input: NeedInput, now: Date = new Date()): Need {
+  return createNeedWithStatus(input, "draft", now);
+}
+
+function createNeedWithStatus(input: NeedInput, status: NeedStatus, now: Date): Need {
   validateNeedInput(input);
 
   const timestamp = toIsoString(now);
@@ -10,7 +18,7 @@ export function createNeed(input: NeedInput, now: Date = new Date()): Need {
   return {
     ...input,
     id: createId("need"),
-    status: "ready_for_match",
+    status,
     priority: input.priority ?? "normal",
     tags: uniqueTokens(input.tags),
     constraints: input.constraints?.filter(Boolean) ?? [],

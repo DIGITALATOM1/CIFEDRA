@@ -9,6 +9,7 @@ import {
   demoProfiles,
   directionDefinitions,
   integrationDefinitions,
+  markNeedMatched,
   rankProfilesForNeed,
   type NeedInput
 } from "@cifedra/core";
@@ -85,11 +86,12 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
 
   if (request.method === "POST" && url.pathname === "/demo/match") {
     const body = await readJson<Partial<NeedInput>>(request);
-    const need = createNeed(normalizeDemoNeed(body));
-    const matches = rankProfilesForNeed(need, demoProfiles, {
+    const createdNeed = createNeed(normalizeDemoNeed(body));
+    const matches = rankProfilesForNeed(createdNeed, demoProfiles, {
       limit: 5,
       minScore: 25
     });
+    const need = matches.length > 0 ? markNeedMatched(createdNeed) : createdNeed;
     const firstBrief = matches[0] ? buildConversationBrief(need, matches[0]) : null;
 
     sendJson(response, 200, {

@@ -75,6 +75,7 @@ async function checkScenario(scenario) {
     `${scenario.title}: expected ${scenario.expectedProfileId}, got ${firstProfileId ?? "none"}`
   );
 
+  assert(body.need?.status === "matched", `${scenario.title}: expected need status matched`);
   assert(body.firstBrief?.questions?.length >= 3, `${scenario.title}: first brief is incomplete`);
   assert(
     body.integrationWorkflow?.steps?.some((step) => step.id === "plane-task"),

@@ -36,6 +36,7 @@ packages/core
   src/domain.ts      - доменные типы
   src/catalog.ts     - направления и категории
   src/need.ts        - создание и валидация задачи
+  src/lifecycle.ts   - переходы статусов Need
   src/matching.ts    - базовый скоринг и ранжирование профилей
   src/prepare.ts     - подготовка разговора
   src/result.ts      - фиксация результата контакта
