@@ -304,7 +304,8 @@ async function sendHandoff(button) {
         stepId,
         need: state.currentResult.need,
         match: state.currentResult.matches?.[0],
-        brief: state.currentResult.firstBrief
+        brief: state.currentResult.firstBrief,
+        conversation: state.currentResult.firstConversationDraft
       })
     });
     const payload = await response.json();

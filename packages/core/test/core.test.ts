@@ -6,7 +6,9 @@ import {
   buildIntegrationWorkflow,
   buildRecommendedDecisions,
   buildShortlist,
+  canTransitionConversationState,
   canTransitionNeedStatus,
+  createConversationDraft,
   createDraftNeed,
   createNeed,
   demoNeedScenarios,
@@ -16,6 +18,10 @@ import {
   markNeedMatched,
   markNeedReadyForMatch,
   markNeedResolved,
+  markConversationAssigned,
+  markConversationOpened,
+  markConversationResolved,
+  markConversationWaitingUser,
   rankProfilesForNeed,
   recordCandidateDecision,
   recordContactResult
@@ -165,6 +171,130 @@ test("uses latest candidate decision and excludes rejected candidates from short
   const shortlist = buildShortlist(need, matches, decisions);
 
   assert.equal(shortlist.items.some((item) => item.profileId === firstProfileId), false);
+});
+
+test("creates a conversation draft from requested contact decision and brief", () => {
+  const need = markNeedMatched(
+    createNeed({
+      direction: "work",
+      categoryId: "work.expert-help",
+      title: "Нужно ревью SRS",
+      description: "Нужно проверить требования перед передачей в разработку.",
+      expectedResult: "Список замечаний и правок",
+      tags: ["srs", "requirements", "review"]
+    })
+  );
+  const [candidate] = rankProfilesForNeed(need, demoProfiles);
+  assert.ok(candidate);
+
+  const [decision] = buildRecommendedDecisions(
+    need,
+    [candidate],
+    new Date("2026-06-13T10:00:00.000Z")
+  );
+  const brief = buildConversationBrief(need, candidate);
+  const conversation = createConversationDraft(
+    {
+      need,
+      candidate,
+      decision,
+      brief
+    },
+    new Date("2026-06-13T10:01:00.000Z")
+  );
+
+  assert.equal(conversation.needId, need.id);
+  assert.equal(conversation.profileId, candidate.profile.id);
+  assert.equal(conversation.decisionId, decision.id);
+  assert.equal(conversation.channel, "chatwoot_concierge");
+  assert.equal(conversation.state, "draft");
+  assert.equal(conversation.externalRef?.provider, "chatwoot");
+  assert.match(conversation.firstMessage, /Нужно ревью SRS/);
+  assert.match(conversation.firstMessage, /Вопросы:/);
+});
+
+test("rejects conversation draft for non-contact decisions", () => {
+  const need = markNeedMatched(
+    createNeed({
+      direction: "skills",
+      categoryId: "skills.career-help",
+      title: "Подготовка к интервью",
+      description: "Нужна практика ответов и разбор резюме перед собеседованием.",
+      expectedResult: "План подготовки и обратная связь",
+      tags: ["career", "interview", "resume"]
+    })
+  );
+  const [candidate] = rankProfilesForNeed(need, demoProfiles);
+  assert.ok(candidate);
+
+  const decision = recordCandidateDecision({
+    needId: need.id,
+    profileId: candidate.profile.id,
+    decision: "saved",
+    matchScore: candidate.score
+  });
+  const brief = buildConversationBrief(need, candidate);
+
+  assert.throws(
+    () =>
+      createConversationDraft({
+        need,
+        candidate,
+        decision,
+        brief
+      }),
+    /requested_contact/
+  );
+});
+
+test("moves a conversation through concierge states", () => {
+  const need = markNeedMatched(
+    createNeed({
+      direction: "life",
+      categoryId: "life.local-tasks",
+      title: "Нужно забрать заказ рядом",
+      description: "Нужно забрать заказ в районе и передать мне вечером.",
+      expectedResult: "Заказ забран и передан",
+      tags: ["delivery", "local help", "errands"],
+      location: {
+        city: "Moscow",
+        district: "Tverskoy"
+      }
+    })
+  );
+  const [candidate] = rankProfilesForNeed(need, demoProfiles);
+  assert.ok(candidate);
+
+  const [decision] = buildRecommendedDecisions(need, [candidate]);
+  const brief = buildConversationBrief(need, candidate);
+  const draft = createConversationDraft({
+    need,
+    candidate,
+    decision,
+    brief
+  });
+  const opened = markConversationOpened(
+    draft,
+    {
+      provider: "chatwoot",
+      id: "conversation_123",
+      url: "http://localhost:8083/app/accounts/1/conversations/123"
+    },
+    new Date("2026-06-13T11:00:00.000Z")
+  );
+  const assigned = markConversationAssigned(opened, new Date("2026-06-13T11:01:00.000Z"));
+  const waitingUser = markConversationWaitingUser(
+    assigned,
+    new Date("2026-06-13T11:02:00.000Z")
+  );
+  const resolved = markConversationResolved(waitingUser, new Date("2026-06-13T11:03:00.000Z"));
+
+  assert.equal(opened.state, "opened");
+  assert.equal(opened.externalRef?.id, "conversation_123");
+  assert.equal(resolved.state, "resolved");
+  assert.equal(resolved.updatedAt, "2026-06-13T11:03:00.000Z");
+  assert.equal(canTransitionConversationState("resolved", "opened"), false);
+  assert.throws(() => markConversationOpened(resolved), /Cannot move conversation/);
 });
 
 test("marks resolved needs as completed in workflow", () => {

@@ -144,6 +144,40 @@ export interface ConversationBrief {
   nextStep: string;
 }
 
+export type ConversationState =
+  | "draft"
+  | "opened"
+  | "assigned"
+  | "waiting_user"
+  | "waiting_operator"
+  | "resolved"
+  | "failed";
+
+export type ConversationChannel = "chatwoot_concierge" | "direct_product_chat";
+
+export interface ConversationExternalRef {
+  provider: "chatwoot" | "cifedra";
+  id?: string;
+  url?: string;
+}
+
+export interface Conversation {
+  id: string;
+  needId: string;
+  profileId: string;
+  decisionId: string;
+  channel: ConversationChannel;
+  state: ConversationState;
+  goal: string;
+  context: string[];
+  questions: string[];
+  risks: string[];
+  firstMessage: string;
+  externalRef?: ConversationExternalRef;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export type ContactOutcome =
   | "agreed"
   | "not_relevant"

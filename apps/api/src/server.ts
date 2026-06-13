@@ -6,6 +6,7 @@ import {
   buildIntegrationWorkflow,
   buildRecommendedDecisions,
   buildShortlist,
+  createConversationDraft,
   createNeed,
   demoNeedScenarios,
   demoProfiles,
@@ -97,6 +98,18 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
     const decisions = buildRecommendedDecisions(need, matches);
     const shortlist = buildShortlist(need, matches, decisions);
     const firstBrief = matches[0] ? buildConversationBrief(need, matches[0]) : null;
+    const firstDecision = matches[0]
+      ? decisions.find((decision) => decision.profileId === matches[0]?.profile.id)
+      : undefined;
+    const firstConversationDraft =
+      matches[0] && firstBrief && firstDecision?.decision === "requested_contact"
+        ? createConversationDraft({
+            need,
+            candidate: matches[0],
+            decision: firstDecision,
+            brief: firstBrief
+          })
+        : null;
 
     sendJson(response, 200, {
       need,
@@ -104,6 +117,7 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
       decisions,
       shortlist,
       firstBrief,
+      firstConversationDraft,
       integrationWorkflow: buildIntegrationWorkflow(need, matches[0], firstBrief)
     });
     return;

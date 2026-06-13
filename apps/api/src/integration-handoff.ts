@@ -2,7 +2,13 @@ import { randomUUID } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
-import { buildIntegrationWorkflow, type ConversationBrief, type MatchCandidate, type Need } from "@cifedra/core";
+import {
+  buildIntegrationWorkflow,
+  type Conversation,
+  type ConversationBrief,
+  type MatchCandidate,
+  type Need
+} from "@cifedra/core";
 
 type HandoffStepId = "plane-task" | "chatwoot-conversation";
 type HandoffMode = "draft" | "live";
@@ -13,6 +19,7 @@ interface IntegrationHandoffInput {
   readonly need: Need;
   readonly match: MatchCandidate;
   readonly brief: ConversationBrief;
+  readonly conversation?: Conversation;
 }
 
 interface ExternalRequestDraft {
@@ -181,25 +188,17 @@ function buildPlaneRequest(input: IntegrationHandoffInput, handoffId: string): E
 }
 
 function buildChatwootRequest(input: IntegrationHandoffInput, handoffId: string): ExternalRequestDraft {
-  const firstMessage = [
-    `Здравствуйте. Есть задача: ${input.need.title}.`,
-    `Ожидаемый результат: ${input.need.expectedResult}.`,
-    "",
-    "Контекст:",
-    ...input.brief.context,
-    "",
-    "Вопросы:",
-    ...input.brief.questions.map((question, index) => `${index + 1}. ${question}`)
-  ].join("\n");
+  const firstMessage = input.conversation?.firstMessage ?? buildChatwootFirstMessage(input);
 
   const body = {
-    source_id: handoffId,
+    source_id: input.conversation?.id ?? handoffId,
     inbox_id: numericEnvOrPlaceholder("CIFEDRA_CHATWOOT_INBOX_ID", "inbox_id"),
     contact_id: numericEnvOrPlaceholder("CIFEDRA_CHATWOOT_CONTACT_ID", "contact_id"),
     status: "open",
     custom_attributes: {
       cifedra_need_id: input.need.id,
       cifedra_profile_id: input.match.profile.id,
+      cifedra_conversation_id: input.conversation?.id,
       cifedra_direction: input.need.direction,
       cifedra_category_id: input.need.categoryId
     },
@@ -217,6 +216,19 @@ function buildChatwootRequest(input: IntegrationHandoffInput, handoffId: string)
     },
     body
   };
+}
+
+function buildChatwootFirstMessage(input: IntegrationHandoffInput): string {
+  return [
+    `Здравствуйте. Есть задача: ${input.need.title}.`,
+    `Ожидаемый результат: ${input.need.expectedResult}.`,
+    "",
+    "Контекст:",
+    ...input.brief.context,
+    "",
+    "Вопросы:",
+    ...input.brief.questions.map((question, index) => `${index + 1}. ${question}`)
+  ].join("\n");
 }
 
 async function saveHandoffRecord(id: string, record: unknown): Promise<string> {

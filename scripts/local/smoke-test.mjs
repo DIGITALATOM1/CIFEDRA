@@ -83,6 +83,14 @@ async function checkScenario(scenario) {
   );
   assert(body.firstBrief?.questions?.length >= 3, `${scenario.title}: first brief is incomplete`);
   assert(
+    body.firstConversationDraft?.state === "draft",
+    `${scenario.title}: expected conversation draft`
+  );
+  assert(
+    body.firstConversationDraft?.decisionId === body.decisions?.[0]?.id,
+    `${scenario.title}: expected conversation to reference first decision`
+  );
+  assert(
     body.integrationWorkflow?.steps?.some((step) => step.id === "plane-task"),
     `${scenario.title}: Plane handoff step is missing`
   );
@@ -109,7 +117,8 @@ async function checkHandoff(matchResult) {
         stepId,
         need: matchResult.need,
         match: matchResult.matches[0],
-        brief: matchResult.firstBrief
+        brief: matchResult.firstBrief,
+        conversation: matchResult.firstConversationDraft
       })
     });
 

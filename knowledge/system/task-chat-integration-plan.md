@@ -61,6 +61,7 @@ npm run integrations:plane:start
 7. Карточки Plane CE и Chatwoot CE вынесены на dev-страницу `http://localhost:4177/web/test-console/diagnostics.html`.
 8. `POST /demo/handoff` принимает результат предыдущих шагов и сохраняет локальный transfer package в `.local/handoffs/`.
 9. `GET /integrations/status` показывает, какие env-переменные нужны для live-создания записей.
+10. `Conversation` теперь создается в `CIFEDRA Core` как draft и может передаваться в Chatwoot adapter как product-owned контекст.
 
 ## Pre-adapter в сценарии
 
@@ -71,6 +72,7 @@ npm run integrations:plane:start
 | `Need` | CIFEDRA Core | Фиксируем потребность, направление, категорию, ожидаемый результат. |
 | `Match` | CIFEDRA Core | Выбираем кандидата и recommended action. |
 | `Prepare` | CIFEDRA Core | Формируем brief для контакта. |
+| `Conversation draft` | CIFEDRA Core | Создаем product-owned conversation state и first message для канала связи. |
 | `Execute` | Plane CE | Готовим draft задачи: title, priority, assignee hint, description, labels. |
 | `Connect` | Chatwoot CE | Готовим draft диалога: inbox, contact, goal, context, first message, risks. |
 | `Result` | CIFEDRA Core | Ожидаем outcome из задачи/диалога и фиксируем качество. |

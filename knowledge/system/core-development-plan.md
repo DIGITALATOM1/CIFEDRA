@@ -1,7 +1,7 @@
 # CIFEDRA CONNECT: план доработки ядра
 
 Дата: 2026-06-13
-Статус: core work plan v0.3
+Статус: core work plan v0.4
 Фокус чата: доработка `CIFEDRA Core`
 
 ## Назначение
@@ -24,6 +24,7 @@ Need -> Match -> Prepare -> Connect -> Result
 | --- | --- |
 | `domain.ts` | Базовые типы `Need`, `Profile`, `MatchCandidate`, `ConversationBrief`, `ContactResult`. |
 | `catalog.ts` | Справочник направлений и категорий. |
+| `conversation.ts` | Product-owned conversation model и состояния коммуникации. |
 | `decisions.ts` | Пользовательские решения по кандидатам и построение shortlist. |
 | `need.ts` | Создание и валидация потребности. |
 | `lifecycle.ts` | Допустимые переходы `NeedStatus` и helpers жизненного цикла. |
@@ -45,7 +46,7 @@ Need -> Match -> Prepare -> Connect -> Result
 | Пробел | Почему важно |
 | --- | --- |
 | `Decision / Shortlist` только начат. | Базовые типы и функции есть, но еще нужно связать их с mobile UI, API хранения и conversation. |
-| Нет сущности `Conversation`. | Chatwoot handoff есть, но core не хранит состояние коммуникации. |
+| `Conversation` только начат. | Core уже хранит draft/state, но outcome и связь с `Result` еще нужно реализовать. |
 | Lifecycle для `Need` только начат. | Переходы уже оформлены, но еще нужно связать их с persistent storage, conversation и result. |
 | Нет модели `Result` как части workflow. | ContactResult есть, но нет связи с conversation, match quality и следующим действием. |
 | Нет direction-specific rules. | `Life`, `Work`, `Skills` пока различаются в основном fixture-данными и категориями. |
@@ -106,13 +107,15 @@ Need created
 
 Задачи:
 
-1. Добавить типы `Conversation`, `ConversationState`, `ConversationChannel`.
-2. Поддержать состояния: `draft`, `opened`, `assigned`, `waiting_user`, `waiting_operator`, `resolved`, `failed`.
-3. Связать conversation с `needId`, `profileId`, `brief`, `externalRef`.
-4. Добавить функцию создания conversation draft из brief.
-5. Обновить Chatwoot handoff, чтобы он возвращал данные, совместимые с core conversation.
+1. Добавить типы `Conversation`, `ConversationState`, `ConversationChannel`. Выполнено.
+2. Поддержать состояния: `draft`, `opened`, `assigned`, `waiting_user`, `waiting_operator`, `resolved`, `failed`. Выполнено.
+3. Связать conversation с `needId`, `profileId`, `decisionId`, `brief`, `externalRef`. Выполнено.
+4. Добавить функцию создания conversation draft из brief. Выполнено.
+5. Обновить Chatwoot handoff, чтобы он принимал данные, совместимые с core conversation. Выполнено.
 
 Ожидаемый результат: Chatwoot становится сменяемым каналом, а не владельцем продуктового состояния.
+
+Текущий результат: `/demo/match` возвращает `firstConversationDraft`, а `/demo/handoff` может передать conversation context в Chatwoot adapter.
 
 ### Итерация 4. Result and quality loop
 
@@ -156,15 +159,15 @@ Need created
 
 ## Следующий рабочий фокус
 
-Начать Итерацию 3: `Conversation core model`.
+Начать Итерацию 4: `Result and quality loop`.
 
 Порядок:
 
-1. Прочитать `domain.ts`, `decisions.ts`, `prepare.ts`, `workflow.ts`.
-2. Добавить типы `Conversation`, `ConversationState`, `ConversationChannel`.
-3. Создать conversation draft из `ConversationBrief` и выбранного `CandidateDecision`.
-4. Подготовить совместимость с Chatwoot handoff.
-5. Добавить тесты и обновить `/demo/match` или отдельный demo endpoint, если нужен API-контракт.
+1. Прочитать `domain.ts`, `conversation.ts`, `result.ts`, `workflow.ts`.
+2. Расширить `ContactResult` связью с `conversationId`, `decisionId`, `matchScore`.
+3. Добавить правила next step после outcome.
+4. Подготовить первый quality signal для matching.
+5. Связать resolved conversation с `Need` lifecycle и `Result`.
 6. Прогнать `npm run typecheck`, `npm test`, `npm run build`, `npm run local:smoke`.
 
 ## Правило для этого чата
