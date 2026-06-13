@@ -19,6 +19,8 @@
 
 План единой авторизации: [knowledge/system/auth-integration-plan.md](./knowledge/system/auth-integration-plan.md).
 
+CJM сценарии и gap-анализ: [knowledge/product/cjm-scenarios-gap-analysis.md](./knowledge/product/cjm-scenarios-gap-analysis.md).
+
 ## Команды
 
 ```bash

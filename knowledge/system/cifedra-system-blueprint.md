@@ -7,6 +7,8 @@
 
 Этот документ фиксирует первый проектный контур системы `CIFEDRA CONNECT` и связывает архитектурные решения с начальной реализацией в репозитории.
 
+Продуктовые сценарии и найденные gaps ведем в [../product/cjm-scenarios-gap-analysis.md](../product/cjm-scenarios-gap-analysis.md).
+
 ## Базовый сценарий
 
 Все направления используют одно ядро:
@@ -87,10 +89,11 @@ curl -X POST http://localhost:3030/demo/match \
 ## Следующие проектные шаги
 
 1. Доработать `CIFEDRA Core` по плану [core-development-plan.md](./core-development-plan.md).
-2. Подготовить SRS `CIFEDRA Core Domain Model`.
-3. Уточнить сущности и статусы: `Need`, `Profile`, `Match`, `Shortlist`, `Conversation`, `Result`, `TrustSignal`.
-4. Добавить persistent storage: PostgreSQL/Supabase migrations.
-5. Добавить нормальный API-слой с OpenAPI-спецификацией.
-6. Подготовить SRS `Mobile MVP` и после него начать `apps/mobile` на React Native + Expo.
-7. Спроектировать Baserow pilot tables для ручного подбора.
-8. Спроектировать Chatwoot concierge flow отдельно от будущего direct product chat.
+2. Использовать [CJM/gap-анализ](../product/cjm-scenarios-gap-analysis.md) как вход в SRS `Mobile MVP`.
+3. Подготовить SRS `CIFEDRA Core Domain Model`.
+4. Уточнить сущности и статусы: `Need`, `Profile`, `Match`, `Shortlist`, `Conversation`, `Result`, `TrustSignal`.
+5. Добавить persistent storage: PostgreSQL/Supabase migrations.
+6. Добавить нормальный API-слой с OpenAPI-спецификацией.
+7. Подготовить SRS `Mobile MVP` и после него начать `apps/mobile` на React Native + Expo.
+8. Спроектировать Baserow pilot tables для ручного подбора.
+9. Спроектировать Chatwoot concierge flow отдельно от будущего direct product chat.
