@@ -118,6 +118,14 @@ async function checkScenario(scenario) {
   );
 
   assert(body.need?.status === "matched", `${scenario.title}: expected need status matched`);
+  assert(
+    body.matches?.[0]?.explanation?.scoreBreakdown?.total === body.matches?.[0]?.score,
+    `${scenario.title}: score breakdown is missing or inconsistent`
+  );
+  assert(
+    body.matches?.[0]?.explanation?.scoreBreakdown?.directionSpecific > 0,
+    `${scenario.title}: expected positive direction-specific score`
+  );
   assert(body.decisions?.length >= 1, `${scenario.title}: expected candidate decisions`);
   assert(
     body.shortlist?.items?.[0]?.profileId === scenario.expectedProfileId,

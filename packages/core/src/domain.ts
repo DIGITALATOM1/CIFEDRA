@@ -13,6 +13,12 @@ export type NeedStatus =
 
 export type Availability = "available" | "limited" | "unavailable";
 
+export type LifeUrgency = "flexible" | "scheduled" | "urgent";
+
+export type SkillLevel = "beginner" | "intermediate" | "advanced" | "expert";
+
+export type InteractionFormat = "chat" | "video" | "in_person" | "async";
+
 export type TrustSignalType =
   | "identity"
   | "portfolio"
@@ -41,6 +47,33 @@ export interface DirectionDefinition {
   categories: CategoryDefinition[];
 }
 
+export interface LifeNeedMatchingContext {
+  urgency?: LifeUrgency;
+  requiresVerifiedIdentity?: boolean;
+  maxDistanceKm?: number;
+}
+
+export interface WorkNeedMatchingContext {
+  requiredRoles?: string[];
+  projectContext?: string[];
+  minimumExperienceYears?: number;
+  requiresPortfolio?: boolean;
+  requiresCompanyVerification?: boolean;
+}
+
+export interface SkillsNeedMatchingContext {
+  currentLevel?: SkillLevel;
+  targetLevel?: SkillLevel;
+  goals?: string[];
+  preferredFormats?: InteractionFormat[];
+}
+
+export interface NeedMatchingContext {
+  life?: LifeNeedMatchingContext;
+  work?: WorkNeedMatchingContext;
+  skills?: SkillsNeedMatchingContext;
+}
+
 export interface NeedInput {
   direction: DirectionId;
   categoryId: string;
@@ -52,6 +85,7 @@ export interface NeedInput {
   location?: Location;
   priority?: Priority;
   tags?: string[];
+  matching?: NeedMatchingContext;
 }
 
 export interface Need extends NeedInput {
@@ -71,6 +105,29 @@ export interface TrustSignal {
   verifiedAt?: string;
 }
 
+export interface LifeProfileMatchingContext {
+  supportsUrgent?: boolean;
+  serviceRadiusKm?: number;
+}
+
+export interface WorkProfileMatchingContext {
+  roles?: string[];
+  domains?: string[];
+  experienceYears?: number;
+}
+
+export interface SkillsProfileMatchingContext {
+  supportedLevels?: SkillLevel[];
+  goals?: string[];
+  formats?: InteractionFormat[];
+}
+
+export interface ProfileMatchingContext {
+  life?: LifeProfileMatchingContext;
+  work?: WorkProfileMatchingContext;
+  skills?: SkillsProfileMatchingContext;
+}
+
 export interface Profile {
   id: string;
   displayName: string;
@@ -82,6 +139,7 @@ export interface Profile {
   availability: Availability;
   location?: Location;
   trustSignals: TrustSignal[];
+  matching?: ProfileMatchingContext;
 }
 
 export type RecommendedAction =
@@ -95,6 +153,18 @@ export interface MatchExplanation {
   risks: string[];
   matchedCategories: string[];
   matchedCapabilities: string[];
+  scoreBreakdown: MatchScoreBreakdown;
+}
+
+export interface MatchScoreBreakdown {
+  direction: number;
+  category: number;
+  capabilities: number;
+  location: number;
+  availability: number;
+  trust: number;
+  directionSpecific: number;
+  total: number;
 }
 
 export interface MatchCandidate {

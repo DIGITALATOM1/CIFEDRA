@@ -7,6 +7,7 @@ export * from "./fixtures.js";
 export * from "./integrations.js";
 export * from "./lifecycle.js";
 export * from "./matching.js";
+export * from "./matching-rules.js";
 export * from "./need.js";
 export * from "./prepare.js";
 export * from "./result.js";

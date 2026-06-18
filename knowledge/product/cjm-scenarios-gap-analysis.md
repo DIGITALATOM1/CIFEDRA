@@ -228,7 +228,7 @@ flowchart LR
 | User profile | Все | Только auth user/principal. | Роли, направления, trust, availability, preferences. |
 | Need wizard | Все | Demo payload. | Формы по категориям, валидация, черновики, вложения. |
 | Clarification agent | Все | Нет. | Список недостающих полей и вопросы до matching. |
-| Direction scoring rules | Все | Базовый scoring. | Life geo/trust, Work expertise/context, Skills goal/level/schedule. |
+| Direction scoring rules | Все | Первая версия реализована: Life geo/trust, Work role/context, Skills goal/level/format. | Калибровка весов по quality signals и добавление schedule/availability. |
 | Candidate cards | Все | API возвращает candidates. | Mobile UI, объяснение, trust, цена, availability. |
 | Swipe decisions | Все | Core model есть. | API storage, история, undo, shortlist. |
 | Conversation state | Все | Draft/open/result в demo. | Webhooks, SLA, участники, история сообщений. |

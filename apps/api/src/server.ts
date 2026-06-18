@@ -282,7 +282,8 @@ function normalizeDemoNeed(body: Partial<NeedInput>): NeedInput {
     constraints: body.constraints,
     location: body.location,
     priority: body.priority,
-    tags: body.tags ?? ["analysis", "requirements", "review"]
+    tags: body.tags ?? ["analysis", "requirements", "review"],
+    matching: body.matching
   };
 }
 

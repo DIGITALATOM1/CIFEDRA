@@ -1,7 +1,7 @@
 # CIFEDRA CONNECT: системный blueprint
 
-Дата: 2026-06-13
-Статус: initial design + implementation scaffold v0.3
+Дата: 2026-06-19
+Статус: initial design + implementation scaffold v0.4
 
 ## Назначение
 
@@ -43,7 +43,8 @@ packages/core
   src/decisions.ts   - решения по кандидатам и shortlist
   src/need.ts        - создание и валидация задачи
   src/lifecycle.ts   - переходы статусов Need
-  src/matching.ts    - базовый скоринг и ранжирование профилей
+  src/matching.ts    - общий скоринг, ранжирование и score breakdown
+  src/matching-rules.ts - правила Life / Work / Skills
   src/prepare.ts     - подготовка разговора
   src/result.ts      - фиксация результата контакта
   src/fixtures.ts    - демо-профили для Life / Work / Skills
@@ -66,7 +67,7 @@ apps/api
 | `GET` | `/directions` | Справочник направлений и категорий. |
 | `GET` | `/demo/profiles` | Демо-профили для проверки matching. |
 | `GET` | `/demo/scenarios` | Демо-сценарии `Life`, `Work`, `Skills` для smoke-тестов и test console. |
-| `POST` | `/demo/match` | Создать демо-задачу, подобрать людей, вернуть decisions, shortlist, first brief, conversation draft и integration workflow для Plane/Chatwoot. |
+| `POST` | `/demo/match` | Создать демо-задачу, применить direction-specific matching, вернуть score breakdown, decisions, shortlist, first brief, conversation draft и integration workflow для Plane/Chatwoot. |
 | `POST` | `/demo/handoff` | Передать данные предыдущих шагов и CIFEDRA actor в adapter Plane/Chatwoot; в draft-режиме сохранить пакет в `.local/handoffs/`. |
 | `POST` | `/demo/result` | Закрыть demo conversation, записать результат контакта, вернуть resolved need и match quality signal. |
 | `GET` | `/integrations/status` | Проверить режим adapter-слоя и недостающую live-конфигурацию. |

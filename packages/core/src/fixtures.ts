@@ -20,7 +20,9 @@ export const demoProfiles: Profile[] = [
     availability: "available",
     location: {
       city: "Moscow",
-      district: "Tverskoy"
+      district: "Tverskoy",
+      latitude: 55.766,
+      longitude: 37.604
     },
     trustSignals: [
       {
@@ -33,7 +35,13 @@ export const demoProfiles: Profile[] = [
         label: "Two references",
         verified: true
       }
-    ]
+    ],
+    matching: {
+      life: {
+        supportsUrgent: true,
+        serviceRadiusKm: 8
+      }
+    }
   },
   {
     id: "profile_work_dmitry",
@@ -59,7 +67,14 @@ export const demoProfiles: Profile[] = [
         label: "Company context",
         verified: true
       }
-    ]
+    ],
+    matching: {
+      work: {
+        roles: ["system analyst", "business analyst"],
+        domains: ["srs", "requirements", "company knowledge"],
+        experienceYears: 12
+      }
+    }
   },
   {
     id: "profile_skills_maria",
@@ -79,7 +94,14 @@ export const demoProfiles: Profile[] = [
         label: "Manual review",
         verified: true
       }
-    ]
+    ],
+    matching: {
+      skills: {
+        supportedLevels: ["beginner", "intermediate", "advanced"],
+        goals: ["career", "interview", "resume"],
+        formats: ["video", "chat", "async"]
+      }
+    }
   }
 ];
 
@@ -98,7 +120,16 @@ export const demoNeedScenarios: DemoNeedScenario[] = [
       tags: ["delivery", "local help", "errands"],
       location: {
         city: "Moscow",
-        district: "Tverskoy"
+        district: "Tverskoy",
+        latitude: 55.764,
+        longitude: 37.605
+      },
+      matching: {
+        life: {
+          urgency: "scheduled",
+          requiresVerifiedIdentity: true,
+          maxDistanceKm: 5
+        }
       }
     }
   },
@@ -116,6 +147,14 @@ export const demoNeedScenarios: DemoNeedScenario[] = [
       tags: ["srs", "requirements", "review"],
       location: {
         remoteAllowed: true
+      },
+      matching: {
+        work: {
+          requiredRoles: ["system analyst"],
+          projectContext: ["srs", "requirements"],
+          minimumExperienceYears: 5,
+          requiresPortfolio: true
+        }
       }
     }
   },
@@ -130,7 +169,18 @@ export const demoNeedScenarios: DemoNeedScenario[] = [
       title: "Подготовка к интервью",
       description: "Нужна практика ответов и разбор резюме перед собеседованием.",
       expectedResult: "План подготовки и обратная связь",
-      tags: ["career", "interview", "resume"]
+      tags: ["career", "interview", "resume"],
+      location: {
+        remoteAllowed: true
+      },
+      matching: {
+        skills: {
+          currentLevel: "intermediate",
+          targetLevel: "advanced",
+          goals: ["interview", "resume"],
+          preferredFormats: ["video"]
+        }
+      }
     }
   }
 ];

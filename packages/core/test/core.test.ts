@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import type { Profile } from "../src/domain.ts";
 import {
   buildIntegrationIdentity,
   buildConversationBrief,
@@ -29,7 +30,8 @@ import {
   rankProfilesForNeed,
   recordCandidateDecision,
   recordContactResult,
-  resolveNeedFromContactResult
+  resolveNeedFromContactResult,
+  scoreProfileForNeed
 } from "../src/index.ts";
 
 test("creates a normalized auth user and integration identity", () => {
@@ -111,6 +113,289 @@ test("creates a valid work need and ranks a relevant profile", () => {
 
   assert.equal(matches[0]?.profile.id, "profile_work_dmitry");
   assert.equal(matches[0]?.recommendedAction, "request_contact");
+});
+
+test("applies life geography, urgency and identity rules", () => {
+  const need = createNeed({
+    direction: "life",
+    categoryId: "life.local-tasks",
+    title: "Срочно забрать заказ",
+    description: "Нужно срочно забрать заказ и привезти его домой.",
+    expectedResult: "Заказ доставлен",
+    tags: ["delivery"],
+    priority: "urgent",
+    location: {
+      city: "Moscow",
+      latitude: 55.764,
+      longitude: 37.605
+    },
+    matching: {
+      life: {
+        requiresVerifiedIdentity: true,
+        maxDistanceKm: 5
+      }
+    }
+  });
+  const profiles: Profile[] = [
+    {
+      id: "life_near_verified",
+      displayName: "Ближний помощник",
+      role: "Локальный помощник",
+      summary: "Выполняет срочные поручения рядом.",
+      directions: ["life"],
+      categoryIds: ["life.local-tasks"],
+      capabilities: ["delivery"],
+      availability: "available",
+      location: {
+        city: "Moscow",
+        latitude: 55.766,
+        longitude: 37.604
+      },
+      trustSignals: [
+        {
+          type: "identity",
+          label: "Identity checked",
+          verified: true
+        }
+      ],
+      matching: {
+        life: {
+          supportsUrgent: true,
+          serviceRadiusKm: 10
+        }
+      }
+    },
+    {
+      id: "life_far_unverified",
+      displayName: "Непроверенный помощник",
+      role: "Локальный помощник",
+      summary: "Выполняет локальные поручения.",
+      directions: ["life"],
+      categoryIds: ["life.local-tasks"],
+      capabilities: ["delivery"],
+      availability: "available",
+      location: {
+        city: "Moscow",
+        latitude: 55.86,
+        longitude: 37.605
+      },
+      trustSignals: [],
+      matching: {
+        life: {
+          supportsUrgent: false,
+          serviceRadiusKm: 3
+        }
+      }
+    }
+  ];
+
+  const nearby = scoreProfileForNeed(need, profiles[0]);
+  const unverified = scoreProfileForNeed(need, profiles[1]);
+
+  assert.ok(nearby.score > unverified.score);
+  assert.equal(nearby.recommendedAction, "request_contact");
+  assert.equal(unverified.recommendedAction, "review_manually");
+  assert.ok(nearby.explanation.scoreBreakdown.location > 0);
+  assert.ok(unverified.explanation.scoreBreakdown.location < 0);
+  assert.match(unverified.explanation.risks.join(" "), /подтвержденная личность/);
+});
+
+test("applies work role, context, experience and trust rules", () => {
+  const need = createNeed({
+    direction: "work",
+    categoryId: "work.expert-help",
+    title: "Экспертное ревью SRS",
+    description: "Нужно провести экспертное ревью требований проекта.",
+    expectedResult: "Список замечаний",
+    tags: ["srs"],
+    location: {
+      remoteAllowed: true
+    },
+    matching: {
+      work: {
+        requiredRoles: ["system analyst"],
+        projectContext: ["srs"],
+        minimumExperienceYears: 5,
+        requiresPortfolio: true,
+        requiresCompanyVerification: true
+      }
+    }
+  });
+  const profiles: Profile[] = [
+    {
+      id: "work_senior_analyst",
+      displayName: "Старший аналитик",
+      role: "System Analyst",
+      summary: "Ревью требований и проектирование систем.",
+      directions: ["work"],
+      categoryIds: ["work.expert-help"],
+      capabilities: ["srs"],
+      availability: "available",
+      location: {
+        remoteAllowed: true
+      },
+      trustSignals: [
+        {
+          type: "portfolio",
+          label: "Portfolio reviewed",
+          verified: true
+        },
+        {
+          type: "company",
+          label: "Company verified",
+          verified: true
+        }
+      ],
+      matching: {
+        work: {
+          roles: ["system analyst"],
+          domains: ["srs"],
+          experienceYears: 8
+        }
+      }
+    },
+    {
+      id: "work_junior_developer",
+      displayName: "Разработчик",
+      role: "Developer",
+      summary: "Разработка и участие в ревью.",
+      directions: ["work"],
+      categoryIds: ["work.expert-help"],
+      capabilities: ["srs"],
+      availability: "available",
+      location: {
+        remoteAllowed: true
+      },
+      trustSignals: [],
+      matching: {
+        work: {
+          roles: ["developer"],
+          domains: ["development"],
+          experienceYears: 2
+        }
+      }
+    }
+  ];
+
+  const expert = scoreProfileForNeed(need, profiles[0]);
+  const weakMatch = scoreProfileForNeed(need, profiles[1]);
+
+  assert.ok(expert.score > weakMatch.score);
+  assert.equal(expert.recommendedAction, "request_contact");
+  assert.equal(weakMatch.recommendedAction, "review_manually");
+  assert.ok(expert.explanation.scoreBreakdown.directionSpecific > 0);
+  assert.ok(weakMatch.explanation.scoreBreakdown.directionSpecific < 0);
+  assert.match(weakMatch.explanation.risks.join(" "), /портфолио/);
+});
+
+test("applies skills level, goal and format rules", () => {
+  const need = createNeed({
+    direction: "skills",
+    categoryId: "skills.career-help",
+    title: "Подготовка к интервью",
+    description: "Нужна практика интервью для системного аналитика.",
+    expectedResult: "Обратная связь",
+    tags: ["interview"],
+    location: {
+      remoteAllowed: true
+    },
+    matching: {
+      skills: {
+        currentLevel: "intermediate",
+        targetLevel: "advanced",
+        goals: ["interview"],
+        preferredFormats: ["video"]
+      }
+    }
+  });
+  const profiles: Profile[] = [
+    {
+      id: "skills_video_mentor",
+      displayName: "Видео-ментор",
+      role: "Карьерный ментор",
+      summary: "Проводит mock interview по видео.",
+      directions: ["skills"],
+      categoryIds: ["skills.career-help"],
+      capabilities: ["interview"],
+      availability: "available",
+      location: {
+        remoteAllowed: true
+      },
+      trustSignals: [],
+      matching: {
+        skills: {
+          supportedLevels: ["intermediate", "advanced"],
+          goals: ["interview"],
+          formats: ["video"]
+        }
+      }
+    },
+    {
+      id: "skills_in_person_beginner",
+      displayName: "Офлайн-наставник",
+      role: "Наставник",
+      summary: "Работает очно с начинающими.",
+      directions: ["skills"],
+      categoryIds: ["skills.career-help"],
+      capabilities: ["resume"],
+      availability: "available",
+      location: {
+        remoteAllowed: false
+      },
+      trustSignals: [],
+      matching: {
+        skills: {
+          supportedLevels: ["beginner"],
+          goals: ["resume"],
+          formats: ["in_person"]
+        }
+      }
+    }
+  ];
+
+  const mentor = scoreProfileForNeed(need, profiles[0]);
+  const wrongFormat = scoreProfileForNeed(need, profiles[1]);
+
+  assert.ok(mentor.score > wrongFormat.score);
+  assert.equal(mentor.recommendedAction, "request_contact");
+  assert.ok(mentor.explanation.scoreBreakdown.directionSpecific > 0);
+  assert.ok(wrongFormat.explanation.scoreBreakdown.directionSpecific < 0);
+  assert.match(wrongFormat.explanation.risks.join(" "), /формат занятий/);
+});
+
+test("rejects matching context from another direction and invalid numeric rules", () => {
+  const baseLifeNeed = {
+    direction: "life" as const,
+    categoryId: "life.local-tasks",
+    title: "Забрать заказ",
+    description: "Нужно забрать заказ рядом с домом.",
+    expectedResult: "Заказ доставлен"
+  };
+
+  assert.throws(
+    () =>
+      createNeed({
+        ...baseLifeNeed,
+        matching: {
+          work: {
+            requiredRoles: ["system analyst"]
+          }
+        }
+      }),
+    /does not belong/
+  );
+  assert.throws(
+    () =>
+      createNeed({
+        ...baseLifeNeed,
+        matching: {
+          life: {
+            maxDistanceKm: 0
+          }
+        }
+      }),
+    /positive number/
+  );
 });
 
 test("moves a need through the core lifecycle", () => {

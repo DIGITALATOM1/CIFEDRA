@@ -1,7 +1,7 @@
 # CIFEDRA CONNECT: план доработки ядра
 
-Дата: 2026-06-13
-Статус: core work plan v0.5
+Дата: 2026-06-19
+Статус: core work plan v0.6
 Фокус чата: доработка `CIFEDRA Core`
 
 ## Назначение
@@ -45,11 +45,11 @@ Need -> Match -> Prepare -> Connect -> Result
 
 | Пробел | Почему важно |
 | --- | --- |
-| `Decision / Shortlist` только начат. | Базовые типы и функции есть, но еще нужно связать их с mobile UI, API хранения и conversation. |
-| `Conversation` только начат. | Core уже хранит draft/state, но outcome и связь с `Result` еще нужно реализовать. |
-| Lifecycle для `Need` только начат. | Переходы уже оформлены, но еще нужно связать их с persistent storage, conversation и result. |
-| `Result / quality loop` только начат. | Результат уже связан с conversation/decision и quality signal, но еще не влияет на scoring правил. |
-| Нет direction-specific rules. | `Life`, `Work`, `Skills` пока различаются в основном fixture-данными и категориями. |
+| `Decision / Shortlist` не сохраняется. | Типы и функции есть, но нужны API хранения и mobile UI. |
+| `Conversation` не получает внешние события. | Core хранит draft/state и связан с Result, но нужны persistence и event sync Chatwoot/Plane. |
+| Lifecycle `Need` работает только в runtime. | Переходы оформлены, но еще не связаны с persistent storage и транзакциями. |
+| `Result / quality loop` не влияет на scoring. | Quality signal создается, но пока не калибрует веса и правила matching. |
+| Direction-specific rules требуют дальнейшей калибровки. | Первая версия реализована и покрыта тестами, но веса нужно уточнять на реальных результатах. |
 | Нет API-contract-first слоя. | Mobile и будущий backend должны опираться на устойчивые DTO/контракты. |
 
 ## Ближайшая цель
@@ -139,13 +139,28 @@ Need created
 
 Задачи:
 
-1. Вынести правила scoring по направлениям.
-2. Для `Life` усилить географию, срочность, доверие.
-3. Для `Work` усилить опыт, роль, SRS/проектный контекст.
-4. Для `Skills` усилить уровень, цель развития, формат занятий.
-5. Добавить fixtures и тесты для edge cases.
+1. Вынести правила scoring по направлениям. Выполнено.
+2. Для `Life` усилить географию, срочность, доверие. Выполнено.
+3. Для `Work` усилить опыт, роль, SRS/проектный контекст. Выполнено.
+4. Для `Skills` усилить уровень, цель развития, формат занятий. Выполнено.
+5. Добавить fixtures и тесты для edge cases. Выполнено.
 
 Ожидаемый результат: matching станет более объяснимым и ближе к продуктовой ценности.
+
+Текущий результат:
+
+- Добавлены типизированные `NeedMatchingContext` и `ProfileMatchingContext`.
+- `Life` учитывает координаты/район, допустимый радиус, срочность и обязательную
+  проверку личности.
+- `Work` учитывает требуемую роль, проектный контекст, опыт, портфолио и
+  корпоративное подтверждение.
+- `Skills` учитывает текущий/целевой уровень, цели развития и формат занятий.
+- Каждый кандидат возвращает `scoreBreakdown` по общим и direction-specific
+  факторам.
+- Обязательные, но неподтвержденные trust-факторы переводят кандидата в
+  `review_manually`.
+- Добавлены контрастные unit-тесты и smoke-проверка breakdown для трех
+  направлений.
 
 ### Итерация 6. API contracts for mobile
 
@@ -162,16 +177,18 @@ Need created
 
 ## Следующий рабочий фокус
 
-Начать Итерацию 5: `Direction-specific rules`.
+Начать Итерацию 6: `API contracts for mobile`.
 
 Порядок:
 
-1. Прочитать `matching.ts`, `catalog.ts`, `fixtures.ts`, `core.test.ts`.
-2. Вынести scoring rules по направлениям.
-3. Усилить `Life`: география, срочность, доверие.
-4. Усилить `Work`: роль, SRS/проектный контекст, company knowledge.
-5. Усилить `Skills`: уровень, формат занятий, цель развития.
-6. Прогнать `npm run typecheck`, `npm test`, `npm run build`, `npm run local:smoke`.
+1. Зафиксировать публичные DTO отдельно от внутренних domain-типов.
+2. Описать request/response для `Need`, `Match`, `Decision`, `Shortlist`,
+   `Brief`, `Conversation`, `Result`.
+3. Подготовить OpenAPI-outline для текущих и целевых endpoints.
+4. Добавить версионирование API и единый формат ошибок.
+5. Синхронизировать `apps/api`, test console и smoke-тесты с DTO.
+6. Прогнать `npm run typecheck`, `npm test`, `npm run build`,
+   `npm run local:smoke`.
 
 ## Правило для этого чата
 
