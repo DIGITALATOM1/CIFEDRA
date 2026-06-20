@@ -1,7 +1,7 @@
 # CIFEDRA CONNECT: High-Level Design
 
 Дата: 2026-06-20
-Версия: HLD v0.1
+Версия: HLD v0.3
 Статус: draft for review
 
 ## 1. Назначение
@@ -28,6 +28,10 @@ HLD описывает целевую высокоуровневую архит�
 - [План авторизации](./auth-integration-plan.md).
 - [Языки и голос](./multilingual-voice-plan.md).
 
+Метод представления: C4 Model на уровнях System Context, Container и
+Component, дополненный Dynamic и Deployment diagrams. Code-level diagrams,
+классы, таблицы БД и алгоритмы относятся к LLD.
+
 ## 2. Цели решения
 
 1. Дать пользователю единый flow поиска полезного человека:
@@ -52,7 +56,124 @@ Need
 5. Подключать production providers через заменяемые adapters.
 6. Сохранять продуктовые данные и lifecycle в CIFEDRA.
 
-## 3. Не входит в текущий scope
+## 3. Functional Requirements
+
+### 3.1 Клиент
+
+Клиент может:
+
+1. Зарегистрироваться и заполнить профиль.
+2. Выбрать направление `Life`, `Work` или `Skills`.
+3. Создать, изменить или отменить Need.
+4. Ответить на уточняющие вопросы.
+5. Получить объяснимый список кандидатов.
+6. Сохранить, отклонить или выбрать кандидата.
+7. Запросить контакт.
+8. Получить подтверждение или отказ помощника.
+9. Передать разрешенный контекст и начать коммуникацию.
+10. Отслеживать задачу, поручение или встречу.
+11. Подтвердить результат, приложить proof и оставить feedback.
+
+### 3.2 Помощник / эксперт / ментор
+
+Исполнитель может:
+
+1. Создать provider profile и указать специализацию.
+2. Задать availability, географию, timezone, языки и форматы.
+3. Пройти необходимую verification.
+4. Получить безопасный preview запроса.
+5. Принять, отклонить или запросить уточнение.
+6. Общаться и выполнять engagement.
+7. Передать результат и получить feedback.
+
+### 3.3 Оператор / администратор
+
+Оператор может:
+
+1. Обрабатывать queue и SLA.
+2. Выполнять triage и ручной matching.
+3. Создавать Chatwoot conversation и Plane task.
+4. Обрабатывать escalation, report и moderation case.
+5. Закрывать outcome с причиной и audit trail.
+
+Администратор может управлять:
+
+- roles and permissions;
+- verification and moderation;
+- catalog and intake schemas;
+- integrations and health;
+- audit and retention policies.
+
+### 3.4 Functional traceability
+
+Детальная трассировка шагов и gaps:
+
+- [CJM по направлениям](../product/cjm-scenarios-gap-analysis.md);
+- [CJM по ролям](../product/cjm-by-roles.md);
+- [Core gap analysis](./core-cjm-gap-analysis.md).
+
+## 4. Non-Functional Requirements summary
+
+| Requirement | HLD response |
+| --- | --- |
+| Availability | Stateless API/worker, retries and production redundancy. |
+| Responsiveness | Synchronous path содержит только Core transaction; integrations асинхронны. |
+| Reliability | PostgreSQL transaction, outbox/inbox, idempotency and reconciliation. |
+| Security | OIDC, least privilege, consent, audit and data minimization. |
+| Maintainability | Modular monolith, ports/adapters and versioned contracts. |
+| Scalability | Horizontal API/worker scaling after measurement. |
+| Internationalization | Locale, timezone, language metadata and provider adapters. |
+| Testability | Local mocks, contract tests, smoke and E2E. |
+| Recoverability | Backups, restore tests and explicit RTO/RPO before production. |
+
+Quantitative SLO values remain TBD until pilot sizing is approved.
+
+## 5. Domain classification
+
+Разделение Core/Supporting/Generic помогает не превращать внешние платформы в
+владельцев продуктовой логики.
+
+### 5.1 Core domains
+
+Именно эти зоны формируют основную ценность CIFEDRA:
+
+| Domain | Why Core |
+| --- | --- |
+| Need Intake and Clarification | Формализует реальную потребность пользователя. |
+| Provider Profile and Availability | Определяет, кого и при каких условиях можно подобрать. |
+| Matching and Explanation | Основной механизм поиска полезного человека. |
+| Decision and Contact Request | Управляет выбором и двухсторонним согласием. |
+| Trust and Consent | Делает контакт безопасным и управляемым. |
+| Engagement | Связывает контакт с реальным выполнением. |
+| Result and Quality Loop | Проверяет ценность подбора и улучшает правила. |
+
+### 5.2 Supporting domains
+
+| Domain | Role |
+| --- | --- |
+| Organization and Membership | Поддерживает Work/company scenarios. |
+| Booking and Scheduling | Поддерживает Skills, Work and Care engagements. |
+| Conversation Coordination | Связывает product state с каналами связи. |
+| Operator Operations | Queue, triage, SLA and manual override. |
+| Catalog and Intake Schema Management | Управляет направлениями и версиями форм. |
+| Artifacts and Knowledge References | Хранит метаданные SRS, CV, proof and materials. |
+
+### 5.3 Generic capabilities
+
+Эти возможности интегрируются или переиспользуют стандартные решения:
+
+| Capability | Target solution |
+| --- | --- |
+| Authentication | Keycloak. |
+| Notifications | Push/email/SMS providers. |
+| Object storage | S3-compatible storage. |
+| Text translation | Provider adapter; Argos local candidate. |
+| Speech transcription | Provider adapter; Whisper candidate. |
+| Video | Jitsi or another provider. |
+| Payments | PSP adapter; mock locally. |
+| Observability | Standard logs, metrics and traces. |
+
+## 6. Не входит в текущий scope
 
 - production payment provider;
 - payouts и marketplace settlement;
@@ -66,7 +187,7 @@ Need
 Эти зоны должны иметь контракты или extension points, но не реализуются до
 подтверждения основного сценария.
 
-## 4. Архитектурные драйверы
+## 7. Архитектурные драйверы
 
 | Драйвер | Архитектурное следствие |
 | --- | --- |
@@ -80,7 +201,66 @@ Need
 | Локальная разработка | Mock providers and Docker-based integrations. |
 | Future commerce | Payment abstraction без хранения card data. |
 
-## 5. System Context
+## 8. Ограничения и sizing assumptions
+
+На текущем локальном этапе продуктовые объемы еще не подтверждены. HLD не
+фиксирует вымышленные значения нагрузки. Перед staging необходимо утвердить:
+
+| Параметр | Статус |
+| --- | --- |
+| MAU/DAU по направлениям | TBD по pilot plan. |
+| Peak API requests per second | TBD по load profile. |
+| Количество активных профилей | TBD. |
+| Среднее число кандидатов на Need | TBD после пилота matching. |
+| Объем файлов и аудио в месяц | TBD после voice/artifact scope. |
+| Доля запросов с переводом | TBD по выбранным языкам. |
+| Notification volume | TBD по CJM events. |
+| Payment transactions | Не применимо до commercial pilot. |
+| Required API availability | Определить до staging. |
+| RTO/RPO | Определить до production. |
+
+До появления данных применяем следующие ограничения:
+
+- один регион deployment;
+- один primary PostgreSQL;
+- без database sharding;
+- без Kafka/RabbitMQ;
+- горизонтально масштабируемые stateless API/worker только при необходимости;
+- внешние integrations считаются ненадежными и обрабатываются асинхронно;
+- media не передается через Core как долгоживущий binary payload.
+
+## 9. C4 notation
+
+### 9.1 Уровни
+
+| Уровень | Что показывает | Раздел HLD |
+| --- | --- | --- |
+| C4 Level 1 | Пользователи, CIFEDRA и внешние software systems. | System Context. |
+| C4 Level 2 | Deployable/runnable containers и data stores. | Container Architecture. |
+| C4 Level 3 | Компоненты внутри API и Worker. | Component Architecture. |
+| C4 Level 4 | Классы, функции, DB schemas. | Не входит; оформляется в LLD. |
+
+### 9.2 Легенда
+
+| Элемент | Значение |
+| --- | --- |
+| Person | Пользователь или операционная роль. |
+| Software System | CIFEDRA или внешняя система. |
+| Container | Отдельно запускаемое приложение, worker или data store. |
+| Component | Логически связанный набор функций внутри container. |
+| Solid relationship | Синхронный вызов или основная зависимость. |
+| Async relationship | Event/outbox/webhook processing. |
+| External | Заменяемый provider за adapter boundary. |
+
+Каждая диаграмма должна иметь:
+
+- название и scope;
+- понятные имена элементов;
+- назначение и технологию, где это важно;
+- подписанные отношения;
+- отсутствие деталей, принадлежащих следующему уровню.
+
+## 10. C4 Level 1: System Context
 
 ```mermaid
 flowchart LR
@@ -101,25 +281,31 @@ flowchart LR
   Notify["Push / Email / SMS Providers"]
   Payment["Payment Provider<br/>production later"]
 
-  Client --> CIFEDRA
-  Provider --> CIFEDRA
-  Operator --> CIFEDRA
-  Org --> CIFEDRA
+  Client -->|"Creates needs, selects people, receives results"| CIFEDRA
+  Provider -->|"Accepts requests and delivers help"| CIFEDRA
+  Operator -->|"Triages, matches and resolves exceptions"| CIFEDRA
+  Org -->|"Manages members and company context"| CIFEDRA
 
-  CIFEDRA --> IdP
-  CIFEDRA --> Support
-  CIFEDRA --> Tasks
-  CIFEDRA --> Backoffice
-  CIFEDRA --> Calendar
-  CIFEDRA --> Video
-  CIFEDRA --> Language
-  CIFEDRA --> Notify
-  CIFEDRA --> Payment
+  CIFEDRA -->|"Authenticates users via OIDC"| IdP
+  CIFEDRA -->|"Creates and synchronizes support conversations"| Support
+  CIFEDRA -->|"Creates and synchronizes operational tasks"| Tasks
+  CIFEDRA -->|"Projects pilot operational data"| Backoffice
+  CIFEDRA -->|"Synchronizes bookings"| Calendar
+  CIFEDRA -->|"Creates meeting references"| Video
+  CIFEDRA -->|"Translates or transcribes content"| Language
+  CIFEDRA -->|"Delivers product notifications"| Notify
+  CIFEDRA -->|"Creates payment intents later"| Payment
 ```
 
-## 6. Container Architecture
+### 10.1 Context boundary
 
-### 6.1 Контейнеры
+В границы CIFEDRA входят product lifecycle, data ownership, policies,
+matching, contact acceptance, execution and result. Keycloak, Chatwoot, Plane,
+Baserow, calendar, language and payment providers являются внешними systems.
+
+## 11. C4 Level 2: Container Architecture
+
+### 11.1 Контейнеры
 
 | Контейнер | Ответственность | Технология / статус |
 | --- | --- | --- |
@@ -135,7 +321,7 @@ flowchart LR
 | Integration Runtime | Chatwoot, Plane, Baserow and optional providers. | Docker/local and isolated prod. |
 | Observability | Logs, metrics, traces and alerts. | Basic logs now; production stack later. |
 
-### 6.2 Container diagram
+### 11.2 Container diagram
 
 ```mermaid
 flowchart TB
@@ -151,24 +337,24 @@ flowchart TB
   Media["Media Storage"]
   Providers["Integration Providers"]
 
-  Mobile --> Keycloak
-  Web --> Keycloak
-  Ops --> Keycloak
-  Mobile --> Proxy
-  Web --> Proxy
-  Ops --> Proxy
-  Proxy --> API
-  API --> Keycloak
-  API --> Core
-  Core --> DB
-  Core --> Media
-  Core --> Worker
-  Worker --> DB
-  Worker --> Providers
-  Providers --> Worker
+  Mobile -->|"OIDC Authorization Code + PKCE"| Keycloak
+  Web -->|"OIDC"| Keycloak
+  Ops -->|"OIDC with stronger policy"| Keycloak
+  Mobile -->|"HTTPS/JSON"| Proxy
+  Web -->|"HTTPS"| Proxy
+  Ops -->|"HTTPS/JSON"| Proxy
+  Proxy -->|"Routes API requests"| API
+  API -->|"Validates JWT/JWKS"| Keycloak
+  API -->|"Invokes commands and queries"| Core
+  Core -->|"Transactions and repositories"| DB
+  Core -->|"Creates metadata and signed access"| Media
+  Core -->|"Writes outbox events"| Worker
+  Worker -->|"Reads outbox and writes delivery state"| DB
+  Worker -->|"Provider APIs"| Providers
+  Providers -->|"Signed webhooks"| Worker
 ```
 
-## 7. Application Architecture
+## 12. C4 Level 3: Component Architecture
 
 На MVP используем modular monolith + worker, а не набор микросервисов.
 
@@ -185,7 +371,79 @@ apps/worker
   -> media/language jobs
 ```
 
-### 7.1 Core bounded modules
+### 12.1 API container components
+
+```mermaid
+flowchart LR
+  Clients["Mobile / Web / Ops"]
+
+  subgraph API["CIFEDRA API Container"]
+    Router["HTTP Router<br/>versioned routes"]
+    Auth["Authentication Adapter<br/>local or Keycloak JWT"]
+    DTO["DTO Mapper and Validation"]
+    Policy["Authorization Policy Gateway"]
+    App["Application Services<br/>commands and queries"]
+    Errors["Error Envelope / Correlation"]
+  end
+
+  Core["CIFEDRA Core"]
+  Repo["Repository Ports"]
+  DB["PostgreSQL"]
+
+  Clients -->|"HTTPS/JSON"| Router
+  Router -->|"Authenticates request"| Auth
+  Router -->|"Validates and maps"| DTO
+  DTO -->|"Calls use case"| App
+  App -->|"Checks permissions"| Policy
+  App -->|"Executes domain operation"| Core
+  App -->|"Loads/saves aggregates"| Repo
+  Repo -->|"SQL transaction"| DB
+  Router -->|"Maps failures"| Errors
+```
+
+Responsibilities:
+
+| Component | Responsibility |
+| --- | --- |
+| HTTP Router | Versioned endpoints, HTTP method/path routing. |
+| Authentication Adapter | Validate local token or Keycloak JWT. |
+| DTO Mapper/Validation | Separate public contracts from domain types. |
+| Authorization Policy Gateway | Ownership, membership, consent and role checks. |
+| Application Services | Transaction boundary and use-case orchestration. |
+| Error/Correlation | Stable error envelope and trace correlation. |
+
+### 12.2 Worker container components
+
+```mermaid
+flowchart LR
+  DB["PostgreSQL<br/>Outbox / Inbox"]
+
+  subgraph Worker["CIFEDRA Worker Container"]
+    Dispatcher["Outbox Dispatcher"]
+    Scheduler["Job Scheduler"]
+    Retry["Retry / Dead-letter Policy"]
+    Integration["Integration Adapter Registry"]
+    Notification["Notification Dispatcher"]
+    MediaJobs["Media / Language Jobs"]
+    Webhook["Webhook Ingress Processor"]
+  end
+
+  Providers["External Providers"]
+
+  DB -->|"Claims pending events"| Dispatcher
+  Scheduler -->|"Triggers expiry/reconciliation"| Dispatcher
+  Dispatcher --> Integration
+  Dispatcher --> Notification
+  Dispatcher --> MediaJobs
+  Integration -->|"API calls"| Providers
+  Notification -->|"Push/email/SMS"| Providers
+  MediaJobs -->|"Translate/transcribe"| Providers
+  Providers -->|"Webhook events"| Webhook
+  Webhook -->|"Deduplicated commands"| DB
+  Retry --> Dispatcher
+```
+
+### 12.3 Core components
 
 | Module | Responsibility |
 | --- | --- |
@@ -209,9 +467,99 @@ apps/worker
 | Audit | Actor, action, resource, reason and timestamp. |
 | Events | Domain event, correlation, causation and idempotency. |
 
-## 8. Data Architecture
+### 12.4 Component ownership rules
 
-### 8.1 Primary storage
+1. API components do not implement domain rules.
+2. Core does not import provider SDKs.
+3. Worker does not bypass application/domain policies.
+4. Repositories implement ports defined by the application/Core boundary.
+5. External webhooks become validated commands, not direct DB updates.
+6. Public DTO changes are versioned independently from internal refactoring.
+
+## 13. Dynamic diagrams
+
+### 13.1 Primary user flow
+
+```mermaid
+sequenceDiagram
+  actor Client
+  participant App as Mobile App
+  participant API as CIFEDRA API
+  participant Core as CIFEDRA Core
+  participant DB as PostgreSQL
+  participant Worker as CIFEDRA Worker
+  participant Provider as Helper/Expert
+
+  Client->>App: Creates need
+  App->>API: POST need
+  API->>Core: CreateNeed command
+  Core->>DB: Save draft
+  API-->>App: Need + missing fields
+  Client->>App: Answers clarification
+  App->>API: Submit answers
+  API->>Core: Mark ready and run match
+  Core->>DB: Save match run/candidates
+  API-->>App: Candidate cards
+  Client->>App: Requests contact
+  App->>API: Create contact request
+  API->>Core: Validate consent and candidate
+  Core->>DB: Save request + outbox
+  DB-->>Worker: Contact request event
+  Worker-->>Provider: Notify offer
+  Provider->>API: Accept request
+  API->>Core: Create engagement
+  Core->>DB: Save engagement
+  API-->>App: Contact accepted
+```
+
+### 13.2 External integration and retry
+
+```mermaid
+sequenceDiagram
+  participant Core as CIFEDRA Core
+  participant DB as PostgreSQL
+  participant Worker as Worker
+  participant Chatwoot as Chatwoot
+
+  Core->>DB: Commit conversation + outbox
+  Worker->>DB: Claim event
+  Worker->>Chatwoot: Create conversation with idempotency key
+  alt Provider available
+    Chatwoot-->>Worker: External ID
+    Worker->>DB: Save external ref and delivery success
+  else Timeout or 5xx
+    Worker->>DB: Save retry attempt
+    Worker->>Worker: Backoff
+    Worker->>Chatwoot: Retry same idempotency key
+  end
+  Chatwoot->>Worker: Signed status webhook
+  Worker->>DB: Inbox deduplication + domain command
+```
+
+### 13.3 Payment flow in local and production
+
+```mermaid
+sequenceDiagram
+  participant Core as CIFEDRA Core
+  participant Worker as Worker
+  participant Adapter as Payment Adapter
+  participant PSP as Payment Provider
+
+  Core->>Worker: PaymentIntentRequested
+  alt Local profile
+    Worker->>Adapter: Create mock intent
+    Adapter-->>Worker: Deterministic test status
+  else Production profile
+    Worker->>PSP: Create hosted payment intent
+    PSP-->>Worker: Checkout reference
+    PSP->>Worker: Signed payment webhook
+  end
+  Worker->>Core: Apply idempotent payment event
+```
+
+## 14. Data Architecture
+
+### 14.1 Storage selection by access pattern
 
 PostgreSQL является единственным source of truth для product state.
 
@@ -222,7 +570,19 @@ Extensions:
 - PostgreSQL full-text search for initial search;
 - outbox/inbox tables for integration reliability.
 
-### 8.2 High-level entity groups
+| Data/access pattern | Storage decision | Rationale |
+| --- | --- | --- |
+| Profiles, Needs, lifecycle and permissions | PostgreSQL relational tables. | Transactions, constraints and joins. |
+| Life distance and service area | PostGIS. | Geospatial indexes and queries. |
+| Semantic candidate retrieval | pgvector initially. | Vectors live near profile/need data. |
+| Files, audio, video and result artifacts | S3-compatible object storage. | Large binary data should not live in relational rows. |
+| Media/artifact metadata | PostgreSQL. | Ownership, consent and access policy. |
+| Domain events | PostgreSQL outbox/inbox. | Atomic state and event persistence. |
+| Search | PostgreSQL FTS initially. | Avoid separate search runtime before scale requires it. |
+| Cache | None by default. | Add Redis only after measured hot reads/latency. |
+| Analytics | PostgreSQL projections initially. | Separate warehouse only after reporting volume grows. |
+
+### 14.2 High-level entity groups
 
 ```mermaid
 erDiagram
@@ -243,7 +603,40 @@ erDiagram
   USER_PROFILE ||--o{ AUDIT_EVENT : acts
 ```
 
-### 8.3 Media
+### 14.3 Data consistency
+
+| Data | Consistency model |
+| --- | --- |
+| Core aggregate transaction | Strong consistency in one PostgreSQL transaction. |
+| Match result persisted with rule version | Strong consistency. |
+| External Chatwoot/Plane/calendar projection | Eventual consistency. |
+| Notifications | At-least-once intent, provider delivery deduplicated where possible. |
+| Webhooks | At-least-once input with inbox deduplication. |
+| Search/vector indexes | Eventual consistency and rebuildable. |
+| Analytics/reporting | Eventual consistency. |
+
+### 14.4 Read/write paths
+
+На первом этапе API и Core используют единый transactional model.
+
+```text
+Write:
+Client -> API -> Application Service -> Core -> PostgreSQL transaction
+                                  \-> Outbox
+
+Read:
+Client -> API -> Query Service -> PostgreSQL
+```
+
+Отдельные Read Service, Write Service, Redis cache или CQRS projections
+добавляются только при подтвержденной проблеме:
+
+- разные read/write scaling profiles;
+- тяжелые агрегированные карточки;
+- недопустимая latency PostgreSQL query;
+- необходимость independently rebuildable projections.
+
+### 14.5 Media
 
 PostgreSQL хранит metadata и access policy. Binary content хранится отдельно.
 
@@ -259,16 +652,16 @@ Production:
 S3-compatible object storage
 ```
 
-## 9. Identity and Security
+## 15. Identity and Security
 
-### 9.1 Authentication
+### 15.1 Authentication
 
 - Keycloak is production/staging IdP.
 - Mobile uses Authorization Code through external browser + PKCE.
 - API validates issuer, audience, signature and expiration.
 - Local auth remains test adapter.
 
-### 9.2 Authorization
+### 15.2 Authorization
 
 Keycloak roles не заменяют Core policies.
 
@@ -281,7 +674,7 @@ Core проверяет:
 - risk category policy;
 - resource visibility.
 
-### 9.3 Sensitive data
+### 15.3 Sensitive data
 
 - exact address скрыт до разрешенного шага;
 - cards/payment credentials не хранятся;
@@ -290,7 +683,7 @@ Core проверяет:
 - administrative override is audited;
 - account and data deletion flow обязателен до production.
 
-## 10. Integration Architecture
+## 16. Integration Architecture
 
 Все интеграции реализуются через ports/adapters.
 
@@ -305,7 +698,7 @@ Core Domain Event
   -> Domain Command
 ```
 
-### 10.1 Integration matrix
+### 16.1 Integration matrix
 
 | Integration | Purpose | Source of truth | Local mode | Production decision |
 | --- | --- | --- | --- | --- |
@@ -320,7 +713,7 @@ Core Domain Event
 | n8n | Internal automation. | Never product source of truth. | Not needed for MVP. | Optional after event contracts. |
 | Payment Provider | Payment processing. | PSP record + Core projection. | Mock only. | Real provider before commercial production. |
 
-## 11. Scheduling
+## 17. Scheduling
 
 Core owns:
 
@@ -337,7 +730,7 @@ Core owns:
 Calendly or another provider is an adapter. A booking link alone does not
 replace Core Booking because CIFEDRA needs status, result and quality loop.
 
-## 12. Languages and Voice
+## 18. Languages and Voice
 
 ```text
 Audio
@@ -362,7 +755,7 @@ Argos Translate:
 
 UI localization remains a separate resource-based i18n process.
 
-## 13. Automation and n8n
+## 19. Automation and n8n
 
 n8n is not required for Core or Mobile MVP.
 
@@ -386,16 +779,16 @@ Prohibited as source of truth:
 
 Default implementation: custom workers consuming domain events.
 
-## 14. Payments
+## 20. Payments
 
-### 14.1 Local
+### 20.1 Local
 
 - `MockPaymentProvider`;
 - test money only;
 - deterministic webhook fixtures;
 - no card data and no PSP secrets.
 
-### 14.2 Production
+### 20.2 Production
 
 Payment provider selection is deferred until:
 
@@ -413,9 +806,9 @@ Integration requirements:
 - refund/dispute states;
 - PCI scope minimization.
 
-## 15. Deployment Architecture
+## 21. C4 Deployment Architecture
 
-### 15.1 Current local
+### 21.1 Current local
 
 | Component | Status |
 | --- | --- |
@@ -428,7 +821,7 @@ Integration requirements:
 | Keycloak | Not yet added. |
 | Baserow | Planned. |
 
-### 15.2 Target local
+### 21.2 Target local
 
 ```text
 Docker / local processes
@@ -450,7 +843,40 @@ Mocks
 
 Компоненты включаются профилями, чтобы не запускать весь стек для каждого теста.
 
-### 15.3 Staging
+### 21.3 Local deployment diagram
+
+```mermaid
+flowchart TB
+  subgraph Laptop["Developer workstation"]
+    Browser["Browser / Test Console"]
+    Mobile["iOS/Android Simulator"]
+    API["CIFEDRA API process"]
+    Worker["CIFEDRA Worker process"]
+    Media[".local/media"]
+
+    subgraph Docker["Docker Desktop"]
+      PG["PostgreSQL"]
+      Keycloak["Keycloak"]
+      Chatwoot["Chatwoot"]
+      Plane["Plane"]
+      Baserow["Baserow"]
+      Optional["Optional Argos / Whisper"]
+    end
+  end
+
+  Browser --> API
+  Mobile --> API
+  API --> PG
+  API --> Keycloak
+  API --> Media
+  Worker --> PG
+  Worker --> Chatwoot
+  Worker --> Plane
+  Worker --> Baserow
+  Worker --> Optional
+```
+
+### 21.4 Staging
 
 - production-like Keycloak/PostgreSQL;
 - test domains and TLS;
@@ -459,7 +885,7 @@ Mocks
 - migrations and backup validation;
 - TestFlight/Google Play internal builds.
 
-### 15.4 Production
+### 21.5 Production
 
 - reverse proxy/load balancer and TLS;
 - stateless API replicas;
@@ -473,7 +899,83 @@ Mocks
 - real payment provider;
 - privacy, terms and deletion endpoints.
 
-## 16. Non-Functional Requirements
+### 21.6 Production deployment diagram
+
+```mermaid
+flowchart TB
+  Users["Internet Users"]
+  DNS["DNS / TLS / Edge"]
+
+  subgraph AppZone["Application Zone"]
+    API1["API Replica 1"]
+    API2["API Replica 2"]
+    Worker1["Worker Replica 1"]
+    Worker2["Worker Replica 2"]
+  end
+
+  subgraph DataZone["Data Zone"]
+    PG["Managed/Self-hosted PostgreSQL<br/>PITR backups"]
+    Media["S3-compatible Storage"]
+    Keycloak["Keycloak + DB"]
+  end
+
+  subgraph External["External / Isolated Providers"]
+    Chatwoot["Chatwoot"]
+    Plane["Plane"]
+    Language["Language Providers"]
+    Notify["Notification Providers"]
+    Payment["Payment Provider"]
+  end
+
+  Users --> DNS
+  DNS --> API1
+  DNS --> API2
+  API1 --> PG
+  API2 --> PG
+  API1 --> Media
+  API2 --> Media
+  API1 --> Keycloak
+  API2 --> Keycloak
+  Worker1 --> PG
+  Worker2 --> PG
+  Worker1 --> External
+  Worker2 --> External
+```
+
+## 22. Scalability and resilience
+
+### 22.1 Scaling path
+
+1. Optimize PostgreSQL queries and indexes.
+2. Scale stateless API horizontally.
+3. Scale workers by queue/event type.
+4. Add read replicas only after measured read pressure.
+5. Add Meilisearch/Qdrant only after measured search/vector limits.
+6. Partition high-volume audit/event tables only after evidence.
+7. Split a module into a service only when ownership or scaling requires it.
+
+### 22.2 Failure policy
+
+| Failure | Expected behavior |
+| --- | --- |
+| Chatwoot/Plane unavailable | Core transaction succeeds; outbox retries integration. |
+| Translation unavailable | Original content remains available; job marked failed/retryable. |
+| Notification unavailable | Product state remains valid; delivery retries. |
+| Payment provider unavailable | Payment remains pending/failed; engagement policy decides next step. |
+| Keycloak unavailable | Existing valid tokens may work until expiry; new login is unavailable. |
+| Worker unavailable | Outbox accumulates; API/Core state remains consistent. |
+| Search index unavailable | Fall back to PostgreSQL/basic retrieval where supported. |
+
+### 22.3 Backpressure
+
+- worker concurrency limits per provider;
+- retry with exponential backoff and maximum attempts;
+- dead-letter/manual review state;
+- media upload size and duration limits;
+- rate limits per principal/IP/client;
+- bulk operations separated from interactive API.
+
+## 23. Detailed Non-Functional Requirements
 
 | Area | HLD requirement |
 | --- | --- |
@@ -489,7 +991,10 @@ Mocks
 | Observability | Correlation IDs across API, worker and integrations. |
 | Testability | Local mocks, contract tests, smoke and E2E scenarios. |
 
-## 17. Architecture Decisions
+Количественные SLO не утверждаются без pilot data. Они должны быть добавлены в
+NFR/SRS до staging acceptance.
+
+## 24. Architecture Decisions
 
 | ID | Decision | Status |
 | --- | --- | --- |
@@ -503,7 +1008,20 @@ Mocks
 | ADR-008 | Payment contract now, real provider only before production pilot. | Accepted. |
 | ADR-009 | Direct product chat is separate future SRS. | Deferred. |
 
-## 18. Risks
+## 25. Trade-offs
+
+| Decision | Benefit | Cost / limitation |
+| --- | --- | --- |
+| Modular monolith | Быстрая разработка и общие транзакции. | Требует строгих module boundaries. |
+| PostgreSQL outbox | Reliability без брокера. | Дополнительные worker/table operations. |
+| Keycloak | Готовые security flows и OIDC. | Отдельный runtime и operational overhead. |
+| External adapters | Replaceability and local mocks. | Нужно поддерживать mappings/reconciliation. |
+| Core-owned Booking | Единый lifecycle и result linkage. | Больше custom domain work. |
+| No n8n in core | Предсказуемость и testability. | Меньше low-code скорости для core workflows. |
+| Deferred payments | Снижает ранний legal/compliance scope. | Commercial flow тестируется только mock-контрактом. |
+| Provider-neutral language layer | Можно менять models/providers. | Требует metadata and quality evaluation. |
+
+## 26. Risks
 
 | Risk | Mitigation |
 | --- | --- |
@@ -517,7 +1035,7 @@ Mocks
 | Payment compliance expands scope | Mock locally; legal/financial SRS before provider. |
 | Plane/Chatwoot status drift | Outbox/inbox and reconciliation jobs. |
 
-## 19. Open Questions
+## 27. Open Questions
 
 1. Какие языки входят в первый pilot?
 2. Нужен ли voice input в Mobile MVP или в следующей итерации?
@@ -528,7 +1046,7 @@ Mocks
 7. Какие данные можно передавать внешним translation/speech providers?
 8. Какая редакция Plane/Chatwoot поддержит operator SSO?
 
-## 20. Implementation Roadmap
+## 28. Implementation Roadmap
 
 ### Phase 1. Core Completion
 
@@ -572,7 +1090,45 @@ Mocks
 - real payment provider;
 - store publication.
 
-## 21. HLD Acceptance Criteria
+## 29. C4/HLD Review Checklist
+
+### Scope
+
+- [ ] System boundary понятна business и engineering аудитории.
+- [ ] Все ключевые роли и external systems присутствуют.
+- [ ] In-scope и out-of-scope согласованы.
+
+### Diagrams
+
+- [ ] Context diagram показывает только people/software systems.
+- [ ] Container diagram показывает deployable units and data stores.
+- [ ] Component diagrams соответствуют API/Worker responsibilities.
+- [ ] Все отношения подписаны.
+- [ ] Dynamic diagrams покрывают primary and failure-sensitive flows.
+- [ ] Deployment diagrams разделяют local, staging and production.
+
+### Data and security
+
+- [ ] Для каждого типа данных указан owner/source of truth.
+- [ ] Authentication отделена от authorization.
+- [ ] PII/media/payment boundaries согласованы.
+- [ ] Consistency and integration failure behavior определены.
+
+### Operability
+
+- [ ] Определены logs/metrics/traces/correlation.
+- [ ] Определены backup/restore and migration expectations.
+- [ ] Retry, idempotency, dead-letter and reconciliation учтены.
+- [ ] Quantitative SLO/sizing вынесены в обязательный staging input.
+
+### Delivery
+
+- [ ] Phase roadmap согласован с Core gap register.
+- [ ] Open questions имеют владельцев и target artifacts.
+- [ ] Детали LLD не смешаны с HLD.
+- [ ] Architecture decisions перенесены в ADR backlog.
+
+## 30. HLD Acceptance Criteria
 
 HLD можно утвердить, когда:
 
@@ -585,3 +1141,13 @@ HLD можно утвердить, когда:
 7. Подтверждена необязательность n8n для MVP.
 8. Подтвержден mock-only payment layer до production.
 9. Открытые вопросы перенесены в SRS/ADR backlog.
+
+## 31. References
+
+- [C4 Model official site](https://c4model.com/).
+- [System Design Primer](https://github.com/donnemartin/system-design-primer).
+- [OAuth 2.0 for Native Apps](https://www.rfc-editor.org/rfc/rfc8252).
+- Методический материал по HLD, предоставленный пользователем
+  (`Высок. Новое.pdf`, 13 страниц).
+- Остальные product-specific sources перечислены в
+  [целевой архитектуре](./cifedra-target-architecture.md).
