@@ -135,7 +135,7 @@ Need -> Match -> Prepare -> Connect -> Result
 1. Утвержденный SRS `Mobile MVP`.
 2. Минимальная модель данных: `Need`, `Profile`, `Match`, `Shortlist`, `Conversation`, `Result`.
 3. API-контракты для mobile flow.
-4. Решение по auth v0.1: CIFEDRA Auth endpoints и integration identity; перед production нужен persistent storage/IdP.
+4. Решение по auth v0.2: local auth для dev, Keycloak/OIDC для staging and production.
 5. Решение по concierge/direct chat.
 6. Минимальный UX flow по `Life`, `Work`, `Skills`.
 

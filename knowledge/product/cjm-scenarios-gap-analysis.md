@@ -1,7 +1,13 @@
 # CIFEDRA CONNECT: CJM сценарии и gap-анализ
 
-Дата: 2026-06-14
-Статус: product/system analysis v0.1
+Дата: 2026-06-20
+Статус: product/system analysis v0.2
+
+Связанные документы:
+
+- [CJM по ролям](./cjm-by-roles.md).
+- [Аудит CJM и Core](../system/core-cjm-gap-analysis.md).
+- [Целевая архитектура](../system/cifedra-target-architecture.md).
 
 ## Назначение
 
@@ -209,12 +215,15 @@ flowchart LR
 | Video/session layer | Skills, Work | Ссылка на звонок, заметки, запись, итоги. |
 | Company knowledge permissions | Work | Доступ к внутренним базам, цитирование, разграничение прав. |
 | Outcome taxonomy по направлениям | Все | Разные результаты и причины неуспеха для Life/Work/Skills. |
+| Языки и перевод | Все | Locale, spoken/required languages, text translation and transcript metadata. |
+| Голосовой ввод | Все | Audio consent, media storage, transcription provider and confidence. |
+| Price/payment contract | Life, Work, Skills | Money, terms and mock payment provider без реальных транзакций. |
 
 ### P2. Масштабирование продукта
 
 | Gap | Для чего |
 | --- | --- |
-| Payments / billing / payouts. | Коммерческие сценарии и маркетплейс. |
+| Real payments / billing / payouts. | Коммерческие сценарии после production readiness и юридического SRS. |
 | Reviews and reputation. | Доверие, удержание, качество matching. |
 | Disputes and refunds. | Разбор спорных случаев. |
 | Direct product chat. | Замена части Chatwoot и контроль UX в мобильном приложении. |
@@ -255,8 +264,9 @@ flowchart LR
 
 ## Решения по результатам анализа
 
-1. `CIFEDRA Auth` остается источником идентичности. Plane/Chatwoot не должны
-   становиться местом регистрации пользователя.
+1. Keycloak становится источником authentication в staging/production, а
+   CIFEDRA Core владеет product profile and permissions. Plane/Chatwoot не
+   становятся местом регистрации пользователя.
 2. Chatwoot conversation создаем после `Match -> Prepare` и явного действия
    пользователя/оператора, чтобы не засорять поддержку сырыми потребностями.
 3. Plane task создаем только для сценариев, где есть исполнение, дедлайн или

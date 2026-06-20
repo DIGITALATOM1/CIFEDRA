@@ -6,6 +6,7 @@
 
 - [cifedra-connect-platform-selection.md](./cifedra-connect-platform-selection.md)
 - [cifedra-connect-modifiable-solution-architecture.md](./cifedra-connect-modifiable-solution-architecture.md)
+- [Целевая архитектура](../system/cifedra-target-architecture.md)
 
 ## Цель
 
@@ -180,7 +181,7 @@ flowchart LR
 flowchart TB
   Cross["Сквозные функции CIFEDRA"]
 
-  Auth["Auth / users / roles<br/>Supabase Auth или custom<br/>OSS-PERMISSIVE + CUSTOM rules"]
+  Auth["Authentication<br/>Keycloak OIDC<br/>Core product permissions"]
   API["CIFEDRA API<br/>CUSTOM"]
   Data["PostgreSQL<br/>OSS-PERMISSIVE"]
   Vector["pgvector -> Qdrant<br/>OSS-PERMISSIVE"]
@@ -215,7 +216,8 @@ flowchart TB
 | Сквозная функция | Основное решение | Тип | Решение |
 | --- | --- | --- | --- |
 | Мобильный клиент | React Native + Expo | `OSS-PERMISSIVE` | Основной UX для iOS/Android. |
-| Auth, API, storage, realtime | Supabase + собственный API | `OSS-PERMISSIVE + CUSTOM` | Supabase ускоряет, но бизнес-правила пишем сами. |
+| Authentication / SSO | Keycloak + Core authorization | `OSS-PERMISSIVE + CUSTOM` | Keycloak владеет credentials/session; Core владеет profile/permissions. |
+| API and storage | Собственный API + PostgreSQL | `CUSTOM + OSS-PERMISSIVE` | Product state и бизнес-правила остаются в CIFEDRA. |
 | Основные данные | PostgreSQL | `OSS-PERMISSIVE` | Системный источник истины. |
 | Матчинг | CIFEDRA Match Engine | `CUSTOM` | Главная продуктовая ценность. |
 | Векторный поиск | pgvector, позже Qdrant | `OSS-PERMISSIVE` | Только инфраструктура для поиска, не логика решения. |
@@ -226,7 +228,9 @@ flowchart TB
 | Встречи | Самописные слоты, потом review Cal.diy | `CUSTOM / DEFER` | Не внедрять внешний scheduling до SRS. |
 | Видео | Jitsi Meet | `OSS-PERMISSIVE` | Отдельный сервис для Skills/Work. |
 | Контент | Payload или Strapi | `OSS-PERMISSIVE` | Публичные инструкции, материалы, FAQ. |
-| Платежи/commerce | Пока самописная политика; Medusa позже | `DEFER` | Нужна юридическая модель, комиссии, возвраты, споры. |
+| Языки и перевод | UI i18n + text translation adapter | `CUSTOM + INTEGRATE` | Оригинал хранится отдельно; provider заменяем. |
+| Голос | Whisper/speech provider adapter | `OSS-PERMISSIVE / INTEGRATE` | Transcription и language detection, не универсальный text translator. |
+| Платежи/commerce | Provider-neutral payment adapter | `CUSTOM / DEFER` | Локально mock; реальный PSP только перед production pilot после юридического SRS. |
 | Автоматизации | Custom workers; n8n только внутренне | `CUSTOM / SOURCE-AVAILABLE` | n8n не использовать как core из-за Sustainable Use License. |
 
 ## Лицензионная карта компонентов
@@ -248,6 +252,9 @@ flowchart TB
     Jitsi["Jitsi Meet<br/>Apache-2.0"]
     Medusa["Medusa<br/>MIT"]
     Appwrite["Appwrite<br/>BSD-3-Clause"]
+    Keycloak["Keycloak<br/>Apache-2.0"]
+    Whisper["Whisper<br/>MIT"]
+    Argos["Argos Translate<br/>MIT"]
   end
 
   subgraph Yellow["Можно, но нужен license review / отдельный сервис"]
@@ -256,6 +263,7 @@ flowchart TB
     Nominatim["Nominatim<br/>GPL"]
     Matrix["Synapse<br/>AGPL / commercial"]
     MeiliEE["Meilisearch EE<br/>BUSL"]
+    LibreTranslate["LibreTranslate<br/>AGPL-3.0"]
   end
 
   subgraph Purple["Source-available / не core"]
@@ -277,8 +285,8 @@ flowchart TB
   classDef source fill:#f0e8ff,stroke:#8c6cff,color:#111318
   classDef custom fill:#fff4d6,stroke:#c7a663,color:#111318
 
-  class RN,Expo,PG,Supabase,PGV,Qdrant,MeiliCE,Baserow,Chatwoot,Payload,Strapi,Jitsi,Medusa,Appwrite permissive
-  class PostGIS,OSM,Nominatim,Matrix,MeiliEE caution
+  class RN,Expo,PG,Supabase,PGV,Qdrant,MeiliCE,Baserow,Chatwoot,Payload,Strapi,Jitsi,Medusa,Appwrite,Keycloak,Whisper,Argos permissive
+  class PostGIS,OSM,Nominatim,Matrix,MeiliEE,LibreTranslate caution
   class N8N,Directus source
   class Need,Match,Swipe,Trust,Result,ProductChat custom
 ```
@@ -289,7 +297,8 @@ flowchart TB
 | --- | --- |
 | `Need`, `Match`, `Prepare`, `Result`, `Trust` | `BUILD`: самописное ядро. |
 | Mobile UI, карточки, свайпы, shortlist | `BUILD`: самописный UX на React Native + Expo. |
-| Auth, storage, realtime, DB admin | `INTEGRATE/MODIFY`: Supabase/PostgreSQL. |
+| Authentication | `INTEGRATE/MODIFY`: Keycloak. |
+| Storage and DB admin | `INTEGRATE`: PostgreSQL and migrations. |
 | Geo | `INTEGRATE`: PostGIS; OSM/Nominatim только после license/data review. |
 | Semantic search | `INTEGRATE`: pgvector; Qdrant при росте. |
 | Backoffice и ручной пилот | `MODIFY`: Baserow OSE. |
@@ -297,9 +306,10 @@ flowchart TB
 | Direct user-to-helper chat | `BUILD`: проектировать отдельно; Matrix/Synapse не брать без AGPL review. |
 | Scheduling | `BUILD first`: простые слоты; Cal.diy/календарные интеграции позже. |
 | Video | `INTEGRATE`: Jitsi Meet. |
+| Translation / speech | `INTEGRATE`: provider adapters; Whisper only for speech tasks. |
 | Content/help center | `MODIFY`: Payload или Strapi. |
 | Automation | `BUILD/INTEGRATE`: custom workers; n8n только внутренне и после review. |
-| Payments/commerce | `DEFER`: SRS по оплатам, комиссиям, возвратам и спорам. |
+| Payments/commerce | `DEFINE/DEFER`: adapter и mock сейчас; реальный PSP после production readiness. |
 
 ## Источники лицензий и ограничений
 
@@ -322,6 +332,8 @@ flowchart TB
 - Matrix / Synapse: [Element Synapse AGPL/commercial note](https://github.com/element-hq/synapse), [Matrix.org](https://matrix.org/).
 - n8n: [Sustainable Use License docs](https://docs.n8n.io/sustainable-use-license/), [GitHub license note](https://github.com/n8n-io/n8n).
 - Directus: [MSCL license](https://directus.com/license), [GitHub license note](https://github.com/directus/directus).
+- Keycloak: [documentation](https://www.keycloak.org/docs/latest/server_admin/), [Apache-2.0 license](https://github.com/keycloak/keycloak/blob/main/LICENSE.txt).
+- Whisper: [OpenAI repository and MIT license](https://github.com/openai/whisper).
 - Cal.diy: [self-hosting warning](https://github.com/calcom/cal.diy), [license change note](https://cal.com/blog/cal-diy-open-source-to-closed-source).
 
 ## Следующий шаг

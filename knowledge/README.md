@@ -19,6 +19,11 @@
 | Документ | Назначение |
 | --- | --- |
 | [product/cjm-scenarios-gap-analysis.md](./product/cjm-scenarios-gap-analysis.md) | CJM по направлениям `Life`, `Work`, `Skills` и реестр неучтенных функций. |
+| [product/cjm-by-roles.md](./product/cjm-by-roles.md) | CJM клиента, помощника, оператора, администратора, организации и аналитика. |
+| [system/cifedra-hld.md](./system/cifedra-hld.md) | Формальный High-Level Design решения. |
+| [system/cifedra-target-architecture.md](./system/cifedra-target-architecture.md) | Каноническая архитектура локального и production-контуров. |
+| [system/core-cjm-gap-analysis.md](./system/core-cjm-gap-analysis.md) | Сопоставление CJM с текущим Core и план закрытия gaps. |
+| [system/multilingual-voice-plan.md](./system/multilingual-voice-plan.md) | Языки, перевод, Whisper и voice scenarios. |
 
 ## Правило структуры
 

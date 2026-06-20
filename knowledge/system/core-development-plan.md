@@ -162,33 +162,60 @@ Need created
 - Добавлены контрастные unit-тесты и smoke-проверка breakdown для трех
   направлений.
 
-### Итерация 6. API contracts for mobile
+### Итерация 6. Identity, Profile, Intake and Clarification
 
-Цель: подготовить backend/mobile к стабильной интеграции.
+Цель: закрыть первые отсутствующие звенья CJM до фиксации публичных DTO.
 
 Задачи:
 
-1. Описать DTO для `Need`, `Match`, `Decision`, `Shortlist`, `Brief`, `Conversation`, `Result`.
-2. Подготовить OpenAPI-outline.
-3. Синхронизировать endpoints `apps/api` с core-моделью.
-4. Обновить smoke-тесты.
+1. Добавить provider-neutral `IdentityRef`.
+2. Добавить `UserProfile` and `ProviderProfile`.
+3. Добавить category-specific `NeedSchema`.
+4. Добавить completeness and `Clarification` lifecycle.
+5. Добавить ownership and базовые authorization policies.
 
-Ожидаемый результат: можно безопасно начинать `apps/mobile`.
+### Итерация 7. Contact Request and Engagement
+
+1. Отделить client decision от provider acceptance.
+2. Добавить `ContactRequest`: requested/accepted/declined/expired.
+3. Добавить `Engagement`: planned/in_progress/blocked/completed/cancelled.
+4. Добавить основу Booking/Assignment.
+
+### Итерация 8. Trust, Persistence and Events
+
+1. Consent/disclosure policy.
+2. Verification/report/block/moderation baseline.
+3. Repository ports and optimistic version.
+4. Domain events, outbox, webhook inbox and idempotency.
+5. Audit trail and notification intents.
+
+### Итерация 9. API contracts for mobile
+
+1. Описать публичные DTO.
+2. Подготовить OpenAPI.
+3. Добавить versioned routes and error envelope.
+4. Синхронизировать API, test console and smoke tests.
+
+### Итерация 10. Platform adapters
+
+1. Keycloak/OIDC adapter.
+2. PostgreSQL repositories and migrations.
+3. Chatwoot/Plane event sync.
+4. Languages/translation/transcription contracts.
+5. Mock scheduling and payment providers.
 
 ## Следующий рабочий фокус
 
-Начать Итерацию 6: `API contracts for mobile`.
+Начать Итерацию 6: `Identity, Profile, Intake and Clarification`.
 
 Порядок:
 
-1. Зафиксировать публичные DTO отдельно от внутренних domain-типов.
-2. Описать request/response для `Need`, `Match`, `Decision`, `Shortlist`,
-   `Brief`, `Conversation`, `Result`.
-3. Подготовить OpenAPI-outline для текущих и целевых endpoints.
-4. Добавить версионирование API и единый формат ошибок.
-5. Синхронизировать `apps/api`, test console и smoke-тесты с DTO.
-6. Прогнать `npm run typecheck`, `npm test`, `npm run build`,
-   `npm run local:smoke`.
+1. Прочитать [core-cjm-gap-analysis.md](./core-cjm-gap-analysis.md).
+2. Спроектировать `IdentityRef`, `UserProfile`, `ProviderProfile`.
+3. Спроектировать ownership and authorization boundaries.
+4. Добавить `NeedSchema` and completeness.
+5. Добавить `Clarification` questions/answers and lifecycle.
+6. Прогнать unit tests and local smoke.
 
 ## Правило для этого чата
 

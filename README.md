@@ -21,6 +21,12 @@
 
 CJM сценарии и gap-анализ: [knowledge/product/cjm-scenarios-gap-analysis.md](./knowledge/product/cjm-scenarios-gap-analysis.md).
 
+Целевая архитектура: [knowledge/system/cifedra-target-architecture.md](./knowledge/system/cifedra-target-architecture.md).
+
+High-Level Design: [knowledge/system/cifedra-hld.md](./knowledge/system/cifedra-hld.md).
+
+Аудит CJM и ядра: [knowledge/system/core-cjm-gap-analysis.md](./knowledge/system/core-cjm-gap-analysis.md).
+
 ## Команды
 
 ```bash

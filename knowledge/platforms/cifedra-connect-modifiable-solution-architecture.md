@@ -4,6 +4,9 @@
 Статус: архитектурная гипотеза v0.1
 Связанный документ: [cifedra-connect-platform-selection.md](./cifedra-connect-platform-selection.md)
 
+Актуальная целевая схема и решения по Keycloak, Whisper, scheduling, n8n и
+payments: [../system/cifedra-target-architecture.md](../system/cifedra-target-architecture.md).
+
 ## Цель
 
 Определить, какие готовые технические решения можно взять, модифицировать и встроить в `CIFEDRA CONNECT`, чтобы закрыть направления `Life`, `Work`, `Skills`, не потеряв собственное продуктовое ядро.
@@ -58,17 +61,19 @@ Mobile App
 | Слой | Основное решение | Почему подходит | Граница применения |
 | --- | --- | --- | --- |
 | Mobile app | `React Native + Expo` | Нативные iOS/Android приложения, быстрые итерации, совместимость с React Native widget для Chatwoot. | Весь пользовательский UX: карточки, свайпы, shortlist, подготовка, результат. |
-| Core backend | `Postgres + собственный API`, ускоренно через `Supabase` | Supabase дает Postgres, Auth, Realtime, Storage, Edge Functions и self-hosting; Postgres остается источником истины. | Бизнес-логику матчинга и результата не прятать в Supabase-only правилах. |
+| Core backend | `PostgreSQL + собственный API` | PostgreSQL остается источником истины; PostGIS/pgvector подключаются как extensions. | Бизнес-логику держать в CIFEDRA Core. |
+| Identity | `Keycloak` в staging/production; local auth adapter в dev | OIDC/SSO, sessions, MFA, reset and federation. | Product profile/permissions остаются в Core. |
 | Геоданные | `PostGIS` | Расширяет PostgreSQL хранением, индексированием и запросами геоданных. | Нужно прежде всего для `Life`: расстояния, районы, локальная доступность. |
 | Семантический матчинг | `pgvector` на старте, `Qdrant` при росте | pgvector хранит векторы рядом с данными в Postgres; Qdrant можно вынести отдельно для масштабного vector search. | Не заменяет правила матчинга, а дополняет их similarity-поиском. |
 | Фасетный поиск | `Meilisearch` опционально | Быстрый open-source поиск, фильтры, self-host/fork. | Подключать после появления объема профилей и поисковых фильтров. |
 | Backoffice / операционные таблицы | `Baserow` | MIT/open-source, API-first, удобно для ручного матчинга, справочников и SRS-операционки. | Не использовать как production core мобильного продукта. |
 | Support / concierge | `Chatwoot` | Self-hosted/open-source support desk, mobile apps, API, React Native widget. | Использовать для поддержки и concierge, не как основной marketplace messenger. |
-| Автоматизации | `n8n` опционально | Source-available, self-hostable, extensible workflows. | Использовать для внутренних процессов после лицензионного review; критичные процессы переносить в код. |
+| Автоматизации | Собственные workers; `n8n` опционально | Workers надежно исполняют domain events; n8n удобен для внутренних интеграций. | Не отдавать n8n lifecycle, auth, trust, payments and audit. |
 | Контент / инструкции / Help Center | `Chatwoot Help Center`, позже `Strapi` или `Payload` | Strapi MIT/open-source, Payload TypeScript/open-source; можно строить управляемый контент. | Не смешивать продуктовые данные людей с публичным контентом. |
-| Scheduling | Сначала собственные слоты в core; позже `Cal.com / Cal.diy` с осторожностью | Cal.com силен в бронировании, но self-host community edition имеет ограничения и требует review. | Для `Skills` и `Work` после SRS по встречам, оплате и отменам. |
+| Scheduling | Собственные slots/Booking; позже Calendly/calendar adapter | Core владеет booking state; Calendly является SaaS integration. Cal.diy допустим только как local spike. | Для `Skills`, `Work`, Care после SRS по встречам и отменам. |
+| Languages / voice | UI i18n + translation adapter + Whisper transcription adapter | Разделяет перевод интерфейса, текста и речи. | Whisper не использовать как универсальный переводчик. |
 | Video sessions | `Jitsi Meet` опционально | Open-source video, можно self-host. | Для `Skills`: наставничество, занятия, консультации. |
-| Commerce / payments | Пока не выбирать; изучить `Medusa` позже | Medusa дает open-source commerce primitives, но CIFEDRA сначала не классический e-commerce. | Подключать только после SRS по оплатам, комиссиям и юридической модели. |
+| Commerce / payments | Provider-neutral payment adapter | Локально mock provider; реальный PSP выбирается перед production. | Не хранить card data; нужен отдельный юридический и финансовый SRS. |
 
 ## Покрытие направлений
 
@@ -99,7 +104,7 @@ Mobile App
 | Company Knowledge | Knowledge base + vector search, связка человек-документ-система-решение. |
 | Операционная работа аналитика | Baserow для реестров, SRS, вопросов, статусов, ручного подбора. |
 | Коммуникация и эскалации | Chatwoot для support/concierge; direct product chat проектировать отдельно. |
-| Интеграции | n8n или собственные workers для CRM, Jira, GitHub, почты, календарей. |
+| Интеграции | Собственные workers; n8n только для внутренних некритичных automation. |
 
 В `Work` особенно важно не просто найти человека, а подготовить качественный контакт: цель, контекст, вопросы, ожидаемый результат, риски и следующий шаг.
 
@@ -110,7 +115,7 @@ Mobile App
 | Потребность | Техническое решение |
 | --- | --- |
 | Подбор наставника/партнера | Core matching + pgvector по целям, навыкам, уровню, формату. |
-| Занятия и консультации | Собственные слоты на старте; позже Cal.com/Cal.diy или интеграция календарей. |
+| Занятия и консультации | Собственные слоты на старте; позже Calendly/calendar adapter. Cal.diy только для local spike. |
 | Видео-встречи | Jitsi Meet как open-source вариант после отдельного SRS. |
 | Учебные материалы | Strapi/Payload или простой content layer в core. |
 | Прогресс и результат | Собственный `Result`: цель, session outcome, домашнее действие, follow-up. |

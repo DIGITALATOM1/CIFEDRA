@@ -9,6 +9,11 @@
 
 Продуктовые сценарии и найденные gaps ведем в [../product/cjm-scenarios-gap-analysis.md](../product/cjm-scenarios-gap-analysis.md).
 
+Каноническая целевая архитектура:
+[cifedra-target-architecture.md](./cifedra-target-architecture.md).
+
+High-Level Design: [cifedra-hld.md](./cifedra-hld.md).
+
 ## Базовый сценарий
 
 Все направления используют одно ядро:
