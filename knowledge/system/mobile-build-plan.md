@@ -9,6 +9,9 @@
 
 Правильный путь: делать не обертку вокруг Plane, Chatwoot или тестовой web-консоли, а собственное мобильное приложение `CIFEDRA`, которое работает через `CIFEDRA API`.
 
+Mobile является одним из клиентских каналов. Полноценный browser-канал
+проектируется отдельно: [web-client-build-plan.md](./web-client-build-plan.md).
+
 ```text
 Mobile App
   -> CIFEDRA API
@@ -25,7 +28,7 @@ Mobile App
 | Вопрос | Решение |
 | --- | --- |
 | Основной mobile stack | `React Native + Expo`. |
-| Web/PWA wrapper | Не основной путь; можно использовать позже только для быстрых внутренних демо. |
+| Client WEB | Отдельное React WEB-приложение, не wrapper мобильного UI. |
 | Общая бизнес-логика | Держать в `packages/core`, чтобы переиспользовать правила между API, тестами и будущим mobile. |
 | API | Все мобильные действия идут через `apps/api`; мобильное приложение не знает токены Plane/Chatwoot/Baserow. |
 | Интеграции | Plane/Chatwoot подключаются на backend-стороне через adapters. |

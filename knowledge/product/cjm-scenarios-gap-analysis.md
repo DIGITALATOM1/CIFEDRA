@@ -188,23 +188,23 @@ flowchart LR
 
 ## Gap register
 
-### P0. До Mobile MVP и локального end-to-end теста
+### P0. До Client Applications MVP и локального end-to-end теста
 
 | Gap | Почему это P0 | Рекомендуемое направление |
 | --- | --- | --- |
-| Persistent storage для users, needs, matches, decisions, conversations, results. | Сейчас состояние демо в памяти/локальных файлах, mobile не сможет работать стабильно. | Backend / Data. |
+| Persistent storage для users, needs, matches, decisions, conversations, results. | Сейчас состояние демо в памяти/локальных файлах, mobile и WEB не смогут работать стабильно. | Backend / Data. |
 | Профиль пользователя и роли `client/helper/operator/admin`. | Без профиля невозможно доверие, доступность и персонализация matching. | Auth / Profile. |
 | Direction-specific intake forms. | `Life`, `Work`, `Skills` требуют разных обязательных полей. | Core / Product. |
 | Уточняющие вопросы до matching. | Сейчас matching стартует без проверки полноты данных. | Core / Agents. |
-| Хранение свайпов и shortlist. | В core есть модель, но нет долговременного UX-состояния. | Mobile / API. |
+| Хранение decisions и shortlist. | В core есть модель, но нет долговременного UX-состояния. | Mobile / WEB / API. |
 | Trust & safety baseline. | Life и Care нельзя запускать без проверок, жалоб, блокировок и правил раскрытия данных. | Security / Operations. |
-| Notifications. | Без push/email/in-app пользователь не узнает о ответе, статусе и результате. | Mobile / Backend. |
+| Notifications. | Без push/email/in-app пользователь не узнает о ответе, статусе и результате. | Mobile / WEB / Backend. |
 | Operator/backoffice queue. | Chatwoot есть, но нет продуктовой очереди исключений и ручной диспетчеризации. | Operations / Backoffice. |
 | Backoffice data model for Baserow pilot. | Для ручного пилота нужны таблицы потребностей, кандидатов, назначений, статусов и результатов. | Backoffice / Baserow. |
 | Integration event sync. | Нужно возвращать статусы Chatwoot/Plane обратно в CIFEDRA Core. | Integrations. |
 | Production auth basics. | Нужны reset password, session expiry, refresh, confirmation, audit. | Auth. |
 
-### P1. После базового mobile MVP
+### P1. После базового Client Applications MVP
 
 | Gap | Направления | Суть |
 | --- | --- | --- |
@@ -226,7 +226,7 @@ flowchart LR
 | Real payments / billing / payouts. | Коммерческие сценарии после production readiness и юридического SRS. |
 | Reviews and reputation. | Доверие, удержание, качество matching. |
 | Disputes and refunds. | Разбор спорных случаев. |
-| Direct product chat. | Замена части Chatwoot и контроль UX в мобильном приложении. |
+| Direct product chat. | Замена части Chatwoot и контроль UX в mobile/client WEB. |
 | Full SSO into integrated apps. | Бесшовный вход в Plane/Chatwoot UI. |
 | Recommendation learning loop. | Автоматическое улучшение matching по результатам. |
 
@@ -280,7 +280,7 @@ flowchart LR
 
 ## Следующий порядок работ
 
-1. Превратить этот CJM в SRS `Mobile MVP`.
+1. Превратить этот CJM в SRS `Client Applications MVP`.
 2. Описать direction-specific schemas для `Need Intake`.
 3. Добавить persistent storage и API DTO для `Need`, `Decision`, `Shortlist`,
    `Conversation`, `Result`.

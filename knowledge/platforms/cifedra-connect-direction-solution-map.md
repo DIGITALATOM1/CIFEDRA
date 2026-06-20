@@ -29,11 +29,13 @@ flowchart TB
   C["CIFEDRA CONNECT"]
   CORE["CIFEDRA Core<br/>CUSTOM"]
   MOBILE["Mobile App<br/>React Native + Expo<br/>OSS-PERMISSIVE"]
+  WEB["Client WEB<br/>React + TypeScript + Vite<br/>OSS-PERMISSIVE"]
   DATA["Core Data<br/>PostgreSQL 18<br/>OSS-PERMISSIVE"]
   OPS["Backoffice<br/>Baserow OSE<br/>OSS-PERMISSIVE"]
   SUPPORT["Support / Concierge<br/>Chatwoot CE<br/>OSS-PERMISSIVE"]
 
   C --> MOBILE
+  C --> WEB
   C --> CORE
   CORE --> DATA
   CORE --> LIFE["CIFEDRA Life"]
@@ -47,7 +49,7 @@ flowchart TB
   classDef direction fill:#eef2ff,stroke:#6c8cff,color:#111318
 
   class CORE custom
-  class MOBILE,DATA,OPS,SUPPORT permissive
+  class MOBILE,WEB,DATA,OPS,SUPPORT permissive
   class LIFE,WORK,SKILLS direction
 ```
 
@@ -216,6 +218,7 @@ flowchart TB
 | Сквозная функция | Основное решение | Тип | Решение |
 | --- | --- | --- | --- |
 | Мобильный клиент | React Native + Expo | `OSS-PERMISSIVE` | Основной UX для iOS/Android. |
+| Клиентский WEB | React + TypeScript + Vite | `OSS-PERMISSIVE` | Адаптивный UX для desktop, tablet и mobile browser. |
 | Authentication / SSO | Keycloak + Core authorization | `OSS-PERMISSIVE + CUSTOM` | Keycloak владеет credentials/session; Core владеет profile/permissions. |
 | API and storage | Собственный API + PostgreSQL | `CUSTOM + OSS-PERMISSIVE` | Product state и бизнес-правила остаются в CIFEDRA. |
 | Основные данные | PostgreSQL | `OSS-PERMISSIVE` | Системный источник истины. |
@@ -240,6 +243,8 @@ flowchart TB
   subgraph Green["Можно модифицировать и встраивать осторожно<br/>permissive open-source"]
     RN["React Native<br/>MIT"]
     Expo["Expo<br/>MIT"]
+    React["React<br/>MIT"]
+    Vite["Vite<br/>MIT"]
     PG["PostgreSQL<br/>PostgreSQL License"]
     Supabase["Supabase<br/>evaluated, not selected"]
     PGV["pgvector<br/>PostgreSQL-like"]
@@ -285,7 +290,7 @@ flowchart TB
   classDef source fill:#f0e8ff,stroke:#8c6cff,color:#111318
   classDef custom fill:#fff4d6,stroke:#c7a663,color:#111318
 
-  class RN,Expo,PG,Supabase,PGV,Qdrant,MeiliCE,Baserow,Chatwoot,Payload,Strapi,Jitsi,Medusa,Appwrite,Keycloak,Whisper,Argos permissive
+  class RN,Expo,React,Vite,PG,Supabase,PGV,Qdrant,MeiliCE,Baserow,Chatwoot,Payload,Strapi,Jitsi,Medusa,Appwrite,Keycloak,Whisper,Argos permissive
   class PostGIS,OSM,Nominatim,Matrix,MeiliEE,LibreTranslate caution
   class N8N,Directus source
   class Need,Match,Swipe,Trust,Result,ProductChat custom
@@ -297,6 +302,7 @@ flowchart TB
 | --- | --- |
 | `Need`, `Match`, `Prepare`, `Result`, `Trust` | `BUILD`: самописное ядро. |
 | Mobile UI, карточки, свайпы, shortlist | `BUILD`: самописный UX на React Native + Expo. |
+| Client WEB, карточки, списки, decision actions | `BUILD`: React + TypeScript + Vite. |
 | Authentication | `INTEGRATE/MODIFY`: Keycloak. |
 | Storage and DB admin | `INTEGRATE`: PostgreSQL and migrations. |
 | Geo | `INTEGRATE`: PostGIS; OSM/Nominatim только после license/data review. |
@@ -315,6 +321,8 @@ flowchart TB
 
 - React Native: [MIT license](https://github.com/facebook/react-native/blob/main/LICENSE).
 - Expo: [MIT license](https://github.com/expo/expo/blob/main/LICENSE).
+- React: [MIT license](https://github.com/facebook/react/blob/main/LICENSE).
+- Vite: [MIT license](https://github.com/vitejs/vite/blob/main/LICENSE).
 - Supabase: [Apache-2.0 license](https://github.com/supabase/supabase/blob/master/LICENSE), [architecture docs](https://supabase.com/docs/guides/getting-started/architecture).
 - PostgreSQL: [PostgreSQL License](https://www.postgresql.org/about/licence/).
 - PostGIS: [GPL FAQ](https://postgis.net/documentation/faq/gpl-license/), [license file](https://github.com/postgis/postgis/blob/master/LICENSE.TXT).

@@ -1,7 +1,7 @@
 # CIFEDRA CONNECT: High-Level Design
 
 Дата: 2026-06-20
-Версия: HLD v0.4
+Версия: HLD v0.5
 Статус: approved architecture baseline; sizing and detailed SRS remain open
 
 ## 1. Назначение
@@ -27,6 +27,7 @@ HLD описывает целевую высокоуровневую архит�
 - [CJM по ролям](../product/cjm-by-roles.md).
 - [План авторизации](./auth-integration-plan.md).
 - [Языки и голос](./multilingual-voice-plan.md).
+- [План клиентского WEB](./web-client-build-plan.md).
 - [Architecture Decision Records](../adr/README.md).
 
 Метод представления: C4 Model на уровнях System Context, Container и
@@ -51,8 +52,8 @@ Need
 
 2. Поддерживать разные правила `Life`, `Work`, `Skills` без создания трех
    независимых систем.
-3. Собирать mobile-first продукт, не зависящий от UI Plane, Chatwoot, Baserow,
-   Calendly или других внешних систем.
+3. Собирать mobile-first и web-accessible продукт, не зависящий от UI Plane,
+   Chatwoot, Baserow, Calendly или других внешних систем.
 4. Позволять локальную разработку и тестирование до внешнего deployment.
 5. Подключать production providers через заменяемые adapters.
 6. Сохранять продуктовые данные и lifecycle в CIFEDRA.
@@ -192,7 +193,7 @@ Quantitative SLO values remain TBD until pilot sizing is approved.
 
 | Драйвер | Архитектурное следствие |
 | --- | --- |
-| Mobile-first | Versioned API, OIDC, push-ready notifications. |
+| Mobile + client WEB | Versioned API, OIDC, responsive UX, push/in-app notifications. |
 | Self-host / modifiable | Open standards и open-source предпочтительнее SaaS lock-in. |
 | Три направления | Общий lifecycle + direction-specific schemas and policies. |
 | Ручной пилот | Baserow/Chatwoot/Plane доступны через adapters. |
@@ -311,6 +312,7 @@ Baserow, calendar, language and payment providers являются внешни�
 | Контейнер | Ответственность | Технология / статус |
 | --- | --- | --- |
 | Mobile App | Клиентский и provider flow. | React Native + Expo, planned. |
+| Client WEB | Тот же клиентский/provider flow в browser. | React + TypeScript + Vite, planned. |
 | Web Landing | Информация и store links. | Static web, implemented. |
 | Operator/Admin Portal | Queue, triage, moderation, catalog. | Custom web, planned. |
 | CIFEDRA API | Public API, auth validation, DTO, policies. | Node.js/TypeScript, prototype. |
@@ -327,9 +329,11 @@ Baserow, calendar, language and payment providers являются внешни�
 ```mermaid
 flowchart TB
   Mobile["Mobile App"]
-  Web["Landing / Web"]
+  ClientWeb["Client WEB"]
+  Landing["Public Landing"]
   Ops["Operator Portal"]
   Proxy["Reverse Proxy / TLS"]
+  WebHost["Static Web Hosting / CDN"]
   Keycloak["Keycloak"]
   API["CIFEDRA API"]
   Core["CIFEDRA Core"]
@@ -339,10 +343,12 @@ flowchart TB
   Providers["Integration Providers"]
 
   Mobile -->|"OIDC Authorization Code + PKCE"| Keycloak
-  Web -->|"OIDC"| Keycloak
+  ClientWeb -->|"OIDC Authorization Code + PKCE"| Keycloak
   Ops -->|"OIDC with stronger policy"| Keycloak
   Mobile -->|"HTTPS/JSON"| Proxy
-  Web -->|"HTTPS"| Proxy
+  ClientWeb -->|"HTTPS/JSON"| Proxy
+  ClientWeb -->|"Loads static assets"| WebHost
+  Landing -->|"HTTPS static content"| WebHost
   Ops -->|"HTTPS/JSON"| Proxy
   Proxy -->|"Routes API requests"| API
   API -->|"Validates JWT/JWKS"| Keycloak
@@ -376,7 +382,7 @@ apps/worker
 
 ```mermaid
 flowchart LR
-  Clients["Mobile / Web / Ops"]
+  Clients["Mobile / Client WEB / Ops"]
 
   subgraph API["CIFEDRA API Container"]
     Router["HTTP Router<br/>versioned routes"]
@@ -491,7 +497,7 @@ services.
 ```mermaid
 sequenceDiagram
   actor Client
-  participant App as Mobile App
+  participant App as Mobile or Client WEB
   participant API as CIFEDRA API
   participant Core as CIFEDRA Core
   participant DB as PostgreSQL
@@ -700,6 +706,7 @@ S3-compatible object storage
 
 - Keycloak is production/staging IdP.
 - Mobile uses Authorization Code through external browser + PKCE.
+- Client WEB uses Authorization Code + PKCE and stores tokens only in memory.
 - API validates issuer, audience, signature and expiration.
 - Local auth remains test adapter.
 
@@ -817,7 +824,7 @@ UI localization remains a separate resource-based i18n process.
 
 ## 19. Automation and n8n
 
-n8n is not required for Core or Mobile MVP.
+n8n is not required for Core or client applications MVP.
 
 Allowed target use:
 
@@ -889,6 +896,7 @@ CIFEDRA managed local environment
     - cifedra-api
     - cifedra-worker
     - cifedra-postgres
+    - cifedra-web
   cifedra-identity compose project/profile
     - keycloak
     - keycloak-postgres
@@ -923,6 +931,7 @@ PostgreSQL, Redis/Valkey, RabbitMQ и object storage остаются в private
 flowchart TB
   subgraph Laptop["Developer workstation"]
     Browser["Browser / Test Console"]
+    ClientWeb["Client WEB browser"]
     Mobile["iOS/Android Simulator"]
 
     subgraph CoreDocker["cifedra-core compose project"]
@@ -930,6 +939,7 @@ flowchart TB
       Worker["CIFEDRA Worker container"]
       PG["Core PostgreSQL"]
       Media["Local media volume"]
+      WebAssets["Client WEB dev/static container"]
     end
 
     subgraph IdentityDocker["cifedra-identity compose project"]
@@ -946,6 +956,8 @@ flowchart TB
   end
 
   Browser --> API
+  ClientWeb --> WebAssets
+  ClientWeb --> API
   Mobile --> API
   API --> PG
   API --> Keycloak
@@ -987,6 +999,7 @@ flowchart TB
 flowchart TB
   Users["Internet Users"]
   DNS["DNS / TLS / Edge"]
+  Web["Client WEB static assets / CDN"]
 
   subgraph AppZone["Application Zone"]
     API1["API Replica 1"]
@@ -1011,8 +1024,9 @@ flowchart TB
   end
 
   Users --> DNS
-  DNS --> API1
-  DNS --> API2
+  DNS -->|"Client WEB static assets"| Web
+  DNS -->|"API traffic"| API1
+  DNS -->|"API traffic"| API2
   API1 --> PG
   API2 --> PG
   API1 --> Media
@@ -1126,7 +1140,7 @@ NFR/SRS до staging acceptance.
 ## 27. Open Questions
 
 1. Какие языки входят в первый pilot?
-2. Нужен ли voice input в Mobile MVP или в следующей итерации?
+2. Нужен ли voice input в Client Applications MVP или в следующей итерации?
 3. Какой сценарий первым требует Booking: Skills, Work или Care?
 4. Нужен ли пользователям direct chat или concierge достаточно для pilot?
 5. Какая юридическая модель будет у production payments?
@@ -1151,11 +1165,11 @@ NFR/SRS до staging acceptance.
 - outbox/inbox;
 - versioned API/OpenAPI.
 
-### Phase 3. Identity and Mobile
+### Phase 3. Identity and Client Applications
 
 - Keycloak local/staging;
-- OIDC mobile flow;
-- Mobile shell and primary CJM.
+- OIDC mobile and WEB flows;
+- Mobile and client WEB shells with primary CJM.
 
 ### Phase 4. Operations
 

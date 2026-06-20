@@ -16,9 +16,10 @@
 - локального Docker runtime для open source модулей;
 - интеграций с задачами и чатом;
 - сценариев по каждому направлению;
-- будущих требований к мобильному приложению, backoffice и concierge.
+- будущих требований к mobile, клиентскому WEB, backoffice и concierge.
 
 Путь к будущей мобильной сборке зафиксирован отдельно: [mobile-build-plan.md](./mobile-build-plan.md).
+Путь к клиентскому WEB: [web-client-build-plan.md](./web-client-build-plan.md).
 
 ## Локальные сервисы
 
@@ -27,6 +28,7 @@
 | API | `http://localhost:3030` | Прототип backend API. |
 | CIFEDRA Auth | `http://localhost:3030/auth/status` | Локальная регистрация, login, bearer-session и identity claims. |
 | Landing | `http://localhost:4177/web/landing/` | Веб-лендинг с QR-кодами приложений. |
+| Client WEB | `http://localhost:4178/` | Планируемое адаптивное приложение клиентов и исполнителей. |
 | Test Console | `http://localhost:4177/web/test-console/` | Ручная проверка сценариев `Life`, `Work`, `Skills`. |
 | Integration Diagnostics | `http://localhost:4177/web/test-console/diagnostics.html` | Техническая проверка локальных модулей Plane/Chatwoot. |
 | Plane CE | `http://localhost:8082` | Open source модуль задач и исполнения. |
@@ -126,6 +128,6 @@ http://localhost:4177/web/test-console/
 3. `Skills` MVP flow.
 4. Общая доменная модель.
 5. API-контракты.
-6. Минимальный mobile UX.
+6. Минимальный mobile и client WEB UX.
 7. Решение по backoffice и support/concierge.
 8. Локальная проверка Plane CE и Chatwoot CE как сменяемых модулей.

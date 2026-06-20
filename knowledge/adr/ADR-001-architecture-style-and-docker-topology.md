@@ -45,6 +45,13 @@ CIFEDRA Core строится как **модульный монолит с от
 Это не два независимых микросервиса: они используют общие доменные контракты и
 одну Core DB.
 
+Клиентские приложения являются отдельными deployable frontends:
+
+- `apps/mobile` для iOS/Android;
+- `apps/web` для клиентского WEB;
+- `apps/ops` позже для операторов/администраторов;
+- `web/landing` остается отдельным публичным статическим сайтом.
+
 ### 2. Доменные границы
 
 Внутри Core выделяются модули:
@@ -93,6 +100,7 @@ CIFEDRA local environment
     cifedra-api
     cifedra-worker
     cifedra-postgres
+    cifedra-web
   cifedra-identity compose project/profile
     keycloak
     keycloak-postgres
@@ -119,6 +127,7 @@ ports, привязанные к `127.0.0.1`.
 | Profile | Состав | Назначение |
 | --- | --- | --- |
 | `core` | API, worker, Core PostgreSQL. | Ежедневная разработка и unit/integration tests. |
+| `web` | Клиентское WEB-приложение. | Responsive browser flow и E2E tests. |
 | `identity` | Keycloak и его DB. | OIDC, registration and authorization tests. |
 | `support` | Chatwoot stack. | Concierge/support scenario. |
 | `tasks` | Plane stack. | Operator execution/task scenario. |
@@ -132,6 +141,7 @@ ports, привязанные к `127.0.0.1`.
 
 - API и worker собираются из одного versioned application image;
 - запускаются разными commands и масштабируются независимо;
+- клиентский WEB собирается отдельно и публикуется как static assets;
 - Core PostgreSQL является отдельным stateful component;
 - Keycloak использует отдельный PostgreSQL instance/database, backup и service role;
 - Chatwoot/Plane/Baserow развертываются изолированно или заменяются SaaS;

@@ -54,7 +54,7 @@ Need -> Match -> Prepare -> Connect -> Result
 
 ## Ближайшая цель
 
-Подготовить `CIFEDRA Core` к mobile MVP и реальному backend storage.
+Подготовить `CIFEDRA Core` к mobile/client WEB MVP и реальному backend storage.
 
 Критерий: ядро должно уметь не только подобрать профиль, но и провести минимальный жизненный цикл:
 
@@ -189,7 +189,7 @@ Need created
 4. Domain events, outbox, webhook inbox and idempotency.
 5. Audit trail and notification intents.
 
-### Итерация 9. API contracts for mobile
+### Итерация 9. API contracts for client applications
 
 1. Описать публичные DTO.
 2. Подготовить OpenAPI.

@@ -25,6 +25,7 @@
 | [system/cifedra-target-architecture.md](./system/cifedra-target-architecture.md) | Каноническая архитектура локального и production-контуров. |
 | [system/core-cjm-gap-analysis.md](./system/core-cjm-gap-analysis.md) | Сопоставление CJM с текущим Core и план закрытия gaps. |
 | [system/multilingual-voice-plan.md](./system/multilingual-voice-plan.md) | Языки, перевод, Whisper и voice scenarios. |
+| [system/web-client-build-plan.md](./system/web-client-build-plan.md) | Клиентское WEB-приложение, стек, границы и этапы реализации. |
 | [adr/README.md](./adr/README.md) | Реестр утвержденных архитектурных решений. |
 
 ## Правило структуры

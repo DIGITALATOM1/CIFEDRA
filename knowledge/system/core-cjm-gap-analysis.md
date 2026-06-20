@@ -40,7 +40,7 @@ Identity
   -> Review / Reputation / Repeat
 ```
 
-До mobile API нельзя считать доменную модель стабильной: сейчас отсутствуют
+До client API нельзя считать доменную модель стабильной: сейчас отсутствуют
 агрегаты между `Decision` и `Conversation`, а также между `Conversation` и
 `Result`.
 
@@ -217,7 +217,7 @@ translation status, но не зависит от конкретной моде�
 
 ## Приоритетный backlog
 
-### P0. До фиксации Mobile API
+### P0. До фиксации Client API
 
 1. `IdentityRef` и provider-neutral principal.
 2. `Profile` aggregate и ownership.
@@ -265,9 +265,9 @@ translation status, но не зависит от конкретной моде�
 7. Iteration 12: Notifications, operator queue and integration event sync.
 8. Iteration 13: Languages, translation metadata and voice transcription.
 
-## Критерий готовности Core к Mobile
+## Критерий готовности Core к клиентским приложениям
 
-Core готов к фиксации mobile API, когда:
+Core готов к фиксации API для mobile и client WEB, когда:
 
 - профиль и identity разделены;
 - Need умеет запросить уточнение;

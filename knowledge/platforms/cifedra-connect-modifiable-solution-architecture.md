@@ -19,7 +19,7 @@ payments: [../system/cifedra-target-architecture.md](../system/cifedra-target-ar
 | --- | --- |
 | Модифицируемость | Доступен исходный код или расширяемая архитектура, можно менять UI, модели данных, правила и интеграции. |
 | Self-host / переносимость | Можно стартовать в managed-режиме, но архитектура не должна запирать данные в одном SaaS. |
-| API-first | Мобильное приложение, backoffice, агенты и автоматизации работают через API. |
+| API-first | Mobile, client WEB, backoffice, агенты и автоматизации работают через API. |
 | Postgres-first | Общая модель данных должна быть реляционной, расширяемой и пригодной для аналитики. |
 | Заменяемость | Каждый компонент можно заменить без переписывания пользовательского продукта. |
 | Лицензионная чистота | Open-source предпочтительнее source-available; source-available решения требуют отдельного review перед production. |
@@ -31,7 +31,7 @@ payments: [../system/cifedra-target-architecture.md](../system/cifedra-target-ar
 неструктурированный монолит и не набор микросервисов по направлениям.
 
 ```text
-Mobile App
+Mobile App / Client WEB
   -> CIFEDRA API / Core Backend
     -> Postgres Core Data
     -> Matching / Search / Trust / Result
@@ -63,12 +63,13 @@ Mobile App
 | Слой | Основное решение | Почему подходит | Граница применения |
 | --- | --- | --- | --- |
 | Mobile app | `React Native + Expo` | Нативные iOS/Android приложения, быстрые итерации, совместимость с React Native widget для Chatwoot. | Весь пользовательский UX: карточки, свайпы, shortlist, подготовка, результат. |
+| Client WEB | `React + TypeScript + Vite` | Адаптивный browser-клиент без установки, desktop/tablet сценарии и accessibility. | Тот же product flow через CIFEDRA API; не смешивать с landing и operator portal. |
 | Core backend | `PostgreSQL + собственный API` | PostgreSQL остается источником истины; PostGIS/pgvector подключаются как extensions. | Бизнес-логику держать в CIFEDRA Core. |
 | Identity | `Keycloak` в staging/production; local auth adapter в dev | OIDC/SSO, sessions, MFA, reset and federation. | Product profile/permissions остаются в Core. |
 | Геоданные | `PostGIS` | Расширяет PostgreSQL хранением, индексированием и запросами геоданных. | Нужно прежде всего для `Life`: расстояния, районы, локальная доступность. |
 | Семантический матчинг | `pgvector` на старте, `Qdrant` при росте | pgvector хранит векторы рядом с данными в Postgres; Qdrant можно вынести отдельно для масштабного vector search. | Не заменяет правила матчинга, а дополняет их similarity-поиском. |
 | Фасетный поиск | `Meilisearch` опционально | Быстрый open-source поиск, фильтры, self-host/fork. | Подключать после появления объема профилей и поисковых фильтров. |
-| Backoffice / операционные таблицы | `Baserow` | MIT/open-source, API-first, удобно для ручного матчинга, справочников и SRS-операционки. | Не использовать как production core мобильного продукта. |
+| Backoffice / операционные таблицы | `Baserow` | MIT/open-source, API-first, удобно для ручного матчинга, справочников и SRS-операционки. | Не использовать как production core клиентского продукта. |
 | Support / concierge | `Chatwoot` | Self-hosted/open-source support desk, mobile apps, API, React Native widget. | Использовать для поддержки и concierge, не как основной marketplace messenger. |
 | Автоматизации | Собственные workers; `n8n` опционально | Workers надежно исполняют domain events; n8n удобен для внутренних интеграций. | Не отдавать n8n lifecycle, auth, trust, payments and audit. |
 | Контент / инструкции / Help Center | `Chatwoot Help Center`, позже `Strapi` или `Payload` | Strapi MIT/open-source, Payload TypeScript/open-source; можно строить управляемый контент. | Не смешивать продуктовые данные людей с публичным контентом. |
@@ -86,7 +87,7 @@ Mobile App
 | Потребность | Техническое решение |
 | --- | --- |
 | Локальный поиск помощников | Postgres + PostGIS, позже Meilisearch для фильтров. |
-| Карточки исполнителей рядом | Собственный mobile UX + CIFEDRA Core profiles. |
+| Карточки исполнителей рядом | Собственный mobile/WEB UX + CIFEDRA Core profiles. |
 | Свайпы и shortlist | Собственный модуль `Swipe / Decision`. |
 | Ручной подбор на пилоте | Baserow как очередь заявок и каталог кандидатов. |
 | Коммуникация в раннем MVP | Chatwoot concierge, оператор помогает довести до контакта. |
@@ -129,7 +130,7 @@ Mobile App
 
 | Решение | Решение по проекту |
 | --- | --- |
-| `Baserow` | Использовать для backoffice, справочников, ручного пилота, SRS и базы знаний. Не делать на нем конечный mobile UX. |
+| `Baserow` | Использовать для backoffice, справочников, ручного пилота, SRS и базы знаний. Не делать на нем конечный mobile/WEB UX. |
 | `Chatwoot` | Использовать для поддержки и concierge. Не использовать как полноценный direct marketplace chat без отдельного SRS. |
 | `Appwrite` | Рассматривать только как альтернативный BaaS. Для CIFEDRA не выбран из-за утвержденного PostgreSQL-first подхода, гео, аналитики и сложных связей. |
 | `Directus` | Рассматривать осторожно: мощный backend/admin, но текущая лицензия source-available/MSCL требует review. |
@@ -151,13 +152,14 @@ Mobile App
 - Chatwoot: поддержка и concierge-коммуникация.
 - Документы SRS и архитектуры в `knowledge/`.
 
-### Этап 1. Mobile MVP
+### Этап 1. Client Applications MVP
 
-Цель: дать пользователю основной сценарий в мобильном приложении.
+Цель: дать пользователю основной сценарий в iOS, Android и клиентском WEB.
 
 Состав:
 
 - React Native + Expo.
+- React + TypeScript + Vite для `apps/web`.
 - PostgreSQL для пользователей, задач, профилей, матчей, свайпов, shortlist и result.
 - PostGIS для `Life`.
 - pgvector для начального semantic matching.
@@ -222,7 +224,7 @@ Mobile App
 ## Следующие задачи системного анализа
 
 1. Подготовить SRS `CIFEDRA Core Domain Model`.
-2. Подготовить SRS `Mobile MVP: Need -> Match -> Prepare -> Connect -> Result`.
+2. Подготовить SRS `Client Applications MVP: Need -> Match -> Prepare -> Connect -> Result`.
 3. Подготовить отдельные SRS-блоки для `Life`, `Work`, `Skills`.
 4. Подготовить таблицу `Build / Modify / Integrate / Avoid` по каждому компоненту.
 5. Описать MVP-модель данных: user, need, direction, category, profile, capability, match, swipe, shortlist, conversation, result, trust signal.

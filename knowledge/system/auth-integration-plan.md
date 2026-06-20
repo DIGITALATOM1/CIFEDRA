@@ -23,6 +23,7 @@ Membership, permissions, preferences, consent и trust.
 | Хранение | `.local/auth/store.json`, не коммитится. | Keycloak DB для identity; CIFEDRA DB для product profile. |
 | Интеграции | Adapter добавляет `cifedra_actor_*` в Plane/Chatwoot payload. | SSO для UI интеграций через OIDC/SAML/reverse proxy. |
 | Mobile | Использует локальные `/auth/*` endpoints. | OIDC Authorization Code через browser + PKCE, secure storage and refresh. |
+| Client WEB | Использует тот же local auth adapter. | OIDC Authorization Code + PKCE, tokens только in memory. |
 
 ## Почему Keycloak
 

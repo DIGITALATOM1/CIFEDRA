@@ -1,6 +1,7 @@
 # CIFEDRA CONNECT Landing
 
-Статический лендинг продукта с QR-кодами на мобильные приложения.
+Статический лендинг продукта со ссылкой на клиентский WEB и QR-кодами
+мобильных приложений.
 
 ## Файлы
 
@@ -17,6 +18,7 @@
 
 | Платформа | URL |
 | --- | --- |
+| WEB | `https://app.cifedra.app` |
 | iOS | `https://cifedra.app/ios` |
 | Android | `https://cifedra.app/android` |
 

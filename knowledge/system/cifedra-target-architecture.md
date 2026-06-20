@@ -1,7 +1,7 @@
 # CIFEDRA CONNECT: целевая архитектура
 
 Дата: 2026-06-20
-Статус: target architecture v0.2
+Статус: target architecture v0.3
 
 ## Назначение
 
@@ -27,7 +27,8 @@ External systems provide replaceable capabilities through adapters.
 | Product Core | Самописный `CIFEDRA Core`. |
 | Architecture style | Модульный монолит + отдельный worker; не микросервисы на этапе MVP. |
 | Mobile | React Native + Expo. |
-| Web | Landing и будущий operator/admin portal. |
+| Client WEB | React + TypeScript + Vite, адаптивный пользовательский интерфейс. |
+| Other Web | Отдельные Landing и будущий operator/admin portal. |
 | API | Самописный versioned CIFEDRA API. |
 | Identity | Keycloak для staging/production; local auth adapter для разработки. |
 | Core Data | PostgreSQL 18; PostGIS 3.6.4 и pgvector 0.8.3 как расширения. |
@@ -51,12 +52,14 @@ External systems provide replaceable capabilities through adapters.
 flowchart TB
   subgraph Clients["Clients"]
     Mobile["Mobile App<br/>React Native + Expo"]
-    Web["Landing / Web"]
+    ClientWeb["Client WEB<br/>React + TypeScript"]
+    Landing["Public Landing"]
     Ops["Operator / Admin Portal"]
   end
 
   subgraph Access["Access and Identity"]
     Edge["Reverse Proxy / TLS<br/>production"]
+    WebHost["Static Web Hosting / CDN"]
     IdP["Keycloak<br/>OIDC / SSO"]
   end
 
@@ -90,11 +93,13 @@ flowchart TB
   end
 
   Mobile --> Edge
-  Web --> Edge
+  ClientWeb --> Edge
+  ClientWeb --> WebHost
+  Landing --> WebHost
   Ops --> Edge
   Edge --> API
   Mobile --> IdP
-  Web --> IdP
+  ClientWeb --> IdP
   Ops --> IdP
   API --> IdP
   API --> Core
@@ -161,7 +166,7 @@ Keycloak нужен для общей авторизации в staging/producti
 | Client | Тип |
 | --- | --- |
 | `cifedra-mobile` | Public OIDC client, Authorization Code через системный browser + PKCE. |
-| `cifedra-web` | Web client. |
+| `cifedra-web` | Public SPA OIDC client, Authorization Code + PKCE, tokens in memory. |
 | `cifedra-api` | Resource server / audience. |
 | `cifedra-ops` | Operator/admin portal with stronger authentication policy. |
 | Service integrations | Service accounts only where necessary. |
@@ -242,7 +247,7 @@ Availability -> Slot -> Booking -> Confirmed -> Completed / Cancelled / No-show
 
 ### Нужен ли n8n
 
-Для ядра и первого mobile MVP: нет.
+Для ядра и первого Client Applications MVP: нет.
 
 Он может быть полезен позже как внутренний automation tool:
 
@@ -445,7 +450,7 @@ Git или Baserow.
 | Компонент | Решение |
 | --- | --- |
 | Core domain, match, consent, trust, execution, result | BUILD. |
-| Mobile and operator UX | BUILD. |
+| Mobile, client WEB and operator UX | BUILD. |
 | PostgreSQL/PostGIS/pgvector | INTEGRATE. |
 | Keycloak | INTEGRATE/MODIFY. |
 | Chatwoot, Plane, Baserow | INTEGRATE/MODIFY behind adapters. |
@@ -462,7 +467,7 @@ Git или Baserow.
 2. Перейти с local files на PostgreSQL and repository contracts.
 3. Зафиксировать versioned API/OpenAPI.
 4. Подключить Keycloak локально.
-5. Собрать mobile shell and happy path.
+5. Собрать mobile и client WEB shells с общим happy path.
 6. Добавить Baserow/operator queue and integration event sync.
 7. Добавить languages and optional transcription.
 8. Добавить booking/video по Skills/Work pilot.

@@ -258,6 +258,28 @@ h1 {
   gap: 14px;
 }
 
+.web-app-link {
+  min-height: 62px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid rgba(247, 241, 227, 0.18);
+  border-radius: var(--cifedra-radius-md);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.web-app-link span {
+  color: var(--cifedra-white);
+  font-weight: 900;
+}
+
+.web-app-link a {
+  color: var(--cifedra-teal);
+  font-weight: 900;
+}
+
 .qr-card {
   min-height: 194px;
   padding: 14px;
@@ -485,6 +507,11 @@ h1 {
 
   .qr-strip {
     grid-template-columns: 1fr;
+  }
+
+  .web-app-link {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .site-footer {

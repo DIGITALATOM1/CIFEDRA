@@ -13,7 +13,9 @@
 | `apps/api/` | Минимальный API-прототип поверх `@cifedra/core`. |
 | `scripts/integrations/` | Подготовка и проверка локальных open source интеграций. |
 
-Мобильная стратегия: [knowledge/system/mobile-build-plan.md](./knowledge/system/mobile-build-plan.md).
+Клиентские приложения:
+[mobile iOS/Android](./knowledge/system/mobile-build-plan.md) и
+[WEB](./knowledge/system/web-client-build-plan.md).
 
 План доработки ядра: [knowledge/system/core-development-plan.md](./knowledge/system/core-development-plan.md).
 
