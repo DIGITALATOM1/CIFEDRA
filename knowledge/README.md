@@ -13,6 +13,7 @@
 | `business/` | Бизнес-анализ, процессы, роли, регламенты, модели ценности. |
 | `support/` | Руководства, инструкции, release notes, эксплуатационные материалы. |
 | `agents/` | Роли агентов, зоны ответственности, правила передачи задач между агентами. |
+| `adr/` | Утвержденные Architecture Decision Records и история изменения решений. |
 
 ## Актуальные рабочие документы
 
@@ -24,6 +25,7 @@
 | [system/cifedra-target-architecture.md](./system/cifedra-target-architecture.md) | Каноническая архитектура локального и production-контуров. |
 | [system/core-cjm-gap-analysis.md](./system/core-cjm-gap-analysis.md) | Сопоставление CJM с текущим Core и план закрытия gaps. |
 | [system/multilingual-voice-plan.md](./system/multilingual-voice-plan.md) | Языки, перевод, Whisper и voice scenarios. |
+| [adr/README.md](./adr/README.md) | Реестр утвержденных архитектурных решений. |
 
 ## Правило структуры
 

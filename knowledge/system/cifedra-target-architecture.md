@@ -1,7 +1,7 @@
 # CIFEDRA CONNECT: целевая архитектура
 
 Дата: 2026-06-20
-Статус: target architecture v0.1
+Статус: target architecture v0.2
 
 ## Назначение
 
@@ -10,6 +10,8 @@
 
 Формальное представление контейнеров, данных, deployment и NFR:
 [cifedra-hld.md](./cifedra-hld.md).
+
+Утвержденные решения: [../adr/README.md](../adr/README.md).
 
 Основной принцип:
 
@@ -23,11 +25,12 @@ External systems provide replaceable capabilities through adapters.
 | Зона | Решение |
 | --- | --- |
 | Product Core | Самописный `CIFEDRA Core`. |
+| Architecture style | Модульный монолит + отдельный worker; не микросервисы на этапе MVP. |
 | Mobile | React Native + Expo. |
 | Web | Landing и будущий operator/admin portal. |
 | API | Самописный versioned CIFEDRA API. |
 | Identity | Keycloak для staging/production; local auth adapter для разработки. |
-| Core Data | PostgreSQL; PostGIS и pgvector как расширения. |
+| Core Data | PostgreSQL 18; PostGIS 3.6.4 и pgvector 0.8.3 как расширения. |
 | Files/Media | Локальная файловая система в dev; S3-compatible adapter в production. |
 | Search | PostgreSQL FTS + pgvector сначала; Meilisearch/Qdrant только при росте. |
 | Support | Chatwoot как concierge/support adapter. |
@@ -99,7 +102,7 @@ flowchart TB
   PG --> Geo
   PG --> Vector
   Core --> Media
-  Core --> Worker
+  PG --> Worker
   Worker --> Notify
   Notify --> Channels
   Worker --> Adapters
@@ -115,6 +118,9 @@ flowchart TB
 ```
 
 ## CIFEDRA Core
+
+`Life`, `Work`, `Skills` используют общие модули и таблицы с разными intake
+schemas и policies. Они не являются отдельными backend services.
 
 ### Обязательные модули
 
@@ -310,14 +316,17 @@ Core должен заранее иметь provider-neutral model:
 | Product profile and preferences | CIFEDRA DB. |
 | Need, Match, Contact Request, Engagement, Result | CIFEDRA DB. |
 | Consent, Trust, Moderation, Audit | CIFEDRA DB. |
-| Chatwoot conversation ID/state copy | CIFEDRA DB + external Chatwoot data. |
-| Plane task ID/state copy | CIFEDRA DB + external Plane data. |
+| Chatwoot messages | Chatwoot. |
+| Product conversation state and Chatwoot reference | CIFEDRA DB. |
+| Plane task fields and operator workflow | Plane. |
+| Engagement lifecycle and Plane reference | CIFEDRA DB. |
 | Baserow records | Pilot projection, не source of truth. |
 | Booking | CIFEDRA DB; calendar provider is synchronized projection. |
 | Media metadata | CIFEDRA DB. |
 | Audio/files | Media storage. |
 | Transcript/translation metadata | CIFEDRA DB. |
-| Payment state | CIFEDRA DB projection + PSP source record. |
+| Payment transaction/settlement fact | PSP. |
+| Payment intent and verified projection | CIFEDRA DB. |
 | n8n execution | Internal automation log, не product source of truth. |
 
 ## Eventing
@@ -332,12 +341,15 @@ PostgreSQL transaction
   -> outbox event
   -> worker
   -> adapter/provider
-  -> webhook
+  -> API webhook ingress
   -> inbox deduplication
+  -> worker
   -> domain update
 ```
 
 Это закрывает reliability интеграций без раннего усложнения инфраструктуры.
+Синхронные API описываются OpenAPI 3.1, events используют CloudEvents 1.0,
+ошибки API соответствуют RFC 9457.
 
 ## Notifications
 
@@ -380,7 +392,7 @@ Meilisearch или Qdrant подключаются только после по�
 
 ### Добавляем последовательно
 
-1. PostgreSQL для Core.
+1. Tracked `cifedra-core` compose project с PostgreSQL 18/PostGIS/pgvector.
 2. Repository ports, migrations and outbox.
 3. Keycloak local realm and OIDC adapter.
 4. Baserow pilot backoffice.
@@ -390,8 +402,10 @@ Meilisearch или Qdrant подключаются только после по�
 8. Argos Translate text translation spike.
 9. Jitsi and n8n only when соответствующий CJM готов к проверке.
 
-Не нужно поднимать все контейнеры одновременно до появления проверяемого
-сценария.
+Локально это единое управляемое окружение, но не один контейнер: Core,
+Identity, Chatwoot, Plane и Baserow запускаются отдельными compose projects и
+profiles с отдельными volumes/databases. Не нужно поднимать все контейнеры
+одновременно до появления проверяемого сценария.
 
 ## Production-контур
 

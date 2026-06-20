@@ -1,8 +1,8 @@
 # CIFEDRA CONNECT: High-Level Design
 
 Дата: 2026-06-20
-Версия: HLD v0.3
-Статус: draft for review
+Версия: HLD v0.4
+Статус: approved architecture baseline; sizing and detailed SRS remain open
 
 ## 1. Назначение
 
@@ -27,6 +27,7 @@ HLD описывает целевую высокоуровневую архит�
 - [CJM по ролям](../product/cjm-by-roles.md).
 - [План авторизации](./auth-integration-plan.md).
 - [Языки и голос](./multilingual-voice-plan.md).
+- [Architecture Decision Records](../adr/README.md).
 
 Метод представления: C4 Model на уровнях System Context, Container и
 Component, дополненный Dynamic и Deployment diagrams. Code-level diagrams,
@@ -124,7 +125,7 @@ Need
 | Scalability | Horizontal API/worker scaling after measurement. |
 | Internationalization | Locale, timezone, language metadata and provider adapters. |
 | Testability | Local mocks, contract tests, smoke and E2E. |
-| Recoverability | Backups, restore tests and explicit RTO/RPO before production. |
+| Recoverability | Backups, restore tests and explicit RTO/RPO before staging acceptance. |
 
 Quantitative SLO values remain TBD until pilot sizing is approved.
 
@@ -217,7 +218,7 @@ Quantitative SLO values remain TBD until pilot sizing is approved.
 | Notification volume | TBD по CJM events. |
 | Payment transactions | Не применимо до commercial pilot. |
 | Required API availability | Определить до staging. |
-| RTO/RPO | Определить до production. |
+| RTO/RPO | Определить до staging acceptance. |
 
 До появления данных применяем следующие ограничения:
 
@@ -346,12 +347,12 @@ flowchart TB
   Proxy -->|"Routes API requests"| API
   API -->|"Validates JWT/JWKS"| Keycloak
   API -->|"Invokes commands and queries"| Core
-  Core -->|"Transactions and repositories"| DB
   Core -->|"Creates metadata and signed access"| Media
-  Core -->|"Writes outbox events"| Worker
-  Worker -->|"Reads outbox and writes delivery state"| DB
+  Core -->|"Commits state and outbox in one transaction"| DB
+  Worker -->|"Claims outbox/inbox records"| DB
   Worker -->|"Provider APIs"| Providers
-  Providers -->|"Signed webhooks"| Worker
+  Providers -->|"Signed webhooks through Proxy"| API
+  API -->|"Durably stores validated webhook inbox"| DB
 ```
 
 ## 12. C4 Level 3: Component Architecture
@@ -425,12 +426,14 @@ flowchart LR
     Integration["Integration Adapter Registry"]
     Notification["Notification Dispatcher"]
     MediaJobs["Media / Language Jobs"]
-    Webhook["Webhook Ingress Processor"]
+    Inbox["Inbox Processor"]
+    Commands["Application Command Handler"]
   end
 
   Providers["External Providers"]
 
   DB -->|"Claims pending events"| Dispatcher
+  DB -->|"Claims accepted webhooks"| Inbox
   Scheduler -->|"Triggers expiry/reconciliation"| Dispatcher
   Dispatcher --> Integration
   Dispatcher --> Notification
@@ -438,10 +441,15 @@ flowchart LR
   Integration -->|"API calls"| Providers
   Notification -->|"Push/email/SMS"| Providers
   MediaJobs -->|"Translate/transcribe"| Providers
-  Providers -->|"Webhook events"| Webhook
-  Webhook -->|"Deduplicated commands"| DB
+  Inbox -->|"Maps provider event"| Commands
+  Commands -->|"Domain transaction + processed_at"| DB
   Retry --> Dispatcher
 ```
+
+Signed provider webhooks входят через публичный API ingress. API проверяет
+signature/replay, сохраняет inbox record и быстро отвечает provider. Worker не
+публикуется в Internet и не изменяет domain tables в обход application
+services.
 
 ### 12.3 Core components
 
@@ -519,6 +527,7 @@ sequenceDiagram
   participant Core as CIFEDRA Core
   participant DB as PostgreSQL
   participant Worker as Worker
+  participant API as Webhook API
   participant Chatwoot as Chatwoot
 
   Core->>DB: Commit conversation + outbox
@@ -532,8 +541,11 @@ sequenceDiagram
     Worker->>Worker: Backoff
     Worker->>Chatwoot: Retry same idempotency key
   end
-  Chatwoot->>Worker: Signed status webhook
-  Worker->>DB: Inbox deduplication + domain command
+  Chatwoot->>API: Signed status webhook
+  API->>DB: Durable inbox insert
+  API-->>Chatwoot: 2xx accepted
+  Worker->>DB: Claim inbox record
+  Worker->>DB: Domain command + processed_at transaction
 ```
 
 ### 13.3 Payment flow in local and production
@@ -541,27 +553,35 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
   participant Core as CIFEDRA Core
+  participant DB as PostgreSQL
   participant Worker as Worker
+  participant API as Webhook API
   participant Adapter as Payment Adapter
   participant PSP as Payment Provider
 
-  Core->>Worker: PaymentIntentRequested
+  Core->>DB: Commit payment intent + outbox
+  Worker->>DB: Claim PaymentIntentRequested
   alt Local profile
     Worker->>Adapter: Create mock intent
     Adapter-->>Worker: Deterministic test status
   else Production profile
     Worker->>PSP: Create hosted payment intent
     PSP-->>Worker: Checkout reference
-    PSP->>Worker: Signed payment webhook
+    PSP->>API: Signed payment webhook
+    API->>DB: Durable inbox insert
+    API-->>PSP: 2xx accepted
+    Worker->>DB: Claim and apply idempotent event
   end
-  Worker->>Core: Apply idempotent payment event
 ```
 
 ## 14. Data Architecture
 
 ### 14.1 Storage selection by access pattern
 
-PostgreSQL является единственным source of truth для product state.
+PostgreSQL 18 является единственным source of truth для product state.
+Текущая утвержденная база: PostgreSQL 18.4, PostGIS 3.6.4 и pgvector 0.8.3.
+Подробности зафиксированы в
+[ADR-002](../adr/ADR-002-postgresql-core-data-platform.md).
 
 Extensions:
 
@@ -582,7 +602,22 @@ Extensions:
 | Cache | None by default. | Add Redis only after measured hot reads/latency. |
 | Analytics | PostgreSQL projections initially. | Separate warehouse only after reporting volume grows. |
 
-### 14.2 High-level entity groups
+### 14.2 Database boundaries
+
+| Database/system | Boundary |
+| --- | --- |
+| `cifedra_core` | Dedicated Core PostgreSQL instance, database and roles. |
+| Keycloak DB | Separate PostgreSQL instance/database; credentials and sessions only. |
+| Chatwoot/Plane/Baserow DB | Vendor-owned isolated databases, never queried by CIFEDRA. |
+| Object storage | Binary data; Core owns metadata, checksum, retention and access policy. |
+
+Core schemas follow module ownership: `identity`, `people`, `need`, `matching`,
+`engagement`, `communication`, `trust`, `catalog`, `commerce`, `integration`
+and `audit`. `Life`, `Work`, `Skills` use common tables with direction-specific
+intake definitions and policies; they do not receive separate PostgreSQL
+schemas or databases.
+
+### 14.3 High-level entity groups
 
 ```mermaid
 erDiagram
@@ -603,7 +638,7 @@ erDiagram
   USER_PROFILE ||--o{ AUDIT_EVENT : acts
 ```
 
-### 14.3 Data consistency
+### 14.4 Data consistency
 
 | Data | Consistency model |
 | --- | --- |
@@ -615,7 +650,7 @@ erDiagram
 | Search/vector indexes | Eventual consistency and rebuildable. |
 | Analytics/reporting | Eventual consistency. |
 
-### 14.4 Read/write paths
+### 14.5 Read/write paths
 
 На первом этапе API и Core используют единый transactional model.
 
@@ -636,7 +671,14 @@ Client -> API -> Query Service -> PostgreSQL
 - недопустимая latency PostgreSQL query;
 - необходимость independently rebuildable projections.
 
-### 14.5 Media
+### 14.6 Tenant isolation
+
+- shared-table tenancy with `owner_user_id` and/or `organization_id`;
+- application authorization and scoped constraints are mandatory;
+- no schema-per-tenant;
+- PostgreSQL RLS is added as defense in depth before Work organization pilot.
+
+### 14.7 Media
 
 PostgreSQL хранит metadata и access policy. Binary content хранится отдельно.
 
@@ -687,18 +729,36 @@ Core проверяет:
 
 Все интеграции реализуются через ports/adapters.
 
+Утвержденный стандарт:
+[ADR-003](../adr/ADR-003-interservice-communication-standard.md).
+
 ```text
 Core Domain Event
   -> Transactional Outbox
   -> Worker
   -> Provider Adapter
   -> External Service
-  -> Webhook
+  -> API Webhook Ingress
   -> Inbox Deduplication
+  -> Worker
   -> Domain Command
 ```
 
-### 16.1 Integration matrix
+### 16.1 Interaction rules
+
+| Interaction | Standard |
+| --- | --- |
+| Client API | REST/JSON over HTTPS, OpenAPI 3.1, `/api/v1`. |
+| Errors | RFC 9457 `application/problem+json`. |
+| Concurrency | `ETag/If-Match` or explicit `expectedVersion`. |
+| Command retries | `Idempotency-Key` for create/external-side-effect commands. |
+| Internal Core calls | In-process application services, not HTTP. |
+| Async delivery | PostgreSQL transactional outbox, at-least-once. |
+| Events | CloudEvents 1.0 envelope + versioned JSON Schema. |
+| Webhooks | API ingress -> durable inbox -> asynchronous idempotent command. |
+| External state drift | Scheduled reconciliation jobs. |
+
+### 16.2 Integration matrix
 
 | Integration | Purpose | Source of truth | Local mode | Production decision |
 | --- | --- | --- | --- | --- |
@@ -824,15 +884,21 @@ Integration requirements:
 ### 21.2 Target local
 
 ```text
-Docker / local processes
-  - cifedra-api
-  - cifedra-worker
-  - postgres
-  - keycloak
-  - chatwoot
-  - plane
-  - baserow
-  - optional argos/whisper spike
+CIFEDRA managed local environment
+  cifedra-core compose project
+    - cifedra-api
+    - cifedra-worker
+    - cifedra-postgres
+  cifedra-identity compose project/profile
+    - keycloak
+    - keycloak-postgres
+  vendor compose projects/profiles
+    - chatwoot + own dependencies/data
+    - plane + own dependencies/data
+    - baserow + own dependencies/data
+  optional profiles
+    - argos/whisper
+    - observability
 
 Mocks
   - notifications
@@ -841,7 +907,15 @@ Mocks
   - object storage via local filesystem
 ```
 
-Компоненты включаются профилями, чтобы не запускать весь стек для каждого теста.
+Компоненты включаются профилями `core`, `identity`, `support`, `tasks`,
+`backoffice`, `language`, `observability`. Единые project scripts управляют
+окружением, но vendor stacks сохраняют отдельные compose projects, networks,
+volumes and upgrade cycles. Количество контейнеров не означает
+microservice-архитектуру CIFEDRA.
+
+К shared network подключаются только API-facing containers/proxies. Vendor
+PostgreSQL, Redis/Valkey, RabbitMQ и object storage остаются в private networks
+соответствующих compose projects и не публикуются на host.
 
 ### 21.3 Local deployment diagram
 
@@ -850,16 +924,23 @@ flowchart TB
   subgraph Laptop["Developer workstation"]
     Browser["Browser / Test Console"]
     Mobile["iOS/Android Simulator"]
-    API["CIFEDRA API process"]
-    Worker["CIFEDRA Worker process"]
-    Media[".local/media"]
 
-    subgraph Docker["Docker Desktop"]
-      PG["PostgreSQL"]
+    subgraph CoreDocker["cifedra-core compose project"]
+      API["CIFEDRA API container"]
+      Worker["CIFEDRA Worker container"]
+      PG["Core PostgreSQL"]
+      Media["Local media volume"]
+    end
+
+    subgraph IdentityDocker["cifedra-identity compose project"]
       Keycloak["Keycloak"]
-      Chatwoot["Chatwoot"]
-      Plane["Plane"]
-      Baserow["Baserow"]
+      KeycloakDB["Keycloak PostgreSQL"]
+    end
+
+    subgraph VendorDocker["isolated vendor compose projects"]
+      Chatwoot["Chatwoot stack + own DB"]
+      Plane["Plane stack + own DB"]
+      Baserow["Baserow stack + own DB"]
       Optional["Optional Argos / Whisper"]
     end
   end
@@ -868,6 +949,7 @@ flowchart TB
   Mobile --> API
   API --> PG
   API --> Keycloak
+  Keycloak --> KeycloakDB
   API --> Media
   Worker --> PG
   Worker --> Chatwoot
@@ -891,7 +973,7 @@ flowchart TB
 - stateless API replicas;
 - worker replicas;
 - PostgreSQL backups and point-in-time recovery;
-- object storage;
+- object storage versioning/backup and metadata reconciliation;
 - Keycloak backup and key rotation;
 - secrets management;
 - metrics/logs/traces/alerts;
@@ -916,7 +998,8 @@ flowchart TB
   subgraph DataZone["Data Zone"]
     PG["Managed/Self-hosted PostgreSQL<br/>PITR backups"]
     Media["S3-compatible Storage"]
-    Keycloak["Keycloak + DB"]
+    Keycloak["Keycloak"]
+    KeycloakDB["Keycloak PostgreSQL<br/>separate backups"]
   end
 
   subgraph External["External / Isolated Providers"]
@@ -936,10 +1019,14 @@ flowchart TB
   API2 --> Media
   API1 --> Keycloak
   API2 --> Keycloak
+  Keycloak --> KeycloakDB
   Worker1 --> PG
   Worker2 --> PG
   Worker1 --> External
   Worker2 --> External
+  Chatwoot -->|"Signed webhook"| DNS
+  Plane -->|"Signed webhook"| DNS
+  Payment -->|"Signed webhook"| DNS
 ```
 
 ## 22. Scalability and resilience
@@ -983,7 +1070,7 @@ flowchart TB
 | Reliability | Idempotent commands/webhooks, outbox/inbox, retry with limits. |
 | Data integrity | Transactions, optimistic locking and versioned migrations. |
 | Performance | Match and API SLO are specified before staging load tests. |
-| Availability | Production SLO and RTO/RPO are defined before launch. |
+| Availability | Production SLO and RTO/RPO are defined before staging acceptance. |
 | Privacy | Consent, retention, deletion and disclosure trail. |
 | Accessibility | Mobile/web accessibility and voice input support. |
 | Localization | Locale/timezone/language metadata from first persistent schema. |
@@ -998,15 +1085,16 @@ NFR/SRS до staging acceptance.
 
 | ID | Decision | Status |
 | --- | --- | --- |
-| ADR-001 | Modular monolith + worker before microservices. | Accepted. |
-| ADR-002 | PostgreSQL is Core source of truth. | Accepted. |
-| ADR-003 | Keycloak for staging/production authentication. | Accepted. |
-| ADR-004 | Plane/Chatwoot/Baserow remain replaceable adapters. | Accepted. |
-| ADR-005 | Core owns Booking; Calendly is optional. | Accepted. |
-| ADR-006 | Whisper is speech provider, not universal translator. | Accepted. |
-| ADR-007 | Custom workers first; n8n optional internal automation. | Accepted. |
-| ADR-008 | Payment contract now, real provider only before production pilot. | Accepted. |
-| ADR-009 | Direct product chat is separate future SRS. | Deferred. |
+| [ADR-001](../adr/ADR-001-architecture-style-and-docker-topology.md) | Modular monolith + worker and multi-container topology. | Accepted. |
+| [ADR-002](../adr/ADR-002-postgresql-core-data-platform.md) | PostgreSQL 18, ownership and database boundaries. | Accepted. |
+| [ADR-003](../adr/ADR-003-interservice-communication-standard.md) | REST, CloudEvents, outbox/inbox and webhook standard. | Accepted. |
+| DEC-004 | Keycloak for staging/production authentication. | Accepted; ADR pending. |
+| DEC-005 | Plane/Chatwoot/Baserow remain replaceable adapters. | Accepted; ADR pending. |
+| DEC-006 | Core owns Booking; Calendly is optional. | Accepted; ADR pending. |
+| DEC-007 | Whisper is speech provider, not universal translator. | Accepted; ADR pending. |
+| DEC-008 | Custom workers first; n8n optional internal automation. | Accepted; ADR pending. |
+| DEC-009 | Payment contract now, real provider only before production pilot. | Accepted; ADR pending. |
+| DEC-010 | Direct product chat is separate future SRS. | Deferred. |
 
 ## 25. Trade-offs
 
@@ -1094,43 +1182,47 @@ NFR/SRS до staging acceptance.
 
 ### Scope
 
-- [ ] System boundary понятна business и engineering аудитории.
-- [ ] Все ключевые роли и external systems присутствуют.
-- [ ] In-scope и out-of-scope согласованы.
+- [x] System boundary понятна business и engineering аудитории.
+- [x] Все ключевые роли и external systems присутствуют.
+- [x] In-scope и out-of-scope согласованы.
 
 ### Diagrams
 
-- [ ] Context diagram показывает только people/software systems.
-- [ ] Container diagram показывает deployable units and data stores.
-- [ ] Component diagrams соответствуют API/Worker responsibilities.
-- [ ] Все отношения подписаны.
-- [ ] Dynamic diagrams покрывают primary and failure-sensitive flows.
-- [ ] Deployment diagrams разделяют local, staging and production.
+- [x] Context diagram показывает только people/software systems.
+- [x] Container diagram показывает deployable units and data stores.
+- [x] Component diagrams соответствуют API/Worker responsibilities.
+- [x] Все ключевые отношения подписаны.
+- [x] Dynamic diagrams покрывают primary and failure-sensitive flows.
+- [x] Deployment diagrams разделяют local, staging and production.
 
 ### Data and security
 
-- [ ] Для каждого типа данных указан owner/source of truth.
-- [ ] Authentication отделена от authorization.
-- [ ] PII/media/payment boundaries согласованы.
-- [ ] Consistency and integration failure behavior определены.
+- [x] Для каждого типа данных указан owner/source of truth.
+- [x] Authentication отделена от authorization.
+- [x] PII/media/payment boundaries согласованы.
+- [x] Consistency and integration failure behavior определены.
 
 ### Operability
 
-- [ ] Определены logs/metrics/traces/correlation.
-- [ ] Определены backup/restore and migration expectations.
-- [ ] Retry, idempotency, dead-letter and reconciliation учтены.
+- [x] Определены logs/metrics/traces/correlation.
+- [x] Определены backup/restore and migration expectations.
+- [x] Retry, idempotency, dead-letter and reconciliation учтены.
 - [ ] Quantitative SLO/sizing вынесены в обязательный staging input.
 
 ### Delivery
 
-- [ ] Phase roadmap согласован с Core gap register.
+- [x] Phase roadmap согласован с Core gap register.
 - [ ] Open questions имеют владельцев и target artifacts.
-- [ ] Детали LLD не смешаны с HLD.
-- [ ] Architecture decisions перенесены в ADR backlog.
+- [x] Детали LLD не смешаны с HLD.
+- [x] Ключевые architecture decisions перенесены в ADR.
 
 ## 30. HLD Acceptance Criteria
 
-HLD можно утвердить, когда:
+Архитектурный baseline HLD утвержден 2026-06-20. Для staging acceptance
+остаются обязательными quantitative SLO/sizing и перенос открытых product
+questions в профильные SRS.
+
+Утвержденные положения:
 
 1. Согласованы system boundary and data ownership.
 2. Подтвержден modular monolith + worker.

@@ -27,6 +27,8 @@ High-Level Design: [knowledge/system/cifedra-hld.md](./knowledge/system/cifedra-
 
 Аудит CJM и ядра: [knowledge/system/core-cjm-gap-analysis.md](./knowledge/system/core-cjm-gap-analysis.md).
 
+Утвержденные архитектурные решения: [knowledge/adr/README.md](./knowledge/adr/README.md).
+
 ## Команды
 
 ```bash

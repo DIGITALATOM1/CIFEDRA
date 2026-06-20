@@ -32,7 +32,7 @@ Need -> Match -> Prepare -> Connect -> Result
 | `API Prototype` | Начали реализацию | Минимальный Node.js API `apps/api` поверх core. |
 | `CIFEDRA Auth` | Начали реализацию | Единая регистрация/авторизация и principal для интеграций; план: [auth-integration-plan.md](./auth-integration-plan.md). |
 | `Mobile App` | Спроектирован путь сборки | React Native + Expo; подробный план: [mobile-build-plan.md](./mobile-build-plan.md). |
-| `Core Data` | Следующий этап | PostgreSQL/Supabase, после утверждения модели данных. |
+| `Core Data` | Утверждено, реализация следующая | PostgreSQL 18 + PostGIS + pgvector; [ADR-002](../adr/ADR-002-postgresql-core-data-platform.md). |
 | `Backoffice` | Следующий этап | Baserow OSE для ручного пилота и операционных таблиц. |
 | `Support / Concierge` | Следующий этап | Chatwoot CE для поддержки и concierge-сценариев. |
 | `Landing` | Есть начальная версия | `web/landing`. |
@@ -98,7 +98,7 @@ curl -X POST http://localhost:3030/demo/match \
 2. Использовать [CJM/gap-анализ](../product/cjm-scenarios-gap-analysis.md) как вход в SRS `Mobile MVP`.
 3. Подготовить SRS `CIFEDRA Core Domain Model`.
 4. Уточнить сущности и статусы: `Need`, `Profile`, `Match`, `Shortlist`, `Conversation`, `Result`, `TrustSignal`.
-5. Добавить persistent storage: PostgreSQL/Supabase migrations.
+5. Добавить persistent storage: PostgreSQL migrations, repositories и outbox.
 6. Добавить нормальный API-слой с OpenAPI-спецификацией.
 7. Подготовить SRS `Mobile MVP` и после него начать `apps/mobile` на React Native + Expo.
 8. Спроектировать Baserow pilot tables для ручного подбора.

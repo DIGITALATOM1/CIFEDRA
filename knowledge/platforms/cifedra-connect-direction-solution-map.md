@@ -29,7 +29,7 @@ flowchart TB
   C["CIFEDRA CONNECT"]
   CORE["CIFEDRA Core<br/>CUSTOM"]
   MOBILE["Mobile App<br/>React Native + Expo<br/>OSS-PERMISSIVE"]
-  DATA["Core Data<br/>PostgreSQL / Supabase<br/>OSS-PERMISSIVE"]
+  DATA["Core Data<br/>PostgreSQL 18<br/>OSS-PERMISSIVE"]
   OPS["Backoffice<br/>Baserow OSE<br/>OSS-PERMISSIVE"]
   SUPPORT["Support / Concierge<br/>Chatwoot CE<br/>OSS-PERMISSIVE"]
 
@@ -241,7 +241,7 @@ flowchart TB
     RN["React Native<br/>MIT"]
     Expo["Expo<br/>MIT"]
     PG["PostgreSQL<br/>PostgreSQL License"]
-    Supabase["Supabase<br/>Apache-2.0"]
+    Supabase["Supabase<br/>evaluated, not selected"]
     PGV["pgvector<br/>PostgreSQL-like"]
     Qdrant["Qdrant<br/>Apache-2.0"]
     MeiliCE["Meilisearch CE<br/>MIT"]

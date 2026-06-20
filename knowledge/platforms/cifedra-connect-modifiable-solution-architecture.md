@@ -26,7 +26,9 @@ payments: [../system/cifedra-target-architecture.md](../system/cifedra-target-ar
 
 ## Принцип архитектуры
 
-`CIFEDRA CONNECT` не должен быть одним большим монолитом и не должен быть собран только на no-code. Правильная форма - собственное ядро плюс модифицируемые компоненты вокруг него.
+`CIFEDRA CONNECT` строится как модульный монолит Core с отдельным worker, а
+готовые продукты подключаются как изолированные системы. Это не один большой
+неструктурированный монолит и не набор микросервисов по направлениям.
 
 ```text
 Mobile App
@@ -129,7 +131,7 @@ Mobile App
 | --- | --- |
 | `Baserow` | Использовать для backoffice, справочников, ручного пилота, SRS и базы знаний. Не делать на нем конечный mobile UX. |
 | `Chatwoot` | Использовать для поддержки и concierge. Не использовать как полноценный direct marketplace chat без отдельного SRS. |
-| `Appwrite` | Рассматривать как альтернативный BaaS, если нужен all-in-one backend. Для CIFEDRA приоритет ниже Supabase/Postgres из-за требования Postgres-first, гео, аналитики и сложных связей. |
+| `Appwrite` | Рассматривать только как альтернативный BaaS. Для CIFEDRA не выбран из-за утвержденного PostgreSQL-first подхода, гео, аналитики и сложных связей. |
 | `Directus` | Рассматривать осторожно: мощный backend/admin, но текущая лицензия source-available/MSCL требует review. |
 | `n8n` | Полезен для внутренних автоматизаций, но лицензия source-available. Критичные workflow лучше переносить в собственный код. |
 | `Sharetribe Go` | Не брать: старое source-available marketplace ПО, по GitHub-описанию больше не активно поддерживается. |
@@ -156,7 +158,7 @@ Mobile App
 Состав:
 
 - React Native + Expo.
-- Postgres/Supabase для пользователей, задач, профилей, матчей, свайпов, shortlist и result.
+- PostgreSQL для пользователей, задач, профилей, матчей, свайпов, shortlist и result.
 - PostGIS для `Life`.
 - pgvector для начального semantic matching.
 - Chatwoot widget только как support/concierge.
