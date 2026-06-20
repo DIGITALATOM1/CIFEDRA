@@ -5,6 +5,14 @@
 Команда: владелец продукта + Codex
 Статус: sprint baseline v0.1
 
+Рабочие артефакты:
+
+- [Product brief](../product/work-srs-review-product-brief.md);
+- [Sprint backlog](../delivery/sprint-2026-06-22-backlog.md);
+- [Decision log](../delivery/decision-log.md);
+- [Risk register](../delivery/risk-register.md);
+- [Interview kit](../research/work-srs-review-interview-kit.md).
+
 ## 1. Цель спринта
 
 За две недели нужно превратить текущий локальный прототип в безопасную и

@@ -11,6 +11,8 @@
 | `srs/` | Постановки, шаблоны SRS, реестр требований и ревью требований. |
 | `product/` | Продуктовые гипотезы, сценарии, CJM, сегменты пользователей, метрики. |
 | `business/` | Бизнес-анализ, процессы, роли, регламенты, модели ценности. |
+| `research/` | Интервью, usability research, обезличенные notes и evidence synthesis. |
+| `delivery/` | Sprint backlog, decision log, risk register и evidence packs. |
 | `support/` | Руководства, инструкции, release notes, эксплуатационные материалы. |
 | `agents/` | Роли агентов, зоны ответственности, правила передачи задач между агентами. |
 | `adr/` | Утвержденные Architecture Decision Records и история изменения решений. |
@@ -21,6 +23,11 @@
 | --- | --- |
 | [product/cjm-scenarios-gap-analysis.md](./product/cjm-scenarios-gap-analysis.md) | CJM по направлениям `Life`, `Work`, `Skills` и реестр неучтенных функций. |
 | [product/cjm-by-roles.md](./product/cjm-by-roles.md) | CJM клиента, помощника, оператора, администратора, организации и аналитика. |
+| [product/work-srs-review-product-brief.md](./product/work-srs-review-product-brief.md) | Provisional scope и оффер первого сценария Work / SRS Review. |
+| [research/work-srs-review-interview-kit.md](./research/work-srs-review-interview-kit.md) | Скрипты, target slots и правила первых client/expert interviews. |
+| [delivery/sprint-2026-06-22-backlog.md](./delivery/sprint-2026-06-22-backlog.md) | Исполнимый backlog текущего двухнедельного спринта. |
+| [delivery/decision-log.md](./delivery/decision-log.md) | Реестр продуктовых и delivery-решений. |
+| [delivery/risk-register.md](./delivery/risk-register.md) | Активный реестр рисков программы. |
 | [system/cifedra-hld.md](./system/cifedra-hld.md) | Формальный High-Level Design решения. |
 | [system/cifedra-target-architecture.md](./system/cifedra-target-architecture.md) | Каноническая архитектура локального и production-контуров. |
 | [system/cifedra-development-implementation-master-plan.md](./system/cifedra-development-implementation-master-plan.md) | Интегрированный roadmap разработки, внедрения и запуска. |
