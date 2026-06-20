@@ -1153,6 +1153,9 @@ NFR/SRS до staging acceptance.
 Детальный интегрированный план, gates, domain/design/marketing/store work:
 [cifedra-development-implementation-master-plan.md](./cifedra-development-implementation-master-plan.md).
 
+Текущий двухнедельный execution baseline:
+[cifedra-two-week-execution-plan-2026-06-22.md](./cifedra-two-week-execution-plan-2026-06-22.md).
+
 Quality and rollout:
 [cifedra-quality-release-plan.md](./cifedra-quality-release-plan.md).
 

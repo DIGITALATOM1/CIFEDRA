@@ -20,6 +20,9 @@
 Master-план разработки и внедрения:
 [knowledge/system/cifedra-development-implementation-master-plan.md](./knowledge/system/cifedra-development-implementation-master-plan.md).
 
+Ближайшие две недели:
+[knowledge/system/cifedra-two-week-execution-plan-2026-06-22.md](./knowledge/system/cifedra-two-week-execution-plan-2026-06-22.md).
+
 План доработки ядра: [knowledge/system/core-development-plan.md](./knowledge/system/core-development-plan.md).
 
 План единой авторизации: [knowledge/system/auth-integration-plan.md](./knowledge/system/auth-integration-plan.md).

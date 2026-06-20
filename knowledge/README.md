@@ -24,6 +24,7 @@
 | [system/cifedra-hld.md](./system/cifedra-hld.md) | Формальный High-Level Design решения. |
 | [system/cifedra-target-architecture.md](./system/cifedra-target-architecture.md) | Каноническая архитектура локального и production-контуров. |
 | [system/cifedra-development-implementation-master-plan.md](./system/cifedra-development-implementation-master-plan.md) | Интегрированный roadmap разработки, внедрения и запуска. |
+| [system/cifedra-two-week-execution-plan-2026-06-22.md](./system/cifedra-two-week-execution-plan-2026-06-22.md) | Исполнимый план на 22 июня - 3 июля 2026 для владельца продукта и Codex. |
 | [system/cifedra-quality-release-plan.md](./system/cifedra-quality-release-plan.md) | QA, security, environments, CI/CD, beta и production rollout. |
 | [system/core-cjm-gap-analysis.md](./system/core-cjm-gap-analysis.md) | Сопоставление CJM с текущим Core и план закрытия gaps. |
 | [system/multilingual-voice-plan.md](./system/multilingual-voice-plan.md) | Языки, перевод, Whisper и voice scenarios. |

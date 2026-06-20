@@ -23,6 +23,7 @@ API и backlog могут корректироваться на основани
 
 Связанные планы:
 
+- [Two-week execution plan: 2026-06-22 - 2026-07-03](./cifedra-two-week-execution-plan-2026-06-22.md);
 - [Quality, security and release plan](./cifedra-quality-release-plan.md);
 - [Product, design and go-to-market plan](../product/cifedra-product-design-go-to-market-plan.md);
 - [HLD](./cifedra-hld.md);
@@ -715,6 +716,12 @@ Economics:
 - repeat contribution.
 
 ## 15. Ближайшие 30 дней
+
+Детальная декомпозиция первых 10 рабочих дней для команды
+`владелец продукта + Codex`:
+[cifedra-two-week-execution-plan-2026-06-22.md](./cifedra-two-week-execution-plan-2026-06-22.md).
+Для текущего состава команды этот execution baseline имеет приоритет над
+общей ориентировочной декомпозицией ниже.
 
 ### Неделя 1
 
