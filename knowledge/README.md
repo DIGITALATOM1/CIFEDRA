@@ -23,9 +23,12 @@
 | [product/cjm-by-roles.md](./product/cjm-by-roles.md) | CJM клиента, помощника, оператора, администратора, организации и аналитика. |
 | [system/cifedra-hld.md](./system/cifedra-hld.md) | Формальный High-Level Design решения. |
 | [system/cifedra-target-architecture.md](./system/cifedra-target-architecture.md) | Каноническая архитектура локального и production-контуров. |
+| [system/cifedra-development-implementation-master-plan.md](./system/cifedra-development-implementation-master-plan.md) | Интегрированный roadmap разработки, внедрения и запуска. |
+| [system/cifedra-quality-release-plan.md](./system/cifedra-quality-release-plan.md) | QA, security, environments, CI/CD, beta и production rollout. |
 | [system/core-cjm-gap-analysis.md](./system/core-cjm-gap-analysis.md) | Сопоставление CJM с текущим Core и план закрытия gaps. |
 | [system/multilingual-voice-plan.md](./system/multilingual-voice-plan.md) | Языки, перевод, Whisper и voice scenarios. |
 | [system/web-client-build-plan.md](./system/web-client-build-plan.md) | Клиентское WEB-приложение, стек, границы и этапы реализации. |
+| [product/cifedra-product-design-go-to-market-plan.md](./product/cifedra-product-design-go-to-market-plan.md) | Discovery, дизайн, домен, legal, marketing и go-to-market. |
 | [adr/README.md](./adr/README.md) | Реестр утвержденных архитектурных решений. |
 
 ## Правило структуры

@@ -17,6 +17,9 @@
 [mobile iOS/Android](./knowledge/system/mobile-build-plan.md) и
 [WEB](./knowledge/system/web-client-build-plan.md).
 
+Master-план разработки и внедрения:
+[knowledge/system/cifedra-development-implementation-master-plan.md](./knowledge/system/cifedra-development-implementation-master-plan.md).
+
 План доработки ядра: [knowledge/system/core-development-plan.md](./knowledge/system/core-development-plan.md).
 
 План единой авторизации: [knowledge/system/auth-integration-plan.md](./knowledge/system/auth-integration-plan.md).

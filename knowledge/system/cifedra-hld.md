@@ -1,7 +1,7 @@
 # CIFEDRA CONNECT: High-Level Design
 
 Дата: 2026-06-20
-Версия: HLD v0.5
+Версия: HLD v0.6
 Статус: approved architecture baseline; sizing and detailed SRS remain open
 
 ## 1. Назначение
@@ -1149,6 +1149,12 @@ NFR/SRS до staging acceptance.
 8. Какая редакция Plane/Chatwoot поддержит operator SSO?
 
 ## 28. Implementation Roadmap
+
+Детальный интегрированный план, gates, domain/design/marketing/store work:
+[cifedra-development-implementation-master-plan.md](./cifedra-development-implementation-master-plan.md).
+
+Quality and rollout:
+[cifedra-quality-release-plan.md](./cifedra-quality-release-plan.md).
 
 ### Phase 1. Core Completion
 
