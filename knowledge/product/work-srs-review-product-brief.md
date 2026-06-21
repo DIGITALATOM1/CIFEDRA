@@ -35,11 +35,16 @@ Quick SRS Review
 Это hypotheses, а не публичные обязательства:
 
 - один SRS ориентировочно до 20-25 страниц;
-- один рабочий день после получения достаточного контекста;
+- turnaround проверяется отдельно; один рабочий день является только
+  hypothesis и пока не обещается;
 - проверка полноты, однозначности, непротиворечивости, тестируемости,
   acceptance criteria, data, integrations, NFR and open decisions;
 - прямое редактирование или переписывание документа является отдельной
   услугой.
+
+Quick Review не является полным аудитом SRS. Это ограниченная по scope
+экспертная проверка одной выбранной области с обязательной фиксацией найденных
+critical cross-cutting risks.
 
 ## 2. Validation participants
 
@@ -84,7 +89,7 @@ Job to be done:
 - цель review;
 - ожидаемый срок;
 - тип системы и аудитория;
-- synthetic/redacted фрагмент или описание структуры на discovery;
+- repository-owned synthetic fragment or document structure description;
 - критерии, которые заказчик считает важными.
 
 До `D0 - Real Data Pilot Readiness` реальные confidential SRS не принимаются.
@@ -101,6 +106,15 @@ Job to be done:
 6. пять главных рисков для разработки, тестирования и эксплуатации;
 7. вопросы, требующие business decision;
 8. рекомендуемый порядок исправлений.
+
+### Что Quick Review не включает
+
+- переписывание документа вместо автора;
+- проектирование всей системы;
+- полный legal/security/compliance audit;
+- гарантию отсутствия дефектов;
+- проверку всех областей, если клиент выбрал один primary focus;
+- выполнение рекомендаций.
 
 ### Severity baseline
 
@@ -123,7 +137,7 @@ Client request
   -> clarification
   -> manual expert shortlist
   -> expert acceptance
-  -> synthetic/redacted review
+  -> synthetic review
   -> structured result
   -> feedback
 ```
@@ -153,7 +167,7 @@ Identity
 ```text
 Interview
   -> anonymized problem description
-  -> synthetic/redacted Need
+  -> synthetic Need
   -> Intake
   -> Clarification
   -> Ready for Match
@@ -180,7 +194,7 @@ Interview
 - readiness before matching;
 - existing fixture match simulation after readiness;
 - structured result definition;
-- synthetic/redacted walkthrough;
+- synthetic walkthrough;
 - product and operational metrics draft.
 
 ## 7. Out of scope
@@ -194,7 +208,8 @@ Interview
 - ContactRequest, expert acceptance, Engagement and Result implementation;
 - payment, payout, refund and dispute automation;
 - direct product chat, video or calendar booking;
-- implementation других `Life`, `Work`, `Skills` scenarios в этом sprint.
+- Life/Skills execution and result flows; their local intake schemas are
+  governed by the shared Core P0 SRS.
 
 ## 8. Success signals
 

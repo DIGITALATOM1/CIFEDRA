@@ -13,7 +13,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | R-001 | Пользователи считают review полезным в разговоре, но не готовы передавать задачу или платить. | high | high | Проверять recent cases, alternatives, pilot commitment and price signals. | Product | R0 |
 | R-002 | Scope превращается в полное переписывание SRS или консалтинг без границ. | high | high | Quick Review scope, exclusions and structured artifact. | Product | 2026-06-26 |
-| R-003 | В discovery попадают confidential SRS до legal/privacy readiness. | medium | critical | Только synthetic/redacted examples; явный запрет в scripts and brief. | Product/Security | D0 |
+| R-003 | В discovery попадают confidential SRS до legal/privacy readiness. | medium | critical | Только repository-owned synthetic examples; явный запрет в scripts and brief. | Product/Security | D0 |
 | R-004 | Невозможно найти экспертов с достаточным качеством и доступностью. | medium | high | Два supply interviews, capability criteria and explicit decline flow. | Product | R0 |
 | R-005 | Качество result artifact субъективно и не имеет acceptance criteria. | high | high | Severity taxonomy, artifact outline and user usefulness questions. | Analysis/Product | 2026-07-02 |
 | R-006 | Разработка Core фиксирует неверный intake до product evidence. | medium | high | Versioned schema, provisional fields, traceability and R0 review. | System | R0 |
@@ -28,6 +28,9 @@
 | R-015 | "Без ограничений по географии" трактуется как немедленный global launch. | medium | high | Architecture global-ready, rollout geography enabled only after legal/support/payment gates. | Product/Legal | Production gate |
 | R-016 | Машинный перевод искажает смысл потребности или договоренности. | medium | high | Original retained, machine label, user correction, confidence and manual fallback. | Product/Architecture | Client MVP |
 | R-017 | Владелец продукта как единственный эксперт создает confirmation bias. | high | medium | Использовать self-expert для workflow; quality/supply подтверждать независимыми experts позже. | Product | Gate P1 |
+| R-018 | Три pilot scenarios раздувают scope до трех отдельных продуктов. | high | critical | Один generic Core lifecycle; differences only in versioned schema/rules/fixtures. | Product/System | Daily |
+| R-019 | Life fixture воспринимается как разрешение реальных домашних услуг без trust/safety. | medium | critical | Synthetic local pilot only; no address, real provider or engagement. | Product/Security | Life gate |
+| R-020 | Provider-paid model выбирается без unit economics and legal analysis. | medium | high | Keep charging mechanism open until P1/pricing evidence. | Product/Legal | P1 |
 
 ## Escalation
 

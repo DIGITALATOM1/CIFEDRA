@@ -63,7 +63,7 @@ Identity
 | Trust & Safety | Статический `TrustSignal`. | Нет verification case, report, block, moderation, risk policy. | P0. |
 | Notifications | Нет. | Нужны domain notification intents и user preferences. | P0. |
 | Organization | Нет. | Нужны tenant, membership, invitation, company knowledge permissions. | P1. |
-| Languages | Только свободные tags/capabilities. | Нет locale, spoken languages, language requirement, translation metadata. | P1. |
+| Languages | Только свободные tags/capabilities. | Нет locale, spoken languages, language requirement, translation metadata. | P0 metadata; P1 runtime translation. |
 | Voice / Media | Нет. | Нужны media asset, transcript, translation status и consent. | P1. |
 | Persistence | Runtime/local files. | Нет repository ports, transactions, optimistic locking, migrations. | P0. |
 | Events / Integrations | Handoff создается напрямую. | Нет domain events, outbox, webhook deduplication, status mapping. | P0. |
@@ -87,12 +87,14 @@ draft -> ready_for_match -> matched -> connected -> resolved
 draft
   -> needs_clarification
   -> ready_for_match
+  -> requires_manual_review
+  -> out_of_scope
   -> matching
   -> matched
   -> closed
 ```
 
-Дополнительные terminal states: `cancelled`, `expired`.
+Дополнительные terminal states: `cancelled`, `expired`, `out_of_scope`.
 
 ### Contact Request
 
@@ -223,13 +225,14 @@ translation status, но не зависит от конкретной моде�
 2. `Profile` aggregate и ownership.
 3. Direction/category `NeedSchema` и completeness.
 4. `Clarification` lifecycle.
-5. `ContactRequest` с accept/decline/expiry.
-6. `Engagement` для task/session/local execution.
-7. Consent и минимальный trust/safety policy.
-8. Repository ports, optimistic version и unit of work.
-9. Domain events/outbox/idempotency.
-10. Authorization policies и audit.
-11. Notification intents.
+5. Locale, timezone, spoken/preferred/original language metadata.
+6. `ContactRequest` с accept/decline/expiry.
+7. `Engagement` для task/session/local execution.
+8. Consent и минимальный trust/safety policy.
+9. Repository ports, optimistic version и unit of work.
+10. Domain events/outbox/idempotency.
+11. Authorization policies и audit.
+12. Notification intents.
 
 ### P1. Для полного пилота Life / Work / Skills
 
@@ -239,11 +242,10 @@ translation status, но не зависит от конкретной моде�
 4. Operator queue, SLA, escalation и manual override.
 5. Direction-specific outcome schemas.
 6. Reviews/reputation.
-7. Language preferences и required/spoken languages.
-8. Text translation metadata.
-9. Voice asset/transcript provider interface.
-10. Team shortlist и mutual skill match.
-11. `Money`, `PriceTerms`, payment provider contract and mock provider.
+7. Runtime text translation provider and translation records.
+8. Voice asset/transcript provider interface.
+9. Team shortlist и mutual skill match.
+10. `Money`, `PriceTerms`, payment provider contract and mock provider.
 
 ### P2. После подтверждения продуктовой модели
 
@@ -256,7 +258,7 @@ translation status, но не зависит от конкретной моде�
 
 ## Обновленный порядок реализации
 
-1. Iteration 6: Identity boundary, Profile, Need Intake and Clarification.
+1. Iteration 6: Identity boundary, Profile, language metadata, Need Intake and Clarification.
 2. Iteration 7: Contact Request, Provider Acceptance and Engagement.
 3. Iteration 8: Consent, Trust/Safety, Authorization and Audit.
 4. Iteration 9: Repository ports, domain events, outbox and idempotency.

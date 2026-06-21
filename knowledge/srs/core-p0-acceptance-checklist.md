@@ -1,0 +1,108 @@
+# Core P0 Acceptance Checklist
+
+Дата: 2026-06-21
+Версия: 0.2
+Статус: reviewed draft; product approval incomplete
+
+Связанный SRS:
+[Core P0 Identity, Profile, Intake and Clarification](./core-p0-identity-profile-intake-clarification.md).
+
+## Product approval
+
+- [x] Three local pilot scenario families подтверждены.
+- [x] Local synthetic environment подтвержден.
+- [x] Russian/English UI and runtime translation direction подтверждены.
+- [x] Provider selection model подтвержден.
+- [x] Communication model подтвержден.
+- [x] Free pilot and provider-paid future baseline подтверждены.
+- [ ] Work/SRS required intake fields подтверждены.
+- [ ] Life outdoor-maintenance required/conditional fields подтверждены.
+- [ ] Skills interview-preparation required fields подтверждены.
+- [ ] Readiness rule подтвержден.
+- [ ] Quick Review size and deadline limits подтверждены.
+- [x] Artifact metadata before engagement confirmed.
+- [x] Exactly one Quick Review focus confirmed.
+- [x] Provider public/private fields and contact hiding confirmed.
+- [x] Operator assistance-only boundary confirmed.
+
+## Identity
+
+- [ ] `issuer + subject` является stable key.
+- [ ] Email не участвует в ownership.
+- [ ] Invalid/empty identity rejected.
+- [ ] Local and future OIDC principals map to one Core boundary.
+- [ ] IdentityRef is created only through trusted auth mapping.
+- [ ] Repeated trusted mapping returns the same IdentityRef.
+
+## Profile
+
+- [ ] User and provider profiles имеют explicit owner.
+- [ ] Cross-owner update rejected.
+- [ ] Status transitions validated.
+- [ ] Provider activation requires trusted review and cannot come from self-registration.
+- [ ] Provider status commands use explicit `provider.review`/`provider.suspend` permissions.
+- [ ] Suspended provider excluded from matching.
+- [ ] `ru-RU` and `en-US` accepted.
+- [ ] Unsupported locale/language rejected.
+- [ ] IANA timezone validated.
+- [ ] Provider categories validated against catalog.
+- [ ] Profile is private by default.
+- [ ] Public provider preview excludes contacts and IdP claims.
+- [ ] One user and one provider profile per identity baseline accepted.
+
+## Intake
+
+- [ ] Schema is versioned.
+- [ ] Direction/category/schema consistency checked.
+- [ ] Required, optional and invalid fields distinguished.
+- [ ] Completeness is deterministic.
+- [ ] Unknown schema/version rejected.
+- [ ] Published schema is immutable and Need pins exact version.
+- [ ] Deprecated schema blocks new Need but continues validating existing Need.
+- [ ] Incomplete Need cannot enter matching.
+- [ ] Original and preferred result languages stored.
+- [ ] Original, communication and result language have one aggregate source of truth.
+- [ ] Files and confidential material rejected in current increment.
+- [ ] Local UAT accepts repository-owned synthetic fixtures only.
+- [ ] Local UAT rejects unknown fixture/action IDs and ad-hoc answers.
+- [ ] Stale aggregate version rejected.
+- [ ] Life conditional fields depend on selected service variants.
+- [ ] Life exact address and real property identifiers rejected.
+- [ ] Skills real CV/vacancy files rejected.
+- [ ] All three schemas reach readiness through the same generic engine.
+
+## Clarification
+
+- [ ] Missing/invalid fields can create blocking clarification.
+- [ ] Only owner can answer; operator cannot answer on owner behalf.
+- [ ] Invalid actor rejected.
+- [ ] Invalid lifecycle transition rejected.
+- [ ] Blocking/non-blocking and reason are explicit.
+- [ ] Waiver requires permission and reason.
+- [ ] Answer history preserved on reopen.
+- [ ] Open blocking clarification prevents readiness.
+- [ ] Resolution recalculates completeness.
+- [ ] Clarification answer/resolution and Need reassessment are atomic.
+- [ ] Creating/reopening blocking clarification atomically revokes readiness.
+- [ ] Original language is preserved.
+
+## Authorization and security
+
+- [ ] Self-registration cannot assign helper/operator/admin.
+- [ ] Admin role alone does not imply resource ownership.
+- [ ] Every operator action requires explicit permission, assignment and reason where specified.
+- [ ] Manual analysis uses `need.review` and owner resubmission.
+- [ ] Schema lifecycle uses explicit catalog permissions.
+- [ ] Error does not leak stack, path, credential or secret.
+- [ ] Logs/analytics exclude Need and Clarification free text.
+- [ ] Local test retention and reset are documented and tested.
+- [ ] Negative authorization tests exist.
+
+## Engineering quality
+
+- [ ] SRS requirement IDs appear in traceability.
+- [ ] Unit tests cover happy path and negative path.
+- [ ] Typecheck passes.
+- [ ] Build passes.
+- [ ] Existing tests do not regress.
+- [ ] Documentation and implementation use the same lifecycle terms.

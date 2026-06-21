@@ -1,14 +1,14 @@
 # CIFEDRA Sprint Backlog: 2026-06-22 - 2026-07-03
 
 Дата: 2026-06-21
-Статус: active baseline v0.2
+Статус: active baseline v0.3
 Команда: владелец продукта + Codex
 
 ## Sprint goal
 
-Создать безопасную локальную основу `Work / SRS Review`, реализовать первый
-Core P0 increment и получить первые product evidence без использования
-реальных confidential SRS.
+Создать безопасную локальную основу three synthetic scenarios `Life`, `Work`,
+`Skills`, реализовать общий Core P0 increment and validate category schemas
+without real users, services or confidential data.
 
 ## Status model
 
@@ -26,35 +26,35 @@ Core P0 increment и получить первые product evidence без ис�
 | D1-02 | 1 | Подтвердить target audience, language/geography and first expert. | Владелец продукта | D1-01 | Решения внесены в decision log. | done |
 | D1-03 | 1 | Создать decision log and risk register. | Codex | D1-01 | Owners and review dates указаны. | done |
 | D1-04 | 1 | Подготовить interview kit and five target slots. | Codex | D1-01 | Client/expert scripts and notes template готовы. | done |
-| D1-05 | 1 | Назначить 3 client interviews; owner expert self-assessment подготовить отдельно. | Владелец продукта | D1-04 | В tracker указаны participants and confirmed times. | blocked |
-| D2-01 | 2 | Подготовить SRS Core P0 v0.1. | Codex | D1-02 | Actors, requirements, invariants, errors and acceptance описаны. | planned |
-| D2-02 | 2 | Утвердить Work intake fields and readiness. | Владелец продукта | D2-01 | Нет блокирующих domain TBD. | planned |
-| D2-03 | 2 | Создать traceability CJM -> requirement -> module -> test. | Codex | D2-01 | Каждое P0 requirement имеет target module and test. | planned |
-| D3-01 | 3 | Запретить privileged roles in self-registration. | Codex | D2-02 | Negative tests operator/admin проходят. | planned |
+| D1-05 | 1 | External interviews after local functional pilot. | Владелец продукта | D1-04 | Recruitment remains visible but does not block local R0. | deferred |
+| D1-06 | 1 | Зафиксировать three local pilot scenarios and commercial baseline. | Оба | D1-01 | Life/Work/Skills, free pilot and provider-paid future model recorded. | done |
+| D2-01 | 2 | Подготовить SRS Core P0 v0.1. | Codex | D1-02 | Actors, requirements, invariants, errors and acceptance описаны. | done |
+| D2-02 | 2 | Утвердить Life/Work/Skills intake fields and readiness. | Владелец продукта | D2-01 | Нет блокирующих domain TBD. | blocked |
+| D2-03 | 2 | Создать traceability CJM -> requirement -> module -> test. | Codex | D2-01 | Каждое P0 requirement имеет target module and test. | done |
+| D3-01 | 3 | Запретить privileged roles in self-registration. | Codex | D2-02 | Negative tests helper/operator/admin проходят. | planned |
 | D3-02 | 3 | Защитить state-changing demo endpoints. | Codex | D3-01 | Anonymous/insufficient role получает 401/403. | planned |
 | D3-03 | 3 | Ограничить bind, CORS and live integrations. | Codex | D3-01 | Loopback/allowlist/explicit opt-in проверены. | planned |
 | D4-01 | 4 | Убрать persistent bearer token из browser. | Codex | D3-02 | Token отсутствует в localStorage. | planned |
 | D4-02 | 4 | Добавить limits, timeout and safe error handling. | Codex | D3-02 | Invalid/oversized/timeout tests проходят. | planned |
 | D4-03 | 4 | Добавить GitHub CI baseline. | Codex | D3-03 | Clean install, typecheck, tests, build and docs checks проходят. | planned |
 | D5-01 | 5 | Реализовать IdentityRef and profiles with ru/en language metadata. | Codex | D2-02, D3-01 | Ownership, locale and spoken/preferred languages покрыты tests. | planned |
-| D6-01 | 6 | Реализовать versioned Work NeedSchema. | Codex | D5-01 | Completeness and invalid input tests проходят. | planned |
+| D6-01 | 6 | Реализовать versioned NeedSchema for Life/Work/Skills. | Codex | D2-02, D5-01 | Completeness and invalid input tests pass for all three. | planned |
 | D6-02 | 6 | Заблокировать matching для incomplete Need. | Codex | D6-01 | Core возвращает ожидаемую domain error. | planned |
 | D7-01 | 7 | Реализовать Clarification lifecycle. | Codex | D6-01 | Questions, answers, readiness and transitions tested. | planned |
 | D8-01 | 8 | Поднять tracked PostgreSQL compose. | Codex | D6-01 | Clean start and healthcheck воспроизводимы. | planned |
 | D8-02 | 8 | Создать migration/role/repository spike. | Codex | D8-01 | One aggregate persists across restart; runtime role has no DDL. | planned |
-| D9-01 | 9 | Собрать synthetic vertical flow. | Codex | D5-01, D6-02, D7-01 | Identity -> ready-for-match проходит локально и в CI. | planned |
-| D9-02 | 9 | Синтезировать interview evidence and metrics. | Codex | D1-05 | Findings отделены от мнений и решений. | planned |
+| D9-01 | 9 | Собрать three synthetic vertical flows. | Codex | D5-01, D6-02, D7-01 | Life/Work/Skills reach ready-for-match locally and in CI. | planned |
+| D9-02 | 9 | Сформировать local UAT evidence and metrics. | Codex | D9-01 | Functional findings are separated from future market evidence. | planned |
 | D10-01 | 10 | Провести evidence review R0. | Оба | Все must items | Checks green, decisions and next backlog approved. | planned |
 | D10-02 | 10 | Обновить SRS/HLD/ADR/backlog по evidence. | Codex | D10-01 | Changed contracts and decisions traceable. | planned |
 
 ## User action queue
 
-1. Подтвердить, что лично оказываемая первая услуга: SRS Review/system analysis.
-2. Выбрать initial format: online only или также local/offline.
-3. Выбрать первые translation surfaces.
-4. Выбрать selection and communication model.
-5. Передать список минимум из 3 потенциальных клиентов.
-6. Указать доступные интервалы для интервью.
+1. Подтвердить Life boundary: one outdoor-maintenance schema with pool/lawn
+   variants.
+2. Подтвердить, можно ли выбрать обе Life variants in one Need.
+3. Подтвердить Quick Review limits and readiness details from SRS.
+4. Подтвердить Skills interview-preparation intake fields from SRS.
 
 До выполнения пунктов 1-4 Codex использует recommended baseline из
 [product brief](../product/work-srs-review-product-brief.md), но не считает его

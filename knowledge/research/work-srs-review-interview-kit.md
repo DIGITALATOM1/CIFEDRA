@@ -1,7 +1,7 @@
 # Work / SRS Review Interview Kit
 
 Дата: 2026-06-21
-Статус: ready for recruitment v0.2
+Статус: prepared; recruitment deferred until local functional pilot v0.3
 
 ## 1. Цель
 
@@ -65,7 +65,7 @@ concrete commitment.
 - confidentiality and conflict of interest;
 - preferred turnaround;
 - кто принимает решение и оплачивает;
-- готовность попробовать на synthetic/redacted example;
+- готовность позже попробовать на repository-owned synthetic example;
 - price sensitivity без предложения фиксированной цены.
 
 ## 5. Expert screener

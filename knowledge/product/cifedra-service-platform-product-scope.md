@@ -1,7 +1,7 @@
 # CIFEDRA CONNECT: Product Scope
 
 Дата: 2026-06-21
-Статус: strategic product baseline v0.1
+Статус: strategic product baseline v0.2
 
 ## 1. Product vision
 
@@ -50,19 +50,22 @@ vertical increments, а не одновременно в одном спринт
 - legal/safety availability;
 - capability and availability исполнителя.
 
-## 3. Initial validation scenario
+## 3. Initial local pilot scenarios
 
-Первый сценарий:
+Локально проверяются три scenario families:
 
-```text
-Work / Expert Help / SRS Review
-```
+| Direction | Scenario | Service variants / focus | Delivery assumption |
+| --- | --- | --- | --- |
+| Life | Outdoor home maintenance | Pool cleaning, lawn mowing. | Future in-person service; local pilot is synthetic only. |
+| Work | Expert Help / SRS Review | Quick Review only in local pilot; broader system-analysis consulting is later. | Online. |
+| Skills | Interview preparation | Mock interview, feedback and preparation plan. | Online. |
 
-Причина выбора: владелец продукта может выступить первым экспертом и проверить
-операционный flow без преждевременного набора supply.
+Владелец продукта выступает первым Work-экспертом. Life and Skills provider
+profiles остаются synthetic fixtures до отдельной supply verification.
 
-Это не ограничивает целевой продукт только системным анализом. Сценарий нужен
-для проверки общего lifecycle и подготовки платформенных contracts.
+Локальный pilot проверяет один общий lifecycle и три versioned Need schemas.
+Он не является market pilot и не использует реальные услуги, документы,
+клиентов, адреса или платежи.
 
 ## 4. Languages and geography
 
@@ -93,6 +96,10 @@ payment, support and safety readiness. Формулировка "без огра
 7. Возможность показать оригинал и исправить перевод.
 8. Confidence/error state and manual fallback.
 
+Runtime online text translation is required for client MVP, but the current
+Core P0 increment implements only language metadata and provider-neutral
+contracts. Translation provider integration follows after the Core schemas.
+
 ### Later
 
 - full document translation;
@@ -107,9 +114,10 @@ candidate.
 
 ## 6. First supply model
 
-На первом проверочном сценарии:
+На первом локальном pilot:
 
-- владелец продукта выступает экспертом;
+- владелец продукта выступает Work-экспертом;
+- Life and Skills providers are synthetic fixtures;
 - matching с несколькими реальными экспертами не проверяется;
 - текущие expert fixtures используются только для simulation;
 - recruitment независимых экспертов переносится после проверки intake and
@@ -117,7 +125,37 @@ candidate.
 - self-review владельца продукта не считается независимым подтверждением
   supply economics or quality.
 
-## 7. Scope governance
+## 7. Selection and communication
+
+Accepted baseline:
+
+- Core returns an explainable shortlist;
+- client explicitly selects a provider;
+- swipe may be used in mobile as a presentation/navigation pattern;
+- swipe never changes the underlying decision semantics;
+- provider contacts remain hidden until mutual match: client selects and
+  provider accepts the request;
+- first communication uses concierge flow through CIFEDRA with Chatwoot
+  adapter;
+- direct chat is a later product increment.
+
+## 8. Commercial model
+
+Local pilot is free and uses no real payments.
+
+Future platform monetization hypothesis requested by the product owner:
+
+- users/companies offering services pay CIFEDRA;
+- demand-side users do not pay CIFEDRA for access;
+- payment for the underlying service and the exact provider charging model
+  remain separate open decisions;
+- subscription, lead fee, commission and promoted placement require later
+  pricing/legal experiments.
+
+This direction is not product-evidence or legal approval and shall not freeze
+payment architecture.
+
+## 9. Scope governance
 
 Стратегический scope широкий, но каждый increment обязан иметь:
 
@@ -129,10 +167,11 @@ candidate.
 - synthetic test before real data;
 - решение о том, какие следующие lifecycle steps разблокированы.
 
-Новый сценарий `Life` or `Skills` не добавляется в реализацию, пока текущий
-increment не прошел свой gate.
+В одном increment можно проверить несколько category schemas, только если они
+используют один lifecycle and generic schema engine. Direction-specific
+business flows after `ready_for_match` остаются отдельными increments.
 
-## 8. Current implementation boundary
+## 10. Current implementation boundary
 
 Текущий двухнедельный increment:
 
@@ -144,22 +183,22 @@ Identity
   -> Ready for Match
 ```
 
-В него входят language metadata for Russian/English. Runtime translation,
-provider acceptance, execution and result остаются следующими increments.
+В него входят language metadata for Russian/English and three schema
+configurations. Runtime translation, provider acceptance, execution and result
+остаются следующими increments.
 
-## 9. Open product questions
+## 11. Open product questions
 
-1. Какие категории услуг лично может оказывать первый эксперт?
-2. Нужны ли в первом pilot только online services или также local/offline?
-3. Какие текстовые зоны переводим первыми?
-4. Как пользователь выбирает исполнителя: shortlist, swipe, automatic
-   assignment or combination?
-5. Где проходит первая коммуникация: concierge chat, direct chat or external
-   call?
-6. Первый pilot бесплатный или платный?
-7. Как клиент подтверждает полезный Result для разных направлений?
+1. Life — это одна category `Outdoor maintenance` с двумя service variants или
+   две независимые categories после pilot?
+2. Подтверждаем ли правило: один Life Need содержит только одну service variant?
+3. Как клиент подтверждает полезный Result для каждого из трех направлений?
+4. За что именно provider платит платформе: subscription, lead, commission or
+   promoted placement?
+5. Платит ли клиент исполнителю через CIFEDRA в будущем или напрямую?
+6. Какие provider verification rules обязательны для Life?
 
-## 10. Related documents
+## 12. Related documents
 
 - [SRS Review validation brief](./work-srs-review-product-brief.md);
 - [CJM scenarios](./cjm-scenarios-gap-analysis.md);

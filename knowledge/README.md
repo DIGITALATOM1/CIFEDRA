@@ -23,6 +23,8 @@
 | --- | --- |
 | [product/cjm-scenarios-gap-analysis.md](./product/cjm-scenarios-gap-analysis.md) | CJM по направлениям `Life`, `Work`, `Skills` и реестр неучтенных функций. |
 | [product/cjm-by-roles.md](./product/cjm-by-roles.md) | CJM клиента, помощника, оператора, администратора, организации и аналитика. |
+| [srs/README.md](./srs/README.md) | Реестр SRS, acceptance criteria и traceability. |
+| [srs/core-p0-identity-profile-intake-clarification.md](./srs/core-p0-identity-profile-intake-clarification.md) | SRS первого Core P0 increment. |
 | [product/cifedra-service-platform-product-scope.md](./product/cifedra-service-platform-product-scope.md) | Стратегический scope универсальной платформы услуг Life / Work / Skills. |
 | [product/work-srs-review-product-brief.md](./product/work-srs-review-product-brief.md) | Provisional scope и оффер первого сценария Work / SRS Review. |
 | [research/work-srs-review-interview-kit.md](./research/work-srs-review-interview-kit.md) | Скрипты, target slots и правила первых client/expert interviews. |

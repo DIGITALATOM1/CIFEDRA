@@ -482,7 +482,7 @@ Mobile public release follows stable WEB beta and production API.
 
 - interviews;
 - waitlist/vertical landing;
-- synthetic/redacted walkthroughs;
+- repository-owned synthetic walkthroughs;
 - no broad advertising.
 
 ### Phase B. Concierge pilot

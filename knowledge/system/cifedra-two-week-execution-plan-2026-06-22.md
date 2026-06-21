@@ -17,15 +17,17 @@
 ## 1. Цель спринта
 
 За две недели нужно превратить текущий локальный прототип в безопасную и
-проверяемую основу первого сценария:
+проверяемую основу трех synthetic scenarios:
 
 ```text
+Life / Outdoor maintenance
 Work / Expert Help / SRS Review
+Skills / Interview preparation
 ```
 
 Итог спринта:
 
-1. утвержден provisional scope первого pilot;
+1. утвержден provisional scope трех локальных pilot scenarios;
 2. подготовлен SRS для первого Core P0 increment;
 3. закрыты критичные security gaps локального прототипа;
 4. реализованы и протестированы `IdentityRef`, Profile, Need Intake и
@@ -33,7 +35,7 @@ Work / Expert Help / SRS Review
 5. GitHub CI проверяет typecheck, tests and build;
 6. подготовлен PostgreSQL/migration spike без преждевременного переноса всего
    приложения;
-7. проведены первые problem interviews без приема конфиденциальных документов;
+7. проведен local UAT трех synthetic scenarios без реальных услуг и документов;
 8. на evidence review утвержден backlog следующего двухнедельного спринта.
 
 ## 2. Рабочая модель
@@ -42,8 +44,8 @@ Work / Expert Help / SRS Review
 
 Отвечает за решения, которые нельзя делегировать:
 
-- ценность и границы первого сценария;
-- интервью с потенциальными клиентами и owner expert workshop;
+- ценность и границы pilot scenarios;
+- local product walkthrough and owner expert workshop;
 - принятие продуктовых и UX-решений;
 - выбор названия, доменной стратегии и юридической географии;
 - приемка ежедневных результатов и изменение приоритетов.
@@ -51,7 +53,6 @@ Work / Expert Help / SRS Review
 Ожидаемая загрузка:
 
 - 30-60 минут на решение и приемку в рабочий день;
-- отдельно 3 client interviews по 30-45 минут;
 - один owner expert workshop на 45-60 минут;
 - один итоговый review длительностью 60-90 минут.
 
@@ -73,22 +74,21 @@ Codex работает в активных сессиях с владельце�
 
 ### Must complete
 
-1. Scope and exclusions первого сценария.
+1. Scope and exclusions трех local pilot scenarios.
 2. SRS `Core P0: Identity, Profile, Intake, Clarification`.
 3. Prototype security baseline.
 4. Core increment с unit tests.
 5. GitHub CI baseline.
 6. PostgreSQL compose/migration/repository spike.
-7. Synthetic end-to-end walkthrough.
+7. Three synthetic end-to-end walkthroughs.
 8. Architecture evidence review и следующий backlog.
 
 ### Should complete
 
-1. Три интервью с потенциальными заказчиками SRS review.
-2. Два интервью с потенциальными экспертами.
-3. Low-fidelity client/provider flow.
-4. Metric dictionary для pilot.
-5. Shortlist названия и доменов без заявления о доступности.
+1. Low-fidelity client/provider flow.
+2. Metric dictionary для local pilot.
+3. Shortlist названия и доменов без заявления о доступности.
+4. Подготовленный recruitment kit для будущих external interviews.
 
 ### Не делаем в эти две недели
 
@@ -108,8 +108,8 @@ Codex работает в активных сессиях с владельце�
 
 | Зона | Планируемый артефакт |
 | --- | --- |
-| Product | Brief и evidence по `Work / SRS Review`. |
-| Research | Обезличенные interview notes and synthesis. |
+| Product | Scope and local UAT evidence по Life / Work / Skills. |
+| Research | Prepared interview kit; external synthesis deferred. |
 | Requirements | SRS `Core P0: Identity, Profile, Intake, Clarification`. |
 | Traceability | Связи `CJM -> requirement -> module -> test`. |
 | Architecture | Impact notes and ADR updates only for changed decisions. |
@@ -128,8 +128,8 @@ Codex работает в активных сессиях с владельце�
 
 Владелец продукта:
 
-- подтверждает `Work / SRS Review` как provisional scenario;
-- выбирает основной тип результата: quick review, full review или оба;
+- подтверждает Life/Work/Skills local pilot scenarios;
+- подтверждает Work Quick Review как первый expert service;
 - утверждает exclusions и допустимый manual workflow;
 - определяет доступное время на интервью.
 
@@ -145,7 +145,7 @@ Codex:
 - scope v0.1;
 - exclusions;
 - список открытых решений;
-- расписание пяти интервью.
+- список трех local UAT scenarios.
 
 ### День 2 - вторник, 23 июня
 
@@ -153,13 +153,13 @@ Codex:
 
 Владелец продукта:
 
-- подтверждает поля клиентского запроса;
+- подтверждает поля трех category schemas;
 - подтверждает минимальные данные профиля клиента и эксперта;
 - выбирает правила готовности Need к matching.
 
 Codex:
 
-- готовит SRS `Core P0`;
+- готовит SRS `Core P0` with Life/Work/Skills schemas;
 - описывает `IdentityRef`, `UserProfile`, `ProviderProfile`, `NeedSchema`,
   completeness and Clarification;
 - фиксирует invariants, permissions, errors and acceptance scenarios;
@@ -170,7 +170,7 @@ Codex:
 - SRS v0.1;
 - domain diagram;
 - acceptance checklist;
-- первый client interview.
+- product approval questions зафиксированы.
 
 ### День 3 - среда, 24 июня
 
@@ -220,7 +220,7 @@ Codex:
 
 - Gate `S0 - Safe Local Prototype`;
 - CI работает на push;
-- второй client interview.
+- security evidence зафиксирован.
 
 ### День 5 - пятница, 26 июня
 
@@ -244,30 +244,30 @@ Codex:
 - identity не зависит от email;
 - профиль имеет owner and lifecycle;
 - client/helper product roles не смешаны с admin/operator permissions;
-- первый provider interview.
+- owner expert workshop prepared.
 
 ### День 6 - понедельник, 29 июня
 
-Фокус: Work Need Intake.
+Фокус: Life/Work/Skills Need Intake.
 
 Владелец продукта:
 
-- утверждает обязательные поля запроса на SRS review;
-- определяет, какие данные до pilot могут быть только synthetic/redacted.
+- утверждает обязательные/условные поля трех schemas;
+- подтверждает, что local pilot использует только repository-owned synthetic data.
 
 Codex:
 
 - реализует versioned `NeedSchema`;
-- добавляет Work/SRS answers and completeness calculation;
+- добавляет Life/Work/Skills schemas and completeness calculation;
 - запрещает matching для incomplete Need;
 - добавляет validation and edge-case tests;
 - готовит текстовый low-fidelity intake flow.
 
 Результат дня:
 
-- Work Need имеет явную схему и версию;
+- три Need schemas имеют явную версию;
 - readiness вычисляется одинаково в Core и tests;
-- третий client interview.
+- synthetic inputs prepared for all three.
 
 ### День 7 - вторник, 30 июня
 
@@ -290,7 +290,7 @@ Codex:
 
 - incomplete Need переходит в clarification;
 - после достаточных ответов Need становится ready for matching;
-- второй provider interview.
+- clarification scenarios cover all three directions.
 
 ### День 8 - среда, 1 июля
 
@@ -328,10 +328,10 @@ Codex:
 
 Codex:
 
-- собирает synthetic flow
+- собирает three synthetic flows
   `Identity -> Profile -> Intake -> Clarification -> Ready for Match`;
 - обновляет test console or smoke scenario;
-- формирует interview synthesis and metric dictionary;
+- формирует local UAT evidence and metric dictionary;
 - готовит low-fidelity client/provider flow;
 - выполняет regression, security and Markdown checks.
 
@@ -339,7 +339,7 @@ Codex:
 
 - Gate `C0 - Core Intake Increment`;
 - synthetic vertical flow демонстрируется локально;
-- scope corrections основаны на interview evidence.
+- scope corrections основаны на local UAT evidence.
 
 ### День 10 - пятница, 3 июля
 
@@ -366,22 +366,23 @@ Codex:
 - backlog следующего спринта согласован;
 - domain action оформлен отдельным решением, без автоматической покупки.
 
-## 6. Параллельный трек интервью
+## 6. Local UAT and deferred research
 
-Минимальная выборка:
+Local UAT:
 
-| Роль | Количество | Что проверяем |
-| --- | ---: | --- |
-| Потенциальный заказчик | 3 | Trigger, текущий способ review, срок, доверие, ожидаемый artifact. |
-| Владелец продукта как первый эксперт | 1 workshop | Входные данные, method, effort, confidentiality, формат результата, отказ. |
-| Независимый эксперт | После sprint или при доступности | Проверка quality/supply hypotheses без self-confirmation bias. |
+| Scenario | What is tested |
+| --- | --- |
+| Life / Outdoor maintenance | Pool/lawn variants, conditional fields, local-service metadata and no exact address. |
+| Work / SRS Review | Quick Review metadata, one focus, language and confidentiality guard. |
+| Skills / Interview preparation | Role, level, interview format, goals and language. |
 
+External client/provider interviews resume after the local functional pilot.
 До `D0 - Real Data Pilot Readiness`:
 
 - не загружаем реальные SRS;
 - не записываем конфиденциальные детали проекта;
-- используем synthetic or redacted examples;
-- сохраняем только согласованные interview notes;
+- используем только repository-owned synthetic examples;
+- не создаем записи реальных услуг или engagement;
 - не обещаем участникам готовый сервис или дату публичного запуска.
 
 ## 7. Sprint gates
@@ -417,7 +418,7 @@ Codex:
 - нет открытого Sev-1/Sev-2 в измененном scope;
 - SRS/HLD/code/tests согласованы;
 - PostgreSQL spike воспроизводим;
-- interview findings и решения зафиксированы;
+- local UAT findings и решения зафиксированы;
 - следующий sprint backlog отсортирован по critical path.
 
 ## 8. Definition of Done
@@ -437,7 +438,7 @@ Codex:
 
 План корректируется, если:
 
-- interview evidence опровергает основной Work/SRS scenario;
+- local UAT показывает, что generic schema/lifecycle не покрывает одно из трех направлений;
 - security fix требует изменения auth boundary;
 - PostgreSQL spike выявляет ошибку data ownership;
 - Core contract не покрывает CJM без нового aggregate;
