@@ -1,12 +1,15 @@
 # CIFEDRA Work: SRS Review Product Brief
 
-Дата: 2026-06-20
-Статус: provisional scope v0.1
+Дата: 2026-06-21
+Статус: first validation scenario v0.2
 Период проверки: 2026-06-22 - 2026-07-03
+
+Стратегический scope продукта:
+[CIFEDRA service platform](./cifedra-service-platform-product-scope.md).
 
 ## 1. Product hypothesis
 
-Первый проверяемый сценарий CIFEDRA:
+Первый проверяемый сценарий универсальной service platform CIFEDRA:
 
 ```text
 Work / Expert Help / SRS Review
@@ -38,9 +41,13 @@ Quick SRS Review
 - прямое редактирование или переписывание документа является отдельной
   услугой.
 
-## 2. Primary segment
+## 2. Validation participants
 
-Provisional ICP:
+Целевой клиент CIFEDRA: любой пользователь с потребностью в услуге `Life`,
+`Work` or `Skills`.
+
+Для проверки SRS Review нужны пользователи, у которых есть соответствующая
+потребность:
 
 - lead/system analyst;
 - product or delivery manager;
@@ -48,8 +55,11 @@ Provisional ICP:
 - имеет SRS/requirements artifact перед оценкой или началом разработки;
 - не имеет доступного независимого senior reviewer либо хочет second opinion.
 
-Первый discovery не разделяется по отрасли. Отраслевой фокус выбирается только
-при наличии повторяющегося evidence.
+Это sample текущего scenario, а не ограничение аудитории всей платформы.
+
+Первым экспертом выступает владелец продукта. Это позволяет проверить intake
+and result structure, но не подтверждает независимое качество, supply capacity
+or marketplace economics.
 
 ## 3. Trigger and job
 
@@ -164,6 +174,7 @@ Interview
 
 - один сценарий `Work / SRS Review`;
 - client and expert roles;
+- Russian/English locale and language requirements;
 - profile data, необходимые для review;
 - structured intake and clarification;
 - readiness before matching;
@@ -183,18 +194,22 @@ Interview
 - ContactRequest, expert acceptance, Engagement and Result implementation;
 - payment, payout, refund and dispute automation;
 - direct product chat, video or calendar booking;
-- `Life`, `Skills` and organization-wide knowledge scenarios.
+- implementation других `Life`, `Work`, `Skills` scenarios в этом sprint.
 
 ## 8. Success signals
 
 Discovery signals:
 
-- минимум 3 client interviews and 2 expert interviews;
+- минимум 3 client interviews and owner expert workshop;
 - участники описывают недавний реальный случай, а не только мнение;
 - повторяются причины и последствия плохого SRS;
 - понятен ожидаемый review artifact;
-- минимум 2 эксперта считают workflow исполнимым;
+- владелец продукта как первый эксперт подтверждает техническую исполнимость
+  workflow and effort hypothesis;
 - есть конкретный willingness-to-pilot or willingness-to-pay signal.
+
+Независимая проверка expert quality, supply capacity and economics остается
+обязательной до Gate P1.
 
 Outcome signals:
 
@@ -228,8 +243,10 @@ Technical signals:
 | Решение | Baseline | Кто подтверждает | Срок |
 | --- | --- | --- | --- |
 | Primary offer | Quick Review. | Владелец продукта после первых интервью. | 2026-06-26 |
-| Primary client segment | System/lead analysts and delivery/engineering leads. | Владелец продукта. | 2026-06-23 |
-| Geography and language | Russian-speaking discovery, geography open. | Владелец продукта. | 2026-06-23 |
+| Target audience | Any user with a service need in Life, Work or Skills. | Confirmed by product owner. | accepted |
+| Validation participants | Users with an SRS Review need. | Scenario-specific. | accepted |
+| Geography and language | No strategic geography limit; Russian and English. | Confirmed by product owner. | accepted |
+| First expert | Product owner. | Confirmed by product owner. | accepted |
 | Turnaround promise | Не обещать до интервью. | Владелец продукта. | 2026-07-02 |
 | Artifact format | Structured Markdown/PDF concept. | Владелец продукта. | 2026-07-02 |
 | Pricing | Не фиксировать до evidence. | Владелец продукта. | После sprint R0 |
@@ -237,6 +254,7 @@ Technical signals:
 ## 11. Traceability
 
 - [CJM scenarios](./cjm-scenarios-gap-analysis.md);
+- [Strategic product scope](./cifedra-service-platform-product-scope.md);
 - [Product and go-to-market plan](./cifedra-product-design-go-to-market-plan.md);
 - [Two-week execution plan](../system/cifedra-two-week-execution-plan-2026-06-22.md);
 - [Sprint backlog](../delivery/sprint-2026-06-22-backlog.md);

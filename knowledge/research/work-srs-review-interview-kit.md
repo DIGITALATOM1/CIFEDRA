@@ -1,7 +1,7 @@
 # Work / SRS Review Interview Kit
 
-Дата: 2026-06-20
-Статус: ready for recruitment v0.1
+Дата: 2026-06-21
+Статус: ready for recruitment v0.2
 
 ## 1. Цель
 
@@ -23,9 +23,9 @@ concrete commitment.
 | --- | --- | --- | --- | --- |
 | INT-C01 | Client | 2026-06-23 | TBD by product owner | recruitment required |
 | INT-C02 | Client | 2026-06-25 | TBD by product owner | recruitment required |
-| INT-E01 | Expert | 2026-06-26 | TBD by product owner | recruitment required |
+| INT-E01 | Owner expert workshop | 2026-06-26 | Product owner | confirmed |
 | INT-C03 | Client | 2026-06-29 | TBD by product owner | recruitment required |
-| INT-E02 | Expert | 2026-06-30 | TBD by product owner | recruitment required |
+| INT-E02 | Independent expert | After sprint or if available | TBD | optional for current sprint |
 
 Не хранить телефоны, email или полные имена в этом Git-репозитории. Контакты
 остаются в личном календаре/контактном инструменте владельца продукта.
@@ -76,6 +76,10 @@ concrete commitment.
 - регулярно проверял требования других специалистов;
 - способен показать методику без раскрытия клиентских материалов;
 - готов обсуждать acceptance, confidentiality and decline reasons.
+
+В текущем sprint owner expert workshop используется для описания method,
+inputs, effort and result. Он не считается независимым подтверждением качества
+или доступности supply.
 
 ## 6. Expert interview
 

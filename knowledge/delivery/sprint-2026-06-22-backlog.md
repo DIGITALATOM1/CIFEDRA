@@ -1,7 +1,7 @@
 # CIFEDRA Sprint Backlog: 2026-06-22 - 2026-07-03
 
-Дата: 2026-06-20
-Статус: active baseline v0.1
+Дата: 2026-06-21
+Статус: active baseline v0.2
 Команда: владелец продукта + Codex
 
 ## Sprint goal
@@ -23,10 +23,10 @@ Core P0 increment и получить первые product evidence без ис�
 | ID | День | Задача | Owner | Зависит от | Acceptance | Статус |
 | --- | --- | --- | --- | --- | --- | --- |
 | D1-01 | 1 | Зафиксировать product brief and provisional offer. | Codex | - | Brief связан с CJM и master plan. | done |
-| D1-02 | 1 | Подтвердить primary segment, language/geography and offer. | Владелец продукта | D1-01 | Решения внесены в decision log. | blocked |
+| D1-02 | 1 | Подтвердить target audience, language/geography and first expert. | Владелец продукта | D1-01 | Решения внесены в decision log. | done |
 | D1-03 | 1 | Создать decision log and risk register. | Codex | D1-01 | Owners and review dates указаны. | done |
 | D1-04 | 1 | Подготовить interview kit and five target slots. | Codex | D1-01 | Client/expert scripts and notes template готовы. | done |
-| D1-05 | 1 | Назначить 3 client and 2 expert interviews. | Владелец продукта | D1-04 | В tracker указаны participants and confirmed times. | blocked |
+| D1-05 | 1 | Назначить 3 client interviews; owner expert self-assessment подготовить отдельно. | Владелец продукта | D1-04 | В tracker указаны participants and confirmed times. | blocked |
 | D2-01 | 2 | Подготовить SRS Core P0 v0.1. | Codex | D1-02 | Actors, requirements, invariants, errors and acceptance описаны. | planned |
 | D2-02 | 2 | Утвердить Work intake fields and readiness. | Владелец продукта | D2-01 | Нет блокирующих domain TBD. | planned |
 | D2-03 | 2 | Создать traceability CJM -> requirement -> module -> test. | Codex | D2-01 | Каждое P0 requirement имеет target module and test. | planned |
@@ -36,7 +36,7 @@ Core P0 increment и получить первые product evidence без ис�
 | D4-01 | 4 | Убрать persistent bearer token из browser. | Codex | D3-02 | Token отсутствует в localStorage. | planned |
 | D4-02 | 4 | Добавить limits, timeout and safe error handling. | Codex | D3-02 | Invalid/oversized/timeout tests проходят. | planned |
 | D4-03 | 4 | Добавить GitHub CI baseline. | Codex | D3-03 | Clean install, typecheck, tests, build and docs checks проходят. | planned |
-| D5-01 | 5 | Реализовать IdentityRef and profiles. | Codex | D2-02, D3-01 | Ownership and lifecycle покрыты tests. | planned |
+| D5-01 | 5 | Реализовать IdentityRef and profiles with ru/en language metadata. | Codex | D2-02, D3-01 | Ownership, locale and spoken/preferred languages покрыты tests. | planned |
 | D6-01 | 6 | Реализовать versioned Work NeedSchema. | Codex | D5-01 | Completeness and invalid input tests проходят. | planned |
 | D6-02 | 6 | Заблокировать matching для incomplete Need. | Codex | D6-01 | Core возвращает ожидаемую domain error. | planned |
 | D7-01 | 7 | Реализовать Clarification lifecycle. | Codex | D6-01 | Questions, answers, readiness and transitions tested. | planned |
@@ -49,13 +49,14 @@ Core P0 increment и получить первые product evidence без ис�
 
 ## User action queue
 
-1. Подтвердить либо изменить provisional `Quick Review`.
-2. Выбрать primary client segment.
-3. Подтвердить язык и географию discovery.
-4. Передать список минимум из 3 потенциальных клиентов и 2 экспертов.
-5. Указать доступные интервалы для интервью.
+1. Подтвердить, что лично оказываемая первая услуга: SRS Review/system analysis.
+2. Выбрать initial format: online only или также local/offline.
+3. Выбрать первые translation surfaces.
+4. Выбрать selection and communication model.
+5. Передать список минимум из 3 потенциальных клиентов.
+6. Указать доступные интервалы для интервью.
 
-До выполнения пунктов 1-3 Codex использует baseline из
+До выполнения пунктов 1-4 Codex использует recommended baseline из
 [product brief](../product/work-srs-review-product-brief.md), но не считает его
 финальным product decision.
 

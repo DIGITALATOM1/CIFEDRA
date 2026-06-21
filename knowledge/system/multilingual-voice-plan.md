@@ -1,12 +1,19 @@
 # CIFEDRA CONNECT: языки, перевод и голос
 
-Дата: 2026-06-20
-Статус: architecture decision v0.1
+Дата: 2026-06-21
+Статус: architecture decision v0.2
 
 ## Короткий ответ
 
 Мультиязычность нужна как сквозная функция. Whisper можно использовать для
 распознавания речи, но нельзя считать его единым переводчиком CIFEDRA.
+
+Product baseline:
+
+- русский and English входят в client MVP;
+- target architecture не ограничена одной географией;
+- runtime text translation является обязательной capability MVP;
+- production rollout по странам выполняется отдельно после legal gates.
 
 ## Четыре разные задачи
 
@@ -61,13 +68,14 @@ Whisper направлен в английский, а не в произвол�
 
 ### P0
 
-- хранить `locale`, `timezone`, preferred content language;
+- хранить Russian/English `locale`, `timezone`, preferred content language;
 - добавить language requirement в Need и spoken languages в Profile;
 - подготовить UI к resource-based i18n.
 
 ### P1
 
-- text translation provider abstraction;
+- text translation provider abstraction and first local runtime spike;
+- Need/Profile/Clarification text translation;
 - voice input и voice note transcription;
 - MediaAsset/Transcript/ProcessingJob;
 - glossary для CIFEDRA/SRS/профессиональной терминологии.

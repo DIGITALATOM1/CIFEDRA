@@ -1,6 +1,7 @@
 # CIFEDRA Risk Register
 
 Дата создания: 2026-06-20
+Дата обновления: 2026-06-21
 Статус: active
 
 Шкала:
@@ -23,6 +24,10 @@
 | R-011 | Название или домен окажутся недоступны. | medium | medium | Не покупать до shortlist and registrar verification; держать alternatives. | Product | R0 |
 | R-012 | Interview notes содержат лишние персональные данные. | medium | high | Consent, minimization, participant codes and restricted notes. | Research | Each interview |
 | R-013 | Increment `Ready for Match` ошибочно объявят готовым SRS Review product. | medium | high | В brief и demo разделять sprint output, fixture simulation and future product flow. | Product/System | R0 |
+| R-014 | Широкая аудитория Life/Work/Skills приводит к одновременной реализации несвязанных сценариев. | high | critical | Один validation scenario and one vertical increment at a time. | Product/System | Each sprint |
+| R-015 | "Без ограничений по географии" трактуется как немедленный global launch. | medium | high | Architecture global-ready, rollout geography enabled only after legal/support/payment gates. | Product/Legal | Production gate |
+| R-016 | Машинный перевод искажает смысл потребности или договоренности. | medium | high | Original retained, machine label, user correction, confidence and manual fallback. | Product/Architecture | Client MVP |
+| R-017 | Владелец продукта как единственный эксперт создает confirmation bias. | high | medium | Использовать self-expert для workflow; quality/supply подтверждать независимыми experts позже. | Product | Gate P1 |
 
 ## Escalation
 
