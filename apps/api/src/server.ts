@@ -1,4 +1,6 @@
-import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
+import { createServer, type IncomingMessage, type Server, type ServerResponse } from "node:http";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { createIntegrationHandoff, getIntegrationStatus } from "./integration-handoff.js";
 import {
@@ -23,6 +25,7 @@ import {
   directionDefinitions,
   integrationDefinitions,
   type AuthRegistrationInput,
+  type AuthRole,
   markConversationOpened,
   markConversationResolved,
   markNeedMatched,
@@ -35,31 +38,55 @@ import {
   type NeedInput
 } from "@cifedra/core";
 
-const port = Number(process.env.PORT ?? 3030);
+export function createApiServer(): Server {
+  return createServer(async (request, response) => {
+    try {
+      await routeRequest(request, response);
+    } catch (error) {
+      if (error instanceof AuthError) {
+        sendJson(response, error.statusCode, {
+          error: error.message
+        });
+        return;
+      }
 
-const server = createServer(async (request, response) => {
-  try {
-    await routeRequest(request, response);
-  } catch (error) {
-    if (error instanceof AuthError) {
-      sendJson(response, error.statusCode, {
-        error: error.message
+      console.error("Unhandled API error", error);
+      sendJson(response, 500, {
+        error: "Internal server error"
       });
-      return;
     }
+  });
+}
 
-    sendJson(response, 500, {
-      error: error instanceof Error ? error.message : "Unknown server error"
-    });
-  }
-});
+export function startApiServer(): Server {
+  const port = Number(process.env.PORT ?? 3030);
+  const host = getApiHost();
+  const server = createApiServer();
 
-server.listen(port, () => {
-  console.log(`CIFEDRA API prototype listening on http://localhost:${port}`);
-});
+  server.listen(port, host, () => {
+    console.log(`CIFEDRA API prototype listening on http://${host}:${port}`);
+  });
+
+  return server;
+}
+
+export function getApiHost(): string {
+  return process.env.CIFEDRA_API_HOST ?? "127.0.0.1";
+}
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  startApiServer();
+}
 
 async function routeRequest(request: IncomingMessage, response: ServerResponse): Promise<void> {
-  const url = new URL(request.url ?? "/", `http://${request.headers.host ?? "localhost"}`);
+  if (!applyCorsPolicy(request, response)) {
+    sendJson(response, 403, {
+      error: "Origin is not allowed"
+    });
+    return;
+  }
+
+  const url = new URL(request.url ?? "/", "http://localhost");
 
   if (request.method === "OPTIONS") {
     sendEmpty(response, 204);
@@ -154,7 +181,7 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
   }
 
   if (request.method === "POST" && url.pathname === "/demo/match") {
-    const authContext = await getAuthContextFromHeader(request.headers.authorization);
+    const authContext = await requireAnyRole(request, ["client", "helper", "operator"]);
     const body = await readJson<Partial<NeedInput>>(request);
     const createdNeed = createNeed(normalizeDemoNeed(body));
     const matches = rankProfilesForNeed(createdNeed, demoProfiles, {
@@ -186,17 +213,17 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
       firstBrief,
       firstConversationDraft,
       integrationWorkflow: buildIntegrationWorkflow(need, matches[0], firstBrief),
-      actor: authContext?.principal ?? null
+      actor: authContext.principal
     });
     return;
   }
 
   if (request.method === "POST" && url.pathname === "/demo/handoff") {
-    const authContext = await getAuthContextFromHeader(request.headers.authorization);
+    const authContext = await requireAnyRole(request, ["client", "operator"]);
     const body = await readJson<Parameters<typeof createIntegrationHandoff>[0]>(request);
     const handoff = await createIntegrationHandoff({
       ...body,
-      actor: authContext?.principal
+      actor: authContext.principal
     });
 
     sendJson(response, 200, {
@@ -206,6 +233,7 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
   }
 
   if (request.method === "POST" && url.pathname === "/demo/result") {
+    await requireAnyRole(request, ["client", "helper", "operator"]);
     const body = await readJson<DemoResultRequest>(request);
     const conversation = resolveDemoConversation(body.conversation);
     const result = recordContactResult({
@@ -256,6 +284,16 @@ async function requireAuthContext(request: IncomingMessage) {
 
   if (!authContext) {
     throw new AuthError(401, "Authorization required");
+  }
+
+  return authContext;
+}
+
+async function requireAnyRole(request: IncomingMessage, allowedRoles: readonly AuthRole[]) {
+  const authContext = await requireAuthContext(request);
+
+  if (!authContext.principal.roles.some((role) => allowedRoles.includes(role))) {
+    throw new AuthError(403, "Insufficient permissions");
   }
 
   return authContext;
@@ -317,21 +355,43 @@ async function readJson<T>(request: IncomingMessage): Promise<T> {
 
 function sendJson(response: ServerResponse, statusCode: number, payload: unknown): void {
   response.writeHead(statusCode, {
-    "content-type": "application/json; charset=utf-8",
-    ...corsHeaders()
+    "content-type": "application/json; charset=utf-8"
   });
   response.end(`${JSON.stringify(payload, null, 2)}\n`);
 }
 
 function sendEmpty(response: ServerResponse, statusCode: number): void {
-  response.writeHead(statusCode, corsHeaders());
+  response.writeHead(statusCode);
   response.end();
 }
 
-function corsHeaders(): Record<string, string> {
-  return {
-    "access-control-allow-origin": "*",
-    "access-control-allow-methods": "GET,POST,OPTIONS",
-    "access-control-allow-headers": "authorization,content-type"
-  };
+function applyCorsPolicy(request: IncomingMessage, response: ServerResponse): boolean {
+  const origin = request.headers.origin;
+
+  if (!origin) {
+    return true;
+  }
+
+  if (!allowedCorsOrigins().has(origin)) {
+    return false;
+  }
+
+  response.setHeader("access-control-allow-origin", origin);
+  response.setHeader("access-control-allow-methods", "GET,POST,OPTIONS");
+  response.setHeader("access-control-allow-headers", "authorization,content-type");
+  response.setHeader("vary", "Origin");
+  return true;
+}
+
+function allowedCorsOrigins(): Set<string> {
+  const configured = process.env.CIFEDRA_CORS_ALLOWED_ORIGINS
+    ?.split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
+  return new Set(
+    configured?.length
+      ? configured
+      : ["http://localhost:4177", "http://127.0.0.1:4177"]
+  );
 }

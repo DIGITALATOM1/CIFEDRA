@@ -25,7 +25,7 @@ Local prototype
 
 До первого shared environment необходимо:
 
-1. Запретить self-registration ролей `operator/admin`.
+1. Запретить self-registration ролей `helper/operator/admin`.
 2. Защитить demo/product endpoints authentication and authorization.
 3. Перестать доверять client-supplied domain state.
 4. Добавить request schema, body limit, timeout, rate limit and safe errors.

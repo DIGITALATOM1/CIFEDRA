@@ -53,6 +53,8 @@ interface IntegrationHandoffResult {
 }
 
 interface IntegrationStatus {
+  readonly liveRequested: boolean;
+  readonly externalWritesAllowed: boolean;
   readonly liveEnabled: boolean;
   readonly plane: {
     readonly baseUrl: string;
@@ -67,14 +69,18 @@ interface IntegrationStatus {
 }
 
 const rootDir = new URL("../../..", import.meta.url).pathname;
-const handoffDir = join(rootDir, ".local", "handoffs");
+const defaultHandoffDir = join(rootDir, ".local", "handoffs");
 
 export function getIntegrationStatus(): IntegrationStatus {
-  const liveEnabled = process.env.CIFEDRA_INTEGRATIONS_LIVE === "1";
+  const liveRequested = process.env.CIFEDRA_INTEGRATIONS_LIVE === "1";
+  const externalWritesAllowed = process.env.CIFEDRA_ALLOW_EXTERNAL_WRITES === "1";
+  const liveEnabled = liveRequested && externalWritesAllowed;
   const planeMissing = planeMissingConfig();
   const chatwootMissing = chatwootMissingConfig();
 
   return {
+    liveRequested,
+    externalWritesAllowed,
     liveEnabled,
     plane: {
       baseUrl: planeBaseUrl(),
@@ -105,13 +111,15 @@ export async function createIntegrationHandoff(input: IntegrationHandoffInput): 
       : buildChatwootRequest(input, id);
   const missingConfig =
     step.integrationId === "plane" ? planeMissingConfig() : chatwootMissingConfig();
-  const liveEnabled = process.env.CIFEDRA_INTEGRATIONS_LIVE === "1";
+  const liveEnabled =
+    process.env.CIFEDRA_INTEGRATIONS_LIVE === "1"
+    && process.env.CIFEDRA_ALLOW_EXTERNAL_WRITES === "1";
   const mode: HandoffMode = liveEnabled && missingConfig.length === 0 ? "live" : "draft";
 
   let status: HandoffStatus = "draft_saved";
   let message =
     mode === "draft"
-      ? "Handoff пакет сохранен локально. Для live-создания добавьте конфигурацию интеграции и CIFEDRA_INTEGRATIONS_LIVE=1."
+      ? "Handoff пакет сохранен локально. Для live-создания нужны конфигурация, CIFEDRA_INTEGRATIONS_LIVE=1 и CIFEDRA_ALLOW_EXTERNAL_WRITES=1."
       : "Handoff отправлен во внешний модуль.";
   let externalResponse: unknown;
 
@@ -249,12 +257,15 @@ function buildChatwootFirstMessage(input: IntegrationHandoffInput): string {
 }
 
 async function saveHandoffRecord(id: string, record: unknown): Promise<string> {
+  const handoffDir = process.env.CIFEDRA_HANDOFF_DIR ?? defaultHandoffDir;
   await mkdir(handoffDir, {
     recursive: true
   });
 
   const relativePath = `.local/handoffs/${id}.json`;
-  await writeFile(join(rootDir, relativePath), `${JSON.stringify(record, null, 2)}\n`);
+  await writeFile(join(handoffDir, `${id}.json`), `${JSON.stringify(record, null, 2)}\n`, {
+    mode: 0o600
+  });
 
   return relativePath;
 }

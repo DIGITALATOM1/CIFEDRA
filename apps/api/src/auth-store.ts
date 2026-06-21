@@ -6,7 +6,7 @@ import {
   timingSafeEqual
 } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 
 import {
   buildIntegrationIdentity,
@@ -15,7 +15,6 @@ import {
   toAuthPrincipal,
   type AuthPrincipal,
   type AuthRegistrationInput,
-  type AuthRole,
   type AuthUser,
   type IntegrationIdentity
 } from "@cifedra/core";
@@ -65,8 +64,8 @@ export interface AuthStatus {
 }
 
 const rootDir = new URL("../../..", import.meta.url).pathname;
-const authDir = join(rootDir, ".local", "auth");
-const authStorePath = join(authDir, "store.json");
+const defaultAuthDir = join(rootDir, ".local", "auth");
+const defaultAuthStorePath = join(defaultAuthDir, "store.json");
 const sessionTtlMs = 7 * 24 * 60 * 60 * 1000;
 
 export async function getAuthStatus(): Promise<AuthStatus> {
@@ -94,6 +93,10 @@ export async function getAuthStatus(): Promise<AuthStatus> {
 export async function registerLocalUser(
   input: AuthRegistrationInput
 ): Promise<AuthSessionResponse> {
+  if (input.roles?.some((role) => role !== "client")) {
+    throw new AuthError(400, "Self-registration only supports the client role");
+  }
+
   const data = await readStore();
   const email = normalizeAuthEmail(input.email);
 
@@ -106,7 +109,7 @@ export async function registerLocalUser(
     {
       ...input,
       email,
-      roles: normalizeApiRoles(input.roles)
+      roles: ["client"]
     },
     `usr_${randomUUID()}`
   );
@@ -206,10 +209,6 @@ export class AuthError extends Error {
   }
 }
 
-function normalizeApiRoles(roles?: readonly AuthRole[]): readonly AuthRole[] {
-  return roles?.length ? roles : ["client"];
-}
-
 function withPassword(user: AuthUser, password: string): StoredAuthUser {
   const passwordSalt = randomBytes(16).toString("base64url");
 
@@ -286,7 +285,7 @@ function isExpired(expiresAt: string): boolean {
 
 async function readStore(): Promise<AuthStoreData> {
   try {
-    const raw = await readFile(authStorePath, "utf8");
+    const raw = await readFile(getAuthStorePath(), "utf8");
     const parsed = JSON.parse(raw) as Partial<AuthStoreData>;
 
     return {
@@ -306,12 +305,17 @@ async function readStore(): Promise<AuthStoreData> {
 }
 
 async function writeStore(data: AuthStoreData): Promise<void> {
-  await mkdir(authDir, {
+  const authStorePath = getAuthStorePath();
+  await mkdir(dirname(authStorePath), {
     recursive: true
   });
   await writeFile(authStorePath, `${JSON.stringify(data, null, 2)}\n`, {
     mode: 0o600
   });
+}
+
+function getAuthStorePath(): string {
+  return process.env.CIFEDRA_AUTH_STORE_PATH ?? defaultAuthStorePath;
 }
 
 function isMissingFileError(error: unknown): boolean {

@@ -31,6 +31,8 @@ Product and delivery decisions фиксируются здесь. Architecture d
 | DEC-018 | 2026-06-21 | Work Quick Review request has one primary review focus. | accepted | Scope должен оставаться быстрым и проверяемым. | Владелец продукта | Gate R0 |
 | DEC-019 | 2026-06-21 | Real artifact metadata is required before engagement; file content is enabled only after D0 policy. | accepted | До D0 нельзя принимать confidential documents. | Владелец продукта | Gate D0 |
 | DEC-020 | 2026-06-21 | Provider contacts are hidden until mutual match; operator only assists analysis and does not choose on behalf of participants. | accepted | Selection and disclosure require participant decisions. | Владелец продукта | ContactRequest SRS |
+| DEC-021 | 2026-06-21 | Life pilot category is `Уход за участком`; pool cleaning and lawn mowing are service variants. | accepted | Варианты используют общий local-service intake and lifecycle. | Владелец продукта | Gate R0 |
+| DEC-022 | 2026-06-21 | Proposed Life/Work/Skills fields and readiness rules are approved for local synthetic UAT. | accepted | Product owner approved Day 2 schema baseline. | Владелец продукта | External product evidence |
 
 ## Open decisions
 
@@ -40,8 +42,7 @@ Product and delivery decisions фиксируются здесь. Architecture d
 | OPEN-004 | Result artifact format | Markdown / DOCX / PDF / mixed | Structured Markdown with later export | Product/System | 2026-07-02 |
 | OPEN-005 | Turnaround | Same day / 1 day / 2 days / no promise | No promise before evidence | Владелец продукта | 2026-07-02 |
 | OPEN-006 | Provider charging model | Subscription / lead / commission / promotion | Do not choose before pricing/legal discovery | Владелец продукта | Gate P1 |
-| OPEN-007 | Life schema boundary | One outdoor-maintenance category / separate pool and lawn categories | One schema with service variants for local pilot | Владелец продукта | Before D2 approval |
-| OPEN-008 | Life combined request | One or multiple variants in one Need | Exactly one variant; two services become two Needs | Владелец продукта | Before implementation |
+| OPEN-007 | Life combined request | One or multiple variants in one Need | Combine when one provider/visit is intended; otherwise split into linked Needs | Владелец продукта | Before ContactRequest implementation |
 | OPEN-009 | Service payment flow | Through CIFEDRA / direct client-provider | Mock only until legal/payment SRS | Владелец продукта | Before PSP work |
-| OPEN-010 | Quick Review limit | 25 pages / 10,000 words / expert hours | 25 pages or 10,000 words | Владелец продукта | Before D2 approval |
+| OPEN-010 | Quick Review limit | 25 pages / 10,000 words / expert hours | 25 pages or 10,000 words | Владелец продукта | Before pilot offer |
 | OPEN-011 | Quick Review turnaround | One business day / two days / no promise | At least one business day | Владелец продукта | Before pilot offer |

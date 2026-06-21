@@ -31,6 +31,7 @@
 | [delivery/sprint-2026-06-22-backlog.md](./delivery/sprint-2026-06-22-backlog.md) | Исполнимый backlog текущего двухнедельного спринта. |
 | [delivery/decision-log.md](./delivery/decision-log.md) | Реестр продуктовых и delivery-решений. |
 | [delivery/risk-register.md](./delivery/risk-register.md) | Активный реестр рисков программы. |
+| [delivery/security-baseline-evidence-2026-06-21.md](./delivery/security-baseline-evidence-2026-06-21.md) | Evidence по локальному security increment Day 3. |
 | [system/cifedra-hld.md](./system/cifedra-hld.md) | Формальный High-Level Design решения. |
 | [system/cifedra-target-architecture.md](./system/cifedra-target-architecture.md) | Каноническая архитектура локального и production-контуров. |
 | [system/cifedra-development-implementation-master-plan.md](./system/cifedra-development-implementation-master-plan.md) | Интегрированный roadmap разработки, внедрения и запуска. |

@@ -56,7 +56,7 @@ vertical increments, а не одновременно в одном спринт
 
 | Direction | Scenario | Service variants / focus | Delivery assumption |
 | --- | --- | --- | --- |
-| Life | Outdoor home maintenance | Pool cleaning, lawn mowing. | Future in-person service; local pilot is synthetic only. |
+| Life | Уход за участком | Pool cleaning, lawn mowing; later garden, territory cleanup and snow. | Future in-person service; local pilot is synthetic only. |
 | Work | Expert Help / SRS Review | Quick Review only in local pilot; broader system-analysis consulting is later. | Online. |
 | Skills | Interview preparation | Mock interview, feedback and preparation plan. | Online. |
 
@@ -189,14 +189,11 @@ configurations. Runtime translation, provider acceptance, execution and result
 
 ## 11. Open product questions
 
-1. Life — это одна category `Outdoor maintenance` с двумя service variants или
-   две независимые categories после pilot?
-2. Подтверждаем ли правило: один Life Need содержит только одну service variant?
-3. Как клиент подтверждает полезный Result для каждого из трех направлений?
-4. За что именно provider платит платформе: subscription, lead, commission or
+1. Как клиент подтверждает полезный Result для каждого из трех направлений?
+2. За что именно provider платит платформе: subscription, lead, commission or
    promoted placement?
-5. Платит ли клиент исполнителю через CIFEDRA в будущем или напрямую?
-6. Какие provider verification rules обязательны для Life?
+3. Платит ли клиент исполнителю через CIFEDRA в будущем или напрямую?
+4. Какие provider verification rules обязательны для Life?
 
 ## 12. Related documents
 

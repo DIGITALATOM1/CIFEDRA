@@ -145,14 +145,12 @@ async function submitAuth(action) {
   const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");
   const displayName = String(formData.get("displayName") ?? "").trim();
-  const role = String(formData.get("role") ?? "client");
   const body =
     action === "register"
       ? {
           email,
           password,
-          displayName: displayName || email.split("@")[0] || "CIFEDRA User",
-          roles: [role]
+          displayName: displayName || email.split("@")[0] || "CIFEDRA User"
         }
       : {
           email,

@@ -29,11 +29,11 @@ without real users, services or confidential data.
 | D1-05 | 1 | External interviews after local functional pilot. | Владелец продукта | D1-04 | Recruitment remains visible but does not block local R0. | deferred |
 | D1-06 | 1 | Зафиксировать three local pilot scenarios and commercial baseline. | Оба | D1-01 | Life/Work/Skills, free pilot and provider-paid future model recorded. | done |
 | D2-01 | 2 | Подготовить SRS Core P0 v0.1. | Codex | D1-02 | Actors, requirements, invariants, errors and acceptance описаны. | done |
-| D2-02 | 2 | Утвердить Life/Work/Skills intake fields and readiness. | Владелец продукта | D2-01 | Нет блокирующих domain TBD. | blocked |
+| D2-02 | 2 | Утвердить Life/Work/Skills intake fields and readiness. | Владелец продукта | D2-01 | Нет блокирующих domain TBD для local UAT. | done |
 | D2-03 | 2 | Создать traceability CJM -> requirement -> module -> test. | Codex | D2-01 | Каждое P0 requirement имеет target module and test. | done |
-| D3-01 | 3 | Запретить privileged roles in self-registration. | Codex | D2-02 | Negative tests helper/operator/admin проходят. | planned |
-| D3-02 | 3 | Защитить state-changing demo endpoints. | Codex | D3-01 | Anonymous/insufficient role получает 401/403. | planned |
-| D3-03 | 3 | Ограничить bind, CORS and live integrations. | Codex | D3-01 | Loopback/allowlist/explicit opt-in проверены. | planned |
+| D3-01 | 3 | Запретить privileged roles in self-registration. | Codex | D2-02 | Negative tests helper/operator/admin проходят. | done |
+| D3-02 | 3 | Защитить state-changing demo endpoints. | Codex | D3-01 | Anonymous/insufficient role получает 401/403. | done |
+| D3-03 | 3 | Ограничить bind, CORS and live integrations. | Codex | D3-01 | Loopback/allowlist/explicit opt-in проверены. | done |
 | D4-01 | 4 | Убрать persistent bearer token из browser. | Codex | D3-02 | Token отсутствует в localStorage. | planned |
 | D4-02 | 4 | Добавить limits, timeout and safe error handling. | Codex | D3-02 | Invalid/oversized/timeout tests проходят. | planned |
 | D4-03 | 4 | Добавить GitHub CI baseline. | Codex | D3-03 | Clean install, typecheck, tests, build and docs checks проходят. | planned |
@@ -50,13 +50,10 @@ without real users, services or confidential data.
 
 ## User action queue
 
-1. Подтвердить Life boundary: one outdoor-maintenance schema with pool/lawn
-   variants.
-2. Подтвердить, можно ли выбрать обе Life variants in one Need.
-3. Подтвердить Quick Review limits and readiness details from SRS.
-4. Подтвердить Skills interview-preparation intake fields from SRS.
+1. Подтвердить Quick Review: 25 pages / 10,000 words and one business day.
+2. Подтвердить combined Life rule: one Need only for one provider/visit.
 
-До выполнения пунктов 1-4 Codex использует recommended baseline из
+До выполнения этих пунктов Codex использует recommended baseline из
 [product brief](../product/work-srs-review-product-brief.md), но не считает его
 финальным product decision.
 

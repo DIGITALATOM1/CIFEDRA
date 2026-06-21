@@ -67,7 +67,7 @@ npm run integrations:plane:start
 10. `Conversation` теперь создается в `CIFEDRA Core` как draft и может передаваться в Chatwoot adapter как product-owned контекст.
 11. `POST /demo/result` закрывает demo conversation и возвращает result/quality signal в `CIFEDRA Core`.
 12. `integrations:chatwoot:bootstrap` автоматически создает Chatwoot account, admin user, API inbox, contact и API token, а также закрывает Chatwoot installation onboarding.
-13. `local:start` автоматически подхватывает `.local/integrations/chatwoot/cifedra.env`, поэтому Chatwoot handoff может работать в live-режиме без ручного копирования настроек.
+13. `local:start` автоматически подхватывает `.local/integrations/chatwoot/cifedra.env`; bootstrap заполняет adapter configuration, но оставляет внешние записи выключенными.
 14. `CIFEDRA Auth` добавляет actor в handoff: Chatwoot получает `cifedra_actor_*` custom attributes, Plane получает actor в описание задачи.
 
 ## Pre-adapter в сценарии
@@ -90,7 +90,11 @@ npm run integrations:plane:start
 
 ```bash
 CIFEDRA_INTEGRATIONS_LIVE=1
+CIFEDRA_ALLOW_EXTERNAL_WRITES=1
 ```
+
+Оба флага обязательны. Один `CIFEDRA_INTEGRATIONS_LIVE=1` показывает намерение
+включить live-режим, но не разрешает внешние записи.
 
 Plane:
 
@@ -112,9 +116,10 @@ npm run integrations:chatwoot:bootstrap
 npm run local:restart
 ```
 
-Bootstrap включает `CIFEDRA_INTEGRATIONS_LIVE=1` только в локальном файле
-`.local/integrations/chatwoot/cifedra.env`. Plane при этом остается в draft-режиме,
-пока для него не заполнены собственные live-настройки.
+Bootstrap записывает оба флага со значением `0` в локальный файл
+`.local/integrations/chatwoot/cifedra.env`. После проверки конфигурации владелец
+локального окружения явно меняет оба значения на `1`. Plane остается в
+draft-режиме, пока для него не заполнены собственные live-настройки.
 
 ## Следующие задачи
 

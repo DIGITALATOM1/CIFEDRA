@@ -198,6 +198,12 @@ h1 {
   gap: 8px;
 }
 
+.auth-note {
+  align-self: center;
+  color: var(--cifedra-slate);
+  font-size: 13px;
+}
+
 .auth-actions .primary-button,
 .auth-actions .ghost-button {
   min-height: 42px;

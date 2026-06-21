@@ -179,21 +179,21 @@ Codex:
 Владелец продукта:
 
 - принимает решение, что self-registration создает только роль `client`;
-- подтверждает, что operator/admin выдаются только доверенным
+- подтверждает, что helper/operator/admin выдаются только доверенным
   административным процессом.
 
 Codex:
 
-- запрещает назначение `operator/admin` через self-registration;
+- запрещает назначение `helper/operator/admin` через self-registration;
 - добавляет authorization checks для изменяющих state demo endpoints;
 - ограничивает API loopback interface по умолчанию;
 - заменяет wildcard CORS на allowlist configuration;
-- оставляет live integrations выключенными без явной конфигурации;
+- оставляет live integrations выключенными без двух явных opt-in flags;
 - добавляет negative authorization tests.
 
 Результат дня:
 
-- пользователь не может самостоятельно стать operator/admin;
+- пользователь не может самостоятельно стать helper/operator/admin;
 - unauthorized requests получают `401/403`;
 - API по умолчанию не доступен во внешней сети;
 - security tests проходят.

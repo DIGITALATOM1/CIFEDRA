@@ -75,6 +75,20 @@ function renderIntegrationStatus(status) {
     <article class="integration-card">
       <div class="integration-head">
         <div>
+          <span class="integration-kind">policy</span>
+          <h3>External writes</h3>
+        </div>
+        <span class="license-pill">${status.liveEnabled ? "enabled" : "disabled"}</span>
+      </div>
+      <div class="meta">
+        <span class="pill">Live requested: ${status.liveRequested ? "yes" : "no"}</span>
+        <span class="pill">Writes allowed: ${status.externalWritesAllowed ? "yes" : "no"}</span>
+      </div>
+      <p>Внешние записи разрешены только при одновременном включении обоих флагов.</p>
+    </article>
+    <article class="integration-card">
+      <div class="integration-head">
+        <div>
           <span class="integration-kind">tasks</span>
           <h3>Plane handoff</h3>
         </div>
@@ -122,7 +136,7 @@ function renderMissingConfig(keys, mode) {
   if (!keys?.length) {
     return mode === "live"
       ? `<p>Live-конфигурация заполнена. Adapter будет создавать записи во внешнем модуле.</p>`
-      : `<p>Live-конфигурация заполнена. Для реальной отправки нужен флаг CIFEDRA_INTEGRATIONS_LIVE=1.</p>`;
+      : `<p>Live-конфигурация заполнена. Для реальной отправки нужны CIFEDRA_INTEGRATIONS_LIVE=1 и CIFEDRA_ALLOW_EXTERNAL_WRITES=1.</p>`;
   }
 
   return `

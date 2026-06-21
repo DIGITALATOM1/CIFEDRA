@@ -1,8 +1,10 @@
 import {
   appendFileSync,
+  chmodSync,
   existsSync,
   mkdirSync,
   openSync,
+  readdirSync,
   readFileSync,
   writeFileSync
 } from "node:fs";
@@ -19,6 +21,7 @@ const webPort = Number(process.env.CIFEDRA_WEB_PORT ?? 4177);
 const localIntegrationEnv = loadLocalIntegrationEnv();
 
 mkdirSync(logDir, { recursive: true });
+hardenLocalArtifacts();
 
 execFileSync("npm", ["-w", "@cifedra/core", "run", "build"], {
   cwd: rootDir,
@@ -45,14 +48,19 @@ const api = spawnManaged({
   env: {
     ...localIntegrationEnv.values,
     ...process.env,
-    PORT: String(apiPort)
+    PORT: String(apiPort),
+    CIFEDRA_API_HOST: "127.0.0.1",
+    CIFEDRA_CORS_ALLOWED_ORIGINS: [
+      `http://localhost:${webPort}`,
+      `http://127.0.0.1:${webPort}`
+    ].join(",")
   }
 });
 
 const web = spawnManaged({
   name: "web",
   command: "python3",
-  args: ["-m", "http.server", String(webPort)],
+  args: ["-m", "http.server", String(webPort), "--bind", "127.0.0.1"],
   env: process.env
 });
 
@@ -141,6 +149,30 @@ function loadLocalIntegrationEnv() {
     values,
     files: loadedFiles
   };
+}
+
+function hardenLocalArtifacts() {
+  const sensitiveFiles = [
+    resolve(localDir, "auth", "store.json"),
+    resolve(localDir, "integrations", "chatwoot", "bootstrap.json"),
+    resolve(localDir, "integrations", "chatwoot", "cifedra.env"),
+    resolve(localDir, "integrations", "plane", "cifedra.env")
+  ];
+  const handoffDir = resolve(localDir, "handoffs");
+
+  if (existsSync(handoffDir)) {
+    for (const entry of readdirSync(handoffDir, { withFileTypes: true })) {
+      if (entry.isFile() && entry.name.endsWith(".json")) {
+        sensitiveFiles.push(resolve(handoffDir, entry.name));
+      }
+    }
+  }
+
+  for (const file of sensitiveFiles) {
+    if (existsSync(file)) {
+      chmodSync(file, 0o600);
+    }
+  }
 }
 
 function parseEnvFile(content) {

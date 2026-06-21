@@ -15,10 +15,10 @@
 - [x] Provider selection model подтвержден.
 - [x] Communication model подтвержден.
 - [x] Free pilot and provider-paid future baseline подтверждены.
-- [ ] Work/SRS required intake fields подтверждены.
-- [ ] Life outdoor-maintenance required/conditional fields подтверждены.
-- [ ] Skills interview-preparation required fields подтверждены.
-- [ ] Readiness rule подтвержден.
+- [x] Work/SRS required intake fields подтверждены для local UAT.
+- [x] Life `Уход за участком` required/conditional fields подтверждены для local UAT.
+- [x] Skills interview-preparation required fields подтверждены для local UAT.
+- [x] Readiness rule подтвержден для local UAT.
 - [ ] Quick Review size and deadline limits подтверждены.
 - [x] Artifact metadata before engagement confirmed.
 - [x] Exactly one Quick Review focus confirmed.
@@ -88,7 +88,7 @@
 
 ## Authorization and security
 
-- [ ] Self-registration cannot assign helper/operator/admin.
+- [x] Self-registration cannot assign helper/operator/admin.
 - [ ] Admin role alone does not imply resource ownership.
 - [ ] Every operator action requires explicit permission, assignment and reason where specified.
 - [ ] Manual analysis uses `need.review` and owner resubmission.
@@ -96,7 +96,7 @@
 - [ ] Error does not leak stack, path, credential or secret.
 - [ ] Logs/analytics exclude Need and Clarification free text.
 - [ ] Local test retention and reset are documented and tested.
-- [ ] Negative authorization tests exist.
+- [x] Negative authorization tests exist.
 
 ## Engineering quality
 

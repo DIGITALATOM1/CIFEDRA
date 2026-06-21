@@ -193,7 +193,7 @@ Deliverables:
 - owners, RACI, risk register and decision log;
 - tracked Docker/CI baseline;
 - локальные сервисы доступны только на `127.0.0.1`;
-- закрыты небезопасная self-registration admin/operator, публичные demo endpoints,
+- закрыты небезопасная self-registration helper/operator/admin, публичные demo endpoints,
   wildcard CORS, insecure handoff file permissions и persistent browser token;
 - live provider mode выключен по умолчанию;
 - naming/domain/store-account work запущен.

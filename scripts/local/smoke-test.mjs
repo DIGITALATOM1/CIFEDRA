@@ -9,6 +9,7 @@ await checkHealth();
 await checkLanding();
 await checkTestConsole();
 await checkAuth();
+await checkSecurityBaseline();
 
 const scenarios = await getScenarios();
 let firstScenarioResult = null;
@@ -63,8 +64,7 @@ async function checkAuth() {
     body: JSON.stringify({
       email,
       displayName: "Smoke User",
-      password: smokePassword,
-      roles: ["operator"]
+      password: smokePassword
     })
   });
 
@@ -98,6 +98,43 @@ async function getScenarios() {
   assert(body.scenarios?.length >= 3, "Expected at least 3 demo scenarios");
 
   return body.scenarios;
+}
+
+async function checkSecurityBaseline() {
+  for (const role of ["helper", "operator", "admin"]) {
+    const privilegedRegistration = await fetch(`${apiBaseUrl}/auth/register`, {
+      method: "POST",
+      headers: jsonHeaders(),
+      body: JSON.stringify({
+        email: `${role}-${Date.now()}@cifedra.local`,
+        displayName: `${role} User`,
+        password: smokePassword,
+        roles: [role]
+      })
+    });
+    assert(
+      privilegedRegistration.status === 400,
+      `Expected ${role} registration to fail with 400, got ${privilegedRegistration.status}`
+    );
+  }
+
+  for (const path of ["/demo/match", "/demo/handoff", "/demo/result"]) {
+    const response = await fetch(`${apiBaseUrl}${path}`, {
+      method: "POST",
+      headers: jsonHeaders(),
+      body: "{}"
+    });
+    assert(response.status === 401, `${path}: expected anonymous request to return 401`);
+  }
+
+  const deniedOrigin = await fetch(`${apiBaseUrl}/health`, {
+    headers: {
+      origin: "https://untrusted.example"
+    }
+  });
+  assert(deniedOrigin.status === 403, "Expected untrusted CORS origin to be rejected");
+
+  console.log("Security baseline checks passed.");
 }
 
 async function checkScenario(scenario) {
@@ -194,7 +231,7 @@ async function checkHandoff(matchResult) {
 async function checkResult(matchResult) {
   const response = await fetch(`${apiBaseUrl}/demo/result`, {
     method: "POST",
-    headers: jsonHeaders(),
+    headers: authHeaders(true),
     body: JSON.stringify({
       need: matchResult.need,
       conversation: matchResult.firstConversationDraft,

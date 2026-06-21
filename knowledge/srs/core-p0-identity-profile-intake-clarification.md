@@ -2,7 +2,7 @@
 
 Дата: 2026-06-21
 Версия: 0.2
-Статус: reviewed draft; implementation blocked on PA-007, PA-010 and PA-013
+Статус: reviewed draft; Quick Review publication blocked on PA-007 and PA-010
 Sprint: 2026-06-22 - 2026-07-03
 
 ## 1. Назначение
@@ -68,14 +68,13 @@ Identity
 | PA-010 | Minimum deadline | Proposed: at least one business day; pending confirmation. |
 | PA-011 | Provider public preview | Name, summary, capabilities, languages, trust and availability; contacts hidden until mutual match. Accepted. |
 | PA-012 | Decision boundary | Core calculates readiness after owner submission; operator assists analysis but does not choose provider or accept request. Accepted. |
-| PA-013 | Life schema variants | Proposed: one outdoor-maintenance schema, exactly one service variant per Need; pending confirmation. |
+| PA-013 | Life schema variants | One `Уход за участком` schema with pool/lawn variants is accepted. Combined request rule is provisional: one Need only for one provider/visit; otherwise linked Needs. |
 
 Assumptions affect later increments. Current Core contract must remain valid if
 they change.
 
-Candidate category schemas below are draft product configurations. They shall
-not enter implementation until pending PA-007, PA-010 and PA-013 decisions are
-accepted or explicitly deferred by the product owner.
+Candidate category schemas below are approved for local synthetic UAT.
+Quick Review publication remains blocked until PA-007 and PA-010 are confirmed.
 
 ## 4. Actors
 
@@ -478,13 +477,16 @@ categoryId: life.home-help
 ```
 
 For local pilot, pool cleaning and lawn mowing are service variants of one
-schema. This does not create a new catalog category before product evidence.
+`Уход за участком` schema. For local UAT, one Need may select one or both when
+one provider and visit are intended. Otherwise application flow creates linked
+Needs. The combined request rule remains provisional until product confirmation.
 
 ### Required fields
 
 | Field ID | Type | Purpose |
 | --- | --- | --- |
-| `serviceType` | single choice | Exactly one: `pool_cleaning` or `lawn_mowing`. |
+| `serviceTypes` | multiple choice | One or both: `pool_cleaning`, `lawn_mowing`. |
+| `singleProviderVisit` | boolean | Must be true for a combined Need. |
 | `serviceRegionId` | single choice | Repository-owned synthetic service region; exact address is forbidden. |
 | `desiredDate` | date | Requested future date interpreted in owner Profile timezone. |
 | `propertyContext` | long text | Outdoor property context without identifying address. |
@@ -520,7 +522,7 @@ Additional required fields:
 
 Life Need is ready only when:
 
-1. exactly one service type is selected;
+1. at least one service type is selected;
 2. all conditional fields for selected variants are valid;
 3. desired date is in the future;
 4. exact address, personal contacts and real property identifiers are absent;
@@ -803,10 +805,11 @@ absent.
 Given `pool_cleaning` only, when pool size/condition are valid and lawn fields
 are absent, then completeness does not require lawn fields.
 
-### AC-017 Combined Life intake rejected
+### AC-017 Combined Life intake
 
-Given both Life service variants are submitted in one Need, then Core returns
-`NEED_ANSWER_INVALID`; client may create two separate Needs.
+Given both Life service variants and `singleProviderVisit=true`, when all pool
+and lawn conditional fields are valid, then one Need may become ready. If
+`singleProviderVisit=false`, application flow proposes two linked Needs.
 
 ### AC-018 Life privacy guard
 

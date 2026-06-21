@@ -50,15 +50,7 @@
             Пароль
             <input name="password" type="password" autocomplete="current-password" required>
           </label>
-          <label>
-            Роль
-            <select name="role">
-              <option value="client">client</option>
-              <option value="helper">helper</option>
-              <option value="operator">operator</option>
-              <option value="admin">admin</option>
-            </select>
-          </label>
+          <p class="auth-note">Публичная регистрация создает только роль client.</p>
           <div class="auth-actions">
             <button class="primary-button" id="register-button" type="button">Регистрация</button>
             <button class="ghost-button" id="login-button" type="button">Войти</button>
