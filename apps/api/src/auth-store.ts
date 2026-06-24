@@ -16,6 +16,7 @@ import {
   type AuthPrincipal,
   type AuthRegistrationInput,
   type AuthUser,
+  type IdentityRef,
   type IntegrationIdentity
 } from "@cifedra/core";
 
@@ -45,12 +46,14 @@ export interface AuthSessionResponse {
   readonly token: string;
   readonly expiresAt: string;
   readonly user: AuthPrincipal;
+  readonly identityRef: IdentityRef;
   readonly integrationIdentity: IntegrationIdentity;
 }
 
 export interface AuthContext {
   readonly user: AuthUser;
   readonly principal: AuthPrincipal;
+  readonly identityRef: IdentityRef;
   readonly integrationIdentity: IntegrationIdentity;
 }
 
@@ -171,10 +174,12 @@ export async function getAuthContextFromHeader(
   if (!user) {
     return null;
   }
+  const principal = toAuthPrincipal(user);
 
   return {
     user,
-    principal: toAuthPrincipal(user),
+    principal,
+    identityRef: principal.identityRef,
     integrationIdentity: buildIntegrationIdentity(user)
   };
 }
@@ -251,10 +256,13 @@ function buildSessionResponse(
   token: string,
   expiresAt: string
 ): AuthSessionResponse {
+  const principal = toAuthPrincipal(user);
+
   return {
     token,
     expiresAt,
-    user: toAuthPrincipal(user),
+    user: principal,
+    identityRef: principal.identityRef,
     integrationIdentity: buildIntegrationIdentity(user)
   };
 }

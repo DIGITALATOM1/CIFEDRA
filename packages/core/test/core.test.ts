@@ -53,6 +53,9 @@ test("creates a normalized auth user and integration identity", () => {
   assert.equal(user.createdAt, "2026-06-13T07:00:00.000Z");
   assert.equal(identity.provider, "cifedra");
   assert.equal(identity.claims.subject, "usr_demo");
+  assert.equal(identity.claims.issuer, "cifedra-local");
+  assert.equal(identity.identityRef.id, identity.claims.identityRefId);
+  assert.equal(identity.principal.identityRef.id, identity.identityRef.id);
   assert.equal(identity.claims.email, "user@example.com");
 });
 

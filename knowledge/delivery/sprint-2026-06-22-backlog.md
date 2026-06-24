@@ -37,7 +37,7 @@ without real users, services or confidential data.
 | D4-01 | 4 | Убрать persistent bearer token из browser. | Codex | D3-02 | Token отсутствует в localStorage. | done |
 | D4-02 | 4 | Добавить limits, timeout and safe error handling. | Codex | D3-02 | Invalid/oversized/timeout tests проходят. | done |
 | D4-03 | 4 | Добавить GitHub CI baseline. | Codex | D3-03 | Clean install, typecheck, tests, build and docs checks проходят. | done |
-| D5-01 | 5 | Реализовать IdentityRef and profiles with ru/en language metadata. | Codex | D2-02, D3-01 | Ownership, locale and spoken/preferred languages покрыты tests. | planned |
+| D5-01 | 5 | Реализовать IdentityRef and profiles with ru/en language metadata. | Codex | D2-02, D3-01 | Ownership, locale and spoken/preferred languages покрыты tests. | done |
 | D6-01 | 6 | Реализовать versioned NeedSchema for Life/Work/Skills. | Codex | D2-02, D5-01 | Completeness and invalid input tests pass for all three. | planned |
 | D6-02 | 6 | Заблокировать matching для incomplete Need. | Codex | D6-01 | Core возвращает ожидаемую domain error. | planned |
 | D7-01 | 7 | Реализовать Clarification lifecycle. | Codex | D6-01 | Questions, answers, readiness and transitions tested. | planned |

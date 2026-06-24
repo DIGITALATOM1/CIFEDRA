@@ -1,3 +1,8 @@
+import {
+  localIdentityIssuer,
+  resolveIdentityRefFromTrustedMapping,
+  type IdentityRef
+} from "./identity.js";
 import { toIsoString } from "./utils.js";
 
 export const authRoleIds = ["client", "helper", "operator", "admin"] as const;
@@ -22,6 +27,7 @@ export interface AuthUser {
 
 export interface AuthPrincipal {
   readonly id: string;
+  readonly identityRef: IdentityRef;
   readonly email: string;
   readonly displayName: string;
   readonly roles: readonly AuthRole[];
@@ -29,9 +35,12 @@ export interface AuthPrincipal {
 
 export interface IntegrationIdentity {
   readonly provider: "cifedra";
+  readonly identityRef: IdentityRef;
   readonly principal: AuthPrincipal;
   readonly claims: {
     readonly subject: string;
+    readonly issuer: string;
+    readonly identityRefId: string;
     readonly email: string;
     readonly name: string;
     readonly roles: readonly AuthRole[];
@@ -92,6 +101,7 @@ export function createAuthUser(
 export function toAuthPrincipal(user: AuthUser): AuthPrincipal {
   return {
     id: user.id,
+    identityRef: buildAuthIdentityRef(user),
     email: user.email,
     displayName: user.displayName,
     roles: user.roles
@@ -103,12 +113,23 @@ export function buildIntegrationIdentity(user: AuthUser): IntegrationIdentity {
 
   return {
     provider: "cifedra",
+    identityRef: principal.identityRef,
     principal,
     claims: {
       subject: principal.id,
+      issuer: localIdentityIssuer,
+      identityRefId: principal.identityRef.id,
       email: principal.email,
       name: principal.displayName,
       roles: principal.roles
     }
   };
+}
+
+export function buildAuthIdentityRef(user: AuthUser): IdentityRef {
+  return resolveIdentityRefFromTrustedMapping({
+    issuer: localIdentityIssuer,
+    subject: user.id,
+    source: "local"
+  });
 }

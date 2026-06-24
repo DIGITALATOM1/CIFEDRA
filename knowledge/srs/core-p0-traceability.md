@@ -1,8 +1,8 @@
 # Core P0 Traceability Matrix
 
-Дата: 2026-06-21
-Версия: 0.2
-Статус: reviewed draft
+Дата: 2026-06-25
+Версия: 0.3
+Статус: reviewed draft; Identity/Profile baseline implemented
 
 ## Sources
 
@@ -15,10 +15,10 @@
 
 | Requirement | CJM step / gap | Target module | Planned test |
 | --- | --- | --- | --- |
-| IDN-001 - IDN-008 | Auth/Profile; provider-neutral identity gap | `identity.ts`, auth adapter mapping | idempotent resolve, invalid identity, trusted mapping, email change ownership |
-| PRF-001 - PRF-004 | Profile ownership and authorization | `profile.ts`, `authorization.ts` | own/cross-owner read-update cases |
+| IDN-001 - IDN-008 | Auth/Profile; provider-neutral identity gap | `identity.ts`, auth adapter mapping | `identity-profile.test.ts`: idempotent resolve, invalid identity, trusted mapping, email change ownership |
+| PRF-001 - PRF-004 | Profile ownership and authorization | `profile.ts`, later `authorization.ts` | `identity-profile.test.ts`: own/cross-owner read-update cases |
 | PRF-005 - PRF-006 | Provider lifecycle and match eligibility | `profile.ts`, later matching policy | valid/invalid status, suspended exclusion |
-| PRF-007 - PRF-010 | Profile locale/language/timezone gaps | `profile.ts`, `language.ts` | ru/en accepted, unsupported rejected, timezone invalid |
+| PRF-007 - PRF-010 | Profile locale/language/timezone gaps | `profile.ts`, `language.ts` | `identity-profile.test.ts`: ru/en accepted, unsupported rejected, timezone invalid |
 | PRF-011 - PRF-015 | Admin/ownership/visibility/capability gaps | `authorization.ts`, `profile.ts` | admin without permission, private default, safe preview, provider draft/capability |
 | INT-001 - INT-003 | Need Intake ownership and category schema | `intake.ts` | schema/category/owner consistency |
 | INT-004 - INT-006 | Required fields and completeness gap | `intake.ts` | valid, missing, invalid, deterministic completeness |

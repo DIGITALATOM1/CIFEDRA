@@ -73,6 +73,11 @@ async function checkAuth() {
   const registerBody = await registerResponse.json();
   assert(registerBody.token, "Expected auth token after register");
   assert(registerBody.user?.email === email, "Expected registered auth user email");
+  assert(registerBody.identityRef?.issuer === "cifedra-local", "Expected local identity issuer");
+  assert(
+    registerBody.user?.identityRef?.id === registerBody.identityRef?.id,
+    "Expected principal identityRef to match session identityRef"
+  );
 
   authToken = registerBody.token;
   authUser = registerBody.user;
@@ -84,6 +89,10 @@ async function checkAuth() {
 
   const meBody = await meResponse.json();
   assert(meBody.user?.email === email, "Expected /auth/me to return current user");
+  assert(
+    meBody.identityRef?.id === registerBody.identityRef?.id,
+    "Expected /auth/me identityRef to match session identityRef"
+  );
   assert(meBody.integrationIdentity?.provider === "cifedra", "Expected CIFEDRA identity");
 
   console.log(`Auth registration passed for ${email}.`);

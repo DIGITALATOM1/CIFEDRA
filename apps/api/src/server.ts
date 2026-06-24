@@ -169,6 +169,7 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
 
     sendJson(response, 200, {
       user: authContext.principal,
+      identityRef: authContext.identityRef,
       integrationIdentity: authContext.integrationIdentity
     });
     return;

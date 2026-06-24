@@ -27,27 +27,27 @@
 
 ## Identity
 
-- [ ] `issuer + subject` является stable key.
-- [ ] Email не участвует в ownership.
-- [ ] Invalid/empty identity rejected.
-- [ ] Local and future OIDC principals map to one Core boundary.
-- [ ] IdentityRef is created only through trusted auth mapping.
-- [ ] Repeated trusted mapping returns the same IdentityRef.
+- [x] `issuer + subject` является stable key.
+- [x] Email не участвует в ownership.
+- [x] Invalid/empty identity rejected.
+- [x] Local and future OIDC principals map to one Core boundary.
+- [x] IdentityRef is created only through trusted auth mapping.
+- [x] Repeated trusted mapping returns the same IdentityRef.
 
 ## Profile
 
-- [ ] User and provider profiles имеют explicit owner.
-- [ ] Cross-owner update rejected.
+- [x] User and provider profiles имеют explicit owner.
+- [x] Cross-owner update rejected.
 - [ ] Status transitions validated.
 - [ ] Provider activation requires trusted review and cannot come from self-registration.
 - [ ] Provider status commands use explicit `provider.review`/`provider.suspend` permissions.
 - [ ] Suspended provider excluded from matching.
-- [ ] `ru-RU` and `en-US` accepted.
-- [ ] Unsupported locale/language rejected.
-- [ ] IANA timezone validated.
-- [ ] Provider categories validated against catalog.
-- [ ] Profile is private by default.
-- [ ] Public provider preview excludes contacts and IdP claims.
+- [x] `ru-RU` and `en-US` accepted.
+- [x] Unsupported locale/language rejected.
+- [x] IANA timezone validated.
+- [x] Provider categories validated against catalog.
+- [x] Profile is private by default.
+- [x] Public provider preview excludes contacts and IdP claims.
 - [ ] One user and one provider profile per identity baseline accepted.
 
 ## Intake
@@ -104,7 +104,7 @@
 ## Engineering quality
 
 - [ ] SRS requirement IDs appear in traceability.
-- [ ] Unit tests cover happy path and negative path.
+- [x] Unit tests cover happy path and negative path.
 - [x] Typecheck passes.
 - [x] Build passes.
 - [x] Existing tests do not regress.

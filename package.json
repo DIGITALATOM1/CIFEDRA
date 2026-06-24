@@ -10,7 +10,7 @@
   "scripts": {
     "build": "npm -w @cifedra/core run build && npm -w @cifedra/api run build",
     "typecheck": "npm -w @cifedra/core run typecheck && npm -w @cifedra/core run build && npm -w @cifedra/api run typecheck",
-    "test": "npm -w @cifedra/core run test && npm -w @cifedra/api run test",
+    "test": "npm -w @cifedra/core run test && npm -w @cifedra/core run build && npm -w @cifedra/api run test",
     "docs:check": "node scripts/quality/check-doc-links.mjs",
     "dev:api": "npm -w @cifedra/api run dev",
     "local:start": "node scripts/local/start.mjs",

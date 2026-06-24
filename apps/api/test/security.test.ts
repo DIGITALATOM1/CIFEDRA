@@ -101,6 +101,9 @@ test("secures local registration, demo mutations, CORS and integration writes", 
     assert.equal(registration.status, 201);
     const registrationBody = await registration.json();
     assert.deepEqual(registrationBody.user.roles, ["client"]);
+    assert.equal(registrationBody.identityRef.issuer, "cifedra-local");
+    assert.equal(registrationBody.user.identityRef.id, registrationBody.identityRef.id);
+    assert.equal(registrationBody.integrationIdentity.identityRef.id, registrationBody.identityRef.id);
     const token = registrationBody.token as string;
     const authStorePath = join(tempDir, "auth", "store.json");
 
