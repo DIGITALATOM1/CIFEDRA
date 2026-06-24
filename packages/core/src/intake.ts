@@ -88,6 +88,7 @@ export interface VersionedNeed extends Need {
   readonly ownerUserProfileId: string;
   readonly schemaId: string;
   readonly schemaVersion: number;
+  readonly aggregateVersion: number;
   readonly answers: Record<string, unknown>;
   readonly completeness: NeedCompleteness;
   readonly originalContentLanguage: LanguageCode;
@@ -323,6 +324,7 @@ export function createNeedFromSchema(
     ownerUserProfileId,
     schemaId: schema.schemaId,
     schemaVersion: schema.version,
+    aggregateVersion: 1,
     answers: cloneAnswers(input.answers),
     completeness,
     originalContentLanguage,

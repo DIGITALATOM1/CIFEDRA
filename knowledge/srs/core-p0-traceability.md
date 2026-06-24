@@ -1,8 +1,8 @@
 # Core P0 Traceability Matrix
 
 Дата: 2026-06-25
-Версия: 0.4
-Статус: reviewed draft; Identity/Profile and NeedSchema baseline implemented
+Версия: 0.5
+Статус: reviewed draft; Identity/Profile, NeedSchema and Clarification baseline implemented
 
 ## Sources
 
@@ -31,11 +31,11 @@
 | Life schema v1 | Life home-help intake gaps | schema config/registry | `intake.test.ts`: pool, lawn, combined variants and conditional fields |
 | Work schema v1 | Work SRS review intake gaps | schema config/registry | `intake.test.ts`: complete/incomplete SRS intake |
 | Skills schema v1 | Skills career-help intake gaps | schema config/registry | `intake.test.ts`: role, level, interview type, goals and language |
-| CLR-001 - CLR-004 | Clarification entity absent | `clarification.ts` | create for field/topic by allowed requester |
-| CLR-005 - CLR-007 | Clarification lifecycle/actor gap | `clarification.ts`, `authorization.ts` | resolve/reopen/cancel and invalid actor |
-| CLR-008 - CLR-009 | Readiness and recalculation gap | `clarification.ts`, `intake.ts`, `lifecycle.ts` | blocking open; answer leads to ready |
-| CLR-010 - CLR-011 | Clarification language/original gap | `clarification.ts`, `language.ts` | original and translation metadata separate |
-| CLR-012 - CLR-018 | Reason/blocking/waiver/concurrency/answer application gaps | `clarification.ts`, `authorization.ts`, application UoW | reason, blocking, waiver limits, answer merge, reopen, stale and atomic update |
+| CLR-001 - CLR-004 | Clarification entity absent | `clarification.ts` | `clarification.test.ts`: create for field/topic by allowed requester |
+| CLR-005 - CLR-007 | Clarification lifecycle/actor gap | `clarification.ts`, later `authorization.ts` | `clarification.test.ts`: resolve/reopen and invalid actor/status |
+| CLR-008 - CLR-009 | Readiness and recalculation gap | `clarification.ts`, `intake.ts`, `lifecycle.ts` | `clarification.test.ts`: blocking open; answer leads to ready |
+| CLR-010 - CLR-011 | Clarification language/original gap | `clarification.ts`, `language.ts` | `clarification.test.ts`: original language preserved in answer history |
+| CLR-012 - CLR-018 | Reason/blocking/waiver/concurrency/answer application gaps | `clarification.ts`, later `authorization.ts`, application UoW | `clarification.test.ts`: reason, blocking, waiver limits, answer merge, reopen, stale and atomic update |
 | NFR-001 - NFR-003 | Replaceable provider architecture | all Core modules | no external imports/provider calls |
 | NFR-004 | Multi-direction extensibility | `intake.ts` schema registry | second synthetic schema without lifecycle change |
 | NFR-005 | Translation safety | `language.ts` | translated variant cannot overwrite original |
@@ -43,7 +43,7 @@
 | NFR-007 | Deterministic testability | utilities/module factories | fixed timestamps/ids where asserted |
 | NFR-008 | Privacy-safe diagnostics | logger/analytics boundary | free text and IdP claims absent |
 | NFR-009 | Local retention/reset | local test tooling | repeatable reset and retention check |
-| NFR-010 | Atomic reassessment | application service/UoW contract | failure leaves Need and Clarification unchanged |
+| NFR-010 | Atomic reassessment | application service/UoW contract | `clarification.test.ts`: failure leaves Need and Clarification unchanged |
 | NFR-011 | Provisional schema governance | schema registry/review process | local draft can change without migration of external user data |
 
 ## Acceptance scenario mapping
@@ -56,7 +56,7 @@
 | AC-004 | PRF-005 - PRF-010 | `profile.test.ts` |
 | AC-005 | INT-004 - INT-006, INT-011, CLR-004, CLR-008 | `intake.test.ts`, `clarification.test.ts` |
 | AC-006 | CLR-003 - CLR-009 | `clarification.test.ts` |
-| AC-007 | CLR-003, CLR-007 | `authorization.test.ts`, `clarification.test.ts` |
+| AC-007 | CLR-003, CLR-007 | `clarification.test.ts`, later `authorization.test.ts` |
 | AC-008 | INT-008, PRF-010 | `language.test.ts`, `intake.test.ts` |
 | AC-009 | INT-009, CLR-010, CLR-011, NFR-005 | `language.test.ts` |
 | AC-010 | INT-012 | `intake.test.ts` |
@@ -72,12 +72,12 @@
 | AC-021 | PRF-011, PA-012 | `authorization.test.ts` |
 | AC-022 | INT-017, INT-018 | `intake.test.ts` |
 | AC-023 | CLR-013, CLR-014 | `clarification.test.ts` |
-| AC-024 | CLR-015 - CLR-017, NFR-010 | application service atomicity test |
+| AC-024 | CLR-015 - CLR-017, NFR-010 | `clarification.test.ts` |
 | AC-025 | Need lifecycle/out-of-scope rule | `intake.test.ts`, `lifecycle.test.ts` |
 | AC-026 | INT-019, INT-020 | local UAT fixture registry test |
 | AC-027, AC-028 | PRF-005, provider permissions | `authorization.test.ts`, `profile.test.ts` |
 | AC-029 | INT-017, INT-018, catalog permissions | `authorization.test.ts`, `intake.test.ts` |
-| AC-030 | CLR-015, CLR-018, NFR-010 | atomic application service test |
+| AC-030 | CLR-015, CLR-018, NFR-010 | `clarification.test.ts` |
 | Three schema readiness | INT-003 - INT-016 | `intake.test.ts` parameterized for Life/Work/Skills |
 
 ## Implementation sequence

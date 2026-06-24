@@ -73,18 +73,18 @@
 
 ## Clarification
 
-- [ ] Missing/invalid fields can create blocking clarification.
-- [ ] Only owner can answer; operator cannot answer on owner behalf.
-- [ ] Invalid actor rejected.
-- [ ] Invalid lifecycle transition rejected.
-- [ ] Blocking/non-blocking and reason are explicit.
-- [ ] Waiver requires permission and reason.
-- [ ] Answer history preserved on reopen.
-- [ ] Open blocking clarification prevents readiness.
-- [ ] Resolution recalculates completeness.
-- [ ] Clarification answer/resolution and Need reassessment are atomic.
-- [ ] Creating/reopening blocking clarification atomically revokes readiness.
-- [ ] Original language is preserved.
+- [x] Missing/invalid fields can create blocking clarification.
+- [x] Only owner can answer; operator cannot answer on owner behalf.
+- [x] Invalid actor rejected.
+- [x] Invalid lifecycle transition rejected.
+- [x] Blocking/non-blocking and reason are explicit.
+- [x] Waiver requires permission and reason.
+- [x] Answer history preserved on reopen.
+- [x] Open blocking clarification prevents readiness.
+- [x] Resolution recalculates completeness.
+- [x] Clarification answer/resolution and Need reassessment are atomic.
+- [x] Creating/reopening blocking clarification atomically revokes readiness.
+- [x] Original language is preserved.
 
 ## Authorization and security
 
