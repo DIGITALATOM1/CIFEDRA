@@ -6,6 +6,7 @@ import type {
   Profile,
   RecommendedAction
 } from "./domain.js";
+import { assertNeedCanEnterMatching } from "./intake.js";
 import { scoreDirectionRules } from "./matching-rules.js";
 import { clampScore, overlap } from "./utils.js";
 
@@ -19,6 +20,8 @@ export function rankProfilesForNeed(
   profiles: Profile[],
   options: MatchOptions = {}
 ): MatchCandidate[] {
+  assertNeedCanEnterMatching(need);
+
   const limit = options.limit ?? 10;
   const minScore = options.minScore ?? 25;
 
@@ -33,6 +36,8 @@ export function rankProfilesForNeed(
 }
 
 export function scoreProfileForNeed(need: Need, profile: Profile): MatchCandidate {
+  assertNeedCanEnterMatching(need);
+
   const hasDirectionFit = profile.directions.includes(need.direction);
   const directionFit = hasDirectionFit ? 20 : -40;
   const matchedCategories = overlap([need.categoryId], profile.categoryIds);

@@ -52,24 +52,24 @@
 
 ## Intake
 
-- [ ] Schema is versioned.
-- [ ] Direction/category/schema consistency checked.
-- [ ] Required, optional and invalid fields distinguished.
-- [ ] Completeness is deterministic.
-- [ ] Unknown schema/version rejected.
-- [ ] Published schema is immutable and Need pins exact version.
-- [ ] Deprecated schema blocks new Need but continues validating existing Need.
-- [ ] Incomplete Need cannot enter matching.
-- [ ] Original and preferred result languages stored.
+- [x] Schema is versioned.
+- [x] Direction/category/schema consistency checked.
+- [x] Required, optional and invalid fields distinguished.
+- [x] Completeness is deterministic.
+- [x] Unknown schema/version rejected.
+- [x] Published schema is immutable and Need pins exact version.
+- [x] Deprecated schema blocks new Need but continues validating existing Need.
+- [x] Incomplete Need cannot enter matching.
+- [x] Original and preferred result languages stored.
 - [ ] Original, communication and result language have one aggregate source of truth.
-- [ ] Files and confidential material rejected in current increment.
+- [x] Files and confidential material rejected in current increment.
 - [ ] Local UAT accepts repository-owned synthetic fixtures only.
 - [ ] Local UAT rejects unknown fixture/action IDs and ad-hoc answers.
 - [ ] Stale aggregate version rejected.
-- [ ] Life conditional fields depend on selected service variants.
-- [ ] Life exact address and real property identifiers rejected.
-- [ ] Skills real CV/vacancy files rejected.
-- [ ] All three schemas reach readiness through the same generic engine.
+- [x] Life conditional fields depend on selected service variants.
+- [x] Life exact address and real property identifiers rejected.
+- [x] Skills real CV/vacancy files rejected.
+- [x] All three schemas reach readiness through the same generic engine.
 
 ## Clarification
 

@@ -426,6 +426,8 @@ test("moves a need through the core lifecycle", () => {
   assert.equal(resolved.updatedAt, "2026-06-13T08:04:00.000Z");
   assert.equal(canTransitionNeedStatus("matched", "connected"), true);
   assert.equal(canTransitionNeedStatus("matched", "resolved"), false);
+  assert.equal(canTransitionNeedStatus("draft", "needs_clarification"), true);
+  assert.equal(canTransitionNeedStatus("needs_clarification", "ready_for_match"), true);
 });
 
 test("rejects invalid need lifecycle transitions", () => {

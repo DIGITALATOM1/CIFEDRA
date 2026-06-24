@@ -1,8 +1,8 @@
 # Core P0 Traceability Matrix
 
 Дата: 2026-06-25
-Версия: 0.3
-Статус: reviewed draft; Identity/Profile baseline implemented
+Версия: 0.4
+Статус: reviewed draft; Identity/Profile and NeedSchema baseline implemented
 
 ## Sources
 
@@ -20,17 +20,17 @@
 | PRF-005 - PRF-006 | Provider lifecycle and match eligibility | `profile.ts`, later matching policy | valid/invalid status, suspended exclusion |
 | PRF-007 - PRF-010 | Profile locale/language/timezone gaps | `profile.ts`, `language.ts` | `identity-profile.test.ts`: ru/en accepted, unsupported rejected, timezone invalid |
 | PRF-011 - PRF-015 | Admin/ownership/visibility/capability gaps | `authorization.ts`, `profile.ts` | admin without permission, private default, safe preview, provider draft/capability |
-| INT-001 - INT-003 | Need Intake ownership and category schema | `intake.ts` | schema/category/owner consistency |
-| INT-004 - INT-006 | Required fields and completeness gap | `intake.ts` | valid, missing, invalid, deterministic completeness |
+| INT-001 - INT-003 | Need Intake ownership and category schema | `intake.ts` | `intake.test.ts`: schema/category/owner consistency |
+| INT-004 - INT-006 | Required fields and completeness gap | `intake.ts` | `intake.test.ts`: valid, missing, invalid, deterministic completeness |
 | INT-007 | Need ownership gap | `authorization.ts`, `intake.ts` | cross-owner update rejected |
-| INT-008 - INT-009 | Language metadata/original preservation gap | `language.ts`, `intake.ts` | ru/en metadata and original unchanged |
-| INT-010, INT-013, INT-014, INT-017, INT-018 | Versioned schema gap | `intake.ts` | unknown version, lifecycle, immutable publication, deprecation and pinned Need version |
-| INT-011, INT-015 | Matching before readiness gap | `intake.ts`, `lifecycle.ts`, matching guard | client cannot set status; incomplete Need cannot match |
-| INT-012, INT-019, INT-020 | Artifact/privacy boundary | `intake.ts`, synthetic fixture registry | file/link/external data and ad-hoc UAT payload rejected; fixture checksum/IDs accepted |
+| INT-008 - INT-009 | Language metadata/original preservation gap | `language.ts`, `intake.ts` | `intake.test.ts`: ru/en metadata and original unchanged |
+| INT-010, INT-013, INT-014, INT-017, INT-018 | Versioned schema gap | `intake.ts` | `intake.test.ts`: unknown version, lifecycle, immutable publication, deprecation and pinned Need version |
+| INT-011, INT-015 | Matching before readiness gap | `intake.ts`, `lifecycle.ts`, matching guard | `intake.test.ts`: incomplete Need cannot match |
+| INT-012, INT-019, INT-020 | Artifact/privacy boundary | `intake.ts`, synthetic fixture registry | `intake.test.ts`: file/link/external data rejected; fixture checksum/IDs still planned |
 | INT-016 | Concurrency boundary | `intake.ts` | stale expected version rejected |
-| Life schema v1 | Life home-help intake gaps | schema config/registry | pool, lawn, combined variants and conditional fields |
-| Work schema v1 | Work SRS review intake gaps | schema config/registry | complete/incomplete SRS intake |
-| Skills schema v1 | Skills career-help intake gaps | schema config/registry | role, level, interview type, goals and language |
+| Life schema v1 | Life home-help intake gaps | schema config/registry | `intake.test.ts`: pool, lawn, combined variants and conditional fields |
+| Work schema v1 | Work SRS review intake gaps | schema config/registry | `intake.test.ts`: complete/incomplete SRS intake |
+| Skills schema v1 | Skills career-help intake gaps | schema config/registry | `intake.test.ts`: role, level, interview type, goals and language |
 | CLR-001 - CLR-004 | Clarification entity absent | `clarification.ts` | create for field/topic by allowed requester |
 | CLR-005 - CLR-007 | Clarification lifecycle/actor gap | `clarification.ts`, `authorization.ts` | resolve/reopen/cancel and invalid actor |
 | CLR-008 - CLR-009 | Readiness and recalculation gap | `clarification.ts`, `intake.ts`, `lifecycle.ts` | blocking open; answer leads to ready |

@@ -6,6 +6,7 @@ export type Priority = "low" | "normal" | "high" | "urgent";
 
 export type NeedStatus =
   | "draft"
+  | "needs_clarification"
   | "ready_for_match"
   | "matched"
   | "connected"
@@ -80,6 +81,13 @@ export interface NeedInput {
   title: string;
   description: string;
   expectedResult: string;
+  ownerUserProfileId?: string;
+  schemaId?: string;
+  schemaVersion?: number;
+  originalContentLanguage?: string;
+  communicationLanguage?: string;
+  preferredResultLanguage?: string;
+  answers?: Record<string, unknown>;
   context?: string;
   constraints?: string[];
   location?: Location;

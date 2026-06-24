@@ -33,6 +33,7 @@
 | [delivery/risk-register.md](./delivery/risk-register.md) | Активный реестр рисков программы. |
 | [delivery/security-baseline-evidence-2026-06-21.md](./delivery/security-baseline-evidence-2026-06-21.md) | Evidence по локальному security increment Day 3. |
 | [delivery/identity-profile-evidence-2026-06-25.md](./delivery/identity-profile-evidence-2026-06-25.md) | Evidence по `IdentityRef`, `UserProfile`, `ProviderProfile` and language metadata. |
+| [delivery/need-schema-evidence-2026-06-25.md](./delivery/need-schema-evidence-2026-06-25.md) | Evidence по versioned `NeedSchema`, completeness and matching guard. |
 | [system/cifedra-hld.md](./system/cifedra-hld.md) | Формальный High-Level Design решения. |
 | [system/cifedra-target-architecture.md](./system/cifedra-target-architecture.md) | Каноническая архитектура локального и production-контуров. |
 | [system/cifedra-development-implementation-master-plan.md](./system/cifedra-development-implementation-master-plan.md) | Интегрированный roadmap разработки, внедрения и запуска. |

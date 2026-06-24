@@ -5,6 +5,7 @@ export * from "./decisions.js";
 export * from "./domain.js";
 export * from "./fixtures.js";
 export * from "./identity.js";
+export * from "./intake.js";
 export * from "./integrations.js";
 export * from "./language.js";
 export * from "./lifecycle.js";

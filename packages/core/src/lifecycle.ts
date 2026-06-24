@@ -3,6 +3,7 @@ import { toIsoString } from "./utils.js";
 
 export const needStatusOrder = [
   "draft",
+  "needs_clarification",
   "ready_for_match",
   "matched",
   "connected",
@@ -10,7 +11,8 @@ export const needStatusOrder = [
 ] as const satisfies readonly NeedStatus[];
 
 export const allowedNeedStatusTransitions = {
-  draft: ["ready_for_match"],
+  draft: ["needs_clarification", "ready_for_match"],
+  needs_clarification: ["draft", "ready_for_match"],
   ready_for_match: ["matched"],
   matched: ["connected"],
   connected: ["resolved"],
@@ -45,6 +47,10 @@ export function transitionNeedStatus(
 
 export function markNeedReadyForMatch(need: Need, now: Date = new Date()): Need {
   return transitionNeedStatus(need, "ready_for_match", now);
+}
+
+export function markNeedNeedsClarification(need: Need, now: Date = new Date()): Need {
+  return transitionNeedStatus(need, "needs_clarification", now);
 }
 
 export function markNeedMatched(need: Need, now: Date = new Date()): Need {
