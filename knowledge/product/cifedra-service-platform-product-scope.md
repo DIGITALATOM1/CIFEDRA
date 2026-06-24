@@ -1,7 +1,7 @@
 # CIFEDRA CONNECT: Product Scope
 
-Дата: 2026-06-21
-Статус: strategic product baseline v0.2
+Дата: 2026-06-25
+Статус: strategic product baseline v0.3
 
 ## 1. Product vision
 
@@ -13,6 +13,11 @@ Life
 Work
 Skills
 ```
+
+CIFEDRA не является проектом для отдела системного анализа. Project 1 для
+отдела СА ведется отдельно и не смешивается с данным репозиторием. В CIFEDRA
+задачи системного анализа могут появляться только как один из типов услуг в
+направлении `Work`, например `SRS Review / Quick Review`.
 
 Целевой lifecycle включает все важные шаги:
 

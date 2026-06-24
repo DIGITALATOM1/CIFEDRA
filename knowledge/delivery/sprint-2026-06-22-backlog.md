@@ -34,9 +34,9 @@ without real users, services or confidential data.
 | D3-01 | 3 | Запретить privileged roles in self-registration. | Codex | D2-02 | Negative tests helper/operator/admin проходят. | done |
 | D3-02 | 3 | Защитить state-changing demo endpoints. | Codex | D3-01 | Anonymous/insufficient role получает 401/403. | done |
 | D3-03 | 3 | Ограничить bind, CORS and live integrations. | Codex | D3-01 | Loopback/allowlist/explicit opt-in проверены. | done |
-| D4-01 | 4 | Убрать persistent bearer token из browser. | Codex | D3-02 | Token отсутствует в localStorage. | planned |
-| D4-02 | 4 | Добавить limits, timeout and safe error handling. | Codex | D3-02 | Invalid/oversized/timeout tests проходят. | planned |
-| D4-03 | 4 | Добавить GitHub CI baseline. | Codex | D3-03 | Clean install, typecheck, tests, build and docs checks проходят. | planned |
+| D4-01 | 4 | Убрать persistent bearer token из browser. | Codex | D3-02 | Token отсутствует в localStorage. | done |
+| D4-02 | 4 | Добавить limits, timeout and safe error handling. | Codex | D3-02 | Invalid/oversized/timeout tests проходят. | done |
+| D4-03 | 4 | Добавить GitHub CI baseline. | Codex | D3-03 | Clean install, typecheck, tests, build and docs checks проходят. | done |
 | D5-01 | 5 | Реализовать IdentityRef and profiles with ru/en language metadata. | Codex | D2-02, D3-01 | Ownership, locale and spoken/preferred languages покрыты tests. | planned |
 | D6-01 | 6 | Реализовать versioned NeedSchema for Life/Work/Skills. | Codex | D2-02, D5-01 | Completeness and invalid input tests pass for all three. | planned |
 | D6-02 | 6 | Заблокировать matching для incomplete Need. | Codex | D6-01 | Core возвращает ожидаемую domain error. | planned |

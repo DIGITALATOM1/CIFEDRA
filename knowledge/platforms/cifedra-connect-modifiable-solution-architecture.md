@@ -221,7 +221,7 @@ Mobile App / Client WEB
 - Medusa: [основной сайт](https://medusajs.com/), [GitHub](https://github.com/medusajs/medusa).
 - Sharetribe Go: [GitHub](https://github.com/sharetribe/sharetribe).
 
-## Следующие задачи системного анализа
+## Следующие задачи проектирования
 
 1. Подготовить SRS `CIFEDRA Core Domain Model`.
 2. Подготовить SRS `Client Applications MVP: Need -> Match -> Prepare -> Connect -> Result`.

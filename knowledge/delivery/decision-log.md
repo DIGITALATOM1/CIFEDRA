@@ -1,7 +1,7 @@
 # CIFEDRA Decision Log
 
 Дата создания: 2026-06-20
-Дата обновления: 2026-06-21
+Дата обновления: 2026-06-25
 Статус: active
 
 ## Правило
@@ -33,6 +33,7 @@ Product and delivery decisions фиксируются здесь. Architecture d
 | DEC-020 | 2026-06-21 | Provider contacts are hidden until mutual match; operator only assists analysis and does not choose on behalf of participants. | accepted | Selection and disclosure require participant decisions. | Владелец продукта | ContactRequest SRS |
 | DEC-021 | 2026-06-21 | Life pilot category is `Уход за участком`; pool cleaning and lawn mowing are service variants. | accepted | Варианты используют общий local-service intake and lifecycle. | Владелец продукта | Gate R0 |
 | DEC-022 | 2026-06-21 | Proposed Life/Work/Skills fields and readiness rules are approved for local synthetic UAT. | accepted | Product owner approved Day 2 schema baseline. | Владелец продукта | External product evidence |
+| DEC-023 | 2026-06-25 | CIFEDRA не является Project 1 для отдела системного анализа; системный анализ остается только возможной услугой в `Work`. | accepted | Product owner separated CIFEDRA from the system-analysis department project. | Владелец продукта | Always |
 
 ## Open decisions
 

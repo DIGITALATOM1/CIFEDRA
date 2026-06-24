@@ -124,16 +124,10 @@ export async function createIntegrationHandoff(input: IntegrationHandoffInput): 
   let externalResponse: unknown;
 
   if (mode === "live") {
-    const response = await fetch(request.url, {
-      method: request.method,
-      headers: liveHeaders(request),
-      body: JSON.stringify(request.body)
-    });
-    externalResponse = await safeJson(response);
-    status = response.ok ? "created" : "failed";
-    message = response.ok
-      ? "Запись создана во внешнем модуле."
-      : `Внешний модуль вернул ошибку ${response.status}.`;
+    const providerResult = await sendExternalRequest(request);
+    externalResponse = providerResult.externalResponse;
+    status = providerResult.status;
+    message = providerResult.message;
   }
 
   const result: IntegrationHandoffResult = {
@@ -165,6 +159,47 @@ export async function createIntegrationHandoff(input: IntegrationHandoffInput): 
   };
 
   return result;
+}
+
+interface ExternalRequestResult {
+  readonly status: HandoffStatus;
+  readonly message: string;
+  readonly externalResponse: unknown;
+}
+
+async function sendExternalRequest(request: ExternalRequestDraft): Promise<ExternalRequestResult> {
+  const timeoutMs = providerRequestTimeoutMs();
+
+  try {
+    const response = await fetch(request.url, {
+      method: request.method,
+      headers: liveHeaders(request),
+      body: JSON.stringify(request.body),
+      signal: AbortSignal.timeout(timeoutMs)
+    });
+    const externalResponse = await safeJson(response);
+
+    return {
+      externalResponse,
+      status: response.ok ? "created" : "failed",
+      message: response.ok
+        ? "Запись создана во внешнем модуле."
+        : `Внешний модуль вернул ошибку ${response.status}.`
+    };
+  } catch (error) {
+    const timedOut = isAbortError(error);
+
+    return {
+      status: "failed",
+      message: timedOut
+        ? `Внешний модуль не ответил за ${timeoutMs} ms.`
+        : "Внешний модуль недоступен.",
+      externalResponse: {
+        error: timedOut ? "provider_timeout" : "provider_request_failed",
+        timeoutMs
+      }
+    };
+  }
 }
 
 function buildPlaneRequest(input: IntegrationHandoffInput, handoffId: string): ExternalRequestDraft {
@@ -356,4 +391,19 @@ function escapeHtml(value: string): string {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+function providerRequestTimeoutMs(): number {
+  const value = Number(process.env.CIFEDRA_PROVIDER_REQUEST_TIMEOUT_MS);
+
+  return Number.isInteger(value) && value > 0 ? value : 5000;
+}
+
+function isAbortError(error: unknown): boolean {
+  return Boolean(
+    error
+      && typeof error === "object"
+      && "name" in error
+      && (error.name === "AbortError" || error.name === "TimeoutError")
+  );
 }

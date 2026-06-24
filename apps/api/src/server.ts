@@ -39,11 +39,11 @@ import {
 } from "@cifedra/core";
 
 export function createApiServer(): Server {
-  return createServer(async (request, response) => {
+  const server = createServer(async (request, response) => {
     try {
       await routeRequest(request, response);
     } catch (error) {
-      if (error instanceof AuthError) {
+      if (error instanceof AuthError || error instanceof RequestError) {
         sendJson(response, error.statusCode, {
           error: error.message
         });
@@ -56,6 +56,14 @@ export function createApiServer(): Server {
       });
     }
   });
+  const requestTimeoutMs = getRequestTimeoutMs();
+
+  server.requestTimeout = requestTimeoutMs;
+  server.headersTimeout = requestTimeoutMs;
+  server.keepAliveTimeout = Math.min(5000, requestTimeoutMs);
+  server.setTimeout(requestTimeoutMs);
+
+  return server;
 }
 
 export function startApiServer(): Server {
@@ -141,7 +149,7 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
   }
 
   if (request.method === "POST" && url.pathname === "/auth/register") {
-    const body = await readJson<AuthRegistrationInput>(request);
+    const body = await readJsonObject<AuthRegistrationInput>(request);
     const session = await registerLocalUser(body);
 
     sendJson(response, 201, session);
@@ -149,7 +157,7 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
   }
 
   if (request.method === "POST" && url.pathname === "/auth/login") {
-    const body = await readJson<AuthLoginInput>(request);
+    const body = await readJsonObject<AuthLoginInput>(request);
     const session = await loginLocalUser(body);
 
     sendJson(response, 200, session);
@@ -182,7 +190,7 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
 
   if (request.method === "POST" && url.pathname === "/demo/match") {
     const authContext = await requireAnyRole(request, ["client", "helper", "operator"]);
-    const body = await readJson<Partial<NeedInput>>(request);
+    const body = await readJsonObject<Partial<NeedInput>>(request);
     const createdNeed = createNeed(normalizeDemoNeed(body));
     const matches = rankProfilesForNeed(createdNeed, demoProfiles, {
       limit: 5,
@@ -220,7 +228,7 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
 
   if (request.method === "POST" && url.pathname === "/demo/handoff") {
     const authContext = await requireAnyRole(request, ["client", "operator"]);
-    const body = await readJson<Parameters<typeof createIntegrationHandoff>[0]>(request);
+    const body = await readJsonObject<Parameters<typeof createIntegrationHandoff>[0]>(request);
     const handoff = await createIntegrationHandoff({
       ...body,
       actor: authContext.principal
@@ -234,7 +242,7 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
 
   if (request.method === "POST" && url.pathname === "/demo/result") {
     await requireAnyRole(request, ["client", "helper", "operator"]);
-    const body = await readJson<DemoResultRequest>(request);
+    const body = await readJsonObject<DemoResultRequest>(request);
     const conversation = resolveDemoConversation(body.conversation);
     const result = recordContactResult({
       needId: body.need.id,
@@ -308,6 +316,15 @@ interface DemoResultRequest {
   readonly qualityScore?: number;
 }
 
+class RequestError extends Error {
+  constructor(
+    readonly statusCode: number,
+    message: string
+  ) {
+    super(message);
+  }
+}
+
 function normalizeDemoNeed(body: Partial<NeedInput>): NeedInput {
   return {
     direction: body.direction ?? "work",
@@ -337,20 +354,45 @@ function resolveDemoConversation(conversation: Conversation): Conversation {
   return markConversationResolved(conversation);
 }
 
-async function readJson<T>(request: IncomingMessage): Promise<T> {
+async function readJsonObject<T extends object>(request: IncomingMessage): Promise<T> {
+  const body = await readJson(request);
+
+  if (!isJsonObject(body)) {
+    throw new RequestError(400, "JSON body must be an object");
+  }
+
+  return body as T;
+}
+
+async function readJson(request: IncomingMessage): Promise<unknown> {
+  assertJsonContentType(request);
+
   const chunks: Buffer[] = [];
+  const maxBodyBytes = getMaxJsonBodyBytes();
+  let receivedBytes = 0;
 
   for await (const chunk of request) {
-    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+    const buffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+    receivedBytes += buffer.length;
+
+    if (receivedBytes > maxBodyBytes) {
+      throw new RequestError(413, `JSON body exceeds ${maxBodyBytes} bytes`);
+    }
+
+    chunks.push(buffer);
   }
 
   const rawBody = Buffer.concat(chunks).toString("utf8").trim();
 
   if (!rawBody) {
-    return {} as T;
+    return {};
   }
 
-  return JSON.parse(rawBody) as T;
+  try {
+    return JSON.parse(rawBody);
+  } catch {
+    throw new RequestError(400, "Invalid JSON body");
+  }
 }
 
 function sendJson(response: ServerResponse, statusCode: number, payload: unknown): void {
@@ -394,4 +436,35 @@ function allowedCorsOrigins(): Set<string> {
       ? configured
       : ["http://localhost:4177", "http://127.0.0.1:4177"]
   );
+}
+
+function assertJsonContentType(request: IncomingMessage): void {
+  const contentType = Array.isArray(request.headers["content-type"])
+    ? request.headers["content-type"][0]
+    : request.headers["content-type"];
+  const mediaType = contentType?.split(";")[0]?.trim().toLowerCase();
+
+  if (mediaType === "application/json" || mediaType?.endsWith("+json")) {
+    return;
+  }
+
+  throw new RequestError(415, "Content-Type must be application/json");
+}
+
+function isJsonObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function getMaxJsonBodyBytes(): number {
+  return positiveIntegerEnv("CIFEDRA_MAX_JSON_BODY_BYTES", 64 * 1024);
+}
+
+function getRequestTimeoutMs(): number {
+  return positiveIntegerEnv("CIFEDRA_REQUEST_TIMEOUT_MS", 10_000);
+}
+
+function positiveIntegerEnv(key: string, fallback: number): number {
+  const value = Number(process.env[key]);
+
+  return Number.isInteger(value) && value > 0 ? value : fallback;
 }

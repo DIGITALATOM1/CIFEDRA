@@ -35,3 +35,9 @@ http://localhost:4177/web/test-console/?api=http://localhost:3031
 5. Нажать `Запустить matching`.
 6. Проверить профиль, score, причины, риски, brief для контакта и внутренние handoff-шаги.
 7. Нажать `Передать данные` на шагах задачи/диалога, чтобы сохранить transfer package в `.local/handoffs/`.
+
+## Auth note
+
+Bearer token хранится только в памяти текущей вкладки. После перезагрузки
+страницы нужно войти повторно; `localStorage` и `sessionStorage` не используются
+для сессии локального прототипа.

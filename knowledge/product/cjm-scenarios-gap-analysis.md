@@ -250,9 +250,9 @@ flowchart LR
 | Knowledge artifacts | Work, Skills | Нет. | SRS/CV/materials storage, versioning, permissions. |
 | Booking | Skills, Work, Care | Нет. | Slots, calendar, reminders, reschedule/cancel. |
 
-## Аналитические агенты и зоны ответственности
+## Проектные зоны проверки CJM
 
-| Агент | Что проверяет в CJM |
+| Роль проверки | Что проверяет в CJM |
 | --- | --- |
 | Product Analyst | Ценность сценария, сегменты, retention, метрики. |
 | System Analyst | Требования, статусы, сущности, API-контракты, SRS. |

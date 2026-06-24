@@ -93,16 +93,20 @@
 - [ ] Every operator action requires explicit permission, assignment and reason where specified.
 - [ ] Manual analysis uses `need.review` and owner resubmission.
 - [ ] Schema lifecycle uses explicit catalog permissions.
-- [ ] Error does not leak stack, path, credential or secret.
+- [x] Error does not leak stack, path, credential or secret.
 - [ ] Logs/analytics exclude Need and Clarification free text.
 - [ ] Local test retention and reset are documented and tested.
 - [x] Negative authorization tests exist.
+- [x] Browser prototype does not persist bearer token in `localStorage` or `sessionStorage`.
+- [x] Invalid, non-object, oversized and unsupported JSON requests fail with safe 4xx errors.
+- [x] Live provider handoff timeout fails safely and keeps local evidence.
 
 ## Engineering quality
 
 - [ ] SRS requirement IDs appear in traceability.
 - [ ] Unit tests cover happy path and negative path.
-- [ ] Typecheck passes.
-- [ ] Build passes.
-- [ ] Existing tests do not regress.
+- [x] Typecheck passes.
+- [x] Build passes.
+- [x] Existing tests do not regress.
+- [x] GitHub CI baseline runs docs check, tests, typecheck and build.
 - [ ] Documentation and implementation use the same lifecycle terms.

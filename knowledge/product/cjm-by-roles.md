@@ -21,7 +21,6 @@
 | Координатор / исполнитель | Вести контролируемое исполнение задачи. | Assignment, Checklist, Deadline, Artifact, Completion. |
 | Администратор / модератор | Управлять доступом, безопасностью и каталогом. | RBAC, Verification, Moderation, Audit, Catalog, Integration Health. |
 | Владелец организации | Управлять сотрудниками и корпоративным контекстом. | Organization, Membership, Invitations, Permissions, Company Knowledge. |
-| Системный аналитик / агент | Превращать сценарии в требования и контроль качества. | CJM, SRS, Traceability, Backlog, Test Cases, Guides, Release Notes. |
 
 ## Сквозной сценарий
 
@@ -111,17 +110,6 @@ Discover
 | Assign Roles | Разделяет права заказчика, эксперта, оператора. | Organization Role, Permission. | Отсутствует. |
 | Share Knowledge | Подключает внутренние документы и экспертов. | Knowledge Source, Access Scope. | Отсутствует. |
 | Review Activity | Смотрит задачи, результаты и аудит. | Organization Analytics, Audit. | Отсутствует. |
-
-## CJM системного аналитика / агента
-
-| Шаг | Действие | Функции проекта |
-| --- | --- | --- |
-| Collect | Собирает CJM, решения и ограничения. | Structured Knowledge Base. |
-| Specify | Формирует SRS и реестр требований. | Requirement Registry, Templates. |
-| Review | Ищет противоречия и пропуски. | Review Checklist, Traceability. |
-| Plan | Преобразует требования в backlog. | CJM -> SRS -> Task Mapping. |
-| Verify | Готовит E2E и негативные сценарии. | Test Case Registry. |
-| Publish | Выпускает руководства и release notes. | Documentation Lifecycle. |
 
 ## Общие негативные ветки
 

@@ -134,6 +134,22 @@ async function checkSecurityBaseline() {
   });
   assert(deniedOrigin.status === 403, "Expected untrusted CORS origin to be rejected");
 
+  const invalidJson = await fetch(`${apiBaseUrl}/auth/login`, {
+    method: "POST",
+    headers: jsonHeaders(),
+    body: "{not-valid-json"
+  });
+  assert(invalidJson.status === 400, "Expected invalid JSON to return 400");
+
+  const unsupportedContentType = await fetch(`${apiBaseUrl}/auth/login`, {
+    method: "POST",
+    headers: {
+      "content-type": "text/plain"
+    },
+    body: "{}"
+  });
+  assert(unsupportedContentType.status === 415, "Expected text/plain JSON request to return 415");
+
   console.log("Security baseline checks passed.");
 }
 

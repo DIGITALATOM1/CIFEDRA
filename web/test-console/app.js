@@ -1,11 +1,13 @@
 const apiBaseUrl = new URLSearchParams(window.location.search).get("api") ?? "http://localhost:3030";
-const authStorageKey = "cifedra.auth.token";
+const legacyAuthStorageKey = "cifedra.auth.token";
+
+purgeLegacyPersistentAuth();
 
 const state = {
   scenarios: [],
   selectedScenarioId: null,
   currentResult: null,
-  authToken: localStorage.getItem(authStorageKey),
+  authToken: null,
   authUser: null,
   authStatus: null
 };
@@ -175,7 +177,6 @@ async function submitAuth(action) {
 
     state.authToken = payload.token;
     state.authUser = payload.user;
-    localStorage.setItem(authStorageKey, payload.token);
     renderAuthState();
   } catch (error) {
     elements.authState.textContent = error instanceof Error ? error.message : "Auth error";
@@ -197,7 +198,15 @@ async function logout() {
 function clearAuthSession() {
   state.authToken = null;
   state.authUser = null;
-  localStorage.removeItem(authStorageKey);
+  purgeLegacyPersistentAuth();
+}
+
+function purgeLegacyPersistentAuth() {
+  try {
+    window.localStorage?.removeItem(legacyAuthStorageKey);
+  } catch {
+    // Local demo must not depend on browser storage availability.
+  }
 }
 
 function renderAuthState() {

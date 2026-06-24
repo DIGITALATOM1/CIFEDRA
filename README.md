@@ -7,7 +7,7 @@
 | Путь | Назначение |
 | --- | --- |
 | `brand/cifedra/` | Бренд, логотипы, токены и продуктовая архитектура. |
-| `knowledge/` | Архитектурные решения, SRS, системная аналитика и база знаний. |
+| `knowledge/` | Архитектурные решения, SRS, продуктовая документация и база знаний. |
 | `web/landing/` | Статический лендинг продукта с QR-кодами приложений. |
 | `packages/core/` | Самописное доменное ядро `Need -> Match -> Prepare -> Connect -> Result`. |
 | `apps/api/` | Минимальный API-прототип поверх `@cifedra/core`. |
@@ -41,6 +41,7 @@ High-Level Design: [knowledge/system/cifedra-hld.md](./knowledge/system/cifedra-
 
 ```bash
 npm install
+npm run docs:check
 npm run typecheck
 npm test
 npm run build
