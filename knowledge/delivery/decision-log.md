@@ -35,6 +35,7 @@ Product and delivery decisions фиксируются здесь. Architecture d
 | DEC-022 | 2026-06-21 | Proposed Life/Work/Skills fields and readiness rules are approved for local synthetic UAT. | accepted | Product owner approved Day 2 schema baseline. | Владелец продукта | External product evidence |
 | DEC-023 | 2026-06-25 | CIFEDRA не является Project 1 для отдела системного анализа; системный анализ остается только возможной услугой в `Work`. | accepted | Product owner separated CIFEDRA from the system-analysis department project. | Владелец продукта | Always |
 | DEC-024 | 2026-06-26 | R0 Core P0 local gate passed; next sprint starts with ContactRequest/Consent/Engagement, not WEB/mobile production build. | accepted | D1-D9 evidence shows local synthetic Core readiness, but post-match lifecycle and API persistence remain the critical path. | Product/System | Next sprint review |
+| DEC-025 | 2026-06-26 | `ContactRequest` separates client intent from provider acceptance; `requested_contact` does not disclose contacts or create Engagement. | accepted | Post-match workflow needs mutual match and consent/disclosure controls before implementation. | Product/System | ContactRequest implementation |
 
 ## Open decisions
 
@@ -45,6 +46,7 @@ Product and delivery decisions фиксируются здесь. Architecture d
 | OPEN-005 | Turnaround | Same day / 1 day / 2 days / no promise | No promise before evidence | Владелец продукта | 2026-07-02 |
 | OPEN-006 | Provider charging model | Subscription / lead / commission / promotion | Do not choose before pricing/legal discovery | Владелец продукта | Gate P1 |
 | OPEN-007 | Life combined request | One or multiple variants in one Need | Combine when one provider/visit is intended; otherwise split into linked Needs | Владелец продукта | Before ContactRequest implementation |
+| OPEN-008 | ContactRequest provider response timeout | Manual only / explicit expiry / default 48 hours | Support explicit `expiresAt`; propose 48 hours as product default | Владелец продукта | Before API/OpenAPI default |
 | OPEN-009 | Service payment flow | Through CIFEDRA / direct client-provider | Mock only until legal/payment SRS | Владелец продукта | Before PSP work |
 | OPEN-010 | Quick Review limit | 25 pages / 10,000 words / expert hours | 25 pages or 10,000 words | Владелец продукта | Before pilot offer |
 | OPEN-011 | Quick Review turnaround | One business day / two days / no promise | At least one business day | Владелец продукта | Before pilot offer |

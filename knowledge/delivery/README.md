@@ -14,6 +14,8 @@ Delivery-документы не заменяют:
 
 - [Sprint backlog: 2026-06-22 - 2026-07-03](./sprint-2026-06-22-backlog.md);
 - [R0 evidence review: 2026-06-26](./sprint-r0-evidence-review-2026-06-26.md);
+- [ContactRequest SRS evidence: 2026-06-26](./contact-request-srs-evidence-2026-06-26.md);
+- [ContactRequest Core evidence: 2026-06-26](./contact-request-core-evidence-2026-06-26.md);
 - [Next sprint backlog: 2026-07-06 - 2026-07-17](./sprint-2026-07-06-backlog.md);
 - [Decision log](./decision-log.md);
 - [Risk register](./risk-register.md).
@@ -25,4 +27,6 @@ Delivery-документы не заменяют:
 - [Need schema evidence: 2026-06-25](./need-schema-evidence-2026-06-25.md);
 - [Clarification evidence: 2026-06-25](./clarification-evidence-2026-06-25.md);
 - [PostgreSQL evidence: 2026-06-26](./postgres-evidence-2026-06-26.md);
-- [Vertical flow evidence: 2026-06-26](./vertical-flow-evidence-2026-06-26.md).
+- [Vertical flow evidence: 2026-06-26](./vertical-flow-evidence-2026-06-26.md);
+- [ContactRequest SRS evidence: 2026-06-26](./contact-request-srs-evidence-2026-06-26.md);
+- [ContactRequest Core evidence: 2026-06-26](./contact-request-core-evidence-2026-06-26.md).

@@ -31,6 +31,7 @@
 | R-018 | Три pilot scenarios раздувают scope до трех отдельных продуктов. | medium | critical | D9 vertical flows use one generic lifecycle; next sprint remains one post-match lifecycle. | Product/System | Daily |
 | R-019 | Life fixture воспринимается как разрешение реальных домашних услуг без trust/safety. | medium | critical | Synthetic local pilot only; no address, real provider or engagement. | Product/Security | Life gate |
 | R-020 | Provider-paid model выбирается без unit economics and legal analysis. | medium | high | Keep charging mechanism open until P1/pricing evidence. | Product/Legal | P1 |
+| R-021 | ContactRequest accidentally reveals contacts, exact address or confidential artifact data before mutual match. | medium | critical | ContactRequest SRS requires disclosure snapshots, consent policy version and negative tests before API exposure. | Product/Security | ContactRequest implementation |
 
 ## Escalation
 
@@ -39,5 +40,7 @@
 - получен реальный confidential document до D0;
 - обнаружен способ self-assign privileged role;
 - тестовые данные могут быть доступны не только на local loopback;
+- ContactRequest или связанный UI/API раскрывает контакты, точный адрес или
+  confidential artifact data до mutual match;
 - participant просит удалить notes;
 - sprint change добавляет scope без снятия другой задачи.

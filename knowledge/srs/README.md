@@ -16,5 +16,6 @@ SRS не должен зависеть от конкретного UI или в�
 ## Active SRS
 
 - [Core P0: Identity, Profile, Intake and Clarification](./core-p0-identity-profile-intake-clarification.md);
+- [Core P1: ContactRequest and Consent Baseline](./core-p1-contact-request-consent.md);
 - [Core P0 acceptance checklist](./core-p0-acceptance-checklist.md);
 - [Core P0 traceability](./core-p0-traceability.md).

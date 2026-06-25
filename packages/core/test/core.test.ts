@@ -11,13 +11,19 @@ import {
   buildShortlist,
   canTransitionConversationState,
   canTransitionNeedStatus,
+  acceptContactRequest,
+  cancelContactRequest,
   createAuthUser,
+  createContactRequest,
   createConversationDraft,
   createDraftNeed,
   createNeed,
+  declineContactRequest,
   demoNeedScenarios,
   demoProfiles,
+  expireContactRequest,
   integrationDefinitions,
+  isActiveContactRequest,
   markNeedConnected,
   markNeedMatched,
   markNeedReadyForMatch,
@@ -601,6 +607,206 @@ test("rejects conversation draft for non-contact decisions", () => {
         brief
       }),
     /requested_contact/
+  );
+});
+
+test("creates a pending contact request without disclosing exact location", () => {
+  const need = markNeedMatched(
+    createNeed({
+      direction: "life",
+      categoryId: "life.local-tasks",
+      title: "Уход за территорией",
+      description: "Нужно синтетически проверить уборку бассейна и стрижку газона.",
+      expectedResult: "Газон подстрижен, бассейн очищен.",
+      ownerUserProfileId: "client_profile_1",
+      answers: {
+        serviceTypes: ["pool_cleaning", "lawn_mowing"],
+        preferredTimeWindow: "morning"
+      },
+      location: {
+        city: "Moscow",
+        district: "Tverskoy",
+        latitude: 55.764,
+        longitude: 37.605
+      },
+      tags: ["home", "lawn", "pool"]
+    })
+  );
+  const [candidate] = rankProfilesForNeed(need, demoProfiles);
+  assert.ok(candidate);
+
+  const decision = recordCandidateDecision(
+    {
+      needId: need.id,
+      profileId: candidate.profile.id,
+      decision: "requested_contact",
+      matchScore: candidate.score
+    },
+    new Date("2026-06-13T10:00:00.000Z")
+  );
+  const request = createContactRequest(
+    {
+      need,
+      candidate,
+      decision,
+      actorUserProfileId: "client_profile_1",
+      idempotencyKey: "contact-request-demo-1",
+      expiresAt: new Date("2026-06-15T10:00:00.000Z")
+    },
+    new Date("2026-06-13T10:01:00.000Z")
+  );
+
+  assert.equal(request.status, "requested");
+  assert.equal(request.needId, need.id);
+  assert.equal(request.profileId, candidate.profile.id);
+  assert.equal(request.providerProfileId, candidate.profile.id);
+  assert.equal(request.clientUserProfileId, "client_profile_1");
+  assert.equal(request.decisionId, decision.id);
+  assert.equal(request.expiresAt, "2026-06-15T10:00:00.000Z");
+  assert.equal(request.aggregateVersion, 1);
+  assert.equal(isActiveContactRequest(request), true);
+  assert.deepEqual(request.disclosureSnapshot.publicBrief.serviceVariants, [
+    "pool_cleaning",
+    "lawn_mowing"
+  ]);
+  assert.equal(request.disclosureSnapshot.publicBrief.serviceRegion?.city, "Moscow");
+  assert.equal(request.disclosureSnapshot.publicBrief.serviceRegion?.district, "Tverskoy");
+  assert.equal(
+    Object.hasOwn(request.disclosureSnapshot.publicBrief.serviceRegion ?? {}, "latitude"),
+    false
+  );
+  assert.ok(request.disclosureSnapshot.hiddenFields.includes("location.latitude"));
+  assert.ok(request.disclosureSnapshot.hiddenFields.includes("contact.email"));
+});
+
+test("moves contact request through provider and client terminal states", () => {
+  const need = markNeedMatched(
+    createNeed({
+      direction: "work",
+      categoryId: "work.expert-help",
+      title: "Нужно ревью SRS",
+      description: "Нужно проверить требования перед передачей в разработку.",
+      expectedResult: "Список замечаний и правок",
+      ownerUserProfileId: "client_profile_2",
+      tags: ["srs", "requirements", "review"],
+      location: {
+        remoteAllowed: true
+      }
+    })
+  );
+  const [candidate] = rankProfilesForNeed(need, demoProfiles);
+  assert.ok(candidate);
+  const decision = recordCandidateDecision({
+    needId: need.id,
+    profileId: candidate.profile.id,
+    decision: "requested_contact",
+    matchScore: candidate.score
+  });
+  const request = createContactRequest(
+    {
+      need,
+      candidate,
+      decision,
+      actorUserProfileId: "client_profile_2",
+      expiresAt: new Date("2026-06-15T10:00:00.000Z")
+    },
+    new Date("2026-06-13T10:01:00.000Z")
+  );
+
+  assert.throws(
+    () => acceptContactRequest(request, "profile_skills_maria"),
+    /Only the selected provider/
+  );
+
+  const accepted = acceptContactRequest(
+    request,
+    candidate.profile.id,
+    new Date("2026-06-13T10:02:00.000Z")
+  );
+  assert.equal(accepted.status, "accepted");
+  assert.equal(accepted.respondedAt, "2026-06-13T10:02:00.000Z");
+  assert.equal(accepted.aggregateVersion, 2);
+  assert.equal(isActiveContactRequest(accepted), false);
+  assert.throws(() => cancelContactRequest(accepted, "client_profile_2"), /NOT_PENDING/);
+
+  const declined = declineContactRequest(request, candidate.profile.id, "busy");
+  assert.equal(declined.status, "declined");
+  assert.equal(declined.declineReason, "busy");
+
+  const cancelled = cancelContactRequest(request, "client_profile_2");
+  assert.equal(cancelled.status, "cancelled");
+  assert.throws(() => cancelContactRequest(request, "client_profile_3"), /Only the Need owner/);
+
+  const expired = expireContactRequest(request, new Date("2026-06-16T10:00:00.000Z"));
+  assert.equal(expired.status, "expired");
+  assert.equal(expireContactRequest(expired), expired);
+});
+
+test("rejects invalid contact request creation inputs", () => {
+  const need = markNeedMatched(
+    createNeed({
+      direction: "skills",
+      categoryId: "skills.career-help",
+      title: "Подготовка к интервью",
+      description: "Нужна практика ответов и разбор резюме перед собеседованием.",
+      expectedResult: "План подготовки и обратная связь",
+      ownerUserProfileId: "client_profile_3",
+      tags: ["career", "interview", "resume"]
+    })
+  );
+  const [candidate] = rankProfilesForNeed(need, demoProfiles);
+  assert.ok(candidate);
+  const savedDecision = recordCandidateDecision({
+    needId: need.id,
+    profileId: candidate.profile.id,
+    decision: "saved",
+    matchScore: candidate.score
+  });
+  const contactDecision = recordCandidateDecision({
+    needId: need.id,
+    profileId: candidate.profile.id,
+    decision: "requested_contact",
+    matchScore: candidate.score
+  });
+  const draftNeed = createDraftNeed({
+    direction: "skills",
+    categoryId: "skills.career-help",
+    title: "Подготовка к интервью",
+    description: "Нужна практика ответов и разбор резюме перед собеседованием.",
+    expectedResult: "План подготовки и обратная связь",
+    ownerUserProfileId: "client_profile_3",
+    tags: ["career", "interview", "resume"]
+  });
+
+  assert.throws(
+    () =>
+      createContactRequest({
+        need,
+        candidate,
+        decision: savedDecision,
+        actorUserProfileId: "client_profile_3"
+      }),
+    /requested_contact/
+  );
+  assert.throws(
+    () =>
+      createContactRequest({
+        need,
+        candidate,
+        decision: contactDecision,
+        actorUserProfileId: "client_profile_other"
+      }),
+    /Only the Need owner/
+  );
+  assert.throws(
+    () =>
+      createContactRequest({
+        need: draftNeed,
+        candidate,
+        decision: contactDecision,
+        actorUserProfileId: "client_profile_3"
+      }),
+    /cannot create contact request/
   );
 });
 

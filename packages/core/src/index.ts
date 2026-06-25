@@ -1,6 +1,7 @@
 export * from "./auth.js";
 export * from "./catalog.js";
 export * from "./clarification.js";
+export * from "./contact-request.js";
 export * from "./conversation.js";
 export * from "./decisions.js";
 export * from "./domain.js";

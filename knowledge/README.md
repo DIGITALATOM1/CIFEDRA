@@ -25,11 +25,14 @@
 | [product/cjm-by-roles.md](./product/cjm-by-roles.md) | CJM клиента, помощника, оператора, администратора, организации и аналитика. |
 | [srs/README.md](./srs/README.md) | Реестр SRS, acceptance criteria и traceability. |
 | [srs/core-p0-identity-profile-intake-clarification.md](./srs/core-p0-identity-profile-intake-clarification.md) | SRS первого Core P0 increment. |
+| [srs/core-p1-contact-request-consent.md](./srs/core-p1-contact-request-consent.md) | SRS первого post-match increment: ContactRequest, consent and disclosure baseline. |
 | [product/cifedra-service-platform-product-scope.md](./product/cifedra-service-platform-product-scope.md) | Стратегический scope универсальной платформы услуг Life / Work / Skills. |
 | [product/work-srs-review-product-brief.md](./product/work-srs-review-product-brief.md) | Provisional scope и оффер первого сценария Work / SRS Review. |
 | [research/work-srs-review-interview-kit.md](./research/work-srs-review-interview-kit.md) | Скрипты, target slots и правила первых client/expert interviews. |
 | [delivery/sprint-2026-06-22-backlog.md](./delivery/sprint-2026-06-22-backlog.md) | Исполнимый backlog текущего двухнедельного спринта. |
 | [delivery/sprint-r0-evidence-review-2026-06-26.md](./delivery/sprint-r0-evidence-review-2026-06-26.md) | R0 evidence review and gate decision по Core P0 local increment. |
+| [delivery/contact-request-srs-evidence-2026-06-26.md](./delivery/contact-request-srs-evidence-2026-06-26.md) | Evidence по `ContactRequest` SRS and consent/disclosure baseline. |
+| [delivery/contact-request-core-evidence-2026-06-26.md](./delivery/contact-request-core-evidence-2026-06-26.md) | Evidence по Core implementation of `ContactRequest` aggregate. |
 | [delivery/sprint-2026-07-06-backlog.md](./delivery/sprint-2026-07-06-backlog.md) | Proposed backlog следующего спринта после R0. |
 | [delivery/decision-log.md](./delivery/decision-log.md) | Реестр продуктовых и delivery-решений. |
 | [delivery/risk-register.md](./delivery/risk-register.md) | Активный реестр рисков программы. |
