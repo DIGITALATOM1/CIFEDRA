@@ -23,6 +23,7 @@
 | --- | --- |
 | [product/cjm-scenarios-gap-analysis.md](./product/cjm-scenarios-gap-analysis.md) | CJM по направлениям `Life`, `Work`, `Skills` и реестр неучтенных функций. |
 | [product/cjm-by-roles.md](./product/cjm-by-roles.md) | CJM клиента, помощника, оператора, администратора, организации и аналитика. |
+| [product/cifedra-product-strategy-product-owner-review-2026-06-26.md](./product/cifedra-product-strategy-product-owner-review-2026-06-26.md) | Product strategy draft, Vision Board and CJM review package handed to product owner. |
 | [srs/README.md](./srs/README.md) | Реестр SRS, acceptance criteria и traceability. |
 | [srs/core-p0-identity-profile-intake-clarification.md](./srs/core-p0-identity-profile-intake-clarification.md) | SRS первого Core P0 increment. |
 | [srs/core-p1-contact-request-consent.md](./srs/core-p1-contact-request-consent.md) | SRS первого post-match increment: ContactRequest, consent and disclosure baseline. |
@@ -34,6 +35,7 @@
 | [delivery/contact-request-srs-evidence-2026-06-26.md](./delivery/contact-request-srs-evidence-2026-06-26.md) | Evidence по `ContactRequest` SRS and consent/disclosure baseline. |
 | [delivery/contact-request-core-evidence-2026-06-26.md](./delivery/contact-request-core-evidence-2026-06-26.md) | Evidence по Core implementation of `ContactRequest` aggregate. |
 | [delivery/sprint-2026-07-06-backlog.md](./delivery/sprint-2026-07-06-backlog.md) | Proposed backlog следующего спринта после R0. |
+| [delivery/parallel-development-plan-2026-06-27.md](./delivery/parallel-development-plan-2026-06-27.md) | Parallel development plan while product owner reviews product strategy draft. |
 | [delivery/decision-log.md](./delivery/decision-log.md) | Реестр продуктовых и delivery-решений. |
 | [delivery/risk-register.md](./delivery/risk-register.md) | Активный реестр рисков программы. |
 | [delivery/security-baseline-evidence-2026-06-21.md](./delivery/security-baseline-evidence-2026-06-21.md) | Evidence по локальному security increment Day 3. |
