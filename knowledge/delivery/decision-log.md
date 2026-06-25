@@ -1,7 +1,7 @@
 # CIFEDRA Decision Log
 
 Дата создания: 2026-06-20
-Дата обновления: 2026-06-25
+Дата обновления: 2026-06-26
 Статус: active
 
 ## Правило
@@ -34,6 +34,7 @@ Product and delivery decisions фиксируются здесь. Architecture d
 | DEC-021 | 2026-06-21 | Life pilot category is `Уход за участком`; pool cleaning and lawn mowing are service variants. | accepted | Варианты используют общий local-service intake and lifecycle. | Владелец продукта | Gate R0 |
 | DEC-022 | 2026-06-21 | Proposed Life/Work/Skills fields and readiness rules are approved for local synthetic UAT. | accepted | Product owner approved Day 2 schema baseline. | Владелец продукта | External product evidence |
 | DEC-023 | 2026-06-25 | CIFEDRA не является Project 1 для отдела системного анализа; системный анализ остается только возможной услугой в `Work`. | accepted | Product owner separated CIFEDRA from the system-analysis department project. | Владелец продукта | Always |
+| DEC-024 | 2026-06-26 | R0 Core P0 local gate passed; next sprint starts with ContactRequest/Consent/Engagement, not WEB/mobile production build. | accepted | D1-D9 evidence shows local synthetic Core readiness, but post-match lifecycle and API persistence remain the critical path. | Product/System | Next sprint review |
 
 ## Open decisions
 

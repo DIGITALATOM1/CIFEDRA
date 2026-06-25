@@ -1,7 +1,8 @@
 # CIFEDRA CONNECT: план доработки ядра
 
 Дата: 2026-06-19
-Статус: core work plan v0.6
+Дата обновления: 2026-06-26
+Статус: core work plan v0.7 after R0
 Фокус чата: доработка `CIFEDRA Core`
 
 ## Назначение
@@ -33,6 +34,11 @@ Need -> Match -> Prepare -> Connect -> Result
 | `result.ts` | Фиксация результата контакта, next step, quality score и match quality signal. |
 | `workflow.ts` | Связка core-сценария с Plane/Chatwoot handoff. |
 | `fixtures.ts` | Демо-профили для локальных сценариев. |
+| `identity.ts` | Stable `IdentityRef` based on `issuer + subject`. |
+| `profile.ts` | Owned `UserProfile` and `ProviderProfile` with ru/en language metadata. |
+| `intake.ts` | Versioned `NeedSchema`, schema answers, completeness and matching guard. |
+| `clarification.ts` | Blocking clarification lifecycle, owner answers and readiness reassessment. |
+| `vertical-flows.ts` | Repository-owned synthetic Life/Work/Skills Core P0 flows. |
 
 Уже реализовано вокруг core:
 
@@ -40,14 +46,17 @@ Need -> Match -> Prepare -> Connect -> Result
 - `web/test-console` проверяет сценарии локально.
 - Plane/Chatwoot подключены через adapter-layer и draft handoff.
 - Smoke-тесты проверяют `Life`, `Work`, `Skills`.
+- `packages/postgres` содержит PostgreSQL migration/repository spike for
+  `Need + Clarification`.
 
 ## Главные пробелы ядра
 
 | Пробел | Почему важно |
 | --- | --- |
+| `ContactRequest` отсутствует. | `requested_contact` пока означает решение клиента, но не согласие помощника. |
 | `Decision / Shortlist` не сохраняется. | Типы и функции есть, но нужны API хранения и mobile UI. |
 | `Conversation` не получает внешние события. | Core хранит draft/state и связан с Result, но нужны persistence и event sync Chatwoot/Plane. |
-| Lifecycle `Need` работает только в runtime. | Переходы оформлены, но еще не связаны с persistent storage и транзакциями. |
+| Lifecycle `Need` частично persistent. | Есть PostgreSQL spike for Need+Clarification, но API еще не использует repository transaction. |
 | `Result / quality loop` не влияет на scoring. | Quality signal создается, но пока не калибрует веса и правила matching. |
 | Direction-specific rules требуют дальнейшей калибровки. | Первая версия реализована и покрыта тестами, но веса нужно уточнять на реальных результатах. |
 | Нет API-contract-first слоя. | Mobile и будущий backend должны опираться на устойчивые DTO/контракты. |
@@ -168,11 +177,16 @@ Need created
 
 Задачи:
 
-1. Добавить provider-neutral `IdentityRef`.
-2. Добавить `UserProfile` and `ProviderProfile`.
-3. Добавить category-specific `NeedSchema`.
-4. Добавить completeness and `Clarification` lifecycle.
-5. Добавить ownership and базовые authorization policies.
+1. Добавить provider-neutral `IdentityRef`. Выполнено.
+2. Добавить `UserProfile` and `ProviderProfile`. Выполнено.
+3. Добавить category-specific `NeedSchema`. Выполнено.
+4. Добавить completeness and `Clarification` lifecycle. Выполнено.
+5. Добавить ownership and базовые authorization policies. Частично выполнено.
+6. Проверить Life/Work/Skills through vertical flows. Выполнено.
+
+Текущий результат: R0 passed for local synthetic Core P0. `Life`, `Work`,
+`Skills` проходят `Identity -> Profile -> Intake -> Clarification -> Ready for
+Match` and expected first match.
 
 ### Итерация 7. Contact Request and Engagement
 
@@ -185,7 +199,8 @@ Need created
 
 1. Consent/disclosure policy.
 2. Verification/report/block/moderation baseline.
-3. Repository ports and optimistic version.
+3. Repository ports and optimistic version. Started with PostgreSQL
+   `Need + Clarification` spike.
 4. Domain events, outbox, webhook inbox and idempotency.
 5. Audit trail and notification intents.
 
@@ -206,16 +221,17 @@ Need created
 
 ## Следующий рабочий фокус
 
-Начать Итерацию 6: `Identity, Profile, Intake and Clarification`.
+Начать post-match slice после R0:
+`ContactRequest`, consent/disclosure and engagement baseline.
 
 Порядок:
 
-1. Прочитать [core-cjm-gap-analysis.md](./core-cjm-gap-analysis.md).
-2. Спроектировать `IdentityRef`, `UserProfile`, `ProviderProfile`.
-3. Спроектировать ownership and authorization boundaries.
-4. Добавить `NeedSchema` and completeness.
-5. Добавить `Clarification` questions/answers and lifecycle.
-6. Прогнать unit tests and local smoke.
+1. Уточнить ContactRequest SRS and lifecycle.
+2. Реализовать `ContactRequest` aggregate and tests.
+3. Добавить consent/disclosure baseline before contact/address reveal.
+4. Расширить Life/Work/Skills vertical flows после match.
+5. Добавить PostgreSQL repository slice and API application service boundary.
+6. Подготовить OpenAPI/DTO draft for WEB/mobile shell.
 
 ## Правило для этого чата
 

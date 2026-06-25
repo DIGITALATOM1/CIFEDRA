@@ -1,7 +1,8 @@
 # CIFEDRA Core: аудит CJM и функциональных gaps
 
 Дата: 2026-06-20
-Статус: core gap analysis v0.1
+Дата обновления: 2026-06-26
+Статус: core gap analysis v0.2 after R0
 
 ## Источники аудита
 
@@ -16,10 +17,16 @@
 
 ## Итог
 
-Ядро уже проверяет happy path:
+Ядро уже проверяет два уровня local synthetic flow:
 
 ```text
 Need -> Match -> Decision -> Prepare -> Conversation -> Result
+```
+
+и Core P0:
+
+```text
+Identity -> Profile -> Need Intake -> Clarification -> Ready for Match
 ```
 
 Но CJM требует более полного процесса:
@@ -40,19 +47,19 @@ Identity
   -> Review / Reputation / Repeat
 ```
 
-До client API нельзя считать доменную модель стабильной: сейчас отсутствуют
-агрегаты между `Decision` и `Conversation`, а также между `Conversation` и
-`Result`.
+До client API freeze нельзя считать доменную модель стабильной: сейчас
+отсутствуют `ContactRequest`, consent/disclosure, Engagement, persisted
+application services and event/outbox boundary.
 
 ## Матрица покрытия CJM
 
 | Область | Текущая реализация | Gap | Приоритет |
 | --- | --- | --- | --- |
-| Identity | `AuthUser`, `AuthPrincipal`, local bearer session. | Нет provider-neutral identity key, MFA/reset/verification, device/session model. | P0 platform. |
-| Authorization | Четыре роли в token claims. | Нет ownership, permission policy, organization membership, resource scopes. | P0 core. |
-| Profile | `Profile` используется для fixtures и matching. | Нет lifecycle, owner, visibility, preferences, language, timezone, verification status. | P0. |
-| Need Intake | Generic `NeedInput` и direction matching context. | Нет versioned schemas, обязательных полей по категории, вложений, completeness. | P0. |
-| Clarification | В brief есть вопросы. | Нет сущности вопроса/ответа, readiness и перехода `needs_clarification`. | P0. |
+| Identity | `IdentityRef` and local auth mapping implemented. | MFA/reset/verification and device/session model remain in IdP boundary. | P1 platform. |
+| Authorization | Local auth roles, ownership checks in profile/clarification and API endpoint guards. | Нет full permission policy, organization membership, assignment scopes. | P0 next. |
+| Profile | Owned `UserProfile` and `ProviderProfile` with visibility, language and timezone metadata. | Provider suspension, uniqueness and full review policy remain incomplete. | P1. |
+| Need Intake | Versioned `NeedSchema`, schema answers, completeness and matching guard for Life/Work/Skills. | Attachments and fixture/action registry hardening remain incomplete. | P0 next. |
+| Clarification | Clarification aggregate, owner answer, reopen/waiver and readiness reassessment. | UI/API command layer and persistence transaction integration remain incomplete. | P1. |
 | Match | Direction-specific scoring и breakdown. | Нет `MatchRun`, версии алгоритма, ручного override и feedback calibration. | P1. |
 | Client Decision | Decision/Shortlist существуют. | Нет persistence, undo/history и actor ownership. | P0. |
 | Provider Decision | Нет. | Нужны contact offer, accept/decline, expiry, counterproposal. | P0. |
@@ -65,7 +72,7 @@ Identity
 | Organization | Нет. | Нужны tenant, membership, invitation, company knowledge permissions. | P1. |
 | Languages | Только свободные tags/capabilities. | Нет locale, spoken languages, language requirement, translation metadata. | P0 metadata; P1 runtime translation. |
 | Voice / Media | Нет. | Нужны media asset, transcript, translation status и consent. | P1. |
-| Persistence | Runtime/local files. | Нет repository ports, transactions, optimistic locking, migrations. | P0. |
+| Persistence | PostgreSQL 18 compose, roles, migration runner and `Need + Clarification` repository spike. | API still uses runtime Core flow; next aggregates need repository-backed application services. | P0 next. |
 | Events / Integrations | Handoff создается напрямую. | Нет domain events, outbox, webhook deduplication, status mapping. | P0. |
 | Audit | Нет. | Нет actor/action/resource trail и privacy disclosure history. | P0. |
 | Retention | Только next step/quality signal. | Нет history, favorites, reusable need templates, repeat flow. | P2. |

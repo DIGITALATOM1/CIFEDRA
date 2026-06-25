@@ -1,8 +1,8 @@
 # Core P0 Traceability Matrix
 
-Дата: 2026-06-25
-Версия: 0.5
-Статус: reviewed draft; Identity/Profile, NeedSchema and Clarification baseline implemented
+Дата: 2026-06-26
+Версия: 0.6
+Статус: R0 reviewed; Core P0 local synthetic gate passed
 
 ## Sources
 
@@ -10,6 +10,7 @@
 - [CJM by scenarios](../product/cjm-scenarios-gap-analysis.md);
 - [CJM by roles](../product/cjm-by-roles.md);
 - [Core gap analysis](../system/core-cjm-gap-analysis.md).
+- [R0 evidence review](../delivery/sprint-r0-evidence-review-2026-06-26.md).
 
 ## Requirement traceability
 
@@ -26,7 +27,7 @@
 | INT-008 - INT-009 | Language metadata/original preservation gap | `language.ts`, `intake.ts` | `intake.test.ts`: ru/en metadata and original unchanged |
 | INT-010, INT-013, INT-014, INT-017, INT-018 | Versioned schema gap | `intake.ts` | `intake.test.ts`: unknown version, lifecycle, immutable publication, deprecation and pinned Need version |
 | INT-011, INT-015 | Matching before readiness gap | `intake.ts`, `lifecycle.ts`, matching guard | `intake.test.ts`: incomplete Need cannot match |
-| INT-012, INT-019, INT-020 | Artifact/privacy boundary | `intake.ts`, synthetic fixture registry | `intake.test.ts`: file/link/external data rejected; fixture checksum/IDs still planned |
+| INT-012, INT-019, INT-020 | Artifact/privacy boundary | `intake.ts`, `vertical-flows.ts`, synthetic fixture registry later | `intake.test.ts`: file/link/external data rejected; `vertical-flow.test.ts`: repository-owned synthetic flows; fixture checksum/IDs still planned |
 | INT-016 | Concurrency boundary | `intake.ts` | stale expected version rejected |
 | Life schema v1 | Life home-help intake gaps | schema config/registry | `intake.test.ts`: pool, lawn, combined variants and conditional fields |
 | Work schema v1 | Work SRS review intake gaps | schema config/registry | `intake.test.ts`: complete/incomplete SRS intake |
@@ -42,7 +43,7 @@
 | NFR-006 | Safe error boundary | Core errors/API mapping later | error payload excludes runtime details |
 | NFR-007 | Deterministic testability | utilities/module factories | fixed timestamps/ids where asserted |
 | NFR-008 | Privacy-safe diagnostics | logger/analytics boundary | free text and IdP claims absent |
-| NFR-009 | Local retention/reset | local test tooling | repeatable reset and retention check |
+| NFR-009 | Local retention/reset | local test tooling | `db:reset`, `db:smoke`, `local:smoke`; retention policy detail still planned |
 | NFR-010 | Atomic reassessment | application service/UoW contract | `clarification.test.ts`: failure leaves Need and Clarification unchanged |
 | NFR-011 | Provisional schema governance | schema registry/review process | local draft can change without migration of external user data |
 
@@ -74,11 +75,11 @@
 | AC-023 | CLR-013, CLR-014 | `clarification.test.ts` |
 | AC-024 | CLR-015 - CLR-017, NFR-010 | `clarification.test.ts` |
 | AC-025 | Need lifecycle/out-of-scope rule | `intake.test.ts`, `lifecycle.test.ts` |
-| AC-026 | INT-019, INT-020 | local UAT fixture registry test |
+| AC-026 | INT-019, INT-020 | `vertical-flow.test.ts`; local UAT fixture registry hardening still planned |
 | AC-027, AC-028 | PRF-005, provider permissions | `authorization.test.ts`, `profile.test.ts` |
 | AC-029 | INT-017, INT-018, catalog permissions | `authorization.test.ts`, `intake.test.ts` |
 | AC-030 | CLR-015, CLR-018, NFR-010 | `clarification.test.ts` |
-| Three schema readiness | INT-003 - INT-016 | `intake.test.ts` parameterized for Life/Work/Skills |
+| Three schema readiness | INT-003 - INT-016 | `intake.test.ts` parameterized for Life/Work/Skills; `vertical-flow.test.ts` for end-to-end readiness |
 
 ## Implementation sequence
 
@@ -89,6 +90,8 @@ identity.ts + language.ts
   -> intake.ts
   -> clarification.ts
   -> lifecycle/matching readiness guard
+  -> postgres repository spike
+  -> Life/Work/Skills vertical-flow fixtures
   -> exports and tests
 ```
 

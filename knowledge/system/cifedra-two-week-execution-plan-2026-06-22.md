@@ -1,15 +1,17 @@
 # CIFEDRA CONNECT: план работ на 2 недели
 
 Дата подготовки: 2026-06-20
-Дата обновления: 2026-06-21
+Дата обновления: 2026-06-26
 Период: 2026-06-22 - 2026-07-03
 Команда: владелец продукта + Codex
-Статус: sprint baseline v0.1
+Статус: completed after R0
 
 Рабочие артефакты:
 
 - [Product brief](../product/work-srs-review-product-brief.md);
 - [Sprint backlog](../delivery/sprint-2026-06-22-backlog.md);
+- [R0 evidence review](../delivery/sprint-r0-evidence-review-2026-06-26.md);
+- [Next sprint backlog](../delivery/sprint-2026-07-06-backlog.md);
 - [Decision log](../delivery/decision-log.md);
 - [Risk register](../delivery/risk-register.md);
 - [Interview kit](../research/work-srs-review-interview-kit.md).
@@ -452,9 +454,10 @@ External client/provider interviews resume after the local functional pilot.
 4. обновляем sprint baseline;
 5. повторно проходим затронутый gate.
 
-## 10. Вероятный следующий спринт
+## 10. Следующий спринт
 
-Если `R0` пройден:
+`R0` пройден 2026-06-26. Исполнимый proposed backlog:
+[sprint-2026-07-06-backlog.md](../delivery/sprint-2026-07-06-backlog.md).
 
 1. `ContactRequest` and provider accept/decline/expiry;
 2. `Consent` and permitted disclosure;

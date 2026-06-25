@@ -1,7 +1,8 @@
 # CIFEDRA Sprint Backlog: 2026-06-22 - 2026-07-03
 
 Дата: 2026-06-21
-Статус: active baseline v0.3
+Дата обновления: 2026-06-26
+Статус: completed after R0
 Команда: владелец продукта + Codex
 
 ## Sprint goal
@@ -45,8 +46,8 @@ without real users, services or confidential data.
 | D8-02 | 8 | Создать migration/role/repository spike. | Codex | D8-01 | One aggregate persists across restart; runtime role has no DDL. | done |
 | D9-01 | 9 | Собрать three synthetic vertical flows. | Codex | D5-01, D6-02, D7-01 | Life/Work/Skills reach ready-for-match locally and in CI. | done |
 | D9-02 | 9 | Сформировать local UAT evidence and metrics. | Codex | D9-01 | Functional findings are separated from future market evidence. | done |
-| D10-01 | 10 | Провести evidence review R0. | Оба | Все must items | Checks green, decisions and next backlog approved. | planned |
-| D10-02 | 10 | Обновить SRS/HLD/ADR/backlog по evidence. | Codex | D10-01 | Changed contracts and decisions traceable. | planned |
+| D10-01 | 10 | Провести evidence review R0. | Оба | Все must items | Checks green, decisions and next backlog approved. | done |
+| D10-02 | 10 | Обновить SRS/HLD/ADR/backlog по evidence. | Codex | D10-01 | Changed contracts and decisions traceable. | done |
 
 ## User action queue
 
@@ -72,3 +73,8 @@ without real users, services or confidential data.
 
 Sprint закрывается только после gate `R0` из
 [two-week execution plan](../system/cifedra-two-week-execution-plan-2026-06-22.md).
+
+R0 закрыт документом
+[sprint-r0-evidence-review-2026-06-26.md](./sprint-r0-evidence-review-2026-06-26.md).
+Следующий proposed backlog:
+[sprint-2026-07-06-backlog.md](./sprint-2026-07-06-backlog.md).

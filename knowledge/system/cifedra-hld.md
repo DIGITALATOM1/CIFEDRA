@@ -1,8 +1,9 @@
 # CIFEDRA CONNECT: High-Level Design
 
 Дата: 2026-06-20
-Версия: HLD v0.6
-Статус: approved architecture baseline; sizing and detailed SRS remain open
+Дата обновления: 2026-06-26
+Версия: HLD v0.7
+Статус: approved architecture baseline; R0 local Core P0 evidence incorporated
 
 ## 1. Назначение
 
@@ -1158,6 +1159,28 @@ NFR/SRS до staging acceptance.
 
 Quality and rollout:
 [cifedra-quality-release-plan.md](./cifedra-quality-release-plan.md).
+
+### R0 Implementation Evidence
+
+R0 local Core P0 gate passed on 2026-06-26:
+[sprint-r0-evidence-review-2026-06-26.md](../delivery/sprint-r0-evidence-review-2026-06-26.md).
+
+Confirmed implementation baseline:
+
+- `IdentityRef`, `UserProfile`, `ProviderProfile`;
+- versioned `NeedSchema` for Life / Work / Skills;
+- `Clarification` lifecycle and readiness reassessment;
+- local PostgreSQL 18 compose and `Need + Clarification` repository spike;
+- synthetic vertical flows reaching `ready_for_match` for all three directions.
+
+Residual architecture work before client API freeze:
+
+- `ContactRequest` and provider accept/decline/expiry;
+- consent/disclosure boundary;
+- engagement baseline;
+- repository-backed API application services;
+- OpenAPI/DTO versioning;
+- outbox/inbox for external adapter synchronization.
 
 ### Phase 1. Core Completion
 

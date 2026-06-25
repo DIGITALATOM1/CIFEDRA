@@ -29,6 +29,8 @@
 | [product/work-srs-review-product-brief.md](./product/work-srs-review-product-brief.md) | Provisional scope и оффер первого сценария Work / SRS Review. |
 | [research/work-srs-review-interview-kit.md](./research/work-srs-review-interview-kit.md) | Скрипты, target slots и правила первых client/expert interviews. |
 | [delivery/sprint-2026-06-22-backlog.md](./delivery/sprint-2026-06-22-backlog.md) | Исполнимый backlog текущего двухнедельного спринта. |
+| [delivery/sprint-r0-evidence-review-2026-06-26.md](./delivery/sprint-r0-evidence-review-2026-06-26.md) | R0 evidence review and gate decision по Core P0 local increment. |
+| [delivery/sprint-2026-07-06-backlog.md](./delivery/sprint-2026-07-06-backlog.md) | Proposed backlog следующего спринта после R0. |
 | [delivery/decision-log.md](./delivery/decision-log.md) | Реестр продуктовых и delivery-решений. |
 | [delivery/risk-register.md](./delivery/risk-register.md) | Активный реестр рисков программы. |
 | [delivery/security-baseline-evidence-2026-06-21.md](./delivery/security-baseline-evidence-2026-06-21.md) | Evidence по локальному security increment Day 3. |

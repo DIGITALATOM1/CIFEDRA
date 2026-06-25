@@ -13,6 +13,8 @@ Delivery-документы не заменяют:
 ## Текущий спринт
 
 - [Sprint backlog: 2026-06-22 - 2026-07-03](./sprint-2026-06-22-backlog.md);
+- [R0 evidence review: 2026-06-26](./sprint-r0-evidence-review-2026-06-26.md);
+- [Next sprint backlog: 2026-07-06 - 2026-07-17](./sprint-2026-07-06-backlog.md);
 - [Decision log](./decision-log.md);
 - [Risk register](./risk-register.md).
 

@@ -1,6 +1,7 @@
 # ADR-002: PostgreSQL Core Data Platform
 
 Дата: 2026-06-20
+Дата обновления: 2026-06-26
 Статус: accepted
 
 ## Контекст
@@ -38,6 +39,14 @@ PostgreSQL 18
 содержит PostGIS 3.6.4; image фиксируется digest. pgvector добавляется отдельным
 pinned package/build layer. Floating tags не используются в release
 configuration.
+
+Implementation note 2026-06-26:
+
+- local R0 spike uses `postgres:18` because `postgis/postgis:18-3.6` did not
+  provide a linux/arm64 manifest in the current Apple Silicon environment;
+- target architecture still requires PostGIS/pgvector image hardening before
+  staging;
+- evidence: [postgres-evidence-2026-06-26.md](../delivery/postgres-evidence-2026-06-26.md).
 
 ### 2. Источники истины
 

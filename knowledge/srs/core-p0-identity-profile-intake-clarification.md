@@ -1,8 +1,8 @@
 # SRS: Core P0 Identity, Profile, Intake and Clarification
 
-Дата: 2026-06-21
-Версия: 0.2
-Статус: reviewed draft; Quick Review publication blocked on PA-007 and PA-010
+Дата: 2026-06-26
+Версия: 0.3
+Статус: R0 reviewed; local synthetic Core P0 accepted; Quick Review publication blocked on PA-007 and PA-010
 Sprint: 2026-06-22 - 2026-07-03
 
 ## 1. Назначение
@@ -75,6 +75,9 @@ they change.
 
 Candidate category schemas below are approved for local synthetic UAT.
 Quick Review publication remains blocked until PA-007 and PA-010 are confirmed.
+
+R0 review evidence:
+[sprint-r0-evidence-review-2026-06-26.md](../delivery/sprint-r0-evidence-review-2026-06-26.md).
 
 ## 4. Actors
 

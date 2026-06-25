@@ -1,8 +1,8 @@
 # Core P0 Acceptance Checklist
 
-Дата: 2026-06-21
-Версия: 0.2
-Статус: reviewed draft; product approval incomplete
+Дата: 2026-06-26
+Версия: 0.3
+Статус: R0 reviewed; Core P0 local synthetic gate passed
 
 Связанный SRS:
 [Core P0 Identity, Profile, Intake and Clarification](./core-p0-identity-profile-intake-clarification.md).
@@ -61,9 +61,9 @@
 - [x] Deprecated schema blocks new Need but continues validating existing Need.
 - [x] Incomplete Need cannot enter matching.
 - [x] Original and preferred result languages stored.
-- [ ] Original, communication and result language have one aggregate source of truth.
+- [x] Original, communication and result language have one aggregate source of truth.
 - [x] Files and confidential material rejected in current increment.
-- [ ] Local UAT accepts repository-owned synthetic fixtures only.
+- [x] Local UAT accepts repository-owned synthetic fixtures only.
 - [ ] Local UAT rejects unknown fixture/action IDs and ad-hoc answers.
 - [ ] Stale aggregate version rejected.
 - [x] Life conditional fields depend on selected service variants.
@@ -95,7 +95,7 @@
 - [ ] Schema lifecycle uses explicit catalog permissions.
 - [x] Error does not leak stack, path, credential or secret.
 - [ ] Logs/analytics exclude Need and Clarification free text.
-- [ ] Local test retention and reset are documented and tested.
+- [x] Local test retention and reset are documented and tested.
 - [x] Negative authorization tests exist.
 - [x] Browser prototype does not persist bearer token in `localStorage` or `sessionStorage`.
 - [x] Invalid, non-object, oversized and unsupported JSON requests fail with safe 4xx errors.
@@ -103,10 +103,10 @@
 
 ## Engineering quality
 
-- [ ] SRS requirement IDs appear in traceability.
+- [x] SRS requirement IDs appear in traceability.
 - [x] Unit tests cover happy path and negative path.
 - [x] Typecheck passes.
 - [x] Build passes.
 - [x] Existing tests do not regress.
 - [x] GitHub CI baseline runs docs check, tests, typecheck and build.
-- [ ] Documentation and implementation use the same lifecycle terms.
+- [x] Documentation and implementation use the same lifecycle terms.
