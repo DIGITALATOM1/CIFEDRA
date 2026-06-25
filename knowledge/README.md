@@ -36,6 +36,7 @@
 | [delivery/need-schema-evidence-2026-06-25.md](./delivery/need-schema-evidence-2026-06-25.md) | Evidence по versioned `NeedSchema`, completeness and matching guard. |
 | [delivery/clarification-evidence-2026-06-25.md](./delivery/clarification-evidence-2026-06-25.md) | Evidence по `Clarification` lifecycle, readiness reassessment and answer history. |
 | [delivery/postgres-evidence-2026-06-26.md](./delivery/postgres-evidence-2026-06-26.md) | Evidence по local PostgreSQL compose, migrations, roles and repository spike. |
+| [delivery/vertical-flow-evidence-2026-06-26.md](./delivery/vertical-flow-evidence-2026-06-26.md) | Evidence по Life / Work / Skills vertical flows and local UAT metrics. |
 | [system/cifedra-hld.md](./system/cifedra-hld.md) | Формальный High-Level Design решения. |
 | [system/cifedra-target-architecture.md](./system/cifedra-target-architecture.md) | Каноническая архитектура локального и production-контуров. |
 | [system/cifedra-development-implementation-master-plan.md](./system/cifedra-development-implementation-master-plan.md) | Интегрированный roadmap разработки, внедрения и запуска. |

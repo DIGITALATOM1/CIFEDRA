@@ -4,7 +4,8 @@ const elements = {
   apiUrl: document.querySelector("#api-url"),
   integrationGrid: document.querySelector("#integration-grid"),
   integrationStatus: document.querySelector("#integration-status"),
-  authStatus: document.querySelector("#auth-status")
+  authStatus: document.querySelector("#auth-status"),
+  verticalFlowStatus: document.querySelector("#vertical-flow-status")
 };
 
 elements.apiUrl.textContent = apiBaseUrl;
@@ -12,6 +13,7 @@ elements.apiUrl.textContent = apiBaseUrl;
 await loadIntegrations();
 await loadIntegrationStatus();
 await loadAuthStatus();
+await loadVerticalFlows();
 
 async function loadIntegrations() {
   try {
@@ -65,6 +67,25 @@ async function loadAuthStatus() {
     elements.authStatus.innerHTML = `
       <div class="error-state">
         Не удалось загрузить auth-статус. Проверьте API и endpoint /auth/status.
+      </div>
+    `;
+  }
+}
+
+async function loadVerticalFlows() {
+  try {
+    const response = await fetch(`${apiBaseUrl}/demo/vertical-flows`);
+
+    if (!response.ok) {
+      throw new Error(`Failed to load vertical flows: ${response.status}`);
+    }
+
+    const payload = await response.json();
+    renderVerticalFlows(payload.flows ?? []);
+  } catch (error) {
+    elements.verticalFlowStatus.innerHTML = `
+      <div class="error-state">
+        Не удалось загрузить vertical flows. Проверьте API и endpoint /demo/vertical-flows.
       </div>
     `;
   }
@@ -130,6 +151,41 @@ function renderAuthStatus(status) {
       <p>${escapeHtml(status.integrationPolicy)}</p>
     </article>
   `;
+}
+
+function renderVerticalFlows(flows) {
+  if (flows.length === 0) {
+    elements.verticalFlowStatus.innerHTML = `<div class="empty-state">Vertical flows еще не готовы.</div>`;
+    return;
+  }
+
+  elements.verticalFlowStatus.innerHTML = flows.map((flow) => {
+    const firstMatch = flow.matches?.[0];
+    const ready = flow.answeredNeed?.status === "ready_for_match" &&
+      flow.clarification?.status === "resolved";
+
+    return `
+      <article class="integration-card">
+        <div class="integration-head">
+          <div>
+            <span class="integration-kind">${escapeHtml(flow.direction)}</span>
+            <h3>${escapeHtml(flow.title)}</h3>
+          </div>
+          <span class="license-pill">${ready ? "ready" : "check"}</span>
+        </div>
+        <div class="meta">
+          <span class="pill">Initial: ${escapeHtml(flow.initialNeed?.status)}</span>
+          <span class="pill">After answer: ${escapeHtml(flow.answeredNeed?.status)}</span>
+          <span class="pill">Clarification: ${escapeHtml(flow.clarification?.status)}</span>
+        </div>
+        <p>
+          Match: ${escapeHtml(firstMatch?.profile?.id ?? "none")}
+          · score ${escapeHtml(firstMatch?.score ?? "n/a")}
+          · ${escapeHtml(firstMatch?.recommendedAction ?? "n/a")}
+        </p>
+      </article>
+    `;
+  }).join("");
 }
 
 function renderMissingConfig(keys, mode) {

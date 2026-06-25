@@ -10,6 +10,7 @@ await checkLanding();
 await checkTestConsole();
 await checkAuth();
 await checkSecurityBaseline();
+await checkVerticalFlows();
 
 const scenarios = await getScenarios();
 let firstScenarioResult = null;
@@ -160,6 +161,52 @@ async function checkSecurityBaseline() {
   assert(unsupportedContentType.status === 415, "Expected text/plain JSON request to return 415");
 
   console.log("Security baseline checks passed.");
+}
+
+async function checkVerticalFlows() {
+  const response = await fetch(`${apiBaseUrl}/demo/vertical-flows`);
+
+  assert(response.ok, `GET /demo/vertical-flows failed with ${response.status}`);
+
+  const body = await response.json();
+  const flows = body.flows ?? [];
+
+  assert(flows.length === 3, `Expected 3 vertical flows, got ${flows.length}`);
+  assert(
+    flows.map((flow) => flow.direction).join(",") === "life,work,skills",
+    "Expected Life / Work / Skills vertical flows"
+  );
+
+  for (const flow of flows) {
+    assert(
+      flow.identityRef?.issuer === "cifedra-local",
+      `${flow.title}: expected local identity`
+    );
+    assert(
+      flow.initialNeed?.status === "needs_clarification",
+      `${flow.title}: expected initial Need to require clarification`
+    );
+    assert(
+      flow.clarification?.status === "resolved",
+      `${flow.title}: expected resolved clarification`
+    );
+    assert(
+      flow.answeredNeed?.status === "ready_for_match",
+      `${flow.title}: expected answered Need to be ready for match`
+    );
+    assert(
+      flow.matches?.[0]?.profile?.id === flow.expectedProfileId,
+      `${flow.title}: expected ${flow.expectedProfileId}, got ${flow.matches?.[0]?.profile?.id ?? "none"}`
+    );
+    assert(
+      flow.matches?.[0]?.recommendedAction === "request_contact",
+      `${flow.title}: expected request_contact recommendation`
+    );
+
+    console.log(
+      `${flow.title}: vertical flow ready, ${flow.matches[0].profile.id}, score ${flow.matches[0].score}`
+    );
+  }
 }
 
 async function checkScenario(scenario) {

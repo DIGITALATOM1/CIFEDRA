@@ -146,6 +146,25 @@ test("secures local registration, demo mutations, CORS and integration writes", 
       "http://localhost:4177"
     );
 
+    const verticalFlowsResponse = await fetch(`${baseUrl}/demo/vertical-flows`);
+    assert.equal(verticalFlowsResponse.status, 200);
+    const verticalFlowsBody = await verticalFlowsResponse.json();
+    assert.deepEqual(
+      verticalFlowsBody.flows.map((flow: { direction: string }) => flow.direction),
+      ["life", "work", "skills"]
+    );
+    for (const flow of verticalFlowsBody.flows as Array<{
+      answeredNeed: { status: string };
+      clarification: { status: string };
+      matches: Array<{ profile: { id: string }; recommendedAction: string }>;
+      expectedProfileId: string;
+    }>) {
+      assert.equal(flow.answeredNeed.status, "ready_for_match");
+      assert.equal(flow.clarification.status, "resolved");
+      assert.equal(flow.matches[0]?.profile.id, flow.expectedProfileId);
+      assert.equal(flow.matches[0]?.recommendedAction, "request_contact");
+    }
+
     const matchResponse = await postJson(
       `${baseUrl}/demo/match`,
       {

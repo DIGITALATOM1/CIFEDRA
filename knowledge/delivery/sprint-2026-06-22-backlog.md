@@ -43,8 +43,8 @@ without real users, services or confidential data.
 | D7-01 | 7 | Реализовать Clarification lifecycle. | Codex | D6-01 | Questions, answers, readiness and transitions tested. | done |
 | D8-01 | 8 | Поднять tracked PostgreSQL compose. | Codex | D6-01 | Clean start and healthcheck воспроизводимы. | done |
 | D8-02 | 8 | Создать migration/role/repository spike. | Codex | D8-01 | One aggregate persists across restart; runtime role has no DDL. | done |
-| D9-01 | 9 | Собрать three synthetic vertical flows. | Codex | D5-01, D6-02, D7-01 | Life/Work/Skills reach ready-for-match locally and in CI. | planned |
-| D9-02 | 9 | Сформировать local UAT evidence and metrics. | Codex | D9-01 | Functional findings are separated from future market evidence. | planned |
+| D9-01 | 9 | Собрать three synthetic vertical flows. | Codex | D5-01, D6-02, D7-01 | Life/Work/Skills reach ready-for-match locally and in CI. | done |
+| D9-02 | 9 | Сформировать local UAT evidence and metrics. | Codex | D9-01 | Functional findings are separated from future market evidence. | done |
 | D10-01 | 10 | Провести evidence review R0. | Оба | Все must items | Checks green, decisions and next backlog approved. | planned |
 | D10-02 | 10 | Обновить SRS/HLD/ADR/backlog по evidence. | Codex | D10-01 | Changed contracts and decisions traceable. | planned |
 

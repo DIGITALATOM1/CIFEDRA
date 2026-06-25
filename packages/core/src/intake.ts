@@ -80,6 +80,10 @@ export interface VersionedNeedInput {
   readonly originalContentLanguage: string;
   readonly communicationLanguage: string;
   readonly preferredResultLanguage: string;
+  readonly context?: NeedInput["context"];
+  readonly constraints?: NeedInput["constraints"];
+  readonly location?: NeedInput["location"];
+  readonly matching?: NeedInput["matching"];
   readonly priority?: NeedInput["priority"];
   readonly tags?: readonly string[];
 }
@@ -304,6 +308,10 @@ export function createNeedFromSchema(
     originalContentLanguage,
     communicationLanguage,
     preferredResultLanguage,
+    context: input.context,
+    constraints: input.constraints,
+    location: input.location,
+    matching: input.matching,
     priority: input.priority,
     tags: [...(input.tags ?? [])]
   };

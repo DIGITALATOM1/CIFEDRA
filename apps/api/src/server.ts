@@ -32,6 +32,7 @@ import {
   rankProfilesForNeed,
   recordContactResult,
   resolveNeedFromContactResult,
+  runAllSyntheticVerticalFlows,
   type ContactOutcome,
   type Conversation,
   type Need,
@@ -127,6 +128,13 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
   if (request.method === "GET" && url.pathname === "/demo/scenarios") {
     sendJson(response, 200, {
       scenarios: demoNeedScenarios
+    });
+    return;
+  }
+
+  if (request.method === "GET" && url.pathname === "/demo/vertical-flows") {
+    sendJson(response, 200, {
+      flows: runAllSyntheticVerticalFlows()
     });
     return;
   }
@@ -279,6 +287,7 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
       "GET /directions",
       "GET /demo/profiles",
       "GET /demo/scenarios",
+      "GET /demo/vertical-flows",
       "GET /integrations",
       "GET /integrations/status",
       "POST /demo/handoff",

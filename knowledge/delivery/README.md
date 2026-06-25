@@ -22,4 +22,5 @@ Delivery-документы не заменяют:
 - [Identity/profile evidence: 2026-06-25](./identity-profile-evidence-2026-06-25.md);
 - [Need schema evidence: 2026-06-25](./need-schema-evidence-2026-06-25.md);
 - [Clarification evidence: 2026-06-25](./clarification-evidence-2026-06-25.md);
-- [PostgreSQL evidence: 2026-06-26](./postgres-evidence-2026-06-26.md).
+- [PostgreSQL evidence: 2026-06-26](./postgres-evidence-2026-06-26.md);
+- [Vertical flow evidence: 2026-06-26](./vertical-flow-evidence-2026-06-26.md).
