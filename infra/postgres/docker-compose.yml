@@ -1,0 +1,25 @@
+name: cifedra-core
+
+services:
+  postgres:
+    image: postgres:18
+    container_name: cifedra-core-postgres
+    restart: unless-stopped
+    ports:
+      - "54327:5432"
+    environment:
+      POSTGRES_DB: cifedra_core
+      POSTGRES_USER: cifedra_root
+      POSTGRES_PASSWORD: cifedra_root_local_only
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cifedra_root -d cifedra_core"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    volumes:
+      - cifedra-core-postgres-data:/var/lib/postgresql
+      - ./init:/docker-entrypoint-initdb.d:ro
+
+volumes:
+  cifedra-core-postgres-data:

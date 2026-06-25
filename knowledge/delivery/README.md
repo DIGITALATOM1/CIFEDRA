@@ -15,3 +15,11 @@ Delivery-документы не заменяют:
 - [Sprint backlog: 2026-06-22 - 2026-07-03](./sprint-2026-06-22-backlog.md);
 - [Decision log](./decision-log.md);
 - [Risk register](./risk-register.md).
+
+## Evidence packs
+
+- [Security baseline evidence: 2026-06-21](./security-baseline-evidence-2026-06-21.md);
+- [Identity/profile evidence: 2026-06-25](./identity-profile-evidence-2026-06-25.md);
+- [Need schema evidence: 2026-06-25](./need-schema-evidence-2026-06-25.md);
+- [Clarification evidence: 2026-06-25](./clarification-evidence-2026-06-25.md);
+- [PostgreSQL evidence: 2026-06-26](./postgres-evidence-2026-06-26.md).

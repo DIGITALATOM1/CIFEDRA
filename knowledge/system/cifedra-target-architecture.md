@@ -397,15 +397,17 @@ Meilisearch или Qdrant подключаются только после по�
 
 ### Добавляем последовательно
 
-1. Tracked `cifedra-core` compose project с PostgreSQL 18/PostGIS/pgvector.
-2. Repository ports, migrations and outbox.
-3. Keycloak local realm and OIDC adapter.
-4. Baserow pilot backoffice.
-5. Mock notification/calendar/payment providers.
-6. Local media storage.
-7. Whisper transcription spike.
-8. Argos Translate text translation spike.
-9. Jitsi and n8n only when соответствующий CJM готов к проверке.
+1. Tracked `cifedra-core` compose project с PostgreSQL 18.
+2. PostGIS/pgvector image hardening after local arm64-compatible image/digest
+   selection.
+3. Repository ports, migrations and outbox.
+4. Keycloak local realm and OIDC adapter.
+5. Baserow pilot backoffice.
+6. Mock notification/calendar/payment providers.
+7. Local media storage.
+8. Whisper transcription spike.
+9. Argos Translate text translation spike.
+10. Jitsi and n8n only when соответствующий CJM готов к проверке.
 
 Локально это единое управляемое окружение, но не один контейнер: Core,
 Identity, Chatwoot, Plane и Baserow запускаются отдельными compose projects и

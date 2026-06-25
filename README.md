@@ -10,6 +10,7 @@
 | `knowledge/` | Архитектурные решения, SRS, продуктовая документация и база знаний. |
 | `web/landing/` | Статический лендинг продукта с QR-кодами приложений. |
 | `packages/core/` | Самописное доменное ядро `Need -> Match -> Prepare -> Connect -> Result`. |
+| `packages/postgres/` | PostgreSQL migrations and repository adapters for Core persistence. |
 | `apps/api/` | Минимальный API-прототип поверх `@cifedra/core`. |
 | `scripts/integrations/` | Подготовка и проверка локальных open source интеграций. |
 
@@ -58,6 +59,16 @@ API-прототип по умолчанию запускается на `http:/
 npm run local:start
 npm run local:smoke
 npm run local:stop
+```
+
+Локальная Core DB:
+
+```bash
+npm run db:start
+npm run db:migrate
+npm run db:health
+npm run db:smoke
+npm run db:stop
 ```
 
 Локальные open source интеграции:
