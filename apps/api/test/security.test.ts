@@ -18,6 +18,7 @@ test("secures local registration, demo mutations, CORS and integration writes", 
     cors: process.env.CIFEDRA_CORS_ALLOWED_ORIGINS,
     host: process.env.CIFEDRA_API_HOST,
     maxJsonBodyBytes: process.env.CIFEDRA_MAX_JSON_BODY_BYTES,
+    contactRequestStore: process.env.CIFEDRA_CONTACT_REQUEST_STORE,
     providerTimeoutMs: process.env.CIFEDRA_PROVIDER_REQUEST_TIMEOUT_MS,
     chatwootBaseUrl: process.env.CIFEDRA_CHATWOOT_BASE_URL,
     chatwootToken: process.env.CIFEDRA_CHATWOOT_API_TOKEN,
@@ -33,6 +34,7 @@ test("secures local registration, demo mutations, CORS and integration writes", 
   process.env.CIFEDRA_CORS_ALLOWED_ORIGINS = "http://localhost:4177";
   process.env.CIFEDRA_MAX_JSON_BODY_BYTES = "8192";
   delete process.env.CIFEDRA_API_HOST;
+  delete process.env.CIFEDRA_CONTACT_REQUEST_STORE;
 
   const server = createApiServer();
   await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
@@ -107,7 +109,12 @@ test("secures local registration, demo mutations, CORS and integration writes", 
     const token = registrationBody.token as string;
     const authStorePath = join(tempDir, "auth", "store.json");
 
-    for (const path of ["/demo/match", "/demo/handoff", "/demo/result"]) {
+    for (const path of [
+      "/demo/match",
+      "/demo/handoff",
+      "/demo/result",
+      "/demo/contact-requests/contact_request_missing/cancel"
+    ]) {
       const response = await postJson(`${baseUrl}${path}`, {});
       assert.equal(response.status, 401, path);
     }
@@ -206,6 +213,19 @@ test("secures local registration, demo mutations, CORS and integration writes", 
     assert.equal(matchBody.firstContactRequest.decisionId, matchBody.decisions[0].id);
     assert.ok(matchBody.firstContactRequest.disclosureSnapshot.hiddenFields.includes("contact.email"));
 
+    const disabledContactRequestStore = await postJson(
+      `${baseUrl}/demo/contact-requests/${matchBody.firstContactRequest.id}/cancel`,
+      {
+        expectedAggregateVersion: matchBody.firstContactRequest.aggregateVersion
+      },
+      token
+    );
+    assert.equal(disabledContactRequestStore.status, 503);
+    assert.match(
+      (await disabledContactRequestStore.json()).error,
+      /ContactRequest PostgreSQL store is not configured/
+    );
+
     const handoffResponse = await postJson(
       `${baseUrl}/demo/handoff`,
       {
@@ -270,6 +290,7 @@ test("secures local registration, demo mutations, CORS and integration writes", 
     restoreEnv("CIFEDRA_CORS_ALLOWED_ORIGINS", previousEnv.cors);
     restoreEnv("CIFEDRA_API_HOST", previousEnv.host);
     restoreEnv("CIFEDRA_MAX_JSON_BODY_BYTES", previousEnv.maxJsonBodyBytes);
+    restoreEnv("CIFEDRA_CONTACT_REQUEST_STORE", previousEnv.contactRequestStore);
     restoreEnv("CIFEDRA_PROVIDER_REQUEST_TIMEOUT_MS", previousEnv.providerTimeoutMs);
     restoreEnv("CIFEDRA_CHATWOOT_BASE_URL", previousEnv.chatwootBaseUrl);
     restoreEnv("CIFEDRA_CHATWOOT_API_TOKEN", previousEnv.chatwootToken);

@@ -15,6 +15,12 @@ export class RepositoryConflictError extends Error {
   }
 }
 
+export class RepositoryNotFoundError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
+}
+
 export class PostgresNeedRepository {
   constructor(private readonly pool: Pool) {}
 

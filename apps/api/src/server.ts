@@ -3,6 +3,11 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { createIntegrationHandoff, getIntegrationStatus } from "./integration-handoff.js";
+import { getConfiguredContactRequestRepository } from "./contact-request-store.js";
+import {
+  ContactRequestApplicationError,
+  ContactRequestApplicationService
+} from "./contact-request-service.js";
 import {
   AuthError,
   getAuthContextFromHeader,
@@ -45,7 +50,11 @@ export function createApiServer(): Server {
     try {
       await routeRequest(request, response);
     } catch (error) {
-      if (error instanceof AuthError || error instanceof RequestError) {
+      if (
+        error instanceof AuthError ||
+        error instanceof RequestError ||
+        error instanceof ContactRequestApplicationError
+      ) {
         sendJson(response, error.statusCode, {
           error: error.message
         });
@@ -291,6 +300,37 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
     return;
   }
 
+  const contactRequestRoute = parseContactRequestRoute(url.pathname);
+
+  if (request.method === "POST" && contactRequestRoute) {
+    const authContext = await requireAuthContext(request);
+    const body = await readJsonObject<ContactRequestTransitionRequest>(request);
+    const repository = getConfiguredContactRequestRepository();
+
+    if (!repository) {
+      throw new RequestError(
+        503,
+        "ContactRequest PostgreSQL store is not configured; set CIFEDRA_CONTACT_REQUEST_STORE=postgres"
+      );
+    }
+
+    const service = new ContactRequestApplicationService(repository);
+    const command = {
+      requestId: contactRequestRoute.requestId,
+      expectedAggregateVersion: normalizeExpectedAggregateVersion(body.expectedAggregateVersion),
+      actor: authContext.principal,
+      reason: normalizeOptionalReason(body.reason)
+    };
+    const result = await runContactRequestAction(
+      service,
+      contactRequestRoute.action,
+      command
+    );
+
+    sendJson(response, 200, result);
+    return;
+  }
+
   sendJson(response, 404, {
     error: "Not found",
     routes: [
@@ -306,6 +346,10 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
       "GET /demo/vertical-flows",
       "GET /integrations",
       "GET /integrations/status",
+      "POST /demo/contact-requests/{id}/accept",
+      "POST /demo/contact-requests/{id}/decline",
+      "POST /demo/contact-requests/{id}/cancel",
+      "POST /demo/contact-requests/{id}/expire",
       "POST /demo/handoff",
       "POST /demo/match",
       "POST /demo/result"
@@ -342,6 +386,11 @@ interface DemoResultRequest {
   readonly qualityScore?: number;
 }
 
+interface ContactRequestTransitionRequest {
+  readonly expectedAggregateVersion?: unknown;
+  readonly reason?: unknown;
+}
+
 class RequestError extends Error {
   constructor(
     readonly statusCode: number,
@@ -349,6 +398,57 @@ class RequestError extends Error {
   ) {
     super(message);
   }
+}
+
+function parseContactRequestRoute(pathname: string):
+  | {
+    readonly requestId: string;
+    readonly action: "accept" | "decline" | "cancel" | "expire";
+  }
+  | null {
+  const match = /^\/demo\/contact-requests\/([^/]+)\/(accept|decline|cancel|expire)$/.exec(
+    pathname
+  );
+
+  if (!match) {
+    return null;
+  }
+
+  return {
+    requestId: decodeURIComponent(match[1] ?? ""),
+    action: match[2] as "accept" | "decline" | "cancel" | "expire"
+  };
+}
+
+function runContactRequestAction(
+  service: ContactRequestApplicationService,
+  action: "accept" | "decline" | "cancel" | "expire",
+  command: Parameters<ContactRequestApplicationService["accept"]>[0]
+) {
+  switch (action) {
+    case "accept":
+      return service.accept(command);
+    case "decline":
+      return service.decline(command);
+    case "cancel":
+      return service.cancel(command);
+    case "expire":
+      return service.expire(command);
+  }
+}
+
+function normalizeExpectedAggregateVersion(value: unknown): number {
+  return typeof value === "number" ? value : Number.NaN;
+}
+
+function normalizeOptionalReason(value: unknown): string | undefined {
+  if (typeof value !== "string") {
+    return undefined;
+  }
+
+  const trimmed = value.trim();
+
+  return trimmed ? trimmed : undefined;
 }
 
 function normalizeDemoNeed(body: Partial<NeedInput>): NeedInput {

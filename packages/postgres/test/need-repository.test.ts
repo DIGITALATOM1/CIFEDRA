@@ -103,19 +103,34 @@ test("persists and reads a ContactRequest when PostgreSQL is configured", {
     assert.equal(byIdempotencyKey?.id, request.id);
     assert.equal(byNeed.some((item) => item.id === request.id), true);
 
-    const accepted = acceptContactRequest(
-      request,
-      request.providerProfileId,
-      new Date("2026-06-26T10:00:00.000Z")
+    const accepted = await contactRequestRepository.updateContactRequest(
+      request.id,
+      1,
+      (current) =>
+        acceptContactRequest(
+          current,
+          current.providerProfileId,
+          new Date("2026-06-26T10:00:00.000Z")
+        )
     );
-    await contactRequestRepository.saveContactRequest(accepted);
 
     const acceptedPersisted = await contactRequestRepository.findContactRequestById(request.id);
 
+    assert.equal(accepted.status, "accepted");
     assert.equal(acceptedPersisted?.status, "accepted");
     assert.equal(acceptedPersisted?.aggregateVersion, 2);
     await assert.rejects(
-      () => contactRequestRepository.saveContactRequest(request),
+      () =>
+        contactRequestRepository.updateContactRequest(
+          request.id,
+          1,
+          (current) =>
+            acceptContactRequest(
+              current,
+              current.providerProfileId,
+              new Date("2026-06-26T10:05:00.000Z")
+            )
+        ),
       RepositoryConflictError
     );
   } finally {

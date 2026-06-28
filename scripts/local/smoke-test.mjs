@@ -128,7 +128,12 @@ async function checkSecurityBaseline() {
     );
   }
 
-  for (const path of ["/demo/match", "/demo/handoff", "/demo/result"]) {
+  for (const path of [
+    "/demo/match",
+    "/demo/handoff",
+    "/demo/result",
+    "/demo/contact-requests/contact_request_missing/cancel"
+  ]) {
     const response = await fetch(`${apiBaseUrl}${path}`, {
       method: "POST",
       headers: jsonHeaders(),

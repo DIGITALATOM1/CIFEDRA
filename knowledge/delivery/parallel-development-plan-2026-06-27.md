@@ -214,3 +214,19 @@ Completed:
 Next engineering item:
 
 1. `N4-02`: API/application service boundary for ContactRequest transitions.
+
+## Progress update: 2026-06-28 / N4-02
+
+Completed:
+
+1. Added ContactRequest application service for accept, decline, cancel and
+   expire commands.
+2. Added local demo endpoints under `/demo/contact-requests/{id}/{action}`.
+3. Added transactional PostgreSQL update with row lock and expected aggregate
+   version.
+4. Verified that actor ids come from auth context, not from HTTP body.
+
+Next engineering item:
+
+1. `N5-01`: OpenAPI/DTO draft for Core P0 + ContactRequest so WEB/mobile can
+   consume stable contracts.

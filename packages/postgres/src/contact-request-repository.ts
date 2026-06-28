@@ -2,7 +2,7 @@ import type { Pool, PoolClient, QueryResult } from "pg";
 
 import type { ContactRequest } from "@cifedra/core";
 
-import { RepositoryConflictError } from "./need-repository.js";
+import { RepositoryConflictError, RepositoryNotFoundError } from "./need-repository.js";
 
 type Queryable = Pick<Pool | PoolClient, "query">;
 
@@ -13,14 +13,44 @@ export class PostgresContactRequestRepository {
     await saveContactRequest(this.pool, request);
   }
 
-  async findContactRequestById(requestId: string): Promise<ContactRequest | null> {
-    const result = await query<{ payload: unknown }>(
-      this.pool,
-      "SELECT payload FROM need.contact_requests WHERE id = $1",
-      [requestId]
-    );
+  async updateContactRequest(
+    requestId: string,
+    expectedAggregateVersion: number,
+    transition: (current: ContactRequest) => ContactRequest
+  ): Promise<ContactRequest> {
+    const client = await this.pool.connect();
 
-    return result.rows[0]?.payload as ContactRequest | undefined ?? null;
+    try {
+      await client.query("BEGIN");
+
+      const current = await findContactRequestById(client, requestId, {
+        forUpdate: true
+      });
+
+      if (!current) {
+        throw new RepositoryNotFoundError(`ContactRequest ${requestId} was not found`);
+      }
+
+      if (current.aggregateVersion !== expectedAggregateVersion) {
+        throw new RepositoryConflictError(
+          `ContactRequest ${requestId} expected version ${expectedAggregateVersion}, got ${current.aggregateVersion}`
+        );
+      }
+
+      const next = transition(current);
+      await saveContactRequest(client, next);
+      await client.query("COMMIT");
+      return next;
+    } catch (error) {
+      await client.query("ROLLBACK").catch(() => undefined);
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+  async findContactRequestById(requestId: string): Promise<ContactRequest | null> {
+    return findContactRequestById(this.pool, requestId);
   }
 
   async findContactRequestByIdempotencyKey(
@@ -45,6 +75,27 @@ export class PostgresContactRequestRepository {
 
     return result.rows.map((row) => row.payload as ContactRequest);
   }
+}
+
+async function findContactRequestById(
+  client: Queryable,
+  requestId: string,
+  options: {
+    readonly forUpdate?: boolean;
+  } = {}
+): Promise<ContactRequest | null> {
+  const result = await query<{ payload: unknown }>(
+    client,
+    `
+      SELECT payload
+      FROM need.contact_requests
+      WHERE id = $1
+      ${options.forUpdate ? "FOR UPDATE" : ""}
+    `,
+    [requestId]
+  );
+
+  return result.rows[0]?.payload as ContactRequest | undefined ?? null;
 }
 
 async function saveContactRequest(client: Queryable, request: ContactRequest): Promise<void> {
