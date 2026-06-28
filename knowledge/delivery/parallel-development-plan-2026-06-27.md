@@ -197,3 +197,20 @@ Next engineering item:
 
 1. `N4-01`: PostgreSQL migration/repository slice for `ContactRequest`, with
    optimistic versioning and runtime role without DDL permissions.
+
+## Progress update: 2026-06-28 / N4-01
+
+Completed:
+
+1. Added PostgreSQL migration `002_contact_request.sql` for
+   `need.contact_requests`.
+2. Added `PostgresContactRequestRepository` with save/read by `id`,
+   `idempotency_key` and `need_id`.
+3. Extended local DB smoke to persist and verify ContactRequest after
+   PostgreSQL restart.
+4. Ran PostgreSQL integration test with `CIFEDRA_DATABASE_URL` so the new test
+   executed against the local database.
+
+Next engineering item:
+
+1. `N4-02`: API/application service boundary for ContactRequest transitions.

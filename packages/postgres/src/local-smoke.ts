@@ -5,12 +5,18 @@ import { setTimeout as delay } from "node:timers/promises";
 import { Pool } from "pg";
 
 import {
+  buildRecommendedDecisions,
+  createContactRequestFromLatestDecision,
   createClarificationForNeed,
   createNeedFromSchema,
+  demoProfiles,
+  rankProfilesForNeed,
+  type ContactRequest,
   type VersionedNeed
 } from "@cifedra/core";
 
 import { getRuntimeDatabaseUrl, localPostgres } from "./config.js";
+import { PostgresContactRequestRepository } from "./contact-request-repository.js";
 import { PostgresNeedRepository } from "./need-repository.js";
 
 const now = new Date("2026-06-26T09:00:00.000Z");
@@ -19,6 +25,7 @@ export async function runLocalPostgresSmoke(): Promise<void> {
   await verifyRuntimeRoleCannotRunDdl();
 
   const created = await persistSyntheticAggregate();
+  const contact = await persistSyntheticContactRequest();
 
   if (process.env.CIFEDRA_DB_SKIP_RESTART !== "1") {
     restartLocalPostgres();
@@ -26,7 +33,10 @@ export async function runLocalPostgresSmoke(): Promise<void> {
   }
 
   await verifySyntheticAggregate(created.need.id, created.clarificationId);
-  console.log(`PostgreSQL repository smoke passed for Need ${created.need.id}.`);
+  await verifySyntheticContactRequest(contact.need.id, contact.contactRequestId);
+  console.log(
+    `PostgreSQL repository smoke passed for Need ${created.need.id} and ContactRequest ${contact.contactRequestId}.`
+  );
 }
 
 async function verifyRuntimeRoleCannotRunDdl(): Promise<void> {
@@ -45,6 +55,32 @@ async function verifyRuntimeRoleCannotRunDdl(): Promise<void> {
   }
 
   throw new Error("Runtime role unexpectedly created a table in schema need");
+}
+
+async function persistSyntheticContactRequest(): Promise<{
+  readonly need: VersionedNeed;
+  readonly contactRequestId: string;
+}> {
+  const need = createCompleteWorkNeed();
+  const contactRequest = createSyntheticContactRequest(need);
+  const pool = createRuntimePool();
+  const needRepository = new PostgresNeedRepository(pool);
+  const contactRequestRepository = new PostgresContactRequestRepository(pool);
+
+  try {
+    await needRepository.saveNeedAggregate({
+      need,
+      clarifications: []
+    });
+    await contactRequestRepository.saveContactRequest(contactRequest);
+  } finally {
+    await pool.end();
+  }
+
+  return {
+    need,
+    contactRequestId: contactRequest.id
+  };
 }
 
 async function persistSyntheticAggregate(): Promise<{
@@ -105,6 +141,33 @@ async function verifySyntheticAggregate(needId: string, clarificationId: string)
 
     if (!aggregate.clarifications.some((clarification) => clarification.id === clarificationId)) {
       throw new Error(`Clarification ${clarificationId} was not found after restart`);
+    }
+  } finally {
+    await pool.end();
+  }
+}
+
+async function verifySyntheticContactRequest(
+  needId: string,
+  contactRequestId: string
+): Promise<void> {
+  const pool = createRuntimePool();
+  const repository = new PostgresContactRequestRepository(pool);
+
+  try {
+    const contactRequest = await repository.findContactRequestById(contactRequestId);
+    const byNeed = await repository.listContactRequestsByNeedId(needId);
+
+    if (!contactRequest) {
+      throw new Error(`ContactRequest ${contactRequestId} was not found after PostgreSQL restart`);
+    }
+
+    if (contactRequest.status !== "requested") {
+      throw new Error(`Unexpected ContactRequest status after restart: ${contactRequest.status}`);
+    }
+
+    if (!byNeed.some((request) => request.id === contactRequestId)) {
+      throw new Error(`ContactRequest ${contactRequestId} was not listed by Need ${needId}`);
     }
   } finally {
     await pool.end();
@@ -192,6 +255,68 @@ function createIncompleteWorkNeed(): VersionedNeed {
       communicationLanguage: "en",
       preferredResultLanguage: "en",
       tags: ["synthetic", "repository", "smoke"]
+    },
+    now
+  );
+}
+
+function createCompleteWorkNeed(): VersionedNeed {
+  const answers = {
+    reviewType: "quick_review",
+    requesterRole: "analyst",
+    artifactType: "srs",
+    artifactStage: "pre_development",
+    documentAudience: ["business", "development", "testing"],
+    reviewGoal: "Check whether requirements are ready for implementation.",
+    systemContext: "Synthetic matching platform for Life, Work and Skills.",
+    expectedResult: "List of findings, risks and clarification questions.",
+    artifactSizeValue: 20,
+    artifactSizeUnit: "pages",
+    reviewFocus: "completeness",
+    desiredDeadline: "2026-06-27T10:00:00.000Z",
+    dataMode: "synthetic",
+    serviceFormat: "online"
+  };
+
+  return createNeedFromSchema(
+    {
+      ownerUserProfileId: "user_profile_owner",
+      schemaId: "work.srs-review",
+      schemaVersion: 1,
+      title: "Synthetic SRS review",
+      description: "Repository-owned synthetic ContactRequest persistence smoke input.",
+      answers,
+      originalContentLanguage: "en",
+      communicationLanguage: "en",
+      preferredResultLanguage: "en",
+      location: {
+        remoteAllowed: true
+      },
+      tags: ["synthetic", "repository", "contact-request", "srs", "review"]
+    },
+    now
+  );
+}
+
+function createSyntheticContactRequest(need: VersionedNeed): ContactRequest {
+  const matches = rankProfilesForNeed(need, demoProfiles, {
+    limit: 5,
+    minScore: 25
+  });
+  const firstMatch = matches[0];
+
+  if (!firstMatch) {
+    throw new Error(`No synthetic match found for Need ${need.id}`);
+  }
+
+  return createContactRequestFromLatestDecision(
+    {
+      need,
+      candidate: firstMatch,
+      decisions: buildRecommendedDecisions(need, matches, now),
+      actorUserProfileId: need.ownerUserProfileId,
+      idempotencyKey: `postgres-smoke-contact-${need.id}`,
+      expiresAt: new Date("2026-06-28T09:00:00.000Z")
     },
     now
   );

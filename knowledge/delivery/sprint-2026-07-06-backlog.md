@@ -28,7 +28,7 @@ Client Decision
 | N2-02 | 2 | Связать `requested_contact` decision with ContactRequest. | Codex | N2-01 | Client decision no longer implies provider acceptance. | done: [evidence](./contact-request-vertical-flow-evidence-2026-06-28.md) |
 | N3-01 | 3 | Добавить consent/disclosure baseline. | Codex | N1-01 | Contacts/exact address remain hidden without explicit consent state. | done: domain disclosure snapshot baseline |
 | N3-02 | 3 | Обновить local vertical flows with ContactRequest. | Codex | N2-01, N3-01 | Life/Work/Skills create ContactRequest after match and remain synthetic-only. | done: [evidence](./contact-request-vertical-flow-evidence-2026-06-28.md) |
-| N4-01 | 4 | Создать PostgreSQL migration/repository slice for ContactRequest. | Codex | N2-01 | ContactRequest persists with optimistic version and runtime role has no DDL. | planned |
+| N4-01 | 4 | Создать PostgreSQL migration/repository slice for ContactRequest. | Codex | N2-01 | ContactRequest persists with optimistic version and runtime role has no DDL. | done: [evidence](./contact-request-postgres-evidence-2026-06-28.md) |
 | N4-02 | 4 | Добавить API application service boundary for ContactRequest. | Codex | N4-01 | Versioned endpoint uses repository transaction, safe errors and auth context. | planned |
 | N5-01 | 5 | Подготовить OpenAPI/DTO draft for Core P0+ContactRequest. | Codex | N4-02 | API contract documented for future WEB/mobile clients. | planned |
 | N6-01 | 6 | Реализовать Engagement baseline. | Codex | N2-01 | planned/in_progress/completed/cancelled lifecycle tested. | planned |
