@@ -25,9 +25,9 @@ Client Decision
 | N1-01 | 1 | Уточнить ContactRequest SRS. | Codex | R0 | requested/accepted/declined/expired/cancelled states, actors and permissions described. | done: [SRS](../srs/core-p1-contact-request-consent.md), [evidence](./contact-request-srs-evidence-2026-06-26.md) |
 | N1-02 | 1 | Подтвердить combined Life splitting rule. | Владелец продукта | R0 | One Need vs linked Needs rule accepted for ContactRequest. | planned; provisional ask-before-split rule documented |
 | N2-01 | 2 | Реализовать `ContactRequest` aggregate in Core. | Codex | N1-01 | Unit tests cover client request, provider accept/decline, expiry and invalid actors. | done: [evidence](./contact-request-core-evidence-2026-06-26.md) |
-| N2-02 | 2 | Связать `requested_contact` decision with ContactRequest. | Codex | N2-01 | Client decision no longer implies provider acceptance. | planned; domain precondition implemented, vertical/API integration pending |
+| N2-02 | 2 | Связать `requested_contact` decision with ContactRequest. | Codex | N2-01 | Client decision no longer implies provider acceptance. | done: [evidence](./contact-request-vertical-flow-evidence-2026-06-28.md) |
 | N3-01 | 3 | Добавить consent/disclosure baseline. | Codex | N1-01 | Contacts/exact address remain hidden without explicit consent state. | done: domain disclosure snapshot baseline |
-| N3-02 | 3 | Обновить local vertical flows with ContactRequest. | Codex | N2-01, N3-01 | Life/Work/Skills create ContactRequest after match and remain synthetic-only. | planned |
+| N3-02 | 3 | Обновить local vertical flows with ContactRequest. | Codex | N2-01, N3-01 | Life/Work/Skills create ContactRequest after match and remain synthetic-only. | done: [evidence](./contact-request-vertical-flow-evidence-2026-06-28.md) |
 | N4-01 | 4 | Создать PostgreSQL migration/repository slice for ContactRequest. | Codex | N2-01 | ContactRequest persists with optimistic version and runtime role has no DDL. | planned |
 | N4-02 | 4 | Добавить API application service boundary for ContactRequest. | Codex | N4-01 | Versioned endpoint uses repository transaction, safe errors and auth context. | planned |
 | N5-01 | 5 | Подготовить OpenAPI/DTO draft for Core P0+ContactRequest. | Codex | N4-02 | API contract documented for future WEB/mobile clients. | planned |

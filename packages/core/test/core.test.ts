@@ -15,6 +15,7 @@ import {
   cancelContactRequest,
   createAuthUser,
   createContactRequest,
+  createContactRequestFromLatestDecision,
   createConversationDraft,
   createDraftNeed,
   createNeed,
@@ -677,6 +678,77 @@ test("creates a pending contact request without disclosing exact location", () =
   );
   assert.ok(request.disclosureSnapshot.hiddenFields.includes("location.latitude"));
   assert.ok(request.disclosureSnapshot.hiddenFields.includes("contact.email"));
+});
+
+test("creates contact request from latest requested contact decision", () => {
+  const need = markNeedMatched(
+    createNeed({
+      direction: "work",
+      categoryId: "work.expert-help",
+      title: "Нужно ревью SRS",
+      description: "Нужно проверить требования перед передачей в разработку.",
+      expectedResult: "Список замечаний и правок",
+      ownerUserProfileId: "client_profile_latest",
+      tags: ["srs", "requirements", "review"]
+    })
+  );
+  const [candidate] = rankProfilesForNeed(need, demoProfiles);
+  assert.ok(candidate);
+
+  const decisions = [
+    recordCandidateDecision(
+      {
+        needId: need.id,
+        profileId: candidate.profile.id,
+        decision: "saved",
+        matchScore: candidate.score
+      },
+      new Date("2026-06-13T10:00:00.000Z")
+    ),
+    recordCandidateDecision(
+      {
+        needId: need.id,
+        profileId: candidate.profile.id,
+        decision: "requested_contact",
+        matchScore: candidate.score
+      },
+      new Date("2026-06-13T10:05:00.000Z")
+    )
+  ];
+  const request = createContactRequestFromLatestDecision(
+    {
+      need,
+      candidate,
+      decisions,
+      actorUserProfileId: "client_profile_latest"
+    },
+    new Date("2026-06-13T10:06:00.000Z")
+  );
+
+  assert.equal(request.status, "requested");
+  assert.equal(request.decisionId, decisions[1]?.id);
+
+  const staleSavedOnly = decisions.slice(0, 1);
+  assert.throws(
+    () =>
+      createContactRequestFromLatestDecision({
+        need,
+        candidate,
+        decisions: staleSavedOnly,
+        actorUserProfileId: "client_profile_latest"
+      }),
+    /requested_contact/
+  );
+  assert.throws(
+    () =>
+      createContactRequestFromLatestDecision({
+        need,
+        candidate,
+        decisions: [],
+        actorUserProfileId: "client_profile_latest"
+      }),
+    /candidate decision/
+  );
 });
 
 test("moves contact request through provider and client terminal states", () => {

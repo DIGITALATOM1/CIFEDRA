@@ -309,16 +309,19 @@ test("reopens a blocker and preserves answer history while revoking readiness", 
     blocking: true,
     originalLanguage: "ru"
   });
-  const answered = applyClarificationAnswer({
-    need: created.need,
-    clarification: created.clarification,
-    actorUserProfileId: "user_profile_owner",
-    value: "Синтетическая платформа подбора исполнителей Life, Work и Skills.",
-    originalLanguage: "ru",
-    expectedNeedVersion: created.need.aggregateVersion,
-    expectedClarificationVersion: created.clarification.aggregateVersion,
-    relatedClarifications: [created.clarification]
-  });
+  const answered = applyClarificationAnswer(
+    {
+      need: created.need,
+      clarification: created.clarification,
+      actorUserProfileId: "user_profile_owner",
+      value: "Синтетическая платформа подбора исполнителей Life, Work и Skills.",
+      originalLanguage: "ru",
+      expectedNeedVersion: created.need.aggregateVersion,
+      expectedClarificationVersion: created.clarification.aggregateVersion,
+      relatedClarifications: [created.clarification]
+    },
+    now
+  );
 
   assert.equal(answered.need.status, "ready_for_match");
 
@@ -350,16 +353,19 @@ test("reopens a blocker and preserves answer history while revoking readiness", 
   assert.equal(reopened.clarification.status, "open");
   assert.equal(reopened.clarification.answerHistory.length, 1);
 
-  const answeredAgain = applyClarificationAnswer({
-    need: reopened.need,
-    clarification: reopened.clarification,
-    actorUserProfileId: "user_profile_owner",
-    value: "Синтетическая платформа CIFEDRA для направлений Life, Work и Skills.",
-    originalLanguage: "ru",
-    expectedNeedVersion: reopened.need.aggregateVersion,
-    expectedClarificationVersion: reopened.clarification.aggregateVersion,
-    relatedClarifications: [reopened.clarification]
-  });
+  const answeredAgain = applyClarificationAnswer(
+    {
+      need: reopened.need,
+      clarification: reopened.clarification,
+      actorUserProfileId: "user_profile_owner",
+      value: "Синтетическая платформа CIFEDRA для направлений Life, Work и Skills.",
+      originalLanguage: "ru",
+      expectedNeedVersion: reopened.need.aggregateVersion,
+      expectedClarificationVersion: reopened.clarification.aggregateVersion,
+      relatedClarifications: [reopened.clarification]
+    },
+    now
+  );
 
   assert.equal(answeredAgain.need.status, "ready_for_match");
   assert.equal(answeredAgain.clarification.answerHistory.length, 2);

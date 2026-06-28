@@ -72,6 +72,11 @@ export interface CreateContactRequestInput {
   readonly allowedDisclosureFields?: readonly string[];
 }
 
+export interface CreateContactRequestFromLatestDecisionInput
+  extends Omit<CreateContactRequestInput, "decision"> {
+  readonly decisions: readonly CandidateDecision[];
+}
+
 export class ContactRequestError extends Error {
   constructor(
     readonly code: string,
@@ -146,6 +151,32 @@ export function createContactRequest(
     createdAt: timestamp,
     updatedAt: timestamp
   };
+}
+
+export function createContactRequestFromLatestDecision(
+  input: CreateContactRequestFromLatestDecisionInput,
+  now: Date = new Date()
+): ContactRequest {
+  const decision = findLatestCandidateDecision(
+    input.need.id,
+    input.candidate.profile.id,
+    input.decisions
+  );
+
+  if (!decision) {
+    throw new ContactRequestError(
+      "CONTACT_REQUEST_DECISION_REQUIRED",
+      "Contact request requires candidate decision for selected profile"
+    );
+  }
+
+  return createContactRequest(
+    {
+      ...input,
+      decision
+    },
+    now
+  );
 }
 
 export function acceptContactRequest(
@@ -299,6 +330,26 @@ function validateCreateContactRequest(input: CreateContactRequestInput, now: Dat
       "Contact request expiry must be in the future"
     );
   }
+}
+
+function findLatestCandidateDecision(
+  needId: string,
+  profileId: string,
+  decisions: readonly CandidateDecision[]
+): CandidateDecision | undefined {
+  let latest: CandidateDecision | undefined;
+
+  for (const decision of decisions) {
+    if (decision.needId !== needId || decision.profileId !== profileId) {
+      continue;
+    }
+
+    if (!latest || decision.decidedAt >= latest.decidedAt) {
+      latest = decision;
+    }
+  }
+
+  return latest;
 }
 
 function assertProviderCanRespond(

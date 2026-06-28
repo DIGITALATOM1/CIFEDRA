@@ -179,3 +179,21 @@ Preferred outcome for the next session:
 3. PostgreSQL migration/repository slice is started or completed.
 4. Evidence and backlog are updated.
 5. All completed work is committed and pushed.
+
+## Progress update: 2026-06-28
+
+Completed:
+
+1. `N2-02`: `requested_contact` is connected to explicit ContactRequest
+   creation through `createContactRequestFromLatestDecision`.
+2. `N3-02`: Life/Work/Skills synthetic vertical flows now include
+   `candidateDecisions`, `contactRequest` and disclosure metrics.
+3. `/demo/match` returns `firstContactRequest` while preserving the existing
+   local conversation draft for handoff compatibility.
+4. Diagnostics and local smoke assertions now verify `ContactRequest` status and
+   hidden disclosure fields.
+
+Next engineering item:
+
+1. `N4-01`: PostgreSQL migration/repository slice for `ContactRequest`, with
+   optimistic versioning and runtime role without DDL permissions.

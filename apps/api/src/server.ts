@@ -18,6 +18,7 @@ import {
   buildMatchQualitySignal,
   buildRecommendedDecisions,
   buildShortlist,
+  createContactRequestFromLatestDecision,
   createConversationDraft,
   createNeed,
   demoNeedScenarios,
@@ -200,7 +201,10 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
   if (request.method === "POST" && url.pathname === "/demo/match") {
     const authContext = await requireAnyRole(request, ["client", "helper", "operator"]);
     const body = await readJsonObject<Partial<NeedInput>>(request);
-    const createdNeed = createNeed(normalizeDemoNeed(body));
+    const createdNeed = createNeed({
+      ...normalizeDemoNeed(body),
+      ownerUserProfileId: authContext.principal.id
+    });
     const matches = rankProfilesForNeed(createdNeed, demoProfiles, {
       limit: 5,
       minScore: 25
@@ -212,6 +216,17 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
     const firstDecision = matches[0]
       ? decisions.find((decision) => decision.profileId === matches[0]?.profile.id)
       : undefined;
+    const firstContactRequest =
+      matches[0] && firstDecision?.decision === "requested_contact"
+        ? createContactRequestFromLatestDecision({
+            need,
+            candidate: matches[0],
+            decisions,
+            actorUserProfileId: authContext.principal.id,
+            idempotencyKey: `demo-${need.id}-${matches[0].profile.id}-contact-request`,
+            expiresAt: new Date(Date.now() + 48 * 60 * 60 * 1000)
+          })
+        : null;
     const firstConversationDraft =
       matches[0] && firstBrief && firstDecision?.decision === "requested_contact"
         ? createConversationDraft({
@@ -227,6 +242,7 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
       matches,
       decisions,
       shortlist,
+      firstContactRequest,
       firstBrief,
       firstConversationDraft,
       integrationWorkflow: buildIntegrationWorkflow(need, matches[0], firstBrief),

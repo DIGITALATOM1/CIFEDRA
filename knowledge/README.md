@@ -34,6 +34,7 @@
 | [delivery/sprint-r0-evidence-review-2026-06-26.md](./delivery/sprint-r0-evidence-review-2026-06-26.md) | R0 evidence review and gate decision по Core P0 local increment. |
 | [delivery/contact-request-srs-evidence-2026-06-26.md](./delivery/contact-request-srs-evidence-2026-06-26.md) | Evidence по `ContactRequest` SRS and consent/disclosure baseline. |
 | [delivery/contact-request-core-evidence-2026-06-26.md](./delivery/contact-request-core-evidence-2026-06-26.md) | Evidence по Core implementation of `ContactRequest` aggregate. |
+| [delivery/contact-request-vertical-flow-evidence-2026-06-28.md](./delivery/contact-request-vertical-flow-evidence-2026-06-28.md) | Evidence по связке `requested_contact`, ContactRequest and Life / Work / Skills vertical flows. |
 | [delivery/sprint-2026-07-06-backlog.md](./delivery/sprint-2026-07-06-backlog.md) | Proposed backlog следующего спринта после R0. |
 | [delivery/parallel-development-plan-2026-06-27.md](./delivery/parallel-development-plan-2026-06-27.md) | Parallel development plan while product owner reviews product strategy draft. |
 | [delivery/decision-log.md](./delivery/decision-log.md) | Реестр продуктовых и delivery-решений. |

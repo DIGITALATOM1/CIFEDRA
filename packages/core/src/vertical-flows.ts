@@ -4,7 +4,12 @@ import {
   type Clarification,
   type ClarificationReason
 } from "./clarification.js";
-import type { DirectionId, MatchCandidate, NeedInput } from "./domain.js";
+import {
+  createContactRequestFromLatestDecision,
+  type ContactRequest
+} from "./contact-request.js";
+import { buildRecommendedDecisions } from "./decisions.js";
+import type { CandidateDecision, DirectionId, MatchCandidate, NeedInput } from "./domain.js";
 import { demoProfiles } from "./fixtures.js";
 import { createLocalIdentityRef, type IdentityRef } from "./identity.js";
 import { createNeedFromSchema, type VersionedNeed } from "./intake.js";
@@ -55,6 +60,8 @@ export interface SyntheticVerticalFlowResult {
   readonly clarification: Clarification;
   readonly answeredNeed: VersionedNeed;
   readonly matches: readonly MatchCandidate[];
+  readonly candidateDecisions: readonly CandidateDecision[];
+  readonly contactRequest?: ContactRequest;
   readonly metrics: {
     readonly missingBefore: readonly string[];
     readonly invalidBefore: readonly string[];
@@ -62,6 +69,10 @@ export interface SyntheticVerticalFlowResult {
     readonly firstMatchProfileId?: string;
     readonly firstMatchScore?: number;
     readonly firstMatchAction?: string;
+    readonly firstDecision?: string;
+    readonly contactRequestStatus?: string;
+    readonly disclosureHiddenFieldCount?: number;
+    readonly contactRequestExpiresAt?: string;
   };
 }
 
@@ -311,6 +322,23 @@ export function runSyntheticVerticalFlow(
     minScore: 25
   });
   const firstMatch = matches[0];
+  const candidateDecisions = buildRecommendedDecisions(answered.need, matches, now);
+  const contactRequest = firstMatch
+    ? createContactRequestFromLatestDecision(
+        {
+          need: answered.need,
+          candidate: firstMatch,
+          decisions: candidateDecisions,
+          actorUserProfileId: userProfile.id,
+          idempotencyKey: `synthetic-${definition.id}-contact-request`,
+          expiresAt: new Date(now.getTime() + 48 * 60 * 60 * 1000)
+        },
+        now
+      )
+    : undefined;
+  const firstDecision = firstMatch
+    ? candidateDecisions.find((decision) => decision.profileId === firstMatch.profile.id)
+    : undefined;
 
   return {
     id: definition.id,
@@ -323,13 +351,19 @@ export function runSyntheticVerticalFlow(
     clarification: answered.clarification,
     answeredNeed: answered.need,
     matches,
+    candidateDecisions,
+    contactRequest,
     metrics: {
       missingBefore: initialNeed.completeness.missingFieldIds,
       invalidBefore: initialNeed.completeness.invalidFieldIds,
       readyForMatch: answered.need.status === "ready_for_match",
       firstMatchProfileId: firstMatch?.profile.id,
       firstMatchScore: firstMatch?.score,
-      firstMatchAction: firstMatch?.recommendedAction
+      firstMatchAction: firstMatch?.recommendedAction,
+      firstDecision: firstDecision?.decision,
+      contactRequestStatus: contactRequest?.status,
+      disclosureHiddenFieldCount: contactRequest?.disclosureSnapshot.hiddenFields.length,
+      contactRequestExpiresAt: contactRequest?.expiresAt
     }
   };
 }

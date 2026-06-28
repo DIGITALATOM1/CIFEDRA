@@ -202,9 +202,32 @@ async function checkVerticalFlows() {
       flow.matches?.[0]?.recommendedAction === "request_contact",
       `${flow.title}: expected request_contact recommendation`
     );
+    assert(
+      flow.contactRequest?.status === "requested",
+      `${flow.title}: expected ContactRequest requested state`
+    );
+    assert(
+      flow.metrics?.firstDecision === "requested_contact",
+      `${flow.title}: expected requested_contact decision metric`
+    );
+    assert(
+      flow.metrics?.contactRequestStatus === "requested",
+      `${flow.title}: expected contactRequestStatus metric`
+    );
+    assert(
+      flow.contactRequest?.disclosureSnapshot?.hiddenFields?.includes("contact.email"),
+      `${flow.title}: expected contact email to remain hidden`
+    );
+    assert(
+      !Object.hasOwn(
+        flow.contactRequest?.disclosureSnapshot?.publicBrief?.serviceRegion ?? {},
+        "latitude"
+      ),
+      `${flow.title}: exact latitude leaked into ContactRequest public brief`
+    );
 
     console.log(
-      `${flow.title}: vertical flow ready, ${flow.matches[0].profile.id}, score ${flow.matches[0].score}`
+      `${flow.title}: vertical flow ready, ${flow.matches[0].profile.id}, score ${flow.matches[0].score}, contact ${flow.contactRequest.status}`
     );
   }
 }
@@ -244,6 +267,18 @@ async function checkScenario(scenario) {
   assert(
     body.firstConversationDraft?.state === "draft",
     `${scenario.title}: expected conversation draft`
+  );
+  assert(
+    body.firstContactRequest?.status === "requested",
+    `${scenario.title}: expected ContactRequest requested state`
+  );
+  assert(
+    body.firstContactRequest?.decisionId === body.decisions?.[0]?.id,
+    `${scenario.title}: expected ContactRequest to reference first decision`
+  );
+  assert(
+    body.firstContactRequest?.disclosureSnapshot?.hiddenFields?.includes("contact.email"),
+    `${scenario.title}: expected ContactRequest disclosure to hide contact email`
   );
   assert(
     body.firstConversationDraft?.decisionId === body.decisions?.[0]?.id,

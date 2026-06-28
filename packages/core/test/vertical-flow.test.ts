@@ -33,8 +33,24 @@ test("runs Life, Work and Skills through Identity -> Intake -> Clarification -> 
     assert.equal(flow.answeredNeed.status, "ready_for_match");
     assert.equal(flow.answeredNeed.completeness.complete, true);
     assert.equal(flow.matches[0]?.profile.id, flow.expectedProfileId);
+    assert.equal(flow.candidateDecisions[0]?.decision, "requested_contact");
+    assert.equal(flow.contactRequest?.status, "requested");
+    assert.equal(flow.contactRequest?.needId, flow.answeredNeed.id);
+    assert.equal(flow.contactRequest?.decisionId, flow.candidateDecisions[0]?.id);
+    assert.equal(flow.contactRequest?.providerProfileId, flow.expectedProfileId);
+    assert.equal(flow.contactRequest?.clientUserProfileId, flow.userProfile.id);
+    assert.equal(
+      Object.hasOwn(
+        flow.contactRequest?.disclosureSnapshot.publicBrief.serviceRegion ?? {},
+        "latitude"
+      ),
+      false
+    );
     assert.equal(flow.metrics.firstMatchProfileId, flow.expectedProfileId);
     assert.equal(flow.metrics.readyForMatch, true);
     assert.equal(flow.metrics.firstMatchAction, "request_contact");
+    assert.equal(flow.metrics.firstDecision, "requested_contact");
+    assert.equal(flow.metrics.contactRequestStatus, "requested");
+    assert.ok((flow.metrics.disclosureHiddenFieldCount ?? 0) > 0);
   }
 });

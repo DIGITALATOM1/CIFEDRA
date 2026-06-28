@@ -161,8 +161,10 @@ function renderVerticalFlows(flows) {
 
   elements.verticalFlowStatus.innerHTML = flows.map((flow) => {
     const firstMatch = flow.matches?.[0];
+    const contactRequest = flow.contactRequest;
     const ready = flow.answeredNeed?.status === "ready_for_match" &&
-      flow.clarification?.status === "resolved";
+      flow.clarification?.status === "resolved" &&
+      contactRequest?.status === "requested";
 
     return `
       <article class="integration-card">
@@ -177,11 +179,16 @@ function renderVerticalFlows(flows) {
           <span class="pill">Initial: ${escapeHtml(flow.initialNeed?.status)}</span>
           <span class="pill">After answer: ${escapeHtml(flow.answeredNeed?.status)}</span>
           <span class="pill">Clarification: ${escapeHtml(flow.clarification?.status)}</span>
+          <span class="pill">ContactRequest: ${escapeHtml(contactRequest?.status ?? "none")}</span>
         </div>
         <p>
           Match: ${escapeHtml(firstMatch?.profile?.id ?? "none")}
           · score ${escapeHtml(firstMatch?.score ?? "n/a")}
           · ${escapeHtml(firstMatch?.recommendedAction ?? "n/a")}
+        </p>
+        <p>
+          Disclosure: ${escapeHtml(contactRequest?.disclosureSnapshot?.hiddenFields?.length ?? 0)}
+          hidden fields, public region only.
         </p>
       </article>
     `;

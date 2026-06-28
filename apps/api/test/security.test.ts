@@ -157,12 +157,35 @@ test("secures local registration, demo mutations, CORS and integration writes", 
       answeredNeed: { status: string };
       clarification: { status: string };
       matches: Array<{ profile: { id: string }; recommendedAction: string }>;
+      contactRequest: {
+        status: string;
+        disclosureSnapshot: {
+          hiddenFields: string[];
+          publicBrief: {
+            serviceRegion?: Record<string, unknown>;
+          };
+        };
+      };
+      metrics: {
+        firstDecision?: string;
+        contactRequestStatus?: string;
+        disclosureHiddenFieldCount?: number;
+      };
       expectedProfileId: string;
     }>) {
       assert.equal(flow.answeredNeed.status, "ready_for_match");
       assert.equal(flow.clarification.status, "resolved");
       assert.equal(flow.matches[0]?.profile.id, flow.expectedProfileId);
       assert.equal(flow.matches[0]?.recommendedAction, "request_contact");
+      assert.equal(flow.contactRequest.status, "requested");
+      assert.equal(flow.metrics.firstDecision, "requested_contact");
+      assert.equal(flow.metrics.contactRequestStatus, "requested");
+      assert.ok((flow.metrics.disclosureHiddenFieldCount ?? 0) > 0);
+      assert.equal(
+        Object.hasOwn(flow.contactRequest.disclosureSnapshot.publicBrief.serviceRegion ?? {}, "latitude"),
+        false
+      );
+      assert.ok(flow.contactRequest.disclosureSnapshot.hiddenFields.includes("contact.email"));
     }
 
     const matchResponse = await postJson(
@@ -179,6 +202,9 @@ test("secures local registration, demo mutations, CORS and integration writes", 
     );
     assert.equal(matchResponse.status, 200);
     const matchBody = await matchResponse.json();
+    assert.equal(matchBody.firstContactRequest.status, "requested");
+    assert.equal(matchBody.firstContactRequest.decisionId, matchBody.decisions[0].id);
+    assert.ok(matchBody.firstContactRequest.disclosureSnapshot.hiddenFields.includes("contact.email"));
 
     const handoffResponse = await postJson(
       `${baseUrl}/demo/handoff`,
