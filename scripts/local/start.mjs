@@ -74,6 +74,7 @@ const pids = {
     pid: web.pid,
     url: `http://localhost:${webPort}/web/landing/`,
     appUrl: `http://localhost:${webPort}/web/app/`,
+    matchingUrl: `http://localhost:${webPort}/web/app/matching.html`,
     log: ".local/logs/web.log"
   },
   startedAt: new Date().toISOString()
@@ -84,11 +85,13 @@ writeFileSync(pidFile, `${JSON.stringify(pids, null, 2)}\n`);
 await waitForHttp(`http://localhost:${apiPort}/health`, "API");
 await waitForHttp(`http://localhost:${webPort}/web/landing/`, "Web");
 await waitForHttp(`http://localhost:${webPort}/web/app/`, "App");
+await waitForHttp(`http://localhost:${webPort}/web/app/matching.html`, "Matching");
 
 console.log("CIFEDRA local environment is running:");
 console.log(`- API: ${pids.api.url}`);
 console.log(`- Landing: ${pids.web.url}`);
 console.log(`- Alliance Board: ${pids.web.appUrl}`);
+console.log(`- Matching Board: ${pids.web.matchingUrl}`);
 console.log("- Logs: .local/logs/");
 if (localIntegrationEnv.files.length > 0) {
   console.log(`- Loaded integration env: ${localIntegrationEnv.files.join(", ")}`);

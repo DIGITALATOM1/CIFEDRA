@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CIFEDRA Connect - Matching Board</title>
+    <link rel="icon" href="../../brand/cifedra/logo-mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../../brand/cifedra/tokens.css">
+    <link rel="stylesheet" href="./matching.css">
+  </head>
+  <body>
+    <header class="board-header">
+      <a class="brand-link" href="../landing/" aria-label="CIFEDRA Connect">
+        <img src="../../brand/cifedra/logo-cifedra-primary.svg" alt="CIFEDRA Connect">
+      </a>
+      <nav class="board-nav" aria-label="Рабочие страницы">
+        <a href="./">Alliance Board</a>
+        <a class="active" href="./matching.html">Matching Kanban</a>
+        <a href="../landing/">Лендинг</a>
+      </nav>
+      <div class="mode-chip">
+        <span>Prototype</span>
+        <strong>Client view</strong>
+      </div>
+    </header>
+
+    <main>
+      <section class="board-hero" aria-labelledby="board-title">
+        <div>
+          <p class="eyebrow">AI Matching Kanban</p>
+          <h1 id="board-title">От запроса до первого контакта в одной доске.</h1>
+          <p>
+            Отдельная страница матчинга показывает, где находится каждый `Ally Request`,
+            какие союзники предложены, почему они релевантны и какой следующий шаг нужен.
+          </p>
+        </div>
+        <aside class="summary-panel" aria-label="Сводка матчинга">
+          <div>
+            <span>Open requests</span>
+            <strong id="open-count">6</strong>
+          </div>
+          <div>
+            <span>Proposed allies</span>
+            <strong id="ally-count">4</strong>
+          </div>
+          <div>
+            <span>Needs action</span>
+            <strong id="action-count">3</strong>
+          </div>
+        </aside>
+      </section>
+
+      <section class="control-row" aria-label="Фильтры доски">
+        <div class="segment-control" role="tablist" aria-label="Направления">
+          <button class="segment active" type="button" data-filter="all">Все</button>
+          <button class="segment" type="button" data-filter="life">Life</button>
+          <button class="segment" type="button" data-filter="work">Work</button>
+          <button class="segment" type="button" data-filter="skills">Skills</button>
+        </div>
+        <div class="legend" aria-label="Легенда">
+          <span><b class="dot exact"></b>точный матч</span>
+          <span><b class="dot risk"></b>есть риск</span>
+          <span><b class="dot saved"></b>сохраненный запрос</span>
+        </div>
+      </section>
+
+      <section class="kanban-shell" aria-label="Kanban матчинга">
+        <div class="kanban-board" id="matching-board"></div>
+      </section>
+
+      <aside class="inspector" id="inspector" aria-live="polite">
+        <div>
+          <p class="eyebrow compact">Selected card</p>
+          <h2 id="inspector-title">Ревью SRS перед разработкой</h2>
+          <p id="inspector-copy">
+            Выберите карточку на доске, чтобы увидеть критерии, причины матча,
+            риски и рекомендуемое первое действие.
+          </p>
+        </div>
+        <div class="inspector-grid" id="inspector-grid"></div>
+      </aside>
+    </main>
+
+    <script type="module" src="./matching.js"></script>
+  </body>
+</html>

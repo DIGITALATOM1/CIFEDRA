@@ -256,6 +256,12 @@ h2 {
   font-weight: 900;
 }
 
+.board-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .request-list,
 .match-list,
 .criteria-grid,

@@ -12,10 +12,18 @@
 - двигает процесс через `Intro`, `Agreement`, `Active Alliance`, `Result`;
 - видит состояние запросов и союзов на `Alliance Board`.
 
+## Страницы
+
+| Страница | Назначение |
+| --- | --- |
+| `index.html` | Общий `Alliance Board`: запрос, предложенные союзники, процесс и состояние союзов. |
+| `matching.html` | Отдельная kanban-доска матчинга: `Ally Request -> Clarification -> AI Matching -> Proposed Allies -> Contact Request -> Intro`. |
+
 ## Локальный просмотр
 
 ```text
 http://localhost:4177/web/app/
+http://localhost:4177/web/app/matching.html
 ```
 
 Запуск из корня проекта:

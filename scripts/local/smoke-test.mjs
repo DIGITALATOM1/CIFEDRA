@@ -8,6 +8,7 @@ let authUser = null;
 await checkHealth();
 await checkLanding();
 await checkAllianceBoard();
+await checkMatchingBoard();
 await checkTestConsole();
 await checkAuth();
 await checkSecurityBaseline();
@@ -54,6 +55,22 @@ async function checkAllianceBoard() {
   assert(html.includes("Alliance Board"), "Alliance Board title text not found");
   assert(html.includes("AI Matching"), "AI Matching section not found");
   assert(html.includes("Запрос на союзника"), "Ally Request section not found");
+}
+
+async function checkMatchingBoard() {
+  const response = await fetch("http://localhost:4177/web/app/matching.html");
+
+  assert(response.ok, `Matching Board failed with ${response.status}`);
+
+  const html = await response.text();
+  assert(html.includes("AI Matching Kanban"), "Matching Board hero text not found");
+  assert(html.includes("matching.js"), "Matching Board script not found");
+
+  const scriptResponse = await fetch("http://localhost:4177/web/app/matching.js");
+  assert(scriptResponse.ok, `Matching Board script failed with ${scriptResponse.status}`);
+
+  const script = await scriptResponse.text();
+  assert(script.includes("Contact Request"), "Contact Request column not found");
 }
 
 async function checkTestConsole() {

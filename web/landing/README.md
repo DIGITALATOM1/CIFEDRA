@@ -17,6 +17,7 @@
 | Страница | URL |
 | --- | --- |
 | Alliance Board prototype | `../app/` |
+| Matching Kanban prototype | `../app/matching.html` |
 
 ## Текущие ссылки приложений
 
@@ -49,4 +50,5 @@ http://localhost:4177/web/landing/
 
 ```text
 http://localhost:4177/web/app/
+http://localhost:4177/web/app/matching.html
 ```
