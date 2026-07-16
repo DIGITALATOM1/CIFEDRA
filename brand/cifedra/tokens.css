@@ -4,12 +4,18 @@
   --cifedra-slate: #4A515C;
   --cifedra-paper: #F7F1E3;
   --cifedra-white: #FFFFFF;
+  --cifedra-surface: #F6F8F8;
+  --cifedra-border: rgba(17, 19, 24, 0.1);
   --cifedra-teal: #10B7A6;
   --cifedra-lime: #B8E986;
   --cifedra-brass: #C7A663;
   --cifedra-life: #58C7B6;
   --cifedra-work: #6C8CFF;
   --cifedra-skills: #D7B45A;
+  --cifedra-info: #9EB7FF;
+  --cifedra-warning: #E7C86A;
+  --cifedra-success: #7BD88F;
+  --cifedra-danger: #EF857D;
 
   --cifedra-font-ui: "Manrope", "Inter", "Segoe UI", Arial, sans-serif;
   --cifedra-radius-sm: 8px;

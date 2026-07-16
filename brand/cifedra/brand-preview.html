@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CIFEDRA CONNECT Brand Preview</title>
+    <link rel="icon" href="./logo-mark.svg" type="image/svg+xml">
     <link rel="stylesheet" href="./tokens.css">
     <style>
       * {
@@ -25,8 +26,9 @@
 
       .hero {
         display: grid;
-        grid-template-columns: 1fr;
-        gap: 24px;
+        grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+        align-items: center;
+        gap: 36px;
         padding: 44px 56px;
         background: var(--cifedra-ink);
         color: var(--cifedra-paper);
@@ -54,6 +56,112 @@
         color: #d9e5dc;
         font-size: 18px;
         line-height: 1.5;
+      }
+
+      .mission {
+        margin: 0 0 12px;
+        color: var(--cifedra-teal);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 24px;
+      }
+
+      .hero-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        padding: 0 12px;
+        border: 1px solid rgba(247, 241, 227, 0.18);
+        border-radius: 999px;
+        color: #d9e5dc;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .request-panel {
+        padding: 22px;
+        background: var(--cifedra-paper);
+        color: var(--cifedra-ink);
+        border-radius: var(--cifedra-radius-md);
+      }
+
+      .panel-label {
+        margin: 0 0 14px;
+        color: var(--cifedra-slate);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 1.1px;
+        text-transform: uppercase;
+      }
+
+      .prompt-box {
+        min-height: 112px;
+        padding: 16px;
+        border: 1px solid var(--cifedra-border);
+        border-radius: var(--cifedra-radius-sm);
+        background: var(--cifedra-white);
+        color: var(--cifedra-graphite);
+        line-height: 1.45;
+      }
+
+      .field-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin: 14px 0;
+      }
+
+      .field-chip {
+        padding: 11px 12px;
+        border: 1px solid var(--cifedra-border);
+        border-radius: var(--cifedra-radius-sm);
+        background: var(--cifedra-white);
+      }
+
+      .field-chip span {
+        display: block;
+        color: var(--cifedra-slate);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .field-chip strong {
+        display: block;
+        margin-top: 4px;
+        font-size: 14px;
+      }
+
+      .button-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .button {
+        min-height: 42px;
+        padding: 0 16px;
+        border: 0;
+        border-radius: var(--cifedra-radius-sm);
+        font: inherit;
+        font-weight: 800;
+      }
+
+      .button.primary {
+        background: var(--cifedra-teal);
+        color: var(--cifedra-ink);
+      }
+
+      .button.secondary {
+        background: var(--cifedra-ink);
+        color: var(--cifedra-paper);
       }
 
       .section {
@@ -204,6 +312,208 @@
         font-size: 15px;
       }
 
+      .component-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .component {
+        padding: 22px;
+        background: var(--cifedra-surface);
+        border: 1px solid rgba(17, 19, 24, 0.08);
+        border-radius: var(--cifedra-radius-sm);
+      }
+
+      .component.wide {
+        grid-column: 1 / -1;
+      }
+
+      .component-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .component-header h3 {
+        margin: 0;
+        font-size: 22px;
+      }
+
+      .component-header p {
+        margin: 6px 0 0;
+        color: var(--cifedra-slate);
+        line-height: 1.45;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: var(--cifedra-info);
+        color: var(--cifedra-ink);
+        font-size: 12px;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .tag {
+        padding: 7px 10px;
+        border-radius: 999px;
+        background: var(--cifedra-white);
+        border: 1px solid var(--cifedra-border);
+        color: var(--cifedra-graphite);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .match-card {
+        display: grid;
+        gap: 14px;
+        padding: 16px;
+        border-radius: var(--cifedra-radius-sm);
+        background: var(--cifedra-white);
+        border: 1px solid var(--cifedra-border);
+      }
+
+      .ally-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .avatar {
+        display: grid;
+        place-items: center;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: var(--cifedra-ink);
+        color: var(--cifedra-paper);
+        font-weight: 800;
+      }
+
+      .ally-head h4 {
+        margin: 0;
+        font-size: 17px;
+      }
+
+      .ally-head p {
+        margin: 3px 0 0;
+        color: var(--cifedra-slate);
+        font-size: 14px;
+      }
+
+      .score {
+        display: grid;
+        place-items: center;
+        width: 58px;
+        height: 58px;
+        margin-left: auto;
+        border-radius: 50%;
+        background: var(--cifedra-lime);
+        color: var(--cifedra-ink);
+        font-weight: 900;
+      }
+
+      .reason-list {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .reason-list li {
+        padding-left: 14px;
+        border-left: 3px solid var(--cifedra-teal);
+        color: var(--cifedra-graphite);
+        line-height: 1.4;
+      }
+
+      .board-preview {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .board-column {
+        min-height: 188px;
+        padding: 14px;
+        background: var(--cifedra-white);
+        border: 1px solid var(--cifedra-border);
+        border-radius: var(--cifedra-radius-sm);
+      }
+
+      .board-column h4 {
+        margin: 0 0 12px;
+        font-size: 14px;
+      }
+
+      .board-item {
+        padding: 12px;
+        border-radius: var(--cifedra-radius-sm);
+        background: var(--cifedra-surface);
+        color: var(--cifedra-graphite);
+        font-size: 14px;
+        line-height: 1.35;
+      }
+
+      .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .metric {
+        padding: 16px;
+        border-radius: var(--cifedra-radius-sm);
+        background: var(--cifedra-white);
+        border: 1px solid var(--cifedra-border);
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 26px;
+      }
+
+      .metric span {
+        display: block;
+        margin-top: 4px;
+        color: var(--cifedra-slate);
+        font-size: 13px;
+        line-height: 1.3;
+      }
+
+      .empty-state {
+        padding: 18px;
+        border-radius: var(--cifedra-radius-sm);
+        background: #fff8de;
+        border: 1px solid rgba(199, 166, 99, 0.4);
+      }
+
+      .empty-state h4 {
+        margin: 0 0 8px;
+        font-size: 18px;
+      }
+
+      .empty-state p {
+        margin: 0;
+        color: var(--cifedra-graphite);
+        line-height: 1.45;
+      }
+
       .journey {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -247,17 +557,71 @@
           padding-top: 24px;
         }
 
+        .hero {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+
         .hero,
         .section {
           padding: 24px;
         }
 
+        .hero img {
+          width: min(280px, 100%);
+        }
+
+        .hero h1 {
+          font-size: 29px;
+        }
+
+        .mission {
+          color: #d9e5dc;
+          font-size: 13px;
+          line-height: 1.35;
+          letter-spacing: 0;
+          text-transform: none;
+        }
+
+        .hero-actions {
+          display: none;
+        }
+
+        .request-panel {
+          padding: 16px;
+        }
+
+        .prompt-box {
+          min-height: 0;
+          max-height: none;
+          overflow: visible;
+        }
+
         .hero p {
-          font-size: 17px;
+          font-size: 15.5px;
+        }
+
+        .request-panel .field-grid {
+          display: none;
         }
 
         .product-lines {
           grid-template-columns: 1fr;
+        }
+
+        .field-grid,
+        .component-grid,
+        .board-preview,
+        .metric-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .component-header {
+          display: block;
+        }
+
+        .component-header .status {
+          margin-top: 12px;
         }
       }
     </style>
@@ -265,9 +629,32 @@
   <body>
     <main>
       <section class="hero">
-        <img src="./logo-cifedra-inverted.svg" alt="CIFEDRA CONNECT logo">
-        <h1>CIFEDRA CONNECT: навигатор полезных людей.</h1>
-        <p>Помогает найти нужного человека для задачи, подготовить разговор и довести контакт до результата: для жизни, работы и развития навыков.</p>
+        <div class="hero-copy">
+          <img src="./logo-cifedra-inverted.svg" alt="CIFEDRA CONNECT logo">
+          <p class="mission">Сообщество естественного интеллекта, навыков и взаимной помощи</p>
+          <h1>CIFEDRA CONNECT: AI Matchmaker for human allies.</h1>
+          <p>Помогает найти человеческого союзника для жизни, работы и навыков, договориться и довести союз до результата.</p>
+          <div class="hero-actions" aria-label="Product pillars">
+            <span class="hero-pill">Ally Request</span>
+            <span class="hero-pill">AI Matching</span>
+            <span class="hero-pill">Alliance Board</span>
+            <span class="hero-pill">Verified Help</span>
+          </div>
+        </div>
+
+        <aside class="request-panel" aria-label="Ally Request preview">
+          <p class="panel-label">Ally Request</p>
+          <div class="prompt-box">Нужен союзник для mock interview и плана подготовки на 2 недели.</div>
+          <div class="field-grid">
+            <div class="field-chip"><span>Direction</span><strong>Skills</strong></div>
+            <div class="field-chip"><span>Format</span><strong>Online</strong></div>
+            <div class="field-chip"><span>Goal</span><strong>Result plan</strong></div>
+          </div>
+          <div class="button-row">
+            <button class="button primary" type="button">Запустить matching</button>
+            <button class="button secondary" type="button">Сохранить запрос</button>
+          </div>
+        </aside>
       </section>
 
       <section class="section">
@@ -276,7 +663,7 @@
           <article class="line-card">
             <span class="line-badge" style="background:var(--cifedra-life)">Life</span>
             <h3>CIFEDRA Life</h3>
-            <p class="line-summary">Люди для жизни, дома и локальной помощи.</p>
+            <p class="line-summary">Союзники для жизни, дома и локальной помощи.</p>
             <ul class="category-list">
               <li><strong>Home Help</strong>Помощь по дому</li>
               <li><strong>Local Tasks</strong>Поручения рядом</li>
@@ -289,7 +676,7 @@
           <article class="line-card">
             <span class="line-badge" style="background:var(--cifedra-work)">Work</span>
             <h3>CIFEDRA Work</h3>
-            <p class="line-summary">Люди для работы, бизнеса, проектов и сделок.</p>
+            <p class="line-summary">Союзники для работы, бизнеса, проектов и сделок.</p>
             <ul class="category-list">
               <li><strong>Expert Help</strong>Экспертная помощь</li>
               <li><strong>Task Execution</strong>Исполнение задач</li>
@@ -302,7 +689,7 @@
           <article class="line-card">
             <span class="line-badge" style="background:var(--cifedra-skills)">Skills</span>
             <h3>CIFEDRA Skills</h3>
-            <p class="line-summary">Люди для обучения, развития и обмена опытом.</p>
+            <p class="line-summary">Союзники для обучения, развития и обмена опытом.</p>
             <ul class="category-list">
               <li><strong>Mentors</strong>Менторы</li>
               <li><strong>Learning Help</strong>Обучение</li>
@@ -310,6 +697,116 @@
               <li><strong>Practice Partners</strong>Практика</li>
               <li><strong>Skill Exchange</strong>Обмен навыками</li>
             </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Компоненты продукта</h2>
+        <div class="component-grid">
+          <article class="component">
+            <div class="component-header">
+              <div>
+                <h3>Ally Request Composer</h3>
+                <p>Форма, которая переводит ситуацию пользователя в структурированный запрос на союзника.</p>
+              </div>
+              <span class="status">Input</span>
+            </div>
+            <div class="prompt-box">Мне нужно быстро найти человека, который знает B2B-продажи в Telegram и поможет проверить оффер.</div>
+            <div class="tag-row">
+              <span class="tag">Work</span>
+              <span class="tag">Expert Help</span>
+              <span class="tag">Online</span>
+              <span class="tag">Сегодня</span>
+            </div>
+          </article>
+
+          <article class="component">
+            <div class="component-header">
+              <div>
+                <h3>Proposed Ally Card</h3>
+                <p>Карточка объясняет, почему человек подходит, где риски и какой первый контакт лучше.</p>
+              </div>
+              <span class="status" style="background:var(--cifedra-lime)">Match 92%</span>
+            </div>
+            <div class="match-card">
+              <div class="ally-head">
+                <div class="avatar">AK</div>
+                <div>
+                  <h4>Алексей К.</h4>
+                  <p>B2B sales mentor, 18 verified helps</p>
+                </div>
+                <div class="score">92</div>
+              </div>
+              <ul class="reason-list">
+                <li>Похожий опыт: запускал партнерские продажи для SaaS.</li>
+                <li>Доступен сегодня, формат online, язык RU/EN.</li>
+                <li>Риск: нужен четкий brief до первой встречи.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="component wide">
+            <div class="component-header">
+              <div>
+                <h3>Alliance Board</h3>
+                <p>Рабочая доска запросов и союзов: видно, где нужен следующий шаг, договоренность или подтверждение результата.</p>
+              </div>
+              <span class="status" style="background:var(--cifedra-info)">Workflow</span>
+            </div>
+            <div class="board-preview">
+              <div class="board-column">
+                <h4>Ally Request</h4>
+                <div class="board-item">Найти наставника по системной аналитике</div>
+              </div>
+              <div class="board-column">
+                <h4>AI Matching</h4>
+                <div class="board-item">3 союзника, 1 требует уточнения бюджета</div>
+              </div>
+              <div class="board-column">
+                <h4>Agreement</h4>
+                <div class="board-item">Mock interview, 60 минут, итоговый план</div>
+              </div>
+              <div class="board-column">
+                <h4>Result</h4>
+                <div class="board-item">Результат подтвержден, референс доступен</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="component">
+            <div class="component-header">
+              <div>
+                <h3>Trust Snapshot</h3>
+                <p>Доверие строится на подтвержденной помощи, а не на самопрезентации профиля.</p>
+              </div>
+              <span class="status" style="background:var(--cifedra-success)">Verified</span>
+            </div>
+            <div class="metric-grid">
+              <div class="metric"><strong>18</strong><span>verified helps</span></div>
+              <div class="metric"><strong>83%</strong><span>repeat requests</span></div>
+              <div class="metric"><strong>4</strong><span>available references</span></div>
+              <div class="metric"><strong>3</strong><span>directions</span></div>
+            </div>
+          </article>
+
+          <article class="component">
+            <div class="component-header">
+              <div>
+                <h3>No Exact Match</h3>
+                <p>Если точного матча нет, пользователь не попадает в тупик.</p>
+              </div>
+              <span class="status" style="background:var(--cifedra-warning)">Fallback</span>
+            </div>
+            <div class="empty-state">
+              <h4>Точного матча пока нет</h4>
+              <p>Сохраните запрос на союзника, расширьте критерии или сделайте запрос открытым для отклика союзников.</p>
+              <div class="tag-row">
+                <span class="tag">Сохранить</span>
+                <span class="tag">Расширить критерии</span>
+                <span class="tag">Открытый запрос</span>
+              </div>
+            </div>
           </article>
         </div>
       </section>
@@ -325,27 +822,27 @@
       </section>
 
       <section class="section">
-        <h2>Маршрут контакта</h2>
+        <h2>Маршрут союза</h2>
         <div class="journey">
           <article class="step">
             <strong>1</strong>
-            <h3>Задача</h3>
-            <p>Понять, какой человек нужен и для какого результата.</p>
+            <h3>Ally Request</h3>
+            <p>Описать ситуацию, критерии и ожидаемый результат.</p>
           </article>
           <article class="step">
             <strong>2</strong>
-            <h3>Человек</h3>
-            <p>Найти релевантный контакт и увидеть контекст.</p>
+            <h3>AI Matching</h3>
+            <p>Получить объяснимый shortlist союзников.</p>
           </article>
           <article class="step">
             <strong>3</strong>
-            <h3>Разговор</h3>
-            <p>Подготовить цель, тезисы, вопросы и следующий шаг.</p>
+            <h3>Agreement</h3>
+            <p>Зафиксировать условия, формат и следующий шаг.</p>
           </article>
           <article class="step">
             <strong>4</strong>
             <h3>Результат</h3>
-            <p>Зафиксировать итог контакта и движение задачи.</p>
+            <p>Подтвердить итог союза и собрать референс.</p>
           </article>
         </div>
       </section>
@@ -373,12 +870,12 @@
             <p>Ручная петля сохраняет энергию референса: движение, путь, контактный маршрут.</p>
           </article>
           <article>
-            <h3>Полезные люди</h3>
-            <p>Акцентная траектория показывает поиск человека, подготовку разговора и результат.</p>
+            <h3>Human Allies</h3>
+            <p>Акцентная траектория показывает запрос, матчинг, договоренность и результат союза.</p>
           </article>
           <article>
             <h3>Рабочий интерфейс</h3>
-            <p>Палитра и типографика рассчитаны на карты контактов, подготовку встреч и трекинг итогов.</p>
+            <p>Палитра и типографика рассчитаны на карты союзников, Alliance Board и трекинг результатов.</p>
           </article>
         </div>
       </section>
