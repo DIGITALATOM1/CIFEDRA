@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CIFEDRA Connect - Alliance Board</title>
+    <link rel="icon" href="../../brand/cifedra/logo-mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../../brand/cifedra/tokens.css">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <a class="brand-link" href="../landing/" aria-label="CIFEDRA Connect">
+        <img src="../../brand/cifedra/logo-cifedra-primary.svg" alt="CIFEDRA Connect">
+      </a>
+      <nav class="app-nav" aria-label="Рабочие разделы">
+        <a href="#request">Запрос</a>
+        <a href="#matching">Матчинг</a>
+        <a href="#process">Процесс</a>
+      </nav>
+      <div class="user-chip">
+        <span>Client</span>
+        <strong>Игорь</strong>
+      </div>
+    </header>
+
+    <main>
+      <section class="workspace-hero" aria-labelledby="workspace-title">
+        <div>
+          <p class="eyebrow">Alliance Board</p>
+          <h1 id="workspace-title">Рабочая страница пользователя: запрос, матчинг, союз.</h1>
+          <p>
+            Здесь пользователь ведет путь от `Ally Request` до `Active Alliance`:
+            видит предложенных союзников, объяснение матча, безопасный контакт,
+            договоренность и следующий шаг.
+          </p>
+        </div>
+        <aside class="plan-card">
+          <span>Active alliances</span>
+          <strong id="active-count">2 / 5</strong>
+          <p>Лимит активных союзов станет частью будущей монетизации.</p>
+        </aside>
+      </section>
+
+      <section class="workspace-grid">
+        <aside class="side-panel" aria-labelledby="requests-title">
+          <div class="panel-heading">
+            <p class="eyebrow compact">Requests</p>
+            <h2 id="requests-title">Запросы</h2>
+          </div>
+          <div class="direction-tabs" role="tablist" aria-label="Направления">
+            <button class="direction-tab active" type="button" data-direction="work">Work</button>
+            <button class="direction-tab" type="button" data-direction="life">Life</button>
+            <button class="direction-tab" type="button" data-direction="skills">Skills</button>
+          </div>
+          <div class="request-list" id="request-list"></div>
+        </aside>
+
+        <section class="request-panel" id="request" aria-labelledby="request-title">
+          <div class="panel-heading split">
+            <div>
+              <p class="eyebrow compact">Ally Request</p>
+              <h2 id="request-title">Запрос на союзника</h2>
+            </div>
+            <span class="status-pill" id="request-status">Matching</span>
+          </div>
+
+          <div class="request-form">
+            <label>
+              Что нужно сделать
+              <textarea id="request-description" rows="5"></textarea>
+            </label>
+            <div class="field-grid">
+              <label>
+                Формат
+                <select id="request-format">
+                  <option>online</option>
+                  <option>offline</option>
+                  <option>hybrid</option>
+                </select>
+              </label>
+              <label>
+                Язык
+                <select id="request-language">
+                  <option>ru</option>
+                  <option>en</option>
+                </select>
+              </label>
+              <label>
+                Срочность
+                <select id="request-urgency">
+                  <option>this_week</option>
+                  <option>scheduled</option>
+                  <option>flexible</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="criteria-grid" id="criteria-grid"></div>
+        </section>
+
+        <section class="matching-panel" id="matching" aria-labelledby="matching-title">
+          <div class="panel-heading split">
+            <div>
+              <p class="eyebrow compact">AI Matching</p>
+              <h2 id="matching-title">Предложенные союзники</h2>
+            </div>
+            <button class="ghost-button" id="rematch-button" type="button">Обновить матч</button>
+          </div>
+          <div class="match-list" id="match-list"></div>
+        </section>
+
+        <section class="process-panel" id="process" aria-labelledby="process-title">
+          <div class="panel-heading">
+            <p class="eyebrow compact">Alliance Process</p>
+            <h2 id="process-title">Процесс союза</h2>
+          </div>
+
+          <div class="process-steps" id="process-steps"></div>
+
+          <div class="next-step">
+            <span>Следующий шаг</span>
+            <strong id="next-step-title">Подготовить intro</strong>
+            <p id="next-step-copy">CONNECT соберет цель, контекст, вопросы и безопасное первое сообщение.</p>
+            <button class="primary-button" id="advance-button" type="button">Продвинуть процесс</button>
+          </div>
+        </section>
+      </section>
+
+      <section class="board-section" aria-labelledby="board-title">
+        <div class="panel-heading split">
+          <div>
+            <p class="eyebrow compact">Board</p>
+            <h2 id="board-title">Состояние запросов и союзов</h2>
+          </div>
+          <a class="ghost-link" href="../landing/">Вернуться на лендинг</a>
+        </div>
+        <div class="kanban-board" id="kanban-board"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

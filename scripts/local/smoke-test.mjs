@@ -7,6 +7,7 @@ let authUser = null;
 
 await checkHealth();
 await checkLanding();
+await checkAllianceBoard();
 await checkTestConsole();
 await checkAuth();
 await checkSecurityBaseline();
@@ -39,9 +40,20 @@ async function checkLanding() {
   assert(response.ok, `Landing failed with ${response.status}`);
 
   const html = await response.text();
-  assert(html.includes("Навигатор полезных людей"), "Landing title text not found");
+  assert(html.includes("Не ищите. Получайте точный матч."), "Landing title text not found");
   assert(html.includes("assets/qr-ios.svg"), "iOS QR reference not found");
   assert(html.includes("assets/qr-android.svg"), "Android QR reference not found");
+}
+
+async function checkAllianceBoard() {
+  const response = await fetch("http://localhost:4177/web/app/");
+
+  assert(response.ok, `Alliance Board failed with ${response.status}`);
+
+  const html = await response.text();
+  assert(html.includes("Alliance Board"), "Alliance Board title text not found");
+  assert(html.includes("AI Matching"), "AI Matching section not found");
+  assert(html.includes("Запрос на союзника"), "Ally Request section not found");
 }
 
 async function checkTestConsole() {

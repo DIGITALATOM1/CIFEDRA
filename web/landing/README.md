@@ -1,7 +1,7 @@
 # CIFEDRA CONNECT Landing
 
-Статический лендинг продукта со ссылкой на клиентский WEB и QR-кодами
-мобильных приложений.
+Статический лендинг продукта со ссылкой на клиентский WEB, локальный
+`Alliance Board` prototype и QR-кодами мобильных приложений.
 
 ## Файлы
 
@@ -12,13 +12,20 @@
 | `assets/qr-ios.svg` | QR-код для iOS-ссылки. |
 | `assets/qr-android.svg` | QR-код для Android-ссылки. |
 
+Связанная пользовательская страница:
+
+| Страница | URL |
+| --- | --- |
+| Alliance Board prototype | `../app/` |
+
 ## Текущие ссылки приложений
 
 Пока реальные ссылки App Store и Google Play не опубликованы, QR-коды ведут на redirect-URL:
 
 | Платформа | URL |
 | --- | --- |
-| WEB | `https://app.cifedra.app` |
+| WEB production placeholder | `https://app.cifedra.app` |
+| WEB local prototype | `http://localhost:4177/web/app/` |
 | iOS | `https://cifedra.app/ios` |
 | Android | `https://cifedra.app/android` |
 
@@ -36,4 +43,10 @@ python3 -m http.server 4177
 
 ```text
 http://localhost:4177/web/landing/
+```
+
+Пользовательская рабочая страница:
+
+```text
+http://localhost:4177/web/app/
 ```
