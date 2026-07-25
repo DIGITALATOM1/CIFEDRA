@@ -8,11 +8,12 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm -w @cifedra/core run build && npm -w @cifedra/postgres run build && npm -w @cifedra/api run build",
-    "typecheck": "npm -w @cifedra/core run typecheck && npm -w @cifedra/core run build && npm -w @cifedra/postgres run typecheck && npm -w @cifedra/postgres run build && npm -w @cifedra/api run typecheck",
+    "build": "npm -w @cifedra/core run build && npm -w @cifedra/postgres run build && npm -w @cifedra/api run build && npm -w @cifedra/web run build",
+    "typecheck": "npm -w @cifedra/core run typecheck && npm -w @cifedra/core run build && npm -w @cifedra/postgres run typecheck && npm -w @cifedra/postgres run build && npm -w @cifedra/api run typecheck && npm -w @cifedra/web run typecheck",
     "test": "npm -w @cifedra/core run test && npm -w @cifedra/core run build && npm -w @cifedra/postgres run test && npm -w @cifedra/postgres run build && npm -w @cifedra/api run test",
     "docs:check": "node scripts/quality/check-doc-links.mjs",
     "dev:api": "npm -w @cifedra/api run dev",
+    "dev:web": "npm -w @cifedra/web run dev",
     "local:start": "node scripts/local/start.mjs",
     "local:stop": "node scripts/local/stop.mjs",
     "local:restart": "npm run local:stop && npm run local:start",

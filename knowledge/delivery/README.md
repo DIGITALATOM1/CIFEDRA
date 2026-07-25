@@ -19,6 +19,7 @@ Delivery-документы не заменяют:
 - [ContactRequest Vertical Flow evidence: 2026-06-28](./contact-request-vertical-flow-evidence-2026-06-28.md);
 - [ContactRequest PostgreSQL evidence: 2026-06-28](./contact-request-postgres-evidence-2026-06-28.md);
 - [ContactRequest API Boundary evidence: 2026-06-28](./contact-request-api-boundary-evidence-2026-06-28.md);
+- [API Contract Draft evidence: 2026-07-26](./api-contract-draft-evidence-2026-07-26.md);
 - [Parallel development plan: 2026-06-27](./parallel-development-plan-2026-06-27.md);
 - [Next sprint backlog: 2026-07-06 - 2026-07-17](./sprint-2026-07-06-backlog.md);
 - [Decision log](./decision-log.md);
@@ -36,4 +37,5 @@ Delivery-документы не заменяют:
 - [ContactRequest Core evidence: 2026-06-26](./contact-request-core-evidence-2026-06-26.md);
 - [ContactRequest Vertical Flow evidence: 2026-06-28](./contact-request-vertical-flow-evidence-2026-06-28.md);
 - [ContactRequest PostgreSQL evidence: 2026-06-28](./contact-request-postgres-evidence-2026-06-28.md);
-- [ContactRequest API Boundary evidence: 2026-06-28](./contact-request-api-boundary-evidence-2026-06-28.md).
+- [ContactRequest API Boundary evidence: 2026-06-28](./contact-request-api-boundary-evidence-2026-06-28.md);
+- [API Contract Draft evidence: 2026-07-26](./api-contract-draft-evidence-2026-07-26.md).

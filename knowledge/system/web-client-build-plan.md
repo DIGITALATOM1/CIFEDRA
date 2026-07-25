@@ -1,7 +1,7 @@
 # CIFEDRA CONNECT: план клиентского WEB-приложения
 
-Дата: 2026-06-20
-Статус: web client strategy v0.1
+Дата: 2026-07-26
+Статус: web client strategy v0.2 + local MVP started
 
 ## Решение
 
@@ -27,7 +27,7 @@ Need -> Clarify -> Match -> Decide -> Connect -> Execute -> Result
 | Приложение | Назначение |
 | --- | --- |
 | `web/landing` | Публичная информация о продукте, ссылки на WEB, iOS и Android. |
-| `apps/web` | Клиентское приложение для заказчиков, помощников, экспертов и менторов. |
+| `apps/web` | Клиентское приложение для заказчиков, помощников, экспертов и менторов. Local MVP started: React/Vite screen for auth, pilot scenarios, matching kanban and messenger preview. |
 | `apps/ops` | Будущий отдельный интерфейс операторов, модераторов и администраторов. |
 | `web/test-console` | Только локальная инженерная диагностика, не production UI. |
 
@@ -84,6 +84,22 @@ Need -> Clarify -> Match -> Decide -> Connect -> Execute -> Result
 | Execution | Engagement/booking/task status без показа внутреннего Plane UI. |
 | Result | Outcome, proof/artifact, feedback и follow-up. |
 | Notifications | In-app notification center; email/push providers подключаются backend. |
+
+## Local MVP increment 2026-07-26
+
+Создан `apps/web` как первый рабочий WEB MVP поверх локального API.
+
+| Screen area | Current behavior |
+| --- | --- |
+| Auth | Local register/login через `/auth/register` and `/auth/login`; token хранится in memory. |
+| Scenario | Выбор пилотных сценариев `Life / Work / Skills`. |
+| Matching | Запуск `/demo/match` и отображение `Need`, `MatchCandidate`, `Shortlist`, `ContactRequest`, `ConversationBrief`. |
+| Kanban | Клиентский pipeline `Ally Request -> AI Matching -> Proposed Allies -> Contact Request -> Messenger -> Result`. |
+| Messenger | Target preview для `direct_product_chat`: имя клиента и описание запроса/работы без прямых контактов и точного адреса. |
+
+Следующий increment: вынести `/demo/match` в стабильные `/api/v1` endpoints,
+добавить persisted Need/Profile/Engagement и заменить preview чата на
+message persistence.
 
 ## Responsive UX
 

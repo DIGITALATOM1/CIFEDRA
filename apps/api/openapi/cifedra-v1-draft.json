@@ -1,0 +1,1978 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "CIFEDRA API",
+    "version": "0.1.0-draft",
+    "summary": "Draft API contract for CIFEDRA Core, WEB and mobile clients.",
+    "description": "N5-01 draft contract for the local prototype. Current paths reflect the implemented local API; public /api/v1 path promotion is a later stabilization step."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3030",
+      "description": "Local API prototype"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "Catalog"
+    },
+    {
+      "name": "Matching"
+    },
+    {
+      "name": "ContactRequest"
+    },
+    {
+      "name": "Integrations"
+    }
+  ],
+  "x-cifedra-contract": {
+    "status": "draft",
+    "sprintItem": "N5-01",
+    "updatedAt": "2026-07-26",
+    "currentLocalNamespace": "demo",
+    "plannedStableNamespace": "api/v1",
+    "productDefaults": {
+      "contactRequestExpiresInHours": 48,
+      "firstWorkArtifactFormat": "markdown",
+      "firstContactChannel": "direct_product_chat",
+      "preAcceptDisclosure": [
+        "client display name",
+        "work/request description"
+      ]
+    }
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Catalog"
+        ],
+        "summary": "Health check",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Service is available",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/status": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Local auth status",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Auth store status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register local client user",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthRegistrationInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Session created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthSessionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Create local auth session",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthLoginInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Session created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthSessionResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Current authenticated principal",
+        "responses": {
+          "200": {
+            "description": "Authenticated user context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthMeResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Revoke current local session",
+        "responses": {
+          "200": {
+            "description": "Logout result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "revoked"
+                  ],
+                  "properties": {
+                    "revoked": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/directions": {
+      "get": {
+        "tags": [
+          "Catalog"
+        ],
+        "summary": "List Life, Work and Skills directions",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Direction catalog",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "directions"
+                  ],
+                  "properties": {
+                    "directions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DirectionDefinition"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/demo/scenarios": {
+      "get": {
+        "tags": [
+          "Matching"
+        ],
+        "summary": "Synthetic demo scenarios for local UAT",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Synthetic Need scenarios",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "scenarios"
+                  ],
+                  "properties": {
+                    "scenarios": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/NeedInput"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/demo/vertical-flows": {
+      "get": {
+        "tags": [
+          "Matching"
+        ],
+        "summary": "Run synthetic Life, Work and Skills vertical flows",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Synthetic vertical flow evidence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "flows"
+                  ],
+                  "properties": {
+                    "flows": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/demo/match": {
+      "post": {
+        "tags": [
+          "Matching"
+        ],
+        "summary": "Create synthetic Need and return matching board data",
+        "description": "Primary local endpoint for the Matching Kanban prototype. It returns Need, matches, decisions, shortlist, first ContactRequest, conversation brief and draft.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NeedInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Matching result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DemoMatchResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/demo/contact-requests/{requestId}/accept": {
+      "post": {
+        "tags": [
+          "ContactRequest"
+        ],
+        "summary": "Provider accepts contact request",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ContactRequestTransition"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ContactRequestTransition"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/demo/contact-requests/{requestId}/decline": {
+      "post": {
+        "tags": [
+          "ContactRequest"
+        ],
+        "summary": "Provider declines contact request",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ContactRequestTransition"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ContactRequestTransition"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/demo/contact-requests/{requestId}/cancel": {
+      "post": {
+        "tags": [
+          "ContactRequest"
+        ],
+        "summary": "Client cancels contact request",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ContactRequestTransition"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ContactRequestTransition"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/demo/contact-requests/{requestId}/expire": {
+      "post": {
+        "tags": [
+          "ContactRequest"
+        ],
+        "summary": "Operator/admin expires contact request",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ContactRequestTransition"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ContactRequestTransition"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/demo/handoff": {
+      "post": {
+        "tags": [
+          "Integrations"
+        ],
+        "summary": "Create Plane/Chatwoot handoff draft",
+        "description": "Adapter boundary for local integration tests. Product clients should not expose Plane or Chatwoot UI.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Handoff result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/demo/result": {
+      "post": {
+        "tags": [
+          "Matching"
+        ],
+        "summary": "Record synthetic contact result",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DemoResultRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Result and match quality signal",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "need",
+                    "conversation",
+                    "result",
+                    "qualitySignal"
+                  ],
+                  "properties": {
+                    "need": {
+                      "$ref": "#/components/schemas/Need"
+                    },
+                    "conversation": {
+                      "$ref": "#/components/schemas/Conversation"
+                    },
+                    "result": {
+                      "$ref": "#/components/schemas/ContactResult"
+                    },
+                    "qualitySignal": {
+                      "$ref": "#/components/schemas/MatchQualitySignal"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrations/status": {
+      "get": {
+        "tags": [
+          "Integrations"
+        ],
+        "summary": "Local integration adapter status",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Integration status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "parameters": {
+      "RequestId": {
+        "name": "requestId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "requestBodies": {
+      "ContactRequestTransition": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ContactRequestTransitionRequest"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "Error": {
+        "description": "Error response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "ContactRequestTransition": {
+        "description": "Versioned ContactRequest transition result",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ContactRequestTransitionResponse"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "HealthResponse": {
+        "type": "object",
+        "required": [
+          "status",
+          "service",
+          "timestamp"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ok"
+          },
+          "service": {
+            "type": "string",
+            "const": "cifedra-api"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AuthRole": {
+        "type": "string",
+        "enum": [
+          "client",
+          "helper",
+          "operator",
+          "admin"
+        ]
+      },
+      "AuthRegistrationInput": {
+        "type": "object",
+        "required": [
+          "email",
+          "displayName",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "displayName": {
+            "type": "string",
+            "minLength": 2
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8,
+            "writeOnly": true
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuthRole"
+            },
+            "default": [
+              "client"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthLoginInput": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "writeOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IdentityRef": {
+        "type": "object",
+        "required": [
+          "id",
+          "issuer",
+          "subject",
+          "source"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "issuer": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        }
+      },
+      "AuthPrincipal": {
+        "type": "object",
+        "required": [
+          "id",
+          "identityRef",
+          "email",
+          "displayName",
+          "roles"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "identityRef": {
+            "$ref": "#/components/schemas/IdentityRef"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuthRole"
+            }
+          }
+        }
+      },
+      "IntegrationIdentity": {
+        "type": "object",
+        "required": [
+          "provider",
+          "identityRef",
+          "principal",
+          "claims"
+        ],
+        "properties": {
+          "provider": {
+            "type": "string",
+            "const": "cifedra"
+          },
+          "identityRef": {
+            "$ref": "#/components/schemas/IdentityRef"
+          },
+          "principal": {
+            "$ref": "#/components/schemas/AuthPrincipal"
+          },
+          "claims": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "AuthSessionResponse": {
+        "type": "object",
+        "required": [
+          "token",
+          "expiresAt",
+          "user",
+          "identityRef",
+          "integrationIdentity"
+        ],
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "user": {
+            "$ref": "#/components/schemas/AuthPrincipal"
+          },
+          "identityRef": {
+            "$ref": "#/components/schemas/IdentityRef"
+          },
+          "integrationIdentity": {
+            "$ref": "#/components/schemas/IntegrationIdentity"
+          }
+        }
+      },
+      "AuthMeResponse": {
+        "type": "object",
+        "required": [
+          "user",
+          "identityRef",
+          "integrationIdentity"
+        ],
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/AuthPrincipal"
+          },
+          "identityRef": {
+            "$ref": "#/components/schemas/IdentityRef"
+          },
+          "integrationIdentity": {
+            "$ref": "#/components/schemas/IntegrationIdentity"
+          }
+        }
+      },
+      "AuthStatus": {
+        "type": "object",
+        "required": [
+          "provider",
+          "mode",
+          "storePath",
+          "userCount",
+          "activeSessionCount",
+          "integrationPolicy"
+        ],
+        "properties": {
+          "provider": {
+            "type": "string",
+            "const": "cifedra"
+          },
+          "mode": {
+            "type": "string",
+            "const": "local-file"
+          },
+          "storePath": {
+            "type": "string"
+          },
+          "userCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "activeSessionCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "integrationPolicy": {
+            "type": "string"
+          }
+        }
+      },
+      "DirectionId": {
+        "type": "string",
+        "enum": [
+          "life",
+          "work",
+          "skills"
+        ]
+      },
+      "CategoryDefinition": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "summary"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          }
+        }
+      },
+      "DirectionDefinition": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "summary",
+          "categories"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/DirectionId"
+          },
+          "title": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CategoryDefinition"
+            }
+          }
+        }
+      },
+      "Location": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string"
+          },
+          "district": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number"
+          },
+          "longitude": {
+            "type": "number"
+          },
+          "remoteAllowed": {
+            "type": "boolean"
+          }
+        }
+      },
+      "NeedInput": {
+        "type": "object",
+        "required": [
+          "direction",
+          "categoryId",
+          "title",
+          "description",
+          "expectedResult"
+        ],
+        "properties": {
+          "direction": {
+            "$ref": "#/components/schemas/DirectionId"
+          },
+          "categoryId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "expectedResult": {
+            "type": "string"
+          },
+          "ownerUserProfileId": {
+            "type": "string"
+          },
+          "schemaId": {
+            "type": "string"
+          },
+          "schemaVersion": {
+            "type": "integer"
+          },
+          "originalContentLanguage": {
+            "type": "string"
+          },
+          "communicationLanguage": {
+            "type": "string"
+          },
+          "preferredResultLanguage": {
+            "type": "string"
+          },
+          "answers": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "context": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "location": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "low",
+              "normal",
+              "high",
+              "urgent"
+            ]
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "matching": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "Need": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NeedInput"
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "status",
+              "priority",
+              "tags",
+              "constraints",
+              "createdAt",
+              "updatedAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "draft",
+                  "needs_clarification",
+                  "ready_for_match",
+                  "matched",
+                  "connected",
+                  "resolved"
+                ]
+              },
+              "priority": {
+                "type": "string"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "constraints": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        ]
+      },
+      "TrustSignal": {
+        "type": "object",
+        "required": [
+          "type",
+          "label",
+          "verified"
+        ],
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "verified": {
+            "type": "boolean"
+          },
+          "verifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Profile": {
+        "type": "object",
+        "required": [
+          "id",
+          "displayName",
+          "role",
+          "summary",
+          "directions",
+          "categoryIds",
+          "capabilities",
+          "availability",
+          "trustSignals"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "directions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DirectionId"
+            }
+          },
+          "categoryIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "availability": {
+            "type": "string",
+            "enum": [
+              "available",
+              "limited",
+              "unavailable"
+            ]
+          },
+          "location": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "trustSignals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TrustSignal"
+            }
+          },
+          "matching": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "MatchScoreBreakdown": {
+        "type": "object",
+        "required": [
+          "direction",
+          "category",
+          "capabilities",
+          "location",
+          "availability",
+          "trust",
+          "directionSpecific",
+          "total"
+        ],
+        "properties": {
+          "direction": {
+            "type": "number"
+          },
+          "category": {
+            "type": "number"
+          },
+          "capabilities": {
+            "type": "number"
+          },
+          "location": {
+            "type": "number"
+          },
+          "availability": {
+            "type": "number"
+          },
+          "trust": {
+            "type": "number"
+          },
+          "directionSpecific": {
+            "type": "number"
+          },
+          "total": {
+            "type": "number"
+          }
+        }
+      },
+      "MatchExplanation": {
+        "type": "object",
+        "required": [
+          "reasons",
+          "risks",
+          "matchedCategories",
+          "matchedCapabilities",
+          "scoreBreakdown"
+        ],
+        "properties": {
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "risks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "matchedCategories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "matchedCapabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "scoreBreakdown": {
+            "$ref": "#/components/schemas/MatchScoreBreakdown"
+          }
+        }
+      },
+      "MatchCandidate": {
+        "type": "object",
+        "required": [
+          "profile",
+          "score",
+          "recommendedAction",
+          "explanation"
+        ],
+        "properties": {
+          "profile": {
+            "$ref": "#/components/schemas/Profile"
+          },
+          "score": {
+            "type": "number"
+          },
+          "recommendedAction": {
+            "type": "string",
+            "enum": [
+              "request_contact",
+              "shortlist",
+              "review_manually",
+              "skip"
+            ]
+          },
+          "explanation": {
+            "$ref": "#/components/schemas/MatchExplanation"
+          }
+        }
+      },
+      "CandidateDecision": {
+        "type": "object",
+        "required": [
+          "id",
+          "needId",
+          "profileId",
+          "decision",
+          "decidedAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "needId": {
+            "type": "string"
+          },
+          "profileId": {
+            "type": "string"
+          },
+          "decision": {
+            "type": "string",
+            "enum": [
+              "viewed",
+              "saved",
+              "rejected",
+              "requested_contact"
+            ]
+          },
+          "matchScore": {
+            "type": "number"
+          },
+          "note": {
+            "type": "string"
+          },
+          "decidedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Shortlist": {
+        "type": "object",
+        "required": [
+          "id",
+          "needId",
+          "items",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "needId": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ConversationBrief": {
+        "type": "object",
+        "required": [
+          "needId",
+          "profileId",
+          "goal",
+          "context",
+          "questions",
+          "risks",
+          "nextStep"
+        ],
+        "properties": {
+          "needId": {
+            "type": "string"
+          },
+          "profileId": {
+            "type": "string"
+          },
+          "goal": {
+            "type": "string"
+          },
+          "context": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "risks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "nextStep": {
+            "type": "string"
+          }
+        }
+      },
+      "Conversation": {
+        "type": "object",
+        "required": [
+          "id",
+          "needId",
+          "profileId",
+          "decisionId",
+          "channel",
+          "state",
+          "goal",
+          "context",
+          "questions",
+          "risks",
+          "firstMessage",
+          "createdAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "needId": {
+            "type": "string"
+          },
+          "profileId": {
+            "type": "string"
+          },
+          "decisionId": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "string",
+            "enum": [
+              "chatwoot_concierge",
+              "direct_product_chat"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "opened",
+              "assigned",
+              "waiting_user",
+              "waiting_operator",
+              "resolved",
+              "failed"
+            ]
+          },
+          "goal": {
+            "type": "string"
+          },
+          "context": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "risks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "firstMessage": {
+            "type": "string"
+          },
+          "externalRef": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ContactRequestStatus": {
+        "type": "string",
+        "enum": [
+          "requested",
+          "accepted",
+          "declined",
+          "expired",
+          "cancelled"
+        ]
+      },
+      "ContactRequestPublicBrief": {
+        "type": "object",
+        "required": [
+          "direction",
+          "categoryId",
+          "title",
+          "expectedResult"
+        ],
+        "properties": {
+          "direction": {
+            "$ref": "#/components/schemas/DirectionId"
+          },
+          "categoryId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "expectedResult": {
+            "type": "string"
+          },
+          "serviceRegion": {
+            "type": "object",
+            "properties": {
+              "city": {
+                "type": "string"
+              },
+              "district": {
+                "type": "string"
+              },
+              "remoteAllowed": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": false
+          },
+          "serviceVariants": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "preferredTimeWindow": {
+            "type": "string"
+          },
+          "originalContentLanguage": {
+            "type": "string"
+          },
+          "communicationLanguage": {
+            "type": "string"
+          },
+          "preferredResultLanguage": {
+            "type": "string"
+          }
+        }
+      },
+      "ContactRequestDisclosureSnapshot": {
+        "type": "object",
+        "required": [
+          "policyVersion",
+          "publicBrief",
+          "hiddenFields"
+        ],
+        "properties": {
+          "policyVersion": {
+            "type": "string"
+          },
+          "publicBrief": {
+            "$ref": "#/components/schemas/ContactRequestPublicBrief"
+          },
+          "hiddenFields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ContactRequestConsentSnapshot": {
+        "type": "object",
+        "required": [
+          "purpose",
+          "version",
+          "grantedByUserProfileId",
+          "grantedAt",
+          "allowedDisclosureFields"
+        ],
+        "properties": {
+          "purpose": {
+            "type": "string",
+            "const": "provider_pre_accept_brief"
+          },
+          "version": {
+            "type": "string"
+          },
+          "grantedByUserProfileId": {
+            "type": "string"
+          },
+          "grantedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "allowedDisclosureFields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ContactRequest": {
+        "type": "object",
+        "required": [
+          "id",
+          "needId",
+          "profileId",
+          "decisionId",
+          "clientUserProfileId",
+          "providerProfileId",
+          "status",
+          "disclosureSnapshot",
+          "consentSnapshot",
+          "requestedAt",
+          "aggregateVersion",
+          "createdAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "needId": {
+            "type": "string"
+          },
+          "profileId": {
+            "type": "string"
+          },
+          "decisionId": {
+            "type": "string"
+          },
+          "clientUserProfileId": {
+            "type": "string"
+          },
+          "providerProfileId": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ContactRequestStatus"
+          },
+          "disclosureSnapshot": {
+            "$ref": "#/components/schemas/ContactRequestDisclosureSnapshot"
+          },
+          "consentSnapshot": {
+            "$ref": "#/components/schemas/ContactRequestConsentSnapshot"
+          },
+          "idempotencyKey": {
+            "type": "string"
+          },
+          "requestedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "respondedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "cancelledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "declineReason": {
+            "type": "string"
+          },
+          "aggregateVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ContactRequestTransitionRequest": {
+        "type": "object",
+        "required": [
+          "expectedAggregateVersion"
+        ],
+        "properties": {
+          "expectedAggregateVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContactRequestTransitionResponse": {
+        "type": "object",
+        "required": [
+          "contactRequest",
+          "audit"
+        ],
+        "properties": {
+          "contactRequest": {
+            "$ref": "#/components/schemas/ContactRequest"
+          },
+          "audit": {
+            "type": "object",
+            "required": [
+              "actorUserId",
+              "action",
+              "resourceId",
+              "expectedAggregateVersion",
+              "resultingAggregateVersion",
+              "occurredAt"
+            ],
+            "properties": {
+              "actorUserId": {
+                "type": "string"
+              },
+              "action": {
+                "type": "string",
+                "enum": [
+                  "accept",
+                  "decline",
+                  "cancel",
+                  "expire"
+                ]
+              },
+              "resourceId": {
+                "type": "string"
+              },
+              "expectedAggregateVersion": {
+                "type": "integer"
+              },
+              "resultingAggregateVersion": {
+                "type": "integer"
+              },
+              "occurredAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        }
+      },
+      "DemoMatchResponse": {
+        "type": "object",
+        "required": [
+          "need",
+          "matches",
+          "decisions",
+          "shortlist",
+          "firstContactRequest",
+          "firstBrief",
+          "firstConversationDraft",
+          "integrationWorkflow",
+          "actor"
+        ],
+        "properties": {
+          "need": {
+            "$ref": "#/components/schemas/Need"
+          },
+          "matches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MatchCandidate"
+            }
+          },
+          "decisions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CandidateDecision"
+            }
+          },
+          "shortlist": {
+            "$ref": "#/components/schemas/Shortlist"
+          },
+          "firstContactRequest": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ContactRequest"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "firstBrief": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ConversationBrief"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "firstConversationDraft": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Conversation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "integrationWorkflow": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "actor": {
+            "$ref": "#/components/schemas/AuthPrincipal"
+          }
+        }
+      },
+      "DemoResultRequest": {
+        "type": "object",
+        "required": [
+          "need",
+          "conversation"
+        ],
+        "properties": {
+          "need": {
+            "$ref": "#/components/schemas/Need"
+          },
+          "conversation": {
+            "$ref": "#/components/schemas/Conversation"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "agreed",
+              "not_relevant",
+              "no_response",
+              "needs_follow_up",
+              "needs_another_person"
+            ]
+          },
+          "summary": {
+            "type": "string"
+          },
+          "matchScore": {
+            "type": "number"
+          },
+          "qualityScore": {
+            "type": "number"
+          }
+        }
+      },
+      "ContactResult": {
+        "type": "object",
+        "required": [
+          "id",
+          "needId",
+          "profileId",
+          "outcome",
+          "summary",
+          "nextStep",
+          "qualityScore",
+          "recordedAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "needId": {
+            "type": "string"
+          },
+          "profileId": {
+            "type": "string"
+          },
+          "conversationId": {
+            "type": "string"
+          },
+          "decisionId": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "matchScore": {
+            "type": "number"
+          },
+          "nextStep": {
+            "type": "string"
+          },
+          "qualityScore": {
+            "type": "number"
+          },
+          "recordedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "MatchQualitySignal": {
+        "type": "object",
+        "required": [
+          "id",
+          "resultId",
+          "needId",
+          "profileId",
+          "outcome",
+          "qualityScore",
+          "impact",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "resultId": {
+            "type": "string"
+          },
+          "needId": {
+            "type": "string"
+          },
+          "profileId": {
+            "type": "string"
+          },
+          "conversationId": {
+            "type": "string"
+          },
+          "decisionId": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "matchScore": {
+            "type": "number"
+          },
+          "qualityScore": {
+            "type": "number"
+          },
+          "impact": {
+            "type": "string",
+            "enum": [
+              "positive",
+              "neutral",
+              "negative"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

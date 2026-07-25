@@ -18,6 +18,7 @@ const logDir = resolve(localDir, "logs");
 const pidFile = resolve(localDir, "pids.json");
 const apiPort = Number(process.env.CIFEDRA_API_PORT ?? 3030);
 const webPort = Number(process.env.CIFEDRA_WEB_PORT ?? 4177);
+const clientPort = Number(process.env.CIFEDRA_CLIENT_WEB_PORT ?? 5173);
 const localIntegrationEnv = loadLocalIntegrationEnv();
 
 mkdirSync(logDir, { recursive: true });
@@ -38,8 +39,13 @@ if (existing.web && isRunning(existing.web.pid)) {
   throw new Error(`Web server already seems to be running on pid ${existing.web.pid}`);
 }
 
+if (existing.client && isRunning(existing.client.pid)) {
+  throw new Error(`Client web app already seems to be running on pid ${existing.client.pid}`);
+}
+
 await assertPortFree(apiPort, "API");
 await assertPortFree(webPort, "Web");
+await assertPortFree(clientPort, "Client web app");
 
 const api = spawnManaged({
   name: "api",
@@ -52,7 +58,9 @@ const api = spawnManaged({
     CIFEDRA_API_HOST: "127.0.0.1",
     CIFEDRA_CORS_ALLOWED_ORIGINS: [
       `http://localhost:${webPort}`,
-      `http://127.0.0.1:${webPort}`
+      `http://127.0.0.1:${webPort}`,
+      `http://localhost:${clientPort}`,
+      `http://127.0.0.1:${clientPort}`
     ].join(",")
   }
 });
@@ -62,6 +70,26 @@ const web = spawnManaged({
   command: "python3",
   args: ["-m", "http.server", String(webPort), "--bind", "127.0.0.1"],
   env: process.env
+});
+
+const client = spawnManaged({
+  name: "client-web",
+  command: "npm",
+  args: [
+    "-w",
+    "@cifedra/web",
+    "run",
+    "dev",
+    "--",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    String(clientPort)
+  ],
+  env: {
+    ...process.env,
+    VITE_CIFEDRA_API_URL: `http://localhost:${apiPort}`
+  }
 });
 
 const pids = {
@@ -77,6 +105,11 @@ const pids = {
     matchingUrl: `http://localhost:${webPort}/web/app/matching.html`,
     log: ".local/logs/web.log"
   },
+  client: {
+    pid: client.pid,
+    url: `http://localhost:${clientPort}`,
+    log: ".local/logs/client-web.log"
+  },
   startedAt: new Date().toISOString()
 };
 
@@ -86,12 +119,14 @@ await waitForHttp(`http://localhost:${apiPort}/health`, "API");
 await waitForHttp(`http://localhost:${webPort}/web/landing/`, "Web");
 await waitForHttp(`http://localhost:${webPort}/web/app/`, "App");
 await waitForHttp(`http://localhost:${webPort}/web/app/matching.html`, "Matching");
+await waitForHttp(`http://localhost:${clientPort}`, "Client web app");
 
 console.log("CIFEDRA local environment is running:");
 console.log(`- API: ${pids.api.url}`);
 console.log(`- Landing: ${pids.web.url}`);
 console.log(`- Alliance Board: ${pids.web.appUrl}`);
 console.log(`- Matching Board: ${pids.web.matchingUrl}`);
+console.log(`- Client WEB MVP: ${pids.client.url}`);
 console.log("- Logs: .local/logs/");
 if (localIntegrationEnv.files.length > 0) {
   console.log(`- Loaded integration env: ${localIntegrationEnv.files.join(", ")}`);

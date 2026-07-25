@@ -9,6 +9,8 @@
 | `brand/cifedra/` | Бренд, логотипы, токены и продуктовая архитектура. |
 | `knowledge/` | Архитектурные решения, SRS, продуктовая документация и база знаний. |
 | `web/landing/` | Статический лендинг продукта с QR-кодами приложений. |
+| `web/app/` | Статические дизайн-прототипы Alliance Board и kanban-матчинга. |
+| `apps/web/` | Клиентский WEB MVP на React/Vite для локального тестирования. |
 | `packages/core/` | Самописное доменное ядро `Need -> Match -> Prepare -> Connect -> Result`. |
 | `packages/postgres/` | PostgreSQL migrations and repository adapters for Core persistence. |
 | `apps/api/` | Минимальный API-прототип поверх `@cifedra/core`. |
@@ -47,6 +49,7 @@ npm run typecheck
 npm test
 npm run build
 npm run dev:api
+npm run dev:web
 ```
 
 API-прототип по умолчанию запускается на `http://localhost:3030`.
@@ -87,6 +90,7 @@ npm run integrations:plane:start
 
 - API: `http://localhost:3030`
 - Auth status: `http://localhost:3030/auth/status`
+- Client WEB MVP: `http://localhost:5173`
 - Landing: `http://localhost:4177/web/landing/`
 - Test Console: `http://localhost:4177/web/test-console/`
 - Integration Diagnostics: `http://localhost:4177/web/test-console/diagnostics.html`

@@ -1,5 +1,6 @@
 const apiBaseUrl = process.env.CIFEDRA_API_URL ?? "http://localhost:3030";
 const webUrl = process.env.CIFEDRA_WEB_URL ?? "http://localhost:4177/web/landing/";
+const clientWebUrl = process.env.CIFEDRA_CLIENT_WEB_URL ?? "http://localhost:5173";
 const smokePassword = "SmokePassword123!";
 
 let authToken = null;
@@ -9,6 +10,7 @@ await checkHealth();
 await checkLanding();
 await checkAllianceBoard();
 await checkMatchingBoard();
+await checkClientWebMvp();
 await checkTestConsole();
 await checkAuth();
 await checkSecurityBaseline();
@@ -71,6 +73,16 @@ async function checkMatchingBoard() {
 
   const script = await scriptResponse.text();
   assert(script.includes("Contact Request"), "Contact Request column not found");
+}
+
+async function checkClientWebMvp() {
+  const response = await fetch(clientWebUrl);
+
+  assert(response.ok, `Client WEB MVP failed with ${response.status}`);
+
+  const html = await response.text();
+  assert(html.includes("CIFEDRA Connect MVP"), "Client WEB MVP title text not found");
+  assert(html.includes("/src/main.tsx"), "Client WEB MVP entrypoint not found");
 }
 
 async function checkTestConsole() {

@@ -11,7 +11,7 @@ if (!existsSync(pidFile)) {
 
 const pids = JSON.parse(readFileSync(pidFile, "utf8"));
 
-for (const serviceName of ["api", "web"]) {
+for (const serviceName of ["api", "web", "client"]) {
   const pid = pids[serviceName]?.pid;
 
   if (!pid) {
