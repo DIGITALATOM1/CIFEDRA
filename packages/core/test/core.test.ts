@@ -501,7 +501,7 @@ test("uses latest candidate decision and excludes rejected candidates from short
       categoryId: "work.expert-help",
       title: "Нужно ревью SRS",
       description: "Нужно проверить требования перед передачей в разработку.",
-      expectedResult: "Список замечаний и правок",
+      expectedResult: "Список замечаний и правок.",
       tags: ["srs", "requirements", "review"]
     })
   );
@@ -574,6 +574,8 @@ test("creates a conversation draft from requested contact decision and brief", (
   assert.equal(conversation.state, "draft");
   assert.equal(conversation.externalRef?.provider, "chatwoot");
   assert.match(conversation.firstMessage, /Нужно ревью SRS/);
+  assert.match(conversation.firstMessage, /Ожидаемый результат: Список замечаний и правок\./);
+  assert.doesNotMatch(conversation.firstMessage, /Список замечаний и правок\.\./);
   assert.match(conversation.firstMessage, /Вопросы:/);
 });
 

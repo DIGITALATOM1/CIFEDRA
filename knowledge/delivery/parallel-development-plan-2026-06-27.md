@@ -230,3 +230,21 @@ Next engineering item:
 
 1. `N5-01`: OpenAPI/DTO draft for Core P0 + ContactRequest so WEB/mobile can
    consume stable contracts.
+
+## Progress update: 2026-07-26 / N5-01 and N6-01
+
+Completed:
+
+1. Added draft OpenAPI 3.1 contract for the local Core/API MVP, including
+   auth, directions, matching, ContactRequest, Engagement, result and
+   integration status DTOs.
+2. Added `Engagement` core aggregate after accepted ContactRequest.
+3. Extended synthetic vertical flows and local smoke tests through
+   `planned -> in_progress -> completed`.
+4. Updated `apps/web` Kanban MVP with Engagement and structured Markdown result
+   checks.
+
+Next engineering item:
+
+1. `N7-01`: add event/outbox spike so ContactRequest and Engagement changes can
+   drive Plane/Chatwoot adapters without external tools mutating Core state.

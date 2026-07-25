@@ -5,9 +5,13 @@ import {
   getDirections,
   login,
   register,
+  simulateEngagement,
+  transitionEngagement,
   type AuthSessionResponse,
+  type ContactRequest,
   type DemoMatchResponse,
   type DirectionDefinition,
+  type Engagement,
   type MatchCandidate
 } from "./api";
 import { pilotScenarios, type PilotScenario } from "./scenarios";
@@ -21,6 +25,7 @@ const columnLabels = [
   "Proposed Allies",
   "Contact Request",
   "Messenger",
+  "Engagement",
   "Result"
 ] as const;
 
@@ -30,6 +35,8 @@ export function App() {
   const [session, setSession] = useState<AuthSessionResponse | null>(null);
   const [selectedScenarioId, setSelectedScenarioId] = useState(pilotScenarios[1]?.id ?? "");
   const [match, setMatch] = useState<DemoMatchResponse | null>(null);
+  const [acceptedContactRequest, setAcceptedContactRequest] = useState<ContactRequest | null>(null);
+  const [engagement, setEngagement] = useState<Engagement | null>(null);
   const [selectedProfileId, setSelectedProfileId] = useState<string | null>(null);
   const [email, setEmail] = useState(() => `client-${Date.now()}@cifedra.local`);
   const [displayName, setDisplayName] = useState("Игорь");
@@ -128,7 +135,67 @@ export function App() {
 
       const nextMatch = await createDemoMatch(activeSession.token, selectedScenario.input);
       setMatch(nextMatch);
+      setAcceptedContactRequest(null);
+      setEngagement(null);
       setSelectedProfileId(nextMatch.matches[0]?.profile.id ?? null);
+    } catch (caught) {
+      setError(toErrorMessage(caught));
+    } finally {
+      setIsBusy(false);
+    }
+  }
+
+  async function handleSimulateEngagement() {
+    if (!session || !match?.firstContactRequest) {
+      setError("Сначала запустите матчинг и получите ContactRequest.");
+      return;
+    }
+
+    setIsBusy(true);
+    setError(null);
+
+    try {
+      const result = await simulateEngagement(session.token, {
+        need: match.need,
+        contactRequest: match.firstContactRequest,
+        conversation: match.firstConversationDraft,
+        brief: match.firstBrief
+      });
+
+      setAcceptedContactRequest(result.acceptedContactRequest);
+      setEngagement(result.engagement);
+    } catch (caught) {
+      setError(toErrorMessage(caught));
+    } finally {
+      setIsBusy(false);
+    }
+  }
+
+  async function handleTransitionEngagement(action: "start" | "complete" | "cancel") {
+    if (!session || !engagement) {
+      setError("Сначала создайте Engagement.");
+      return;
+    }
+
+    setIsBusy(true);
+    setError(null);
+
+    try {
+      const result = await transitionEngagement(session.token, {
+        engagement,
+        action,
+        summary:
+          action === "complete"
+            ? "MVP-сценарий выполнен локально, результат зафиксирован в Markdown."
+            : undefined,
+        nextStep:
+          action === "complete"
+            ? "Проверить качество результата и решить, нужен ли follow-up."
+            : undefined,
+        reason: action === "cancel" ? "Cancelled in local MVP test." : undefined
+      });
+
+      setEngagement(result.engagement);
     } catch (caught) {
       setError(toErrorMessage(caught));
     } finally {
@@ -173,34 +240,52 @@ export function App() {
 
       <section className="workspace">
         <aside className="panel control-panel" aria-label="MVP controls">
-          <div>
-            <p className="eyebrow compact">1. Auth</p>
-            <h2>Demo client</h2>
-          </div>
-          <label>
-            <span>Имя</span>
-            <input value={displayName} onChange={(event) => setDisplayName(event.target.value)} />
-          </label>
-          <label>
-            <span>Email</span>
-            <input value={email} onChange={(event) => setEmail(event.target.value)} />
-          </label>
-          <label>
-            <span>Password</span>
-            <input
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </label>
-          <div className="button-row">
-            <button type="button" onClick={handleRegister} disabled={isBusy}>
-              Зарегистрировать
-            </button>
-            <button className="secondary" type="button" onClick={handleLogin} disabled={isBusy}>
-              Войти
-            </button>
-          </div>
+          <form
+            className="auth-form"
+            onSubmit={(event) => {
+              event.preventDefault();
+              void handleRegister();
+            }}
+          >
+            <div>
+              <p className="eyebrow compact">1. Auth</p>
+              <h2>Demo client</h2>
+            </div>
+            <label>
+              <span>Имя</span>
+              <input
+                autoComplete="name"
+                value={displayName}
+                onChange={(event) => setDisplayName(event.target.value)}
+              />
+            </label>
+            <label>
+              <span>Email</span>
+              <input
+                autoComplete="username"
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </label>
+            <label>
+              <span>Password</span>
+              <input
+                autoComplete="current-password"
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </label>
+            <div className="button-row">
+              <button type="submit" disabled={isBusy}>
+                Зарегистрировать
+              </button>
+              <button className="secondary" type="button" onClick={handleLogin} disabled={isBusy}>
+                Войти
+              </button>
+            </div>
+          </form>
 
           <div className="divider" />
 
@@ -234,10 +319,16 @@ export function App() {
 
         <section className="board-area" aria-label="Matching workflow">
           <Board
+            acceptedContactRequest={acceptedContactRequest}
+            engagement={engagement}
+            isBusy={isBusy}
             match={match}
             scenario={selectedScenario}
             selectedCandidate={selectedCandidate}
+            onCompleteEngagement={() => void handleTransitionEngagement("complete")}
+            onSimulateEngagement={() => void handleSimulateEngagement()}
             onSelectCandidate={(candidate) => setSelectedProfileId(candidate.profile.id)}
+            onStartEngagement={() => void handleTransitionEngagement("start")}
           />
           <MessengerPreview
             match={match}
@@ -252,15 +343,27 @@ export function App() {
 }
 
 function Board({
+  acceptedContactRequest,
+  engagement,
+  isBusy,
   match,
   scenario,
   selectedCandidate,
-  onSelectCandidate
+  onCompleteEngagement,
+  onSimulateEngagement,
+  onSelectCandidate,
+  onStartEngagement
 }: {
+  readonly acceptedContactRequest: ContactRequest | null;
+  readonly engagement: Engagement | null;
+  readonly isBusy: boolean;
   readonly match: DemoMatchResponse | null;
   readonly scenario: PilotScenario | undefined;
   readonly selectedCandidate: MatchCandidate | null;
+  readonly onCompleteEngagement: () => void;
+  readonly onSimulateEngagement: () => void;
   readonly onSelectCandidate: (candidate: MatchCandidate) => void;
+  readonly onStartEngagement: () => void;
 }) {
   return (
     <section className="kanban" aria-label="MVP kanban board">
@@ -268,22 +371,52 @@ function Board({
         <article className="column" key={column}>
           <header>
             <span>{column}</span>
-            <strong>{columnCount(column, match)}</strong>
+            <strong>{columnCount(column, match, engagement)}</strong>
           </header>
-          {renderColumnContent(column, match, scenario, selectedCandidate, onSelectCandidate)}
+          {renderColumnContent({
+            acceptedContactRequest,
+            column,
+            engagement,
+            isBusy,
+            match,
+            onCompleteEngagement,
+            onSimulateEngagement,
+            onSelectCandidate,
+            onStartEngagement,
+            scenario,
+            selectedCandidate
+          })}
         </article>
       ))}
     </section>
   );
 }
 
-function renderColumnContent(
-  column: (typeof columnLabels)[number],
-  match: DemoMatchResponse | null,
-  scenario: PilotScenario | undefined,
-  selectedCandidate: MatchCandidate | null,
-  onSelectCandidate: (candidate: MatchCandidate) => void
-) {
+function renderColumnContent({
+  acceptedContactRequest,
+  column,
+  engagement,
+  isBusy,
+  match,
+  onCompleteEngagement,
+  onSimulateEngagement,
+  onSelectCandidate,
+  onStartEngagement,
+  scenario,
+  selectedCandidate
+}: {
+  readonly acceptedContactRequest: ContactRequest | null;
+  readonly column: (typeof columnLabels)[number];
+  readonly engagement: Engagement | null;
+  readonly isBusy: boolean;
+  readonly match: DemoMatchResponse | null;
+  readonly onCompleteEngagement: () => void;
+  readonly onSimulateEngagement: () => void;
+  readonly onSelectCandidate: (candidate: MatchCandidate) => void;
+  readonly onStartEngagement: () => void;
+  readonly scenario: PilotScenario | undefined;
+  readonly selectedCandidate: MatchCandidate | null;
+}) {
   if (column === "Ally Request") {
     const need = match?.need ?? scenario?.input;
 
@@ -332,7 +465,7 @@ function renderColumnContent(
   }
 
   if (column === "Contact Request") {
-    const request = match?.firstContactRequest;
+    const request = acceptedContactRequest ?? match?.firstContactRequest;
 
     return request ? (
       <Card title={request.status} meta={`version ${request.aggregateVersion}`}>
@@ -347,6 +480,14 @@ function renderColumnContent(
             <dd>{request.disclosureSnapshot.hiddenFields.length} sensitive fields</dd>
           </div>
         </dl>
+        <button
+          className="card-button"
+          type="button"
+          onClick={onSimulateEngagement}
+          disabled={isBusy || request.status === "accepted"}
+        >
+          {request.status === "accepted" ? "Contact accepted" : "Accept -> Engagement"}
+        </button>
       </Card>
     ) : (
       <Empty text="ContactRequest появится после requested_contact decision." />
@@ -361,6 +502,55 @@ function renderColumnContent(
       </Card>
     ) : (
       <Empty text="Чат подготовится после ContactRequest." />
+    );
+  }
+
+  if (column === "Engagement") {
+    if (!engagement) {
+      return <Empty text="Engagement создается после принятого ContactRequest." />;
+    }
+
+    return (
+      <Card title={engagement.status} meta={`version ${engagement.aggregateVersion}`}>
+        <p>{engagement.executionBrief.nextStep}</p>
+        <dl className="mini-list">
+          <div>
+            <dt>Planned</dt>
+            <dd>{formatDate(engagement.plannedAt)}</dd>
+          </div>
+          <div>
+            <dt>Format</dt>
+            <dd>{engagement.resultArtifactFormat}</dd>
+          </div>
+        </dl>
+        <div className="card-actions">
+          <button
+            className="card-button"
+            type="button"
+            onClick={onStartEngagement}
+            disabled={isBusy || engagement.status !== "planned"}
+          >
+            Start
+          </button>
+          <button
+            className="card-button secondary"
+            type="button"
+            onClick={onCompleteEngagement}
+            disabled={isBusy || engagement.status !== "in_progress"}
+          >
+            Complete MD
+          </button>
+        </div>
+      </Card>
+    );
+  }
+
+  if (column === "Result" && engagement?.status === "completed") {
+    return (
+      <Card title="Markdown result" meta="completed">
+        <p>{engagement.resultArtifact?.title ?? engagement.title}</p>
+        <pre className="artifact-preview">{engagement.resultArtifact?.content}</pre>
+      </Card>
     );
   }
 
@@ -481,7 +671,11 @@ function ScoreBreakdown({ candidate }: { readonly candidate: MatchCandidate }) {
   );
 }
 
-function columnCount(column: (typeof columnLabels)[number], match: DemoMatchResponse | null) {
+function columnCount(
+  column: (typeof columnLabels)[number],
+  match: DemoMatchResponse | null,
+  engagement: Engagement | null
+) {
   if (!match) {
     return "0";
   }
@@ -497,8 +691,10 @@ function columnCount(column: (typeof columnLabels)[number], match: DemoMatchResp
       return match.firstContactRequest ? "1" : "0";
     case "Messenger":
       return match.firstConversationDraft ? "1" : "0";
+    case "Engagement":
+      return engagement ? "1" : "0";
     case "Result":
-      return "MD";
+      return engagement?.status === "completed" ? "MD" : "0";
   }
 }
 

@@ -31,7 +31,7 @@ Client Decision
 | N4-01 | 4 | Создать PostgreSQL migration/repository slice for ContactRequest. | Codex | N2-01 | ContactRequest persists with optimistic version and runtime role has no DDL. | done: [evidence](./contact-request-postgres-evidence-2026-06-28.md) |
 | N4-02 | 4 | Добавить API application service boundary for ContactRequest. | Codex | N4-01 | Versioned endpoint uses repository transaction, safe errors and auth context. | done: [evidence](./contact-request-api-boundary-evidence-2026-06-28.md) |
 | N5-01 | 5 | Подготовить OpenAPI/DTO draft for Core P0+ContactRequest. | Codex | N4-02 | API contract documented for future WEB/mobile clients. | done: [OpenAPI](../../apps/api/openapi/cifedra-v1-draft.json), [evidence](./api-contract-draft-evidence-2026-07-26.md) |
-| N6-01 | 6 | Реализовать Engagement baseline. | Codex | N2-01 | planned/in_progress/completed/cancelled lifecycle tested. | planned |
+| N6-01 | 6 | Реализовать Engagement baseline. | Codex | N2-01 | planned/in_progress/completed/cancelled lifecycle tested. | done: [evidence](./engagement-baseline-evidence-2026-07-26.md) |
 | N7-01 | 7 | Добавить event/outbox spike. | Codex | N4-01 | Domain state and outbox event saved in one transaction. | planned |
 | N8-01 | 8 | Обновить Plane/Chatwoot sync plan around ContactRequest/Engagement. | Codex | N7-01 | External adapters consume product events, not direct Core mutations. | planned |
 | N9-01 | 9 | Local UAT evidence review for post-match flow. | Оба | N3-02, N6-01 | Metrics and residual gaps separated from product/market evidence. | planned |

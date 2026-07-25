@@ -5,6 +5,7 @@ export * from "./contact-request.js";
 export * from "./conversation.js";
 export * from "./decisions.js";
 export * from "./domain.js";
+export * from "./engagement.js";
 export * from "./fixtures.js";
 export * from "./identity.js";
 export * from "./intake.js";

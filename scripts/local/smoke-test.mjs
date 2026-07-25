@@ -24,6 +24,7 @@ for (const scenario of scenarios) {
 }
 
 await checkHandoff(firstScenarioResult);
+await checkEngagement(firstScenarioResult);
 await checkResult(firstScenarioResult);
 
 console.log("Local smoke tests passed for Life / Work / Skills.");
@@ -173,6 +174,8 @@ async function checkSecurityBaseline() {
     "/demo/match",
     "/demo/handoff",
     "/demo/result",
+    "/demo/engagements/simulate",
+    "/demo/engagements/transition",
     "/demo/contact-requests/contact_request_missing/cancel"
   ]) {
     const response = await fetch(`${apiBaseUrl}${path}`, {
@@ -253,12 +256,28 @@ async function checkVerticalFlows() {
       `${flow.title}: expected ContactRequest requested state`
     );
     assert(
+      flow.acceptedContactRequest?.status === "accepted",
+      `${flow.title}: expected accepted ContactRequest simulation`
+    );
+    assert(
+      flow.engagement?.status === "planned",
+      `${flow.title}: expected planned Engagement`
+    );
+    assert(
       flow.metrics?.firstDecision === "requested_contact",
       `${flow.title}: expected requested_contact decision metric`
     );
     assert(
       flow.metrics?.contactRequestStatus === "requested",
       `${flow.title}: expected contactRequestStatus metric`
+    );
+    assert(
+      flow.metrics?.acceptedContactRequestStatus === "accepted",
+      `${flow.title}: expected acceptedContactRequestStatus metric`
+    );
+    assert(
+      flow.metrics?.engagementStatus === "planned",
+      `${flow.title}: expected engagementStatus metric`
     );
     assert(
       flow.contactRequest?.disclosureSnapshot?.hiddenFields?.includes("contact.email"),
@@ -379,6 +398,71 @@ async function checkHandoff(matchResult) {
   }
 
   console.log("Integration handoff checks passed for Plane / Chatwoot.");
+}
+
+async function checkEngagement(matchResult) {
+  const simulateResponse = await fetch(`${apiBaseUrl}/demo/engagements/simulate`, {
+    method: "POST",
+    headers: authHeaders(true),
+    body: JSON.stringify({
+      need: matchResult.need,
+      contactRequest: matchResult.firstContactRequest,
+      conversation: matchResult.firstConversationDraft,
+      brief: matchResult.firstBrief
+    })
+  });
+
+  assert(simulateResponse.ok, `/demo/engagements/simulate failed with ${simulateResponse.status}`);
+
+  const simulated = await simulateResponse.json();
+  assert(
+    simulated.acceptedContactRequest?.status === "accepted",
+    "Expected accepted ContactRequest after engagement simulation"
+  );
+  assert(simulated.engagement?.status === "planned", "Expected planned Engagement");
+  assert(
+    simulated.engagement?.contactRequestId === matchResult.firstContactRequest.id,
+    "Expected Engagement to reference ContactRequest"
+  );
+
+  const startResponse = await fetch(`${apiBaseUrl}/demo/engagements/transition`, {
+    method: "POST",
+    headers: authHeaders(true),
+    body: JSON.stringify({
+      engagement: simulated.engagement,
+      action: "start"
+    })
+  });
+
+  assert(startResponse.ok, `/demo/engagements/transition start failed with ${startResponse.status}`);
+
+  const started = await startResponse.json();
+  assert(started.engagement?.status === "in_progress", "Expected in_progress Engagement");
+
+  const completeResponse = await fetch(`${apiBaseUrl}/demo/engagements/transition`, {
+    method: "POST",
+    headers: authHeaders(true),
+    body: JSON.stringify({
+      engagement: started.engagement,
+      action: "complete",
+      summary: "Smoke Engagement completed.",
+      nextStep: "Review MVP evidence."
+    })
+  });
+
+  assert(
+    completeResponse.ok,
+    `/demo/engagements/transition complete failed with ${completeResponse.status}`
+  );
+
+  const completed = await completeResponse.json();
+  assert(completed.engagement?.status === "completed", "Expected completed Engagement");
+  assert(
+    completed.engagement?.resultArtifact?.format === "structured_markdown",
+    "Expected Markdown Engagement result"
+  );
+
+  console.log("Engagement lifecycle checks passed.");
 }
 
 async function checkResult(matchResult) {

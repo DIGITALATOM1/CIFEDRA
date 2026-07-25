@@ -20,6 +20,7 @@ Auth -> NeedInput -> DemoMatchResponse
   -> MatchCandidate / CandidateDecision / Shortlist
   -> ContactRequest
   -> ConversationBrief / Conversation
+  -> Engagement
   -> ContactResult / MatchQualitySignal
 ```
 
@@ -41,6 +42,7 @@ Auth -> NeedInput -> DemoMatchResponse
 | Catalog | `/directions` | Life/Work/Skills catalog for client UI. |
 | Matching | `/demo/match` | Main local endpoint for MVP kanban board. |
 | ContactRequest | `/demo/contact-requests/{id}/{action}` | Versioned transitions: accept, decline, cancel, expire. |
+| Engagement | `/demo/engagements/simulate`, `/demo/engagements/transition` | Local MVP lifecycle simulation after accepted ContactRequest. |
 | Result | `/demo/result` | Synthetic quality loop after contact. |
 | Integrations | `/demo/handoff`, `/integrations/status` | Plane/Chatwoot adapter boundary, not client UI. |
 
@@ -49,7 +51,8 @@ Auth -> NeedInput -> DemoMatchResponse
 1. Promote local `/demo` paths into stable `/api/v1` endpoints after persisted
    Need/Profile boundaries are ready.
 2. Add explicit persisted `CreateContactRequest` endpoint outside `/demo/match`.
-3. Add `Engagement` aggregate and API after provider accepts contact request.
+3. Persist `Engagement` outside demo simulation and add transactional API
+   application service boundary.
 4. Replace temporary provider proxy rule
    `auth principal id == ContactRequest.providerProfileId` with real
    `ProviderProfile.ownerUserProfileId`.

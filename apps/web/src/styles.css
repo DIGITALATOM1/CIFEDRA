@@ -214,6 +214,11 @@ p {
   gap: 12px;
 }
 
+.auth-form {
+  display: grid;
+  gap: 12px;
+}
+
 .control-panel h2,
 .messenger h2 {
   margin-top: 4px;
@@ -256,7 +261,8 @@ a:focus-visible {
 }
 
 .button-row button,
-.run-button {
+.run-button,
+.card-button {
   min-height: 42px;
   border: 0;
   border-radius: var(--cifedra-radius-sm);
@@ -266,6 +272,18 @@ a:focus-visible {
 }
 
 .button-row .secondary {
+  border: 1px solid rgba(17, 19, 24, 0.12);
+  background: var(--cifedra-white);
+  color: var(--cifedra-ink);
+}
+
+.card-button {
+  min-height: 36px;
+  width: 100%;
+  font-size: 12px;
+}
+
+.card-button.secondary {
   border: 1px solid rgba(17, 19, 24, 0.12);
   background: var(--cifedra-white);
   color: var(--cifedra-ink);
@@ -336,7 +354,7 @@ a:focus-visible {
   min-width: 0;
   overflow-x: auto;
   display: grid;
-  grid-template-columns: repeat(6, minmax(210px, 1fr));
+  grid-template-columns: repeat(7, minmax(210px, 1fr));
   gap: 12px;
   padding-bottom: 6px;
 }
@@ -431,6 +449,25 @@ a:focus-visible {
 .stack {
   display: grid;
   gap: 8px;
+}
+
+.card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.artifact-preview {
+  max-height: 180px;
+  overflow: auto;
+  margin: 0;
+  padding: 10px;
+  border-radius: 10px;
+  background: var(--cifedra-ink);
+  color: var(--cifedra-white);
+  font-size: 11px;
+  line-height: 1.45;
+  white-space: pre-wrap;
 }
 
 .candidate-card {
@@ -564,7 +601,7 @@ dd {
   }
 
   .kanban {
-    grid-template-columns: repeat(6, minmax(220px, 1fr));
+    grid-template-columns: repeat(7, minmax(220px, 1fr));
   }
 }
 

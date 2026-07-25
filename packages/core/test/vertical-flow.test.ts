@@ -39,6 +39,12 @@ test("runs Life, Work and Skills through Identity -> Intake -> Clarification -> 
     assert.equal(flow.contactRequest?.decisionId, flow.candidateDecisions[0]?.id);
     assert.equal(flow.contactRequest?.providerProfileId, flow.expectedProfileId);
     assert.equal(flow.contactRequest?.clientUserProfileId, flow.userProfile.id);
+    assert.equal(flow.acceptedContactRequest?.status, "accepted");
+    assert.equal(flow.acceptedContactRequest?.id, flow.contactRequest?.id);
+    assert.equal(flow.engagement?.status, "planned");
+    assert.equal(flow.engagement?.contactRequestId, flow.contactRequest?.id);
+    assert.equal(flow.engagement?.clientUserProfileId, flow.userProfile.id);
+    assert.equal(flow.engagement?.providerProfileId, flow.expectedProfileId);
     assert.equal(
       Object.hasOwn(
         flow.contactRequest?.disclosureSnapshot.publicBrief.serviceRegion ?? {},
@@ -51,6 +57,8 @@ test("runs Life, Work and Skills through Identity -> Intake -> Clarification -> 
     assert.equal(flow.metrics.firstMatchAction, "request_contact");
     assert.equal(flow.metrics.firstDecision, "requested_contact");
     assert.equal(flow.metrics.contactRequestStatus, "requested");
+    assert.equal(flow.metrics.acceptedContactRequestStatus, "accepted");
+    assert.equal(flow.metrics.engagementStatus, "planned");
     assert.ok((flow.metrics.disclosureHiddenFieldCount ?? 0) > 0);
   }
 });

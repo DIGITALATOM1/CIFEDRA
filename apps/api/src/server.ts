@@ -18,6 +18,7 @@ import {
   type AuthLoginInput
 } from "./auth-store.js";
 import {
+  acceptContactRequest,
   buildConversationBrief,
   buildIntegrationWorkflow,
   buildMatchQualitySignal,
@@ -25,11 +26,15 @@ import {
   buildShortlist,
   createContactRequestFromLatestDecision,
   createConversationDraft,
+  createEngagementFromAcceptedContactRequest,
   createNeed,
   demoNeedScenarios,
   demoProfiles,
   directionDefinitions,
   integrationDefinitions,
+  cancelEngagement,
+  completeEngagement,
+  EngagementError,
   type AuthRegistrationInput,
   type AuthRole,
   markConversationOpened,
@@ -39,8 +44,13 @@ import {
   recordContactResult,
   resolveNeedFromContactResult,
   runAllSyntheticVerticalFlows,
+  startEngagement,
+  type ContactRequest,
   type ContactOutcome,
   type Conversation,
+  type ConversationBrief,
+  type Engagement,
+  type EngagementResultArtifact,
   type Need,
   type NeedInput
 } from "@cifedra/core";
@@ -53,9 +63,10 @@ export function createApiServer(): Server {
       if (
         error instanceof AuthError ||
         error instanceof RequestError ||
-        error instanceof ContactRequestApplicationError
+        error instanceof ContactRequestApplicationError ||
+        error instanceof EngagementError
       ) {
-        sendJson(response, error.statusCode, {
+        sendJson(response, getErrorStatusCode(error), {
           error: error.message
         });
         return;
@@ -254,6 +265,7 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
       firstContactRequest,
       firstBrief,
       firstConversationDraft,
+      firstEngagement: null,
       integrationWorkflow: buildIntegrationWorkflow(need, matches[0], firstBrief),
       actor: authContext.principal
     });
@@ -296,6 +308,40 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
       conversation,
       result,
       qualitySignal
+    });
+    return;
+  }
+
+  if (request.method === "POST" && url.pathname === "/demo/engagements/simulate") {
+    const authContext = await requireAnyRole(request, ["client", "helper", "operator"]);
+    const body = await readJsonObject<DemoEngagementSimulationRequest>(request);
+    const acceptedContactRequest =
+      body.contactRequest.status === "accepted"
+        ? body.contactRequest
+        : acceptContactRequest(body.contactRequest, body.contactRequest.providerProfileId);
+    const engagement = createEngagementFromAcceptedContactRequest({
+      need: body.need,
+      contactRequest: acceptedContactRequest,
+      conversation: body.conversation,
+      brief: body.brief
+    });
+
+    sendJson(response, 200, {
+      acceptedContactRequest,
+      engagement,
+      actor: authContext.principal
+    });
+    return;
+  }
+
+  if (request.method === "POST" && url.pathname === "/demo/engagements/transition") {
+    const authContext = await requireAnyRole(request, ["client", "helper", "operator"]);
+    const body = await readJsonObject<DemoEngagementTransitionRequest>(request);
+    const engagement = transitionDemoEngagement(body);
+
+    sendJson(response, 200, {
+      engagement,
+      actor: authContext.principal
     });
     return;
   }
@@ -350,6 +396,8 @@ async function routeRequest(request: IncomingMessage, response: ServerResponse):
       "POST /demo/contact-requests/{id}/decline",
       "POST /demo/contact-requests/{id}/cancel",
       "POST /demo/contact-requests/{id}/expire",
+      "POST /demo/engagements/simulate",
+      "POST /demo/engagements/transition",
       "POST /demo/handoff",
       "POST /demo/match",
       "POST /demo/result"
@@ -386,6 +434,22 @@ interface DemoResultRequest {
   readonly qualityScore?: number;
 }
 
+interface DemoEngagementSimulationRequest {
+  readonly need: Need;
+  readonly contactRequest: ContactRequest;
+  readonly conversation?: Conversation;
+  readonly brief?: ConversationBrief;
+}
+
+interface DemoEngagementTransitionRequest {
+  readonly engagement: Engagement;
+  readonly action?: unknown;
+  readonly summary?: unknown;
+  readonly nextStep?: unknown;
+  readonly reason?: unknown;
+  readonly resultArtifact?: EngagementResultArtifact;
+}
+
 interface ContactRequestTransitionRequest {
   readonly expectedAggregateVersion?: unknown;
   readonly reason?: unknown;
@@ -398,6 +462,12 @@ class RequestError extends Error {
   ) {
     super(message);
   }
+}
+
+function getErrorStatusCode(
+  error: AuthError | RequestError | ContactRequestApplicationError | EngagementError
+): number {
+  return "statusCode" in error ? error.statusCode : 409;
 }
 
 function parseContactRequestRoute(pathname: string):
@@ -437,8 +507,42 @@ function runContactRequestAction(
   }
 }
 
+function transitionDemoEngagement(body: DemoEngagementTransitionRequest): Engagement {
+  switch (body.action) {
+    case "start":
+      return startEngagement(body.engagement);
+    case "complete":
+      return completeEngagement(body.engagement, {
+        summary: normalizeRequiredText(
+          body.summary,
+          "Engagement completion summary is required"
+        ),
+        nextStep: normalizeRequiredText(
+          body.nextStep,
+          "Engagement completion nextStep is required"
+        ),
+        resultArtifact: body.resultArtifact
+      });
+    case "cancel":
+      return cancelEngagement(
+        body.engagement,
+        normalizeRequiredText(body.reason, "Engagement cancellation reason is required")
+      );
+    default:
+      throw new RequestError(400, "Engagement action must be start, complete or cancel");
+  }
+}
+
 function normalizeExpectedAggregateVersion(value: unknown): number {
   return typeof value === "number" ? value : Number.NaN;
+}
+
+function normalizeRequiredText(value: unknown, message: string): string {
+  if (typeof value !== "string" || !value.trim()) {
+    throw new RequestError(400, message);
+  }
+
+  return value.trim();
 }
 
 function normalizeOptionalReason(value: unknown): string | undefined {

@@ -15,9 +15,11 @@ Connect. Он не заменяет старые статические прот
 2. Выбор одного из трех пилотных сценариев: Life, Work, Skills.
 3. Запуск `/demo/match`.
 4. Kanban-представление workflow:
-   `Ally Request -> AI Matching -> Proposed Allies -> Contact Request -> Messenger -> Result`.
+   `Ally Request -> AI Matching -> Proposed Allies -> Contact Request -> Messenger -> Engagement -> Result`.
 5. Preview встроенного CIFEDRA messenger:
    имя клиента + описание запроса/работы без прямых контактов и точного адреса.
+6. Локальный Engagement lifecycle после provider acceptance:
+   `planned -> in_progress -> completed`, результат в structured Markdown.
 
 ## Запуск
 
@@ -51,4 +53,5 @@ VITE_CIFEDRA_API_URL=http://localhost:3030 npm run dev:web
 1. Экран использует local `/demo/*` API namespace.
 2. Состояние сессии хранится только в памяти браузера.
 3. ContactRequest transitions через PostgreSQL UI пока не подключены.
-4. Engagement lifecycle и настоящий message persistence идут следующим increment.
+4. Engagement пока работает через local demo simulation без PostgreSQL persistence.
+5. Настоящий message persistence идет следующим increment.

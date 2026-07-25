@@ -124,6 +124,37 @@ export interface ContactRequest {
   readonly aggregateVersion: number;
 }
 
+export interface Engagement {
+  readonly id: string;
+  readonly needId: string;
+  readonly profileId: string;
+  readonly contactRequestId: string;
+  readonly conversationId?: string;
+  readonly clientUserProfileId: string;
+  readonly providerProfileId: string;
+  readonly status: "planned" | "in_progress" | "completed" | "cancelled";
+  readonly title: string;
+  readonly expectedResult: string;
+  readonly executionBrief: {
+    readonly summary: string;
+    readonly context: readonly string[];
+    readonly risks: readonly string[];
+    readonly nextStep: string;
+  };
+  readonly resultArtifactFormat: "structured_markdown";
+  readonly resultArtifact?: {
+    readonly format: "structured_markdown";
+    readonly title: string;
+    readonly content: string;
+  };
+  readonly plannedAt: string;
+  readonly startedAt?: string;
+  readonly completedAt?: string;
+  readonly cancelledAt?: string;
+  readonly cancellationReason?: string;
+  readonly aggregateVersion: number;
+}
+
 export interface ConversationBrief {
   readonly needId: string;
   readonly profileId: string;
@@ -160,7 +191,19 @@ export interface DemoMatchResponse {
   readonly firstContactRequest: ContactRequest | null;
   readonly firstBrief: ConversationBrief | null;
   readonly firstConversationDraft: Conversation | null;
+  readonly firstEngagement: Engagement | null;
   readonly integrationWorkflow: Record<string, unknown>;
+  readonly actor: AuthPrincipal;
+}
+
+export interface DemoEngagementSimulationResponse {
+  readonly acceptedContactRequest: ContactRequest;
+  readonly engagement: Engagement;
+  readonly actor: AuthPrincipal;
+}
+
+export interface DemoEngagementTransitionResponse {
+  readonly engagement: Engagement;
   readonly actor: AuthPrincipal;
 }
 
@@ -205,6 +248,39 @@ export async function createDemoMatch(
   input: NeedInput
 ): Promise<DemoMatchResponse> {
   return request<DemoMatchResponse>("/demo/match", {
+    method: "POST",
+    token,
+    body: input
+  });
+}
+
+export async function simulateEngagement(
+  token: string,
+  input: {
+    readonly need: Need;
+    readonly contactRequest: ContactRequest;
+    readonly conversation?: Conversation | null;
+    readonly brief?: ConversationBrief | null;
+  }
+): Promise<DemoEngagementSimulationResponse> {
+  return request<DemoEngagementSimulationResponse>("/demo/engagements/simulate", {
+    method: "POST",
+    token,
+    body: input
+  });
+}
+
+export async function transitionEngagement(
+  token: string,
+  input: {
+    readonly engagement: Engagement;
+    readonly action: "start" | "complete" | "cancel";
+    readonly summary?: string;
+    readonly nextStep?: string;
+    readonly reason?: string;
+  }
+): Promise<DemoEngagementTransitionResponse> {
+  return request<DemoEngagementTransitionResponse>("/demo/engagements/transition", {
     method: "POST",
     token,
     body: input

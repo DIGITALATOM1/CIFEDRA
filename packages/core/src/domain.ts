@@ -256,6 +256,47 @@ export interface Conversation {
   updatedAt: string;
 }
 
+export type EngagementStatus = "planned" | "in_progress" | "completed" | "cancelled";
+
+export type EngagementResultArtifactFormat = "structured_markdown";
+
+export interface EngagementExecutionBrief {
+  readonly summary: string;
+  readonly context: readonly string[];
+  readonly risks: readonly string[];
+  readonly nextStep: string;
+}
+
+export interface EngagementResultArtifact {
+  readonly format: EngagementResultArtifactFormat;
+  readonly title: string;
+  readonly content: string;
+}
+
+export interface Engagement {
+  readonly id: string;
+  readonly needId: string;
+  readonly profileId: string;
+  readonly contactRequestId: string;
+  readonly conversationId?: string;
+  readonly clientUserProfileId: string;
+  readonly providerProfileId: string;
+  readonly status: EngagementStatus;
+  readonly title: string;
+  readonly expectedResult: string;
+  readonly executionBrief: EngagementExecutionBrief;
+  readonly resultArtifactFormat: EngagementResultArtifactFormat;
+  readonly resultArtifact?: EngagementResultArtifact;
+  readonly plannedAt: string;
+  readonly startedAt?: string;
+  readonly completedAt?: string;
+  readonly cancelledAt?: string;
+  readonly cancellationReason?: string;
+  readonly aggregateVersion: number;
+  readonly createdAt: string;
+  readonly updatedAt: string;
+}
+
 export type ContactOutcome =
   | "agreed"
   | "not_relevant"

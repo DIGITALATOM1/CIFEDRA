@@ -5,11 +5,19 @@ import {
   type ClarificationReason
 } from "./clarification.js";
 import {
+  acceptContactRequest,
   createContactRequestFromLatestDecision,
   type ContactRequest
 } from "./contact-request.js";
 import { buildRecommendedDecisions } from "./decisions.js";
-import type { CandidateDecision, DirectionId, MatchCandidate, NeedInput } from "./domain.js";
+import type {
+  CandidateDecision,
+  DirectionId,
+  Engagement,
+  MatchCandidate,
+  NeedInput
+} from "./domain.js";
+import { createEngagementFromAcceptedContactRequest } from "./engagement.js";
 import { demoProfiles } from "./fixtures.js";
 import { createLocalIdentityRef, type IdentityRef } from "./identity.js";
 import { createNeedFromSchema, type VersionedNeed } from "./intake.js";
@@ -62,6 +70,8 @@ export interface SyntheticVerticalFlowResult {
   readonly matches: readonly MatchCandidate[];
   readonly candidateDecisions: readonly CandidateDecision[];
   readonly contactRequest?: ContactRequest;
+  readonly acceptedContactRequest?: ContactRequest;
+  readonly engagement?: Engagement;
   readonly metrics: {
     readonly missingBefore: readonly string[];
     readonly invalidBefore: readonly string[];
@@ -71,6 +81,8 @@ export interface SyntheticVerticalFlowResult {
     readonly firstMatchAction?: string;
     readonly firstDecision?: string;
     readonly contactRequestStatus?: string;
+    readonly acceptedContactRequestStatus?: string;
+    readonly engagementStatus?: string;
     readonly disclosureHiddenFieldCount?: number;
     readonly contactRequestExpiresAt?: string;
   };
@@ -339,6 +351,18 @@ export function runSyntheticVerticalFlow(
   const firstDecision = firstMatch
     ? candidateDecisions.find((decision) => decision.profileId === firstMatch.profile.id)
     : undefined;
+  const acceptedContactRequest = contactRequest
+    ? acceptContactRequest(contactRequest, contactRequest.providerProfileId, now)
+    : undefined;
+  const engagement = acceptedContactRequest
+    ? createEngagementFromAcceptedContactRequest(
+        {
+          need: answered.need,
+          contactRequest: acceptedContactRequest
+        },
+        now
+      )
+    : undefined;
 
   return {
     id: definition.id,
@@ -353,6 +377,8 @@ export function runSyntheticVerticalFlow(
     matches,
     candidateDecisions,
     contactRequest,
+    acceptedContactRequest,
+    engagement,
     metrics: {
       missingBefore: initialNeed.completeness.missingFieldIds,
       invalidBefore: initialNeed.completeness.invalidFieldIds,
@@ -362,6 +388,8 @@ export function runSyntheticVerticalFlow(
       firstMatchAction: firstMatch?.recommendedAction,
       firstDecision: firstDecision?.decision,
       contactRequestStatus: contactRequest?.status,
+      acceptedContactRequestStatus: acceptedContactRequest?.status,
+      engagementStatus: engagement?.status,
       disclosureHiddenFieldCount: contactRequest?.disclosureSnapshot.hiddenFields.length,
       contactRequestExpiresAt: contactRequest?.expiresAt
     }

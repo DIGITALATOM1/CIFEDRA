@@ -94,12 +94,13 @@ Need -> Clarify -> Match -> Decide -> Connect -> Execute -> Result
 | Auth | Local register/login через `/auth/register` and `/auth/login`; token хранится in memory. |
 | Scenario | Выбор пилотных сценариев `Life / Work / Skills`. |
 | Matching | Запуск `/demo/match` и отображение `Need`, `MatchCandidate`, `Shortlist`, `ContactRequest`, `ConversationBrief`. |
-| Kanban | Клиентский pipeline `Ally Request -> AI Matching -> Proposed Allies -> Contact Request -> Messenger -> Result`. |
+| Kanban | Клиентский pipeline `Ally Request -> AI Matching -> Proposed Allies -> Contact Request -> Messenger -> Engagement -> Result`. |
 | Messenger | Target preview для `direct_product_chat`: имя клиента и описание запроса/работы без прямых контактов и точного адреса. |
+| Engagement | Локальный переход accepted ContactRequest в `planned`, затем `in_progress` и `completed` с Markdown result artifact. |
 
 Следующий increment: вынести `/demo/match` в стабильные `/api/v1` endpoints,
-добавить persisted Need/Profile/Engagement и заменить preview чата на
-message persistence.
+добавить persisted Need/Profile/Engagement API boundaries и заменить preview
+чата на message persistence.
 
 ## Responsive UX
 

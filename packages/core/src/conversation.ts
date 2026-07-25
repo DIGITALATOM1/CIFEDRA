@@ -169,7 +169,7 @@ function validateConversationDraftInput(input: ConversationDraftInput): void {
 function buildFirstMessage(need: Need, brief: ConversationBrief): string {
   return [
     `Здравствуйте. Есть задача: ${need.title}.`,
-    `Ожидаемый результат: ${need.expectedResult}.`,
+    `Ожидаемый результат: ${withSentencePeriod(need.expectedResult)}`,
     "",
     "Контекст:",
     ...brief.context,
@@ -179,4 +179,9 @@ function buildFirstMessage(need: Need, brief: ConversationBrief): string {
     "",
     `Следующий шаг: ${brief.nextStep}`
   ].join("\n");
+}
+
+function withSentencePeriod(value: string): string {
+  const trimmed = value.trim();
+  return /[.!?]$/.test(trimmed) ? trimmed : `${trimmed}.`;
 }

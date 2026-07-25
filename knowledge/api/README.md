@@ -23,6 +23,15 @@
 Переименование в публичный `/api/v1` делаем отдельным increment после
 стабилизации persisted Need/Profile/ContactRequest/Engagement endpoints.
 
+## Local MVP endpoints
+
+| Area | Endpoint |
+| --- | --- |
+| Matching board | `POST /demo/match` |
+| ContactRequest transitions | `POST /demo/contact-requests/{id}/{action}` |
+| Engagement simulation | `POST /demo/engagements/simulate` |
+| Engagement lifecycle | `POST /demo/engagements/transition` |
+
 ## Product defaults
 
 1. `ContactRequest.expiresAt` по продукту рассчитывается как `requestedAt + 48h`.

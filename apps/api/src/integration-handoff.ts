@@ -277,7 +277,7 @@ function buildChatwootRequest(input: IntegrationHandoffInput, handoffId: string)
 function buildChatwootFirstMessage(input: IntegrationHandoffInput): string {
   return [
     `Здравствуйте. Есть задача: ${input.need.title}.`,
-    `Ожидаемый результат: ${input.need.expectedResult}.`,
+    `Ожидаемый результат: ${withSentencePeriod(input.need.expectedResult)}`,
     "",
     "Контекст:",
     ...input.brief.context,
@@ -289,6 +289,11 @@ function buildChatwootFirstMessage(input: IntegrationHandoffInput): string {
       ? `Инициатор в CIFEDRA: ${input.actor.displayName} (${input.actor.email}).`
       : "Инициатор в CIFEDRA: локальный demo user без авторизации."
   ].join("\n");
+}
+
+function withSentencePeriod(value: string): string {
+  const trimmed = value.trim();
+  return /[.!?]$/.test(trimmed) ? trimmed : `${trimmed}.`;
 }
 
 async function saveHandoffRecord(id: string, record: unknown): Promise<string> {

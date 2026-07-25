@@ -31,6 +31,9 @@
       "name": "ContactRequest"
     },
     {
+      "name": "Engagement"
+    },
+    {
       "name": "Integrations"
     }
   ],
@@ -578,6 +581,92 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/demo/engagements/simulate": {
+      "post": {
+        "tags": [
+          "Engagement"
+        ],
+        "summary": "Simulate provider acceptance and create Engagement",
+        "description": "Local MVP endpoint. Accepts a requested ContactRequest in memory and returns a planned Engagement. It is not a stable public /api/v1 contract yet.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DemoEngagementSimulationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accepted ContactRequest and planned Engagement",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DemoEngagementSimulationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/demo/engagements/transition": {
+      "post": {
+        "tags": [
+          "Engagement"
+        ],
+        "summary": "Transition local demo Engagement lifecycle",
+        "description": "Local MVP endpoint for planned -> in_progress -> completed/cancelled lifecycle checks. The client sends current in-memory Engagement state.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DemoEngagementTransitionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Transitioned Engagement",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DemoEngagementTransitionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error"
           }
         }
       }
@@ -1776,7 +1865,8 @@
           "firstBrief",
           "firstConversationDraft",
           "integrationWorkflow",
-          "actor"
+          "actor",
+          "firstEngagement"
         ],
         "properties": {
           "need": {
@@ -1833,6 +1923,17 @@
           },
           "actor": {
             "$ref": "#/components/schemas/AuthPrincipal"
+          },
+          "firstEngagement": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Engagement"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Reserved for stable API; current /demo/match returns null until provider acceptance is simulated."
           }
         }
       },
@@ -1970,6 +2071,244 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "EngagementStatus": {
+        "type": "string",
+        "enum": [
+          "planned",
+          "in_progress",
+          "completed",
+          "cancelled"
+        ]
+      },
+      "EngagementExecutionBrief": {
+        "type": "object",
+        "required": [
+          "summary",
+          "context",
+          "risks",
+          "nextStep"
+        ],
+        "properties": {
+          "summary": {
+            "type": "string"
+          },
+          "context": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "risks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "nextStep": {
+            "type": "string"
+          }
+        }
+      },
+      "EngagementResultArtifact": {
+        "type": "object",
+        "required": [
+          "format",
+          "title",
+          "content"
+        ],
+        "properties": {
+          "format": {
+            "type": "string",
+            "const": "structured_markdown"
+          },
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          }
+        }
+      },
+      "Engagement": {
+        "type": "object",
+        "required": [
+          "id",
+          "needId",
+          "profileId",
+          "contactRequestId",
+          "clientUserProfileId",
+          "providerProfileId",
+          "status",
+          "title",
+          "expectedResult",
+          "executionBrief",
+          "resultArtifactFormat",
+          "plannedAt",
+          "aggregateVersion",
+          "createdAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "needId": {
+            "type": "string"
+          },
+          "profileId": {
+            "type": "string"
+          },
+          "contactRequestId": {
+            "type": "string"
+          },
+          "conversationId": {
+            "type": "string"
+          },
+          "clientUserProfileId": {
+            "type": "string"
+          },
+          "providerProfileId": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/EngagementStatus"
+          },
+          "title": {
+            "type": "string"
+          },
+          "expectedResult": {
+            "type": "string"
+          },
+          "executionBrief": {
+            "$ref": "#/components/schemas/EngagementExecutionBrief"
+          },
+          "resultArtifactFormat": {
+            "type": "string",
+            "const": "structured_markdown"
+          },
+          "resultArtifact": {
+            "$ref": "#/components/schemas/EngagementResultArtifact"
+          },
+          "plannedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "cancelledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "cancellationReason": {
+            "type": "string"
+          },
+          "aggregateVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "DemoEngagementSimulationRequest": {
+        "type": "object",
+        "required": [
+          "need",
+          "contactRequest"
+        ],
+        "properties": {
+          "need": {
+            "$ref": "#/components/schemas/Need"
+          },
+          "contactRequest": {
+            "$ref": "#/components/schemas/ContactRequest"
+          },
+          "conversation": {
+            "$ref": "#/components/schemas/Conversation"
+          },
+          "brief": {
+            "$ref": "#/components/schemas/ConversationBrief"
+          }
+        }
+      },
+      "DemoEngagementSimulationResponse": {
+        "type": "object",
+        "required": [
+          "acceptedContactRequest",
+          "engagement",
+          "actor"
+        ],
+        "properties": {
+          "acceptedContactRequest": {
+            "$ref": "#/components/schemas/ContactRequest"
+          },
+          "engagement": {
+            "$ref": "#/components/schemas/Engagement"
+          },
+          "actor": {
+            "$ref": "#/components/schemas/AuthPrincipal"
+          }
+        }
+      },
+      "DemoEngagementTransitionRequest": {
+        "type": "object",
+        "required": [
+          "engagement",
+          "action"
+        ],
+        "properties": {
+          "engagement": {
+            "$ref": "#/components/schemas/Engagement"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "start",
+              "complete",
+              "cancel"
+            ]
+          },
+          "summary": {
+            "type": "string"
+          },
+          "nextStep": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "resultArtifact": {
+            "$ref": "#/components/schemas/EngagementResultArtifact"
+          }
+        }
+      },
+      "DemoEngagementTransitionResponse": {
+        "type": "object",
+        "required": [
+          "engagement",
+          "actor"
+        ],
+        "properties": {
+          "engagement": {
+            "$ref": "#/components/schemas/Engagement"
+          },
+          "actor": {
+            "$ref": "#/components/schemas/AuthPrincipal"
           }
         }
       }
