@@ -1,5 +1,13 @@
 # Research
 
+Раздел хранит research plans, source matrices, interview kits, обезличенные
+notes, evidence synthesis и выводы для product gates.
+
+## Active research
+
+- [Marketplace taxonomy research plan](./cifedra-marketplace-taxonomy-research-plan-2026-07-26.md) - пятидневный план исследования работ `WORK/LIFE/SKILLS`, human value, AI substitutability, safety и выбора primary vertical.
+- [Work SRS Review interview kit](./work-srs-review-interview-kit.md) - исторический/сценарный комплект интервью для первого Work baseline.
+
 Раздел хранит:
 
 - interview plans and scripts;

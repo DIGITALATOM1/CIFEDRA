@@ -1,7 +1,7 @@
 # CIFEDRA Risk Register
 
 Дата создания: 2026-06-20
-Дата обновления: 2026-06-26
+Дата обновления: 2026-07-26
 Статус: active
 
 Шкала:
@@ -32,6 +32,18 @@
 | R-019 | Life fixture воспринимается как разрешение реальных домашних услуг без trust/safety. | medium | critical | Synthetic local pilot only; no address, real provider or engagement. | Product/Security | Life gate |
 | R-020 | Provider-paid model выбирается без unit economics and legal analysis. | medium | high | Keep charging mechanism open until P1/pricing evidence. | Product/Legal | P1 |
 | R-021 | ContactRequest accidentally reveals contacts, exact address or confidential artifact data before mutual match. | medium | critical | ContactRequest SRS requires disclosure snapshots, consent policy version and negative tests before API exposure. | Product/Security | ContactRequest implementation |
+| R-022 | Одновременная реализация нескольких «популярных» сценариев в каждом направлении раздувает MVP. | high | critical | Wide discovery, one primary vertical slice; остальные сценарии остаются catalog/research scope. | Product/Delivery | Gate P0 |
+| R-023 | Точный LIFE-адрес раскрывается до mutual consent или человеку без достаточной verification. | medium | critical | Сохранять `DEC-028`; approximate geo before consent, field-level disclosure and audit. | Security/Product | LIFE gate |
+| R-024 | Резервирование, возврат и выплата денег запускаются без определения legal role, PSP contract, tax/fiscal and dispute process. | high | critical | Mock contract only до payment/legal SRS и country approval. | Product/Legal | Commercial gate |
+| R-025 | Широкий LIFE-каталог воспринимается как разрешение всех категорий в реальном пилоте. | high | critical | Safety tier matrix, prohibited list and category enablement feature flags. | Safety/Product | LIFE gate |
+| R-026 | Отдельные `.ru` и `.com` codebase расходятся по доменной модели, исправлениям и security controls. | medium | critical | One codebase; country config, localization, feature flags and deployment isolation. | Architecture | SRS-P11 |
+| R-027 | Декомпозиция запроса искусственно увеличивает число платных карточек и вызывает недоверие к тарифу. | high | high | Parent bundle rules, user confirmation, anti-gaming metric and pricing experiment. | Product/System | Pricing gate |
+| R-028 | Self-attested Verified Help и референсы позволяют накручивать trust. | high | high | Bilateral confirmation, evidence provenance, moderation and dispute path. | Safety/Product | SRS-P8 |
+| R-029 | Бессрочное хранение артефактов активного пользователя нарушает minimization, deletion или jurisdiction rules. | medium | critical | Data classes, purpose-based retention, user deletion, legal hold and country policy. | Security/Legal | D0 |
+| R-030 | Request, work card, Alliance, payment and Result смешиваются в одной канбан-карточке и одном status field. | high | high | Separate aggregates/state models and explicit projection for Board. | System/Architecture | R1 |
+| R-031 | Свободные AI-теги создают дубли, языковые варианты и нестабильные filters/matches. | high | high | Stable taxonomy IDs, localized labels, tag provenance and user/admin correction. | Product/System | SRS-P9 |
+| R-032 | Одна recurring-карточка перезаписывает историю периодов, оплат и результатов. | medium | high | Separate RecurringRule/template and immutable occurrence records. | System | SRS-P7 |
+| R-033 | Полностью автоматический AI matching показывает небезопасный или формально релевантный, но непригодный матч. | medium | critical | Hard constraints, explainability, quality threshold, evaluation dataset, audited escalation and user correction. | AI/Product/Safety | SRS-P4 |
 
 ## Escalation
 

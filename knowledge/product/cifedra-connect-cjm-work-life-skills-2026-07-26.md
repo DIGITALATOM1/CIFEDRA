@@ -362,6 +362,11 @@ Baseline
 блокирует: `P0` — MVP и безопасный пилот, `P1` — монетизацию и устойчивый
 product-market test, `P2` — масштабирование.
 
+Ответы владельца продукта от 2026-07-26 классифицированы в
+[questionnaire decision synthesis](./cifedra-questionnaire-decision-synthesis-2026-07-26.md).
+Вопрос остается открытым, если ответ отмечен как `Provisional`, `Conflict` или
+`Research required`.
+
 ### 9.1. Сквозные продуктовые вопросы
 
 | ID | Priority | Вопрос | Что блокирует |

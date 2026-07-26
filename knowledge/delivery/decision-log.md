@@ -40,6 +40,14 @@ Product and delivery decisions фиксируются здесь. Architecture d
 | DEC-027 | 2026-07-26 | ContactRequest default provider response timeout is 48 hours. | accepted | Time-bounded response is needed for clear kanban status and client expectations. | Владелец продукта | API/OpenAPI draft |
 | DEC-028 | 2026-07-26 | Target first-contact channel is embedded CIFEDRA messenger; before mutual acceptance the provider sees the client's display name and request/work description, but direct contacts and exact address remain hidden. | accepted | Product needs in-app communication and safe disclosure; Chatwoot remains support/ops, not the primary client UI. | Владелец продукта | Messenger MVP |
 | DEC-029 | 2026-07-26 | First Work result artifact format is structured Markdown. | accepted | Markdown is fast to produce, easy to review locally and can later be exported to DOCX/PDF. | Владелец продукта | Work MVP |
+| DEC-030 | 2026-07-26 | CIFEDRA remains human-to-human: AI structures requests, matches, explains and monitors, while people confirm terms, perform work and accept results. | accepted | Product-owner questionnaire; protection of human value in an AI-heavy market. | Владелец продукта | Always |
+| DEC-031 | 2026-07-26 | Minimum product promise includes the start of an Alliance and management of work execution, not only a relevant introduction. | accepted | Product-owner questionnaire. | Владелец продукта | Scenario selection gate |
+| DEC-032 | 2026-07-26 | Client and Ally use role-specific board views; proposed visible stages are discussion, planned work, in progress, result submitted and evaluation. | provisional | Labels require mapping to domain states and negative transitions. | Product/System | SRS-P5 |
+| DEC-033 | 2026-07-26 | A large request may create linked work cards with different Allies; recurring work creates scheduled occurrences. | accepted | Product-owner questionnaire; avoids one overloaded card. | Product/System | SRS-P3/P7 |
+| DEC-034 | 2026-07-26 | Russian and English remain first languages; German and Croatian are next localization candidates. | provisional | Product-owner questionnaire; activation depends on country/language readiness. | Product | Country gate |
+| DEC-035 | 2026-07-26 | Separate family and organization accounts are out of first MVP scope. | accepted | First release prioritizes personal Client/Ally contexts. | Product/System | Post-MVP review |
+| DEC-036 | 2026-07-26 | In-platform service payment through PSP adapters is the target hypothesis, but no real payment is approved for MVP yet. | provisional | Payment, refund, tax and marketplace roles require legal/commercial evidence. | Product/Legal | Commercial gate |
+| DEC-037 | 2026-07-26 | Three free work/Alliance cards with paid additional capacity is the first pricing hypothesis. | provisional | Must be tested against decomposition gaming, payer-side conflict and willingness to pay. | Product | Pricing experiment |
 
 ## Open decisions
 
@@ -51,3 +59,9 @@ Product and delivery decisions фиксируются здесь. Architecture d
 | OPEN-009 | Service payment flow | Through CIFEDRA / direct client-provider | Mock only until legal/payment SRS | Владелец продукта | Before PSP work |
 | OPEN-010 | Quick Review limit | 25 pages / 10,000 words / expert hours | 25 pages or 10,000 words | Владелец продукта | Before pilot offer |
 | OPEN-011 | Quick Review turnaround | One business day / two days / no promise | At least one business day | Владелец продукта | Before pilot offer |
+| OPEN-012 | Primary vertical slice | One WORK/LIFE/SKILLS scenario selected from research shortlist | Wide discovery, one implemented vertical | Владелец продукта | Gate P0 |
+| OPEN-013 | Payer side | Client / Ally / both / organization | Client vs both-side answers require pricing experiment | Владелец продукта | Commercial gate |
+| OPEN-014 | Paid capacity unit | Work card / Agreement / Active Alliance / hybrid | Do not consume paid capacity before confirmed Agreement | Владелец продукта | SRS-P5 and pricing experiment |
+| OPEN-015 | Result semantics | Payment / work completion / client acceptance / platform revenue | Separate transaction, work and business outcomes | Product/System | SRS-P8 |
+| OPEN-016 | Market topology | Two codebases / one configurable codebase | One codebase with country configuration | Architecture/Product | SRS-P11 |
+| OPEN-017 | Reference verification | Ally self-attestation / client confirmation / evidence / moderation | Bilateral confirmation with dispute path | Product/Safety | SRS-P8 |

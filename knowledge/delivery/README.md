@@ -12,6 +12,13 @@ Delivery-документы не заменяют:
 
 ## Текущий спринт
 
+Актуальный программный baseline:
+
+- [Project Improvement Roadmap: 2026-07-26](./cifedra-project-improvement-roadmap-2026-07-26.md).
+
+Предыдущие sprint backlog и evidence используются как historical delivery
+record до завершения baseline reset:
+
 - [Sprint backlog: 2026-06-22 - 2026-07-03](./sprint-2026-06-22-backlog.md);
 - [R0 evidence review: 2026-06-26](./sprint-r0-evidence-review-2026-06-26.md);
 - [ContactRequest SRS evidence: 2026-06-26](./contact-request-srs-evidence-2026-06-26.md);

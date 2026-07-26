@@ -30,6 +30,9 @@
 | [product/cifedra-service-platform-product-scope.md](./product/cifedra-service-platform-product-scope.md) | Стратегический scope универсальной платформы услуг Life / Work / Skills. |
 | [product/cifedra-connect-alliance-concept-2026-07-17.md](./product/cifedra-connect-alliance-concept-2026-07-17.md) | Актуальная продуктовая фиксация CIFEDRA Connect: Allies, Ally Request, AI Matching, Alliance Board, Active Alliances и trust/reference-модель. |
 | [product/cifedra-connect-cjm-work-life-skills-2026-07-26.md](./product/cifedra-connect-cjm-work-life-skills-2026-07-26.md) | Продуктовый CJM-пакет WORK / LIFE / SKILLS: путь ищущего и союзника, no-match, долгосрочный союз, service blueprint, метрики и открытые вопросы. |
+| [product/cifedra-questionnaire-decision-synthesis-2026-07-26.md](./product/cifedra-questionnaire-decision-synthesis-2026-07-26.md) | Классификация ответов владельца продукта: решения, гипотезы, противоречия, guardrails и gates. |
+| [research/cifedra-marketplace-taxonomy-research-plan-2026-07-26.md](./research/cifedra-marketplace-taxonomy-research-plan-2026-07-26.md) | План исследования популярных работ, human value и AI substitutability для выбора сценариев WORK / LIFE / SKILLS. |
+| [delivery/cifedra-project-improvement-roadmap-2026-07-26.md](./delivery/cifedra-project-improvement-roadmap-2026-07-26.md) | Единый 8-недельный roadmap улучшения проекта, SRS-план, агентная модель и ближайший backlog. |
 | [product/work-srs-review-product-brief.md](./product/work-srs-review-product-brief.md) | Provisional scope и оффер первого сценария Work / SRS Review. |
 | [research/work-srs-review-interview-kit.md](./research/work-srs-review-interview-kit.md) | Скрипты, target slots и правила первых client/expert interviews. |
 | [delivery/sprint-2026-06-22-backlog.md](./delivery/sprint-2026-06-22-backlog.md) | Исполнимый backlog текущего двухнедельного спринта. |
