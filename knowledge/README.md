@@ -28,6 +28,8 @@
 | [srs/core-p0-identity-profile-intake-clarification.md](./srs/core-p0-identity-profile-intake-clarification.md) | SRS первого Core P0 increment. |
 | [srs/core-p1-contact-request-consent.md](./srs/core-p1-contact-request-consent.md) | SRS первого post-match increment: ContactRequest, consent and disclosure baseline. |
 | [product/cifedra-service-platform-product-scope.md](./product/cifedra-service-platform-product-scope.md) | Стратегический scope универсальной платформы услуг Life / Work / Skills. |
+| [product/cifedra-connect-alliance-concept-2026-07-17.md](./product/cifedra-connect-alliance-concept-2026-07-17.md) | Актуальная продуктовая фиксация CIFEDRA Connect: Allies, Ally Request, AI Matching, Alliance Board, Active Alliances и trust/reference-модель. |
+| [product/cifedra-connect-cjm-work-life-skills-2026-07-26.md](./product/cifedra-connect-cjm-work-life-skills-2026-07-26.md) | Продуктовый CJM-пакет WORK / LIFE / SKILLS: путь ищущего и союзника, no-match, долгосрочный союз, service blueprint, метрики и открытые вопросы. |
 | [product/work-srs-review-product-brief.md](./product/work-srs-review-product-brief.md) | Provisional scope и оффер первого сценария Work / SRS Review. |
 | [research/work-srs-review-interview-kit.md](./research/work-srs-review-interview-kit.md) | Скрипты, target slots и правила первых client/expert interviews. |
 | [delivery/sprint-2026-06-22-backlog.md](./delivery/sprint-2026-06-22-backlog.md) | Исполнимый backlog текущего двухнедельного спринта. |

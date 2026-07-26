@@ -354,6 +354,10 @@ payouts, комиссий и внутренней экономики.
 
 ## 12. Открытые вопросы
 
+Детализированный реестр вопросов по сквозному пути и направлениям `WORK`,
+`LIFE`, `SKILLS` ведется в
+[CJM WORK / LIFE / SKILLS](./cifedra-connect-cjm-work-life-skills-2026-07-26.md).
+
 1. Первый market focus: `Work + Skills` или отдельная вертикаль внутри них.
 2. Какой тарифный лимит нужен для первого платного эксперимента: `Active Alliance`,
    `Ally Request` или гибрид.
@@ -366,6 +370,7 @@ payouts, комиссий и внутренней экономики.
 
 - [CIFEDRA CONNECT Product Scope](./cifedra-service-platform-product-scope.md)
 - [CIFEDRA Product Strategy Draft: Product Owner Review](./cifedra-product-strategy-product-owner-review-2026-06-26.md)
+- [CJM WORK / LIFE / SKILLS](./cifedra-connect-cjm-work-life-skills-2026-07-26.md)
 - [CJM по ролям](./cjm-by-roles.md)
 - [CJM по направлениям](./cjm-scenarios-gap-analysis.md)
 - [CIFEDRA Product Architecture](../../brand/cifedra/product-architecture.md)

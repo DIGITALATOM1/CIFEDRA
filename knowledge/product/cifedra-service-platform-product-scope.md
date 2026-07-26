@@ -194,6 +194,26 @@ configurations. Runtime translation, provider acceptance, execution and result
 
 ## 11. Open product questions
 
+### Concept update 2026-07-17
+
+Часть вопросов закрыта новым продуктовым решением
+[CIFEDRA Connect: alliance concept](./cifedra-connect-alliance-concept-2026-07-17.md):
+
+- внешний продуктовый язык: `Ally`, `Ally Request`, `Alliance`;
+- отсутствие точного матча обрабатывается через сохраненный `Ally Request`;
+- долгосрочное сотрудничество ведется как `Active Alliance`, а не как разовый контакт;
+- внутренний процесс управления матчами визуализируется через `Alliance Board`;
+- предварительная монетизация переносится от токенов и lead-only модели к лимиту
+  `Active Alliances`;
+- trust-модель строится на `Verified Help` and `Reference`.
+
+Технический язык `provider` в этом документе остается допустимым как legacy
+implementation vocabulary до отдельного SRS/refactoring решения.
+
+Полный реестр открытых вопросов по сквозному пути и каждому направлению
+зафиксирован в
+[CJM WORK / LIFE / SKILLS](./cifedra-connect-cjm-work-life-skills-2026-07-26.md).
+
 1. Как клиент подтверждает полезный Result для каждого из трех направлений?
 2. За что именно provider платит платформе: subscription, lead, commission or
    promoted placement?
@@ -203,6 +223,7 @@ configurations. Runtime translation, provider acceptance, execution and result
 ## 12. Related documents
 
 - [SRS Review validation brief](./work-srs-review-product-brief.md);
+- [CJM WORK / LIFE / SKILLS](./cifedra-connect-cjm-work-life-skills-2026-07-26.md);
 - [CJM scenarios](./cjm-scenarios-gap-analysis.md);
 - [Languages, translation and voice](../system/multilingual-voice-plan.md);
 - [Two-week execution plan](../system/cifedra-two-week-execution-plan-2026-06-22.md).
