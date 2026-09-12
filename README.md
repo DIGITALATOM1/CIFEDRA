@@ -96,3 +96,5 @@ npm run integrations:plane:start
 - Integration Diagnostics: `http://localhost:4177/web/test-console/diagnostics.html`
 - Plane CE: `http://localhost:8082`
 - Chatwoot CE: `http://localhost:8083`
+
+Концепция пилота SUNLEO / ПВУ: [три CJM и открытые решения](./knowledge/product/sunleo/README.md).
