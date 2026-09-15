@@ -6,11 +6,13 @@ export default defineConfig({
   server: {
     host: "127.0.0.1",
     port: 5173,
-    strictPort: true
+    strictPort: true,
+    proxy: { "/sunleo-api": "http://127.0.0.1:3038" }
   },
   preview: {
     host: "127.0.0.1",
     port: 5173,
-    strictPort: true
+    strictPort: true,
+    proxy: { "/sunleo-api": "http://127.0.0.1:3038" }
   }
 });
