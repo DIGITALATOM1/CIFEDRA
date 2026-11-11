@@ -5,6 +5,8 @@ notes, evidence synthesis и выводы для product gates.
 
 ## Active research
 
+- [Комплект проверки L01 / W01 / S01](./cifedra-three-scenarios-validation-kit-2026-11-12.md) — скринеры, вопросы, evidence и proposed правила review; интервью не проведены.
+
 - [Исследование площадок и 15 кандидатов, 12 ноября 2026](./cifedra-marketplace-research-2026-11-12.md) — источники, ограничения, shortlist и статус P0.
 - [Сценарии и функциональные приоритеты](../product/cifedra-scenarios-functional-priorities-2026-11-12.md) — девять сценариев, исключения и предложение состава MVP.
 

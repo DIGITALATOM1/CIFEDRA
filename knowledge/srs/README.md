@@ -18,6 +18,8 @@ Upstream для декомпозиции требований:
 
 ## Active SRS
 
+- [WORK Quick Review: сценарный SRS](./work-quick-review-scenario-spec-2026-11-12.md) — draft первого E2E, требования, состояния и acceptance examples; содержит proposed решения для review.
+
 - [Critical Use Cases клиентского MVP](./cifedra-mvp-critical-use-cases-2026-11-12.md);
 - [Core P0: Identity, Profile, Intake and Clarification](./core-p0-identity-profile-intake-clarification.md);
 - [Core P1: ContactRequest and Consent Baseline](./core-p1-contact-request-consent.md);

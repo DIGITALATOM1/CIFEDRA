@@ -12,6 +12,8 @@ Delivery-документы не заменяют:
 
 ## Текущий спринт
 
+- [Очередь проектирования сценария, 2026-11-12](./cifedra-scenario-design-backlog-2026-11-12.md) — текущие зависимости, draft SRS и следующий review.
+
 Актуальный программный baseline:
 
 - [Project Improvement Roadmap: 2026-07-26](./cifedra-project-improvement-roadmap-2026-07-26.md).
