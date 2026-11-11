@@ -36,6 +36,12 @@ CJM сценарии и gap-анализ: [knowledge/product/cjm-scenarios-gap-a
 
 High-Level Design: [knowledge/system/cifedra-hld.md](./knowledge/system/cifedra-hld.md).
 
+Актуальная архитектурная дельта MVP:
+[knowledge/system/cifedra-mvp-architecture-delta-2026-11-12.md](./knowledge/system/cifedra-mvp-architecture-delta-2026-11-12.md).
+
+User Story Map клиентского MVP:
+[knowledge/product/cifedra-user-story-map-mvp-2026-11-12.md](./knowledge/product/cifedra-user-story-map-mvp-2026-11-12.md).
+
 Аудит CJM и ядра: [knowledge/system/core-cjm-gap-analysis.md](./knowledge/system/core-cjm-gap-analysis.md).
 
 Утвержденные архитектурные решения: [knowledge/adr/README.md](./knowledge/adr/README.md).
@@ -96,5 +102,3 @@ npm run integrations:plane:start
 - Integration Diagnostics: `http://localhost:4177/web/test-console/diagnostics.html`
 - Plane CE: `http://localhost:8082`
 - Chatwoot CE: `http://localhost:8083`
-
-Концепция пилота SUNLEO / ПВУ: [три CJM и открытые решения](./knowledge/product/sunleo/README.md).

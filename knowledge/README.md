@@ -21,10 +21,12 @@
 
 | Документ | Назначение |
 | --- | --- |
+| [product/cifedra-user-story-map-mvp-2026-11-12.md](./product/cifedra-user-story-map-mvp-2026-11-12.md) | User Story Map клиентского MVP: backbone, истории, релизные срезы M0-M4 и трассировка на экраны/домены. |
 | [product/cjm-scenarios-gap-analysis.md](./product/cjm-scenarios-gap-analysis.md) | CJM по направлениям `Life`, `Work`, `Skills` и реестр неучтенных функций. |
 | [product/cjm-by-roles.md](./product/cjm-by-roles.md) | CJM клиента, помощника, оператора, администратора, организации и аналитика. |
 | [product/cifedra-product-strategy-product-owner-review-2026-06-26.md](./product/cifedra-product-strategy-product-owner-review-2026-06-26.md) | Product strategy draft, Vision Board and CJM review package handed to product owner. |
 | [srs/README.md](./srs/README.md) | Реестр SRS, acceptance criteria и traceability. |
+| [srs/cifedra-mvp-critical-use-cases-2026-11-12.md](./srs/cifedra-mvp-critical-use-cases-2026-11-12.md) | Критические Use Cases от Request до Result с альтернативами, правами, ошибками и traceability. |
 | [srs/core-p0-identity-profile-intake-clarification.md](./srs/core-p0-identity-profile-intake-clarification.md) | SRS первого Core P0 increment. |
 | [srs/core-p1-contact-request-consent.md](./srs/core-p1-contact-request-consent.md) | SRS первого post-match increment: ContactRequest, consent and disclosure baseline. |
 | [product/cifedra-service-platform-product-scope.md](./product/cifedra-service-platform-product-scope.md) | Стратегический scope универсальной платформы услуг Life / Work / Skills. |
@@ -33,6 +35,7 @@
 | [product/cifedra-questionnaire-decision-synthesis-2026-07-26.md](./product/cifedra-questionnaire-decision-synthesis-2026-07-26.md) | Классификация ответов владельца продукта: решения, гипотезы, противоречия, guardrails и gates. |
 | [research/cifedra-marketplace-taxonomy-research-plan-2026-07-26.md](./research/cifedra-marketplace-taxonomy-research-plan-2026-07-26.md) | План исследования популярных работ, human value и AI substitutability для выбора сценариев WORK / LIFE / SKILLS. |
 | [delivery/cifedra-project-improvement-roadmap-2026-07-26.md](./delivery/cifedra-project-improvement-roadmap-2026-07-26.md) | Единый 8-недельный roadmap улучшения проекта, SRS-план, агентная модель и ближайший backlog. |
+| [delivery/cifedra-m1a-vertical-slice-plan-2026-11-12.md](./delivery/cifedra-m1a-vertical-slice-plan-2026-11-12.md) | Первый исполнимый cross-role срез: authenticated WORK Quick Review от persisted Request до mutual ContactRequest. |
 | [product/work-srs-review-product-brief.md](./product/work-srs-review-product-brief.md) | Provisional scope и оффер первого сценария Work / SRS Review. |
 | [research/work-srs-review-interview-kit.md](./research/work-srs-review-interview-kit.md) | Скрипты, target slots и правила первых client/expert interviews. |
 | [delivery/sprint-2026-06-22-backlog.md](./delivery/sprint-2026-06-22-backlog.md) | Исполнимый backlog текущего двухнедельного спринта. |
@@ -53,6 +56,7 @@
 | [delivery/postgres-evidence-2026-06-26.md](./delivery/postgres-evidence-2026-06-26.md) | Evidence по local PostgreSQL compose, migrations, roles and repository spike. |
 | [delivery/vertical-flow-evidence-2026-06-26.md](./delivery/vertical-flow-evidence-2026-06-26.md) | Evidence по Life / Work / Skills vertical flows and local UAT metrics. |
 | [system/cifedra-hld.md](./system/cifedra-hld.md) | Формальный High-Level Design решения. |
+| [system/cifedra-mvp-architecture-delta-2026-11-12.md](./system/cifedra-mvp-architecture-delta-2026-11-12.md) | Authoritative MVP-дельта: post-contact lifecycle, messenger, Agreement, disclosure, Alliance, Result и AI/Ops boundary. |
 | [system/cifedra-target-architecture.md](./system/cifedra-target-architecture.md) | Каноническая архитектура локального и production-контуров. |
 | [system/cifedra-development-implementation-master-plan.md](./system/cifedra-development-implementation-master-plan.md) | Интегрированный roadmap разработки, внедрения и запуска. |
 | [system/cifedra-two-week-execution-plan-2026-06-22.md](./system/cifedra-two-week-execution-plan-2026-06-22.md) | Исполнимый план на 22 июня - 3 июля 2026 для владельца продукта и Codex. |

@@ -1,5 +1,10 @@
 # CIFEDRA CONNECT: High-Level Design
 
+> **MVP delta:** последовательность после ContactRequest, product messenger,
+> Agreement, disclosure, Alliance и Result уточнены в
+> [MVP Architecture Delta 2026-11-12](./cifedra-mvp-architecture-delta-2026-11-12.md).
+> До полной синхронизации HLD при противоречии применяется delta.
+
 Дата: 2026-06-20
 Дата обновления: 2026-06-26
 Версия: HLD v0.7

@@ -13,8 +13,12 @@
 SRS не должен зависеть от конкретного UI или внешнего продукта, если это не
 является явным требованием.
 
+Upstream для декомпозиции требований:
+[User Story Map клиентского MVP](../product/cifedra-user-story-map-mvp-2026-11-12.md).
+
 ## Active SRS
 
+- [Critical Use Cases клиентского MVP](./cifedra-mvp-critical-use-cases-2026-11-12.md);
 - [Core P0: Identity, Profile, Intake and Clarification](./core-p0-identity-profile-intake-clarification.md);
 - [Core P1: ContactRequest and Consent Baseline](./core-p1-contact-request-consent.md);
 - [Core P0 acceptance checklist](./core-p0-acceptance-checklist.md);

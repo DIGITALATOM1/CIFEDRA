@@ -1,7 +1,7 @@
 # CIFEDRA Decision Log
 
 Дата создания: 2026-06-20
-Дата обновления: 2026-07-26
+Дата обновления: 2026-11-12
 Статус: active
 
 ## Правило
@@ -48,6 +48,7 @@ Product and delivery decisions фиксируются здесь. Architecture d
 | DEC-035 | 2026-07-26 | Separate family and organization accounts are out of first MVP scope. | accepted | First release prioritizes personal Client/Ally contexts. | Product/System | Post-MVP review |
 | DEC-036 | 2026-07-26 | In-platform service payment through PSP adapters is the target hypothesis, but no real payment is approved for MVP yet. | provisional | Payment, refund, tax and marketplace roles require legal/commercial evidence. | Product/Legal | Commercial gate |
 | DEC-037 | 2026-07-26 | Three free work/Alliance cards with paid additional capacity is the first pricing hypothesis. | provisional | Must be tested against decomposition gaming, payer-side conflict and willingness to pay. | Product | Pricing experiment |
+| DEC-038 | 2026-11-12 | SUNLEO исключен из продукта и репозитория; дальнейшее проектирование и реализация ведутся только для CIFEDRA. | accepted | Явное решение владельца продукта; отдельный пилот размывал scope и не относится к целевой платформе Life / Work / Skills. | Владелец продукта | Always |
 
 ## Open decisions
 

@@ -1,5 +1,9 @@
 # CIFEDRA CONNECT: целевая архитектура
 
+> Актуальная дельта клиентского MVP:
+> [MVP Architecture Delta 2026-11-12](./cifedra-mvp-architecture-delta-2026-11-12.md).
+> Она уточняет product messenger, Agreement, disclosure и post-contact lifecycle.
+
 Дата: 2026-06-20
 Статус: target architecture v0.3
 
