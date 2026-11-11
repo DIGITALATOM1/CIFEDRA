@@ -5,6 +5,9 @@ notes, evidence synthesis и выводы для product gates.
 
 ## Active research
 
+- [Исследование площадок и 15 кандидатов, 12 ноября 2026](./cifedra-marketplace-research-2026-11-12.md) — источники, ограничения, shortlist и статус P0.
+- [Сценарии и функциональные приоритеты](../product/cifedra-scenarios-functional-priorities-2026-11-12.md) — девять сценариев, исключения и предложение состава MVP.
+
 - [Marketplace taxonomy research plan](./cifedra-marketplace-taxonomy-research-plan-2026-07-26.md) - пятидневный план исследования работ `WORK/LIFE/SKILLS`, human value, AI substitutability, safety и выбора primary vertical.
 - [Work SRS Review interview kit](./work-srs-review-interview-kit.md) - исторический/сценарный комплект интервью для первого Work baseline.
 
