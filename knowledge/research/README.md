@@ -5,6 +5,8 @@ notes, evidence synthesis и выводы для product gates.
 
 ## Active research
 
+- [Источники отбора сценариев WORK/LIFE](./cifedra-scenario-library-evidence-2026-11-15.md) — данные спроса отдельно от каталогов и гипотез; основания комплекта из 40 сценариев.
+
 - [Потребность, ЦА и выход на рынок, 2026-11-15](../product/cifedra-market-opportunity-audience-gtm-2026-11-15.md) — внешние сигналы, сравнение первых сегментов и план проверки коммерческой гипотезы.
 
 - [Комплект проверки L01 / W01 / S01](./cifedra-three-scenarios-validation-kit-2026-11-12.md) — скринеры, вопросы, evidence и proposed правила review; интервью не проведены.
