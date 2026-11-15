@@ -19,6 +19,9 @@
 
 ## Актуальные рабочие документы
 
+Подготовка графовой базы: [два графа WORK / LIFE](./product/cifedra-work-life-goal-graphs-2026-11-15.md) и [две структурированные базы](./product/scenario-bases/README.md).
+Потребности — продуктовая классификация; связи — proposed, без автоматического создания союзов.
+
 Последняя модель продукта: [WORK/LIFE, сценарии-результаты, декомпозиции и переиспользование](./product/cifedra-work-life-scenario-system-2026-11-15.md).
 Вход через ситуацию/цель заменяет обязательное «нужна помощь / могу помочь».
 Две библиотеки: [WORK — 20 сценариев](./product/cifedra-work-scenario-library-2026-11-15.md) и [LIFE — 20 сценариев](./product/cifedra-life-scenario-library-2026-11-15.md).

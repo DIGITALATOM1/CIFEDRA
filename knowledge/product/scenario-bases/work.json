@@ -1,0 +1,2906 @@
+{
+  "schemaVersion": "0.1",
+  "libraryId": "CIFEDRA-WORK",
+  "date": "2026-11-15",
+  "status": "preparation_draft",
+  "sourceMarkdown": "../cifedra-work-scenario-library-2026-11-15.md",
+  "humanNeedClassification": "product_hypothesis",
+  "balance": {
+    "dimensions": [
+      "time",
+      "energy",
+      "money",
+      "commitments",
+      "personal_priorities"
+    ],
+    "targets": null,
+    "note": "Целевые ограничения определяет сам человек; равное деление времени и автоматический баланс не предполагаются"
+  },
+  "executionInstances": [],
+  "alliances": [],
+  "nodes": [
+    {
+      "id": "GOAL-BALANCE",
+      "type": "life_orientation",
+      "title": "Устойчивая жизнь с возможностью выбирать",
+      "status": "proposed_personalizable",
+      "note": "Рамка, не универсальная цель каждого человека и не обещание продукта"
+    },
+    {
+      "id": "DOMAIN-WORK",
+      "type": "domain",
+      "title": "WORK",
+      "status": "product_direction"
+    },
+    {
+      "id": "NEED-W-INCOME",
+      "type": "need",
+      "title": "Доход и карьерная самостоятельность",
+      "status": "product_hypothesis",
+      "note": "Авторская классификация для навигации, не психологический стандарт"
+    },
+    {
+      "id": "NEED-W-GROWTH",
+      "type": "need",
+      "title": "Компетентность и профессиональное развитие",
+      "status": "product_hypothesis",
+      "note": "Авторская классификация для навигации, не психологический стандарт"
+    },
+    {
+      "id": "NEED-W-QUALITY",
+      "type": "need",
+      "title": "Качество и управляемость работы",
+      "status": "product_hypothesis",
+      "note": "Авторская классификация для навигации, не психологический стандарт"
+    },
+    {
+      "id": "NEED-W-VALUE",
+      "type": "need",
+      "title": "Создание ценности и собственного дела",
+      "status": "product_hypothesis",
+      "note": "Авторская классификация для навигации, не психологический стандарт"
+    },
+    {
+      "id": "NEED-W-COOP",
+      "type": "need",
+      "title": "Сотрудничество и совместный вклад",
+      "status": "product_hypothesis",
+      "note": "Авторская классификация для навигации, не психологический стандарт"
+    },
+    {
+      "id": "SC-W-01",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Подготовлен поиск подходящей работы",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть опыт, нужна новая роль; профиль, ограничения, целевые вакансии",
+      "expectedResult": "Выбраны вакансии и выполнены согласованные действия по поиску, без обещания оффера",
+      "potentialRoles": [
+        "Соискатель",
+        "карьерный практик"
+      ],
+      "acceptanceCriteria": "Есть согласованный shortlist и история действий",
+      "exception": "Нет подходящих вакансий: пересмотреть критерии с человеком",
+      "evidenceNote": "C/H R05",
+      "priorityAndRecurrence": "B; по циклу поиска",
+      "children": [
+        "SC-W-01.01",
+        "SC-W-01.02",
+        "SC-W-01.03",
+        "SC-W-01.04",
+        "SC-W-01.05"
+      ]
+    },
+    {
+      "id": "SC-W-01.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Целевая роль определена",
+      "parentId": "SC-W-01",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-01.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Опыт и ограничения описаны",
+      "parentId": "SC-W-01",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-01.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Профиль подготовлен",
+      "parentId": "SC-W-01",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-01.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Подходящие вакансии отобраны",
+      "parentId": "SC-W-01",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-01.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Отклики и исходы зафиксированы",
+      "parentId": "SC-W-01",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-02",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Проведена подготовка к собеседованию",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Назначено интервью; роль, уровень, язык, дата",
+      "expectedResult": "Репетиция проведена, обратная связь передана",
+      "potentialRoles": [
+        "Соискатель",
+        "практик-интервьюер"
+      ],
+      "acceptanceCriteria": "Практика и feedback соответствуют согласованной роли",
+      "exception": "Неявка: перенос; оффер не является приемкой",
+      "evidenceNote": "C/H R05; D-семейство coaching R01",
+      "priorityAndRecurrence": "A; серия",
+      "children": [
+        "SC-W-02.01",
+        "SC-W-02.02",
+        "SC-W-02.03",
+        "SC-W-02.04",
+        "SC-W-02.05"
+      ]
+    },
+    {
+      "id": "SC-W-02.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Контекст интервью подтвержден",
+      "parentId": "SC-W-02",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-02.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Критерии репетиции согласованы",
+      "parentId": "SC-W-02",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-02.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Репетиция проведена",
+      "parentId": "SC-W-02",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-02.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Обратная связь получена",
+      "parentId": "SC-W-02",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-02.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "План дальнейшей подготовки выбран",
+      "parentId": "SC-W-02",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-03",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Подтвержден профессиональный навык",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть задача/пробел; исходный уровень, целевой навык, время",
+      "expectedResult": "Участник самостоятельно выполняет согласованное упражнение",
+      "potentialRoles": [
+        "Учащийся",
+        "наставник",
+        "проверяющий при необходимости"
+      ],
+      "acceptanceCriteria": "Практическая работа сверена с rubric",
+      "exception": "Нет прогресса: изменить упражнение, а не объявить навык освоенным",
+      "evidenceNote": "D-семейство R01; конкретный пакет H",
+      "priorityAndRecurrence": "A; серия",
+      "children": [
+        "SC-W-03.01",
+        "SC-W-03.02",
+        "SC-W-03.03",
+        "SC-W-03.04",
+        "SC-W-03.05"
+      ]
+    },
+    {
+      "id": "SC-W-03.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Исходный уровень определен",
+      "parentId": "SC-W-03",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-03.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Практическая цель согласована",
+      "parentId": "SC-W-03",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-03.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Учебный маршрут выбран",
+      "parentId": "SC-W-03",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-03.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Упражнения выполнены",
+      "parentId": "SC-W-03",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-03.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Навык проверен по критериям",
+      "parentId": "SC-W-03",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-04",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Согласован участник для рабочей роли",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть роль/вклад; scope, условия, срок",
+      "expectedResult": "Стороны подтвердили подходящую кандидатуру и следующий шаг",
+      "potentialRoles": [
+        "Инициатор",
+        "кандидаты",
+        "оценщик"
+      ],
+      "acceptanceCriteria": "Есть согласие обеих сторон на одну роль и условия",
+      "exception": "Нет совпадения: сохранить поиск; не считать участие трудоустройством",
+      "evidenceNote": "D-семейство recruiting R01; партнерство H",
+      "priorityAndRecurrence": "B; по потребности",
+      "children": [
+        "SC-W-04.01",
+        "SC-W-04.02",
+        "SC-W-04.03",
+        "SC-W-04.04",
+        "SC-W-04.05"
+      ]
+    },
+    {
+      "id": "SC-W-04.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Потребность в роли подтверждена",
+      "parentId": "SC-W-04",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-04.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Критерии участия согласованы",
+      "parentId": "SC-W-04",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-04.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Подходящие кандидаты отобраны",
+      "parentId": "SC-W-04",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-04.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Взаимный интерес подтвержден",
+      "parentId": "SC-W-04",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-04.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Условия следующего шага согласованы",
+      "parentId": "SC-W-04",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-05",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Получено независимое ревью",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть draft; предмет, scope, срок, доступ",
+      "expectedResult": "Получены обоснованные замечания по согласованным критериям",
+      "potentialRoles": [
+        "Автор",
+        "предметный эксперт"
+      ],
+      "acceptanceCriteria": "Каждый criterion покрыт, замечания имеют обоснование",
+      "exception": "Scope изменен: новая версия условий; нельзя молча расширить ревью",
+      "evidenceNote": "C/H R05; WQR — гипотеза CIFEDRA",
+      "priorityAndRecurrence": "A; повторно",
+      "children": [
+        "SC-W-05.01",
+        "SC-W-05.02",
+        "SC-W-05.03",
+        "SC-W-05.04",
+        "SC-W-05.05"
+      ]
+    },
+    {
+      "id": "SC-W-05.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Объем ревью согласован",
+      "parentId": "SC-W-05",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-05.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Входная версия доступна",
+      "parentId": "SC-W-05",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-05.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Критерии проверки подтверждены",
+      "parentId": "SC-W-05",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-05.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Замечания обоснованы",
+      "parentId": "SC-W-05",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-05.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Результат ревью принят",
+      "parentId": "SC-W-05",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-06",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Проверена бизнес-гипотеза",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть идея; сегмент, проблема, бюджет эксперимента",
+      "expectedResult": "Получены наблюдения и решение продолжить/изменить/остановить",
+      "potentialRoles": [
+        "Инициатор",
+        "исследователь",
+        "добровольные участники"
+      ],
+      "acceptanceCriteria": "Отделены факты, интерпретация и решение",
+      "exception": "Выборка неполна: inconclusive, не подтверждение спроса",
+      "evidenceNote": "D-семейство research R01; пакет H",
+      "priorityAndRecurrence": "A; итерации",
+      "children": [
+        "SC-W-06.01",
+        "SC-W-06.02",
+        "SC-W-06.03",
+        "SC-W-06.04",
+        "SC-W-06.05"
+      ]
+    },
+    {
+      "id": "SC-W-06.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Проблема и сегмент сформулированы",
+      "parentId": "SC-W-06",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-06.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "План проверки согласован",
+      "parentId": "SC-W-06",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-06.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Наблюдения собраны",
+      "parentId": "SC-W-06",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-06.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Выводы отделены от допущений",
+      "parentId": "SC-W-06",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-06.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Решение по гипотезе принято",
+      "parentId": "SC-W-06",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-07",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Сайт или магазин готов к использованию",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть предложение; аудитория, каталог, сценарий заказа",
+      "expectedResult": "Согласованный пользовательский путь работает на разрешенном контуре",
+      "potentialRoles": [
+        "Заказчик",
+        "дизайнер",
+        "разработчик",
+        "тестировщик"
+      ],
+      "acceptanceCriteria": "Критический путь проверен, доступы переданы по правилам",
+      "exception": "Зависимость недоступна: тестовый контур и явный blocker",
+      "evidenceNote": "D-семейство R01; search-сигнал R10",
+      "priorityAndRecurrence": "B; проект",
+      "children": [
+        "SC-W-07.01",
+        "SC-W-07.02",
+        "SC-W-07.03",
+        "SC-W-07.04",
+        "SC-W-07.05",
+        "SC-W-07.06"
+      ]
+    },
+    {
+      "id": "SC-W-07.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Пользовательский путь согласован",
+      "parentId": "SC-W-07",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-07.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Прототип принят",
+      "parentId": "SC-W-07",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-07.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Функции реализованы",
+      "parentId": "SC-W-07",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-07.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Разрешенный контент подготовлен",
+      "parentId": "SC-W-07",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-07.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Критический путь проверен",
+      "parentId": "SC-W-07",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-07.06",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Передача согласована",
+      "parentId": "SC-W-07",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-08",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Согласованные дефекты устранены",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть продукт/дефект; воспроизведение, среда, права",
+      "expectedResult": "Согласованные дефекты исправлены и проверены",
+      "potentialRoles": [
+        "Владелец",
+        "разработчик",
+        "тестировщик"
+      ],
+      "acceptanceCriteria": "Согласованный тест проходит; побочные эффекты проверены",
+      "exception": "Ошибка не воспроизводится: собрать данные, не закрывать фиктивно",
+      "evidenceNote": "D-семейство testing/development R01",
+      "priorityAndRecurrence": "B; по релизам",
+      "children": [
+        "SC-W-08.01",
+        "SC-W-08.02",
+        "SC-W-08.03",
+        "SC-W-08.04",
+        "SC-W-08.05"
+      ]
+    },
+    {
+      "id": "SC-W-08.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Дефект воспроизведен",
+      "parentId": "SC-W-08",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-08.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Причина или ограничения диагностики установлены",
+      "parentId": "SC-W-08",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-08.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Способ исправления согласован",
+      "parentId": "SC-W-08",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-08.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Исправление выполнено",
+      "parentId": "SC-W-08",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-08.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Регрессия проверена",
+      "parentId": "SC-W-08",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-09",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Канал привлечения проверен",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть продукт; аудитория, оффер, предел расходов",
+      "expectedResult": "Проведен измеримый тест канала и сделан вывод",
+      "potentialRoles": [
+        "Владелец",
+        "маркетолог",
+        "дизайнер/аналитик"
+      ],
+      "acceptanceCriteria": "Расходы и события сверены, вывод соответствует данным",
+      "exception": "Нет лидов: разобрать гипотезу; не обещать продажи",
+      "evidenceNote": "D-семейство marketing R01; конкретный пакет H",
+      "priorityAndRecurrence": "B; итерации",
+      "children": [
+        "SC-W-09.01",
+        "SC-W-09.02",
+        "SC-W-09.03",
+        "SC-W-09.04",
+        "SC-W-09.05"
+      ]
+    },
+    {
+      "id": "SC-W-09.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Цель эксперимента согласована",
+      "parentId": "SC-W-09",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-09.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Оффер и аудитория определены",
+      "parentId": "SC-W-09",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-09.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Материалы и измерение готовы",
+      "parentId": "SC-W-09",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-09.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Тест проведен",
+      "parentId": "SC-W-09",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-09.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Вывод по данным принят",
+      "parentId": "SC-W-09",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-10",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Процесс обработки заявок работает",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть обращения; стадии, ответственные, каналы",
+      "expectedResult": "Заявки проходят процесс без необъясненных потерь",
+      "potentialRoles": [
+        "Владелец",
+        "координатор",
+        "CRM-практик"
+      ],
+      "acceptanceCriteria": "Тестовые обращения имеют ответственного и конечный исход",
+      "exception": "Сбой канала: резервный учет и повтор без дублей",
+      "evidenceNote": "D-семейство automation R01; search R10",
+      "priorityAndRecurrence": "B; проект/повтор",
+      "children": [
+        "SC-W-10.01",
+        "SC-W-10.02",
+        "SC-W-10.03",
+        "SC-W-10.04",
+        "SC-W-10.05"
+      ]
+    },
+    {
+      "id": "SC-W-10.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Стадии и роли согласованы",
+      "parentId": "SC-W-10",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-10.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Правила учета определены",
+      "parentId": "SC-W-10",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-10.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Рабочий контур подготовлен",
+      "parentId": "SC-W-10",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-10.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Пробные обращения обработаны",
+      "parentId": "SC-W-10",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-10.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Ответственные приняли процесс",
+      "parentId": "SC-W-10",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-11",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Комплект визуальных материалов принят",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть продукт/событие; brief, формат, права",
+      "expectedResult": "Принят комплект материалов по согласованному brief",
+      "potentialRoles": [
+        "Заказчик",
+        "дизайнер",
+        "фотограф/видеограф",
+        "редактор"
+      ],
+      "acceptanceCriteria": "Комплект соответствует brief и перечню форматов",
+      "exception": "Не подтверждены права/факты: не выпускать спорный материал",
+      "evidenceNote": "D-семейство design/video R01,R06",
+      "priorityAndRecurrence": "B; пакет",
+      "children": [
+        "SC-W-11.01",
+        "SC-W-11.02",
+        "SC-W-11.03",
+        "SC-W-11.04",
+        "SC-W-11.05"
+      ]
+    },
+    {
+      "id": "SC-W-11.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Brief согласован",
+      "parentId": "SC-W-11",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-11.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Концепция выбрана",
+      "parentId": "SC-W-11",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-11.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Исходные материалы разрешены",
+      "parentId": "SC-W-11",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-11.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Комплект произведен",
+      "parentId": "SC-W-11",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-11.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Форматы и содержание проверены",
+      "parentId": "SC-W-11",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-12",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Управленческий отчет сверен",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть разрешенные данные; определения показателей, период",
+      "expectedResult": "Показатели сверены, отклонения объяснены",
+      "potentialRoles": [
+        "Владелец данных",
+        "аналитик",
+        "принимающий"
+      ],
+      "acceptanceCriteria": "Итоги воспроизводимы по согласованным определениям",
+      "exception": "Данные неполны: показать ограничения и не выдумывать значения",
+      "evidenceNote": "D-семейство analytics R01",
+      "priorityAndRecurrence": "B; ежемесячно",
+      "children": [
+        "SC-W-12.01",
+        "SC-W-12.02",
+        "SC-W-12.03",
+        "SC-W-12.04",
+        "SC-W-12.05"
+      ]
+    },
+    {
+      "id": "SC-W-12.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Определения показателей согласованы",
+      "parentId": "SC-W-12",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-12.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Данные разрешены и собраны",
+      "parentId": "SC-W-12",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-12.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Расчеты выполнены",
+      "parentId": "SC-W-12",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-12.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Расхождения объяснены",
+      "parentId": "SC-W-12",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-12.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Отчет принят владельцем",
+      "parentId": "SC-W-12",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-13",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Финансовый план проекта проверен",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть цели и расходы; допущения, горизонт, ограничения",
+      "expectedResult": "Подготовлена модель вариантов и рисков для решения владельца",
+      "potentialRoles": [
+        "Инициатор",
+        "финансовый практик"
+      ],
+      "acceptanceCriteria": "Формулы и исходные допущения проверены, решение за человеком",
+      "exception": "Неподтвержденные допущения выделены; доход не гарантируется",
+      "evidenceNote": "D-семейство financial modeling R01; пакет H",
+      "priorityAndRecurrence": "B/G; проект",
+      "children": [
+        "SC-W-13.01",
+        "SC-W-13.02",
+        "SC-W-13.03",
+        "SC-W-13.04",
+        "SC-W-13.05"
+      ]
+    },
+    {
+      "id": "SC-W-13.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Исходные допущения согласованы",
+      "parentId": "SC-W-13",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-13.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Модель собрана",
+      "parentId": "SC-W-13",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-13.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Расчеты проверены",
+      "parentId": "SC-W-13",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-13.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Чувствительность оценена",
+      "parentId": "SC-W-13",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-13.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Вариант действий выбран владельцем",
+      "parentId": "SC-W-13",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-14",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Документальный пакет готов",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть операция/период; тип документов, юрисдикция, права",
+      "expectedResult": "Согласованный пакет проверен компетентным участником",
+      "potentialRoles": [
+        "Заказчик",
+        "квалифицированный специалист"
+      ],
+      "acceptanceCriteria": "Перечень комплектен, версия и проверяющий зафиксированы",
+      "exception": "Не хватает основания/полномочий: запросить, не подменять заключение",
+      "evidenceNote": "C R04,R05; конкретный пакет H",
+      "priorityAndRecurrence": "B/G; по периоду",
+      "children": [
+        "SC-W-14.01",
+        "SC-W-14.02",
+        "SC-W-14.03",
+        "SC-W-14.04",
+        "SC-W-14.05"
+      ]
+    },
+    {
+      "id": "SC-W-14.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Перечень и контекст определены",
+      "parentId": "SC-W-14",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-14.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Основания и данные собраны",
+      "parentId": "SC-W-14",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-14.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Пакет подготовлен",
+      "parentId": "SC-W-14",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-14.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Проверка компетентным участником проведена",
+      "parentId": "SC-W-14",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-14.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Пакет передан и принят",
+      "parentId": "SC-W-14",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-15",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Повторяющийся процесс улучшен",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть рутина; шаги, данные, ошибки, допустимые инструменты",
+      "expectedResult": "На тестовых случаях работает согласованное улучшение",
+      "potentialRoles": [
+        "Владелец процесса",
+        "automation-практик",
+        "пользователь"
+      ],
+      "acceptanceCriteria": "Happy path и сбой проходят проверку с участием пользователя",
+      "exception": "Нет безопасного доступа: synthetic spike, не production запуск",
+      "evidenceNote": "D-семейство R01; search R10",
+      "priorityAndRecurrence": "B; проект",
+      "children": [
+        "SC-W-15.01",
+        "SC-W-15.02",
+        "SC-W-15.03",
+        "SC-W-15.04",
+        "SC-W-15.05"
+      ]
+    },
+    {
+      "id": "SC-W-15.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Исходный процесс описан",
+      "parentId": "SC-W-15",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-15.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Участок улучшения выбран",
+      "parentId": "SC-W-15",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-15.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Прототип изменения готов",
+      "parentId": "SC-W-15",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-15.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Нормальные и сбойные случаи проверены",
+      "parentId": "SC-W-15",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-15.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Пользователи освоили согласованный процесс",
+      "parentId": "SC-W-15",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-16",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Результат небольшого проекта принят",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть цель; scope, команда, ресурсы",
+      "expectedResult": "Приняты согласованные результаты этапов",
+      "potentialRoles": [
+        "Инициатор",
+        "координатор",
+        "участники"
+      ],
+      "acceptanceCriteria": "Обязательные deliverables приняты уполномоченными участниками",
+      "exception": "Задержка зависимости: пересогласовать план, не сдвигать скрыто",
+      "evidenceNote": "D-семейство project management R01; пакет H",
+      "priorityAndRecurrence": "B; проект",
+      "children": [
+        "SC-W-16.01",
+        "SC-W-16.02",
+        "SC-W-16.03",
+        "SC-W-16.04",
+        "SC-W-16.05"
+      ]
+    },
+    {
+      "id": "SC-W-16.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Цель и границы согласованы",
+      "parentId": "SC-W-16",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-16.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Частные результаты определены",
+      "parentId": "SC-W-16",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-16.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Вклады участников согласованы",
+      "parentId": "SC-W-16",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-16.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Результаты этапов получены",
+      "parentId": "SC-W-16",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-16.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Обязательные результаты приняты",
+      "parentId": "SC-W-16",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-17",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Принято решение о готовности бизнеса к запуску",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть идея/ресурсы; формат, место, бюджет",
+      "expectedResult": "Пройден согласованный readiness-review запуска",
+      "potentialRoles": [
+        "Предприниматель",
+        "предметные практики",
+        "поставщики"
+      ],
+      "acceptanceCriteria": "Участник принял решение по явному checklist готовности",
+      "exception": "Не выполнены prerequisites: no-go, а не обещание открытия",
+      "evidenceNote": "H; смежные C R05",
+      "priorityAndRecurrence": "B/G; составной",
+      "children": [
+        "SC-W-17.01",
+        "SC-W-17.02",
+        "SC-W-17.03",
+        "SC-W-17.04",
+        "SC-W-17.05",
+        "SC-W-17.06"
+      ]
+    },
+    {
+      "id": "SC-W-17.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Гипотеза проверена",
+      "parentId": "SC-W-17",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-17.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Бизнес-модель оценена",
+      "parentId": "SC-W-17",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-17.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Ресурсы подтверждены",
+      "parentId": "SC-W-17",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-17.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Подготовка завершена в согласованном объеме",
+      "parentId": "SC-W-17",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-17.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Готовность проверена",
+      "parentId": "SC-W-17",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-17.06",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Решение о запуске принято",
+      "parentId": "SC-W-17",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-18",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Коммерческое помещение готово к согласованной передаче",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть объект; полномочия, параметры, условия, цель",
+      "expectedResult": "Объект передан/подготовлен по согласованным критериям",
+      "potentialRoles": [
+        "Владелец",
+        "потенциальный пользователь",
+        "специалист по объекту"
+      ],
+      "acceptanceCriteria": "Подписано решение о передаче либо принят checklist подготовки",
+      "exception": "Объект не подходит: показать gaps; не гарантировать арендатора",
+      "evidenceNote": "H; смежные C R05",
+      "priorityAndRecurrence": "B/G; проект",
+      "children": [
+        "SC-W-18.01",
+        "SC-W-18.02",
+        "SC-W-18.03",
+        "SC-W-18.04",
+        "SC-W-18.05"
+      ]
+    },
+    {
+      "id": "SC-W-18.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Состояние и полномочия установлены",
+      "parentId": "SC-W-18",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-18.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Требования использования согласованы",
+      "parentId": "SC-W-18",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-18.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Условия передачи согласованы",
+      "parentId": "SC-W-18",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-18.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Нужные работы приняты",
+      "parentId": "SC-W-18",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-18.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Готовность и передача подтверждены",
+      "parentId": "SC-W-18",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-19",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Деловое мероприятие проведено",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть цель и аудитория; дата, площадка, вместимость, бюджет",
+      "expectedResult": "Событие проведено, согласованные услуги приняты",
+      "potentialRoles": [
+        "Организатор",
+        "ведущий",
+        "площадка",
+        "технические исполнители"
+      ],
+      "acceptanceCriteria": "Согласованная программа выполнена, отклонения зафиксированы",
+      "exception": "Отмена/недобор: явное решение по плану и условиям",
+      "evidenceNote": "C R04,R05; пакет H",
+      "priorityAndRecurrence": "B/G; событие",
+      "children": [
+        "SC-W-19.01",
+        "SC-W-19.02",
+        "SC-W-19.03",
+        "SC-W-19.04",
+        "SC-W-19.05",
+        "SC-W-19.06"
+      ]
+    },
+    {
+      "id": "SC-W-19.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Цель и программа согласованы",
+      "parentId": "SC-W-19",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-19.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Участники и площадка подтверждены",
+      "parentId": "SC-W-19",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-19.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Вклады подрядчиков согласованы",
+      "parentId": "SC-W-19",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-19.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Подготовка принята",
+      "parentId": "SC-W-19",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-19.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Программа проведена",
+      "parentId": "SC-W-19",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-19.06",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Итоги зафиксированы",
+      "parentId": "SC-W-19",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-20",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Партнерский вклад или поставка приняты",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть предложение бренда/поставщика и потребность партнера; требования, объем, место",
+      "expectedResult": "Принят согласованный вклад: поставка, обучение или этап запуска",
+      "potentialRoles": [
+        "Поставщик/бренд",
+        "заказчик/партнер",
+        "проверяющий"
+      ],
+      "acceptanceCriteria": "Каждый вклад принят отдельно; общий запуск не подменяет поставку",
+      "exception": "Нет согласия бренда/товара: не выдавать подбор за одобрение",
+      "evidenceNote": "H; смежные C R05",
+      "priorityAndRecurrence": "B/G; контракт",
+      "children": [
+        "SC-W-20.01",
+        "SC-W-20.02",
+        "SC-W-20.03",
+        "SC-W-20.04",
+        "SC-W-20.05"
+      ]
+    },
+    {
+      "id": "SC-W-20.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Потребность партнера подтверждена",
+      "parentId": "SC-W-20",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-20.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Спецификация согласована",
+      "parentId": "SC-W-20",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-20.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Условия вклада подтверждены",
+      "parentId": "SC-W-20",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-20.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Поставка или вклад выполнены",
+      "parentId": "SC-W-20",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-W-20.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Состав и качество приняты",
+      "parentId": "SC-W-20",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    }
+  ],
+  "edges": [
+    {
+      "from": "GOAL-BALANCE",
+      "to": "DOMAIN-WORK",
+      "type": "framing",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "DOMAIN-WORK",
+      "to": "NEED-W-INCOME",
+      "type": "need_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-INCOME",
+      "to": "SC-W-01",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-INCOME",
+      "to": "SC-W-02",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "DOMAIN-WORK",
+      "to": "NEED-W-GROWTH",
+      "type": "need_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-GROWTH",
+      "to": "SC-W-03",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-GROWTH",
+      "to": "SC-W-05",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "DOMAIN-WORK",
+      "to": "NEED-W-QUALITY",
+      "type": "need_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-QUALITY",
+      "to": "SC-W-08",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-QUALITY",
+      "to": "SC-W-12",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-QUALITY",
+      "to": "SC-W-13",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-QUALITY",
+      "to": "SC-W-14",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-QUALITY",
+      "to": "SC-W-15",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-QUALITY",
+      "to": "SC-W-16",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "DOMAIN-WORK",
+      "to": "NEED-W-VALUE",
+      "type": "need_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-VALUE",
+      "to": "SC-W-06",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-VALUE",
+      "to": "SC-W-07",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-VALUE",
+      "to": "SC-W-09",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-VALUE",
+      "to": "SC-W-10",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-VALUE",
+      "to": "SC-W-11",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-VALUE",
+      "to": "SC-W-17",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-VALUE",
+      "to": "SC-W-18",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "DOMAIN-WORK",
+      "to": "NEED-W-COOP",
+      "type": "need_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-COOP",
+      "to": "SC-W-04",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-COOP",
+      "to": "SC-W-19",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-W-COOP",
+      "to": "SC-W-20",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "SC-W-01",
+      "to": "SC-W-01.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-01",
+      "to": "SC-W-01.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-01",
+      "to": "SC-W-01.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-01",
+      "to": "SC-W-01.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-01",
+      "to": "SC-W-01.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-02",
+      "to": "SC-W-02.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-02",
+      "to": "SC-W-02.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-02",
+      "to": "SC-W-02.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-02",
+      "to": "SC-W-02.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-02",
+      "to": "SC-W-02.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-03",
+      "to": "SC-W-03.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-03",
+      "to": "SC-W-03.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-03",
+      "to": "SC-W-03.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-03",
+      "to": "SC-W-03.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-03",
+      "to": "SC-W-03.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-04",
+      "to": "SC-W-04.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-04",
+      "to": "SC-W-04.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-04",
+      "to": "SC-W-04.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-04",
+      "to": "SC-W-04.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-04",
+      "to": "SC-W-04.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-05",
+      "to": "SC-W-05.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-05",
+      "to": "SC-W-05.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-05",
+      "to": "SC-W-05.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-05",
+      "to": "SC-W-05.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-05",
+      "to": "SC-W-05.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-06",
+      "to": "SC-W-06.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-06",
+      "to": "SC-W-06.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-06",
+      "to": "SC-W-06.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-06",
+      "to": "SC-W-06.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-06",
+      "to": "SC-W-06.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-07",
+      "to": "SC-W-07.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-07",
+      "to": "SC-W-07.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-07",
+      "to": "SC-W-07.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-07",
+      "to": "SC-W-07.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-07",
+      "to": "SC-W-07.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-07",
+      "to": "SC-W-07.06",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-08",
+      "to": "SC-W-08.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-08",
+      "to": "SC-W-08.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-08",
+      "to": "SC-W-08.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-08",
+      "to": "SC-W-08.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-08",
+      "to": "SC-W-08.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-09",
+      "to": "SC-W-09.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-09",
+      "to": "SC-W-09.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-09",
+      "to": "SC-W-09.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-09",
+      "to": "SC-W-09.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-09",
+      "to": "SC-W-09.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-10",
+      "to": "SC-W-10.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-10",
+      "to": "SC-W-10.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-10",
+      "to": "SC-W-10.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-10",
+      "to": "SC-W-10.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-10",
+      "to": "SC-W-10.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-11",
+      "to": "SC-W-11.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-11",
+      "to": "SC-W-11.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-11",
+      "to": "SC-W-11.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-11",
+      "to": "SC-W-11.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-11",
+      "to": "SC-W-11.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-12",
+      "to": "SC-W-12.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-12",
+      "to": "SC-W-12.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-12",
+      "to": "SC-W-12.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-12",
+      "to": "SC-W-12.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-12",
+      "to": "SC-W-12.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-13",
+      "to": "SC-W-13.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-13",
+      "to": "SC-W-13.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-13",
+      "to": "SC-W-13.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-13",
+      "to": "SC-W-13.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-13",
+      "to": "SC-W-13.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-14",
+      "to": "SC-W-14.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-14",
+      "to": "SC-W-14.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-14",
+      "to": "SC-W-14.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-14",
+      "to": "SC-W-14.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-14",
+      "to": "SC-W-14.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-15",
+      "to": "SC-W-15.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-15",
+      "to": "SC-W-15.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-15",
+      "to": "SC-W-15.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-15",
+      "to": "SC-W-15.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-15",
+      "to": "SC-W-15.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-16",
+      "to": "SC-W-16.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-16",
+      "to": "SC-W-16.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-16",
+      "to": "SC-W-16.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-16",
+      "to": "SC-W-16.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-16",
+      "to": "SC-W-16.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-17",
+      "to": "SC-W-17.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-17",
+      "to": "SC-W-17.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-17",
+      "to": "SC-W-17.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-17",
+      "to": "SC-W-17.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-17",
+      "to": "SC-W-17.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-17",
+      "to": "SC-W-17.06",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-18",
+      "to": "SC-W-18.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-18",
+      "to": "SC-W-18.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-18",
+      "to": "SC-W-18.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-18",
+      "to": "SC-W-18.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-18",
+      "to": "SC-W-18.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-19",
+      "to": "SC-W-19.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-19",
+      "to": "SC-W-19.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-19",
+      "to": "SC-W-19.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-19",
+      "to": "SC-W-19.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-19",
+      "to": "SC-W-19.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-19",
+      "to": "SC-W-19.06",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-20",
+      "to": "SC-W-20.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-20",
+      "to": "SC-W-20.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-20",
+      "to": "SC-W-20.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-20",
+      "to": "SC-W-20.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-W-20",
+      "to": "SC-W-20.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "id": "H-WORK-1",
+      "from": "SC-W-05",
+      "to": "SC-W-08",
+      "type": "supports",
+      "label": "Ревью может дать вход для исправления",
+      "conditions": [
+        "Замечание действительно описывает дефект того же продукта и версии",
+        "Подтверждены актуальность, сроки, вклад, права доступа и согласие соответствующих участников"
+      ],
+      "status": "proposed",
+      "autoCreateAlliance": false,
+      "causalityProven": false
+    },
+    {
+      "id": "H-WORK-2",
+      "from": "SC-W-06",
+      "to": "SC-W-17.01",
+      "type": "candidate_reuse",
+      "label": "Проверка гипотезы может закрыть частный результат запуска",
+      "conditions": [
+        "Одна гипотеза и контекст; сопоставление критериев еще требует review",
+        "Подтверждены актуальность, сроки, вклад, права доступа и согласие соответствующих участников"
+      ],
+      "status": "proposed",
+      "autoCreateAlliance": false,
+      "causalityProven": false
+    },
+    {
+      "id": "H-WORK-3",
+      "from": "SC-W-07",
+      "to": "SC-W-09",
+      "type": "optional_support",
+      "label": "Готовый сайт может быть ресурсом теста привлечения",
+      "conditions": [
+        "Тест действительно использует этот сайт, доступ и измерение готовы",
+        "Подтверждены актуальность, сроки, вклад, права доступа и согласие соответствующих участников"
+      ],
+      "status": "proposed",
+      "autoCreateAlliance": false,
+      "causalityProven": false
+    },
+    {
+      "id": "H-WORK-4",
+      "from": "SC-W-18",
+      "to": "SC-W-17",
+      "type": "optional_support",
+      "label": "Готовое помещение может быть ресурсом открытия",
+      "conditions": [
+        "Выбран офлайн-формат; пригодность и условия подтверждены",
+        "Подтверждены актуальность, сроки, вклад, права доступа и согласие соответствующих участников"
+      ],
+      "status": "proposed",
+      "autoCreateAlliance": false,
+      "causalityProven": false
+    },
+    {
+      "id": "H-WORK-5",
+      "from": "SC-W-20",
+      "to": "SC-W-17.04",
+      "type": "supports",
+      "label": "Принятый партнерский вклад может обеспечить часть подготовки",
+      "conditions": [
+        "Конкретный состав поставки/вклада входит в scope запуска; не вся готовность сразу",
+        "Подтверждены актуальность, сроки, вклад, права доступа и согласие соответствующих участников"
+      ],
+      "status": "proposed",
+      "autoCreateAlliance": false,
+      "causalityProven": false
+    }
+  ]
+}

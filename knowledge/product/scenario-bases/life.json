@@ -1,0 +1,2958 @@
+{
+  "schemaVersion": "0.1",
+  "libraryId": "CIFEDRA-LIFE",
+  "date": "2026-11-15",
+  "status": "preparation_draft",
+  "sourceMarkdown": "../cifedra-life-scenario-library-2026-11-15.md",
+  "humanNeedClassification": "product_hypothesis",
+  "balance": {
+    "dimensions": [
+      "time",
+      "energy",
+      "money",
+      "commitments",
+      "personal_priorities"
+    ],
+    "targets": null,
+    "note": "Целевые ограничения определяет сам человек; равное деление времени и автоматический баланс не предполагаются"
+  },
+  "executionInstances": [],
+  "alliances": [],
+  "nodes": [
+    {
+      "id": "GOAL-BALANCE",
+      "type": "life_orientation",
+      "title": "Устойчивая жизнь с возможностью выбирать",
+      "status": "proposed_personalizable",
+      "note": "Рамка, не универсальная цель каждого человека и не обещание продукта"
+    },
+    {
+      "id": "DOMAIN-LIFE",
+      "type": "domain",
+      "title": "LIFE",
+      "status": "product_direction"
+    },
+    {
+      "id": "NEED-L-HOME",
+      "type": "need",
+      "title": "Безопасность и комфорт среды",
+      "status": "product_hypothesis",
+      "note": "Авторская классификация для навигации, не психологический стандарт"
+    },
+    {
+      "id": "NEED-L-TIME",
+      "type": "need",
+      "title": "Время и посильная повседневная нагрузка",
+      "status": "product_hypothesis",
+      "note": "Авторская классификация для навигации, не психологический стандарт"
+    },
+    {
+      "id": "NEED-L-MOVE",
+      "type": "need",
+      "title": "Мобильность и изменения в жизни",
+      "status": "product_hypothesis",
+      "note": "Авторская классификация для навигации, не психологический стандарт"
+    },
+    {
+      "id": "NEED-L-SOCIAL",
+      "type": "need",
+      "title": "Общение и принадлежность",
+      "status": "product_hypothesis",
+      "note": "Авторская классификация для навигации, не психологический стандарт"
+    },
+    {
+      "id": "NEED-L-GROWTH",
+      "type": "need",
+      "title": "Развитие и самовыражение",
+      "status": "product_hypothesis",
+      "note": "Авторская классификация для навигации, не психологический стандарт"
+    },
+    {
+      "id": "SC-L-01",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Дом убран по согласованному стандарту",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть жилье; площадь, помещения, исключения, слот",
+      "expectedResult": "Согласованные зоны убраны и приняты",
+      "potentialRoles": [
+        "Житель/заказчик",
+        "специалист"
+      ],
+      "acceptanceCriteria": "Все обязательные пункты checklist приняты",
+      "exception": "Неявка: перенос/замена только по согласованию",
+      "evidenceNote": "D-семейство R09; C R03,R04",
+      "priorityAndRecurrence": "A/G; регулярно",
+      "children": [
+        "SC-L-01.01",
+        "SC-L-01.02",
+        "SC-L-01.03",
+        "SC-L-01.04",
+        "SC-L-01.05"
+      ]
+    },
+    {
+      "id": "SC-L-01.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Зоны и исключения согласованы",
+      "parentId": "SC-L-01",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-01.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Время и условия доступа подтверждены",
+      "parentId": "SC-L-01",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-01.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Средства и инвентарь подготовлены",
+      "parentId": "SC-L-01",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-01.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Уборка выполнена",
+      "parentId": "SC-L-01",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-01.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Checklist принят",
+      "parentId": "SC-L-01",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-02",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Жилье приведено в порядок после ремонта или события",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть загрязнение; состояние, виды работ, ограничения",
+      "expectedResult": "Принят отдельный перечень глубокой уборки",
+      "potentialRoles": [
+        "Заказчик",
+        "специалист"
+      ],
+      "acceptanceCriteria": "Условия исключений и checklist сверены",
+      "exception": "Обнаружен иной объем: пересогласовать, не доплатить автоматически",
+      "evidenceNote": "C R03,R04; пакет H",
+      "priorityAndRecurrence": "B/G; эпизодически",
+      "children": [
+        "SC-L-02.01",
+        "SC-L-02.02",
+        "SC-L-02.03",
+        "SC-L-02.04",
+        "SC-L-02.05"
+      ]
+    },
+    {
+      "id": "SC-L-02.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Исходное состояние оценено",
+      "parentId": "SC-L-02",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-02.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Объем глубокой уборки согласован",
+      "parentId": "SC-L-02",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-02.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Средства и ограничения подтверждены",
+      "parentId": "SC-L-02",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-02.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Работы выполнены",
+      "parentId": "SC-L-02",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-02.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Согласованные зоны приняты",
+      "parentId": "SC-L-02",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-03",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Мебель собрана и проверена",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть изделия; модели, детали, инструмент, место",
+      "expectedResult": "Изделия собраны и согласованные проверки пройдены",
+      "potentialRoles": [
+        "Владелец",
+        "сборщик"
+      ],
+      "acceptanceCriteria": "Изделия и дефекты сверены с перечнем",
+      "exception": "Не хватает детали: blocker; не считать завершенным",
+      "evidenceNote": "D-семейство R09; C R03",
+      "priorityAndRecurrence": "A/G; по покупке",
+      "children": [
+        "SC-L-03.01",
+        "SC-L-03.02",
+        "SC-L-03.03",
+        "SC-L-03.04",
+        "SC-L-03.05"
+      ]
+    },
+    {
+      "id": "SC-L-03.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Комплектация проверена",
+      "parentId": "SC-L-03",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-03.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Условия и размещение согласованы",
+      "parentId": "SC-L-03",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-03.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Изделия собраны",
+      "parentId": "SC-L-03",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-03.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Согласованные проверки пройдены",
+      "parentId": "SC-L-03",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-03.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Результат передан",
+      "parentId": "SC-L-03",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-04",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Бытовая неисправность устранена или диагностирована",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть проблема; симптомы, устройство/узел, допустимые действия",
+      "expectedResult": "Устранена согласованная неисправность или передана диагностика",
+      "potentialRoles": [
+        "Владелец",
+        "компетентный мастер"
+      ],
+      "acceptanceCriteria": "Согласованная проверка работоспособности выполнена",
+      "exception": "Опасная/неизвестная причина: остановка и другой специалист",
+      "evidenceNote": "D-семейство plumbing R09; остальные C R04",
+      "priorityAndRecurrence": "B/G; по необходимости",
+      "children": [
+        "SC-L-04.01",
+        "SC-L-04.02",
+        "SC-L-04.03",
+        "SC-L-04.04",
+        "SC-L-04.05"
+      ]
+    },
+    {
+      "id": "SC-L-04.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Симптомы и условия уточнены",
+      "parentId": "SC-L-04",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-04.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Диагностика проведена",
+      "parentId": "SC-L-04",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-04.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Объем вмешательства согласован",
+      "parentId": "SC-L-04",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-04.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Разрешенные работы выполнены",
+      "parentId": "SC-L-04",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-04.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Исход подтвержден согласованной проверкой",
+      "parentId": "SC-L-04",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-05",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Переезд завершен в согласованном объеме",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть вещи и новое место; объем, адресные зоны, даты, лифт",
+      "expectedResult": "Вещи доставлены, согласованные зоны пригодны к использованию",
+      "potentialRoles": [
+        "Переезжающий",
+        "помощники",
+        "перевозчик",
+        "сборщик"
+      ],
+      "acceptanceCriteria": "Перечень и состояние вещей сверены",
+      "exception": "Повреждение/задержка: инцидент и пересогласование",
+      "evidenceNote": "D-семейство R02; составной outcome H",
+      "priorityAndRecurrence": "A/G; событие",
+      "children": [
+        "SC-L-05.01",
+        "SC-L-05.02",
+        "SC-L-05.03",
+        "SC-L-05.04",
+        "SC-L-05.05",
+        "SC-L-05.06"
+      ]
+    },
+    {
+      "id": "SC-L-05.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Перечень вещей подтвержден",
+      "parentId": "SC-L-05",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-05.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "План переезда согласован",
+      "parentId": "SC-L-05",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-05.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Вещи упакованы",
+      "parentId": "SC-L-05",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-05.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Вещи доставлены",
+      "parentId": "SC-L-05",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-05.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Состояние и состав сверены",
+      "parentId": "SC-L-05",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-05.06",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Согласованные зоны обустроены",
+      "parentId": "SC-L-05",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-06",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Пространство и хранение организованы",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть пространство/вещи; цели, размеры, ограничения",
+      "expectedResult": "Система хранения проверена владельцем на своем быту",
+      "potentialRoles": [
+        "Владелец",
+        "организатор"
+      ],
+      "acceptanceCriteria": "Нужные вещи доступны по согласованной логике",
+      "exception": "Нельзя выбрасывать/перемещать чужое без решения владельца",
+      "evidenceNote": "C R03; пакет H",
+      "priorityAndRecurrence": "B/G; эпизодически",
+      "children": [
+        "SC-L-06.01",
+        "SC-L-06.02",
+        "SC-L-06.03",
+        "SC-L-06.04",
+        "SC-L-06.05"
+      ]
+    },
+    {
+      "id": "SC-L-06.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Потребности владельца выяснены",
+      "parentId": "SC-L-06",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-06.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Категории вещей согласованы",
+      "parentId": "SC-L-06",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-06.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "План хранения принят",
+      "parentId": "SC-L-06",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-06.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Пространство организовано",
+      "parentId": "SC-L-06",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-06.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Бытовое использование проверено",
+      "parentId": "SC-L-06",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-07",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Ненужные вещи переданы или вывезены",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть вещи; принадлежность, состояние, способ передачи",
+      "expectedResult": "Согласованные вещи переданы/вывезены с подтверждением",
+      "potentialRoles": [
+        "Владелец",
+        "получатель",
+        "перевозчик"
+      ],
+      "acceptanceCriteria": "Состав передачи совпадает с подтвержденным перечнем",
+      "exception": "Неявка получателя: новый слот, не списание факта передачи",
+      "evidenceNote": "C R03,R04; пакет H",
+      "priorityAndRecurrence": "B/G; эпизодически",
+      "children": [
+        "SC-L-07.01",
+        "SC-L-07.02",
+        "SC-L-07.03",
+        "SC-L-07.04",
+        "SC-L-07.05"
+      ]
+    },
+    {
+      "id": "SC-L-07.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Перечень и принадлежность подтверждены",
+      "parentId": "SC-L-07",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-07.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Способ передачи выбран",
+      "parentId": "SC-L-07",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-07.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Условия с получателем согласованы",
+      "parentId": "SC-L-07",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-07.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Передача выполнена",
+      "parentId": "SC-L-07",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-07.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Состав и исход подтверждены",
+      "parentId": "SC-L-07",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-08",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Личная техника настроена",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть устройство; цель, модель, права, сохранность данных",
+      "expectedResult": "Согласованные пользовательские действия работают",
+      "potentialRoles": [
+        "Владелец",
+        "IT-помощник"
+      ],
+      "acceptanceCriteria": "Владелец выполняет согласованный тест",
+      "exception": "Нужны секреты: не передавать через публичный brief",
+      "evidenceNote": "C R04; конкретный пакет H",
+      "priorityAndRecurrence": "A/G; по необходимости",
+      "children": [
+        "SC-L-08.01",
+        "SC-L-08.02",
+        "SC-L-08.03",
+        "SC-L-08.04",
+        "SC-L-08.05"
+      ]
+    },
+    {
+      "id": "SC-L-08.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Цель использования согласована",
+      "parentId": "SC-L-08",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-08.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Состояние и ограничения определены",
+      "parentId": "SC-L-08",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-08.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Доступ разрешен",
+      "parentId": "SC-L-08",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-08.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Настройка выполнена",
+      "parentId": "SC-L-08",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-08.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Пользовательский тест пройден",
+      "parentId": "SC-L-08",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-09",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Поручение или доставка выполнены",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть предмет/задача; что, откуда/куда, срок, полномочия",
+      "expectedResult": "Поручение выполнено, передача подтверждена",
+      "potentialRoles": [
+        "Заказчик",
+        "помощник",
+        "разрешенный получатель"
+      ],
+      "acceptanceCriteria": "Есть подтверждение надлежащего исхода",
+      "exception": "Получатель недоступен: согласовать дальнейшее действие",
+      "evidenceNote": "C R04; пакет H",
+      "priorityAndRecurrence": "B/G; по потребности",
+      "children": [
+        "SC-L-09.01",
+        "SC-L-09.02",
+        "SC-L-09.03",
+        "SC-L-09.04",
+        "SC-L-09.05"
+      ]
+    },
+    {
+      "id": "SC-L-09.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Предмет и полномочия подтверждены",
+      "parentId": "SC-L-09",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-09.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Маршрут и время согласованы",
+      "parentId": "SC-L-09",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-09.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Получение подтверждено",
+      "parentId": "SC-L-09",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-09.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Нужное действие выполнено",
+      "parentId": "SC-L-09",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-09.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Передача или исход приняты",
+      "parentId": "SC-L-09",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-10",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Участок приведен в согласованное состояние",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть территория; площадь, сезон, инструмент, объем",
+      "expectedResult": "Согласованные работы на участке приняты",
+      "potentialRoles": [
+        "Владелец",
+        "помощник"
+      ],
+      "acceptanceCriteria": "Checklist зоны выполнен без скрытого расширения",
+      "exception": "Погода/опасность: перенос, scope не меняется сам",
+      "evidenceNote": "D-семейство R09; C R03",
+      "priorityAndRecurrence": "B/G; сезонно",
+      "children": [
+        "SC-L-10.01",
+        "SC-L-10.02",
+        "SC-L-10.03",
+        "SC-L-10.04",
+        "SC-L-10.05"
+      ]
+    },
+    {
+      "id": "SC-L-10.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Зона и состояние оценены",
+      "parentId": "SC-L-10",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-10.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Перечень и условия согласованы",
+      "parentId": "SC-L-10",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-10.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Инструменты и время готовы",
+      "parentId": "SC-L-10",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-10.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Работы выполнены",
+      "parentId": "SC-L-10",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-10.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Checklist участка принят",
+      "parentId": "SC-L-10",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-11",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Бытовая поддержка организована и оказана",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть повторяющаяся нагрузка; задачи, время, границы",
+      "expectedResult": "Согласованные бытовые действия выполнены отдельно по циклам",
+      "potentialRoles": [
+        "Человек/заказчик",
+        "бытовой помощник"
+      ],
+      "acceptanceCriteria": "Каждое выполнение имеет свой перечень и приемку",
+      "exception": "Задача за пределами компетенции: отказ/новое согласование",
+      "evidenceNote": "C R04; пакет H",
+      "priorityAndRecurrence": "B/G; регулярно",
+      "children": [
+        "SC-L-11.01",
+        "SC-L-11.02",
+        "SC-L-11.03",
+        "SC-L-11.04",
+        "SC-L-11.05",
+        "SC-L-11.06"
+      ]
+    },
+    {
+      "id": "SC-L-11.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Нагрузка и границы описаны",
+      "parentId": "SC-L-11",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-11.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Приоритеты выбраны",
+      "parentId": "SC-L-11",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-11.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Условия помощи согласованы",
+      "parentId": "SC-L-11",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-11.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Согласованное выполнение завершено",
+      "parentId": "SC-L-11",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-11.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Результат принят",
+      "parentId": "SC-L-11",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-11.06",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Решение о повторе принято",
+      "parentId": "SC-L-11",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-12",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Личное событие состоялось",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть повод; состав участников, место, время, бюджет",
+      "expectedResult": "Согласованная встреча состоялась, услуги приняты",
+      "potentialRoles": [
+        "Инициатор",
+        "участники",
+        "ведущий/подрядчики"
+      ],
+      "acceptanceCriteria": "Согласованные элементы события выполнены",
+      "exception": "Отмена участника: не менять обязательства остальных скрыто",
+      "evidenceNote": "C R04,R05; пакет H",
+      "priorityAndRecurrence": "B/G; событие",
+      "children": [
+        "SC-L-12.01",
+        "SC-L-12.02",
+        "SC-L-12.03",
+        "SC-L-12.04",
+        "SC-L-12.05",
+        "SC-L-12.06"
+      ]
+    },
+    {
+      "id": "SC-L-12.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Цель и формат выбраны",
+      "parentId": "SC-L-12",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-12.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Состав участников подтвержден",
+      "parentId": "SC-L-12",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-12.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Место и время согласованы",
+      "parentId": "SC-L-12",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-12.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Подготовка завершена",
+      "parentId": "SC-L-12",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-12.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Событие проведено",
+      "parentId": "SC-L-12",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-12.06",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Отклонения и итоги зафиксированы",
+      "parentId": "SC-L-12",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-13",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Жилье готово к проживанию или сдаче",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть объект; цель, состояние, перечень, срок",
+      "expectedResult": "Жилье готово по согласованному checklist",
+      "potentialRoles": [
+        "Собственник/житель",
+        "помощники",
+        "принимающий"
+      ],
+      "acceptanceCriteria": "Принимающий проверил обязательные условия",
+      "exception": "Не готов обязательный пункт: готовность не подтверждать",
+      "evidenceNote": "C R08,R03; пакет H",
+      "priorityAndRecurrence": "B/G; проект/цикл",
+      "children": [
+        "SC-L-13.01",
+        "SC-L-13.02",
+        "SC-L-13.03",
+        "SC-L-13.04",
+        "SC-L-13.05",
+        "SC-L-13.06"
+      ]
+    },
+    {
+      "id": "SC-L-13.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Состояние жилья оценено",
+      "parentId": "SC-L-13",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-13.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Критерии готовности согласованы",
+      "parentId": "SC-L-13",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-13.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "План подготовки выбран",
+      "parentId": "SC-L-13",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-13.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Нужные работы приняты",
+      "parentId": "SC-L-13",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-13.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Комплектация проверена",
+      "parentId": "SC-L-13",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-13.06",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Готовность подтверждена",
+      "parentId": "SC-L-13",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-14",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "План поездки подготовлен и согласован",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть намерение поездки; даты, состав, бюджет, интересы",
+      "expectedResult": "Выбран и согласован выполнимый план; подтверждены нужные действия",
+      "potentialRoles": [
+        "Путешественник",
+        "местный практик/организатор"
+      ],
+      "acceptanceCriteria": "Пользователь подтвердил план и реальные подтверждения отдельно",
+      "exception": "Недоступность/отмена: пересмотреть; агент не бронирует без полномочий",
+      "evidenceNote": "H; нужны отдельные travel sources",
+      "priorityAndRecurrence": "B/G; событие",
+      "children": [
+        "SC-L-14.01",
+        "SC-L-14.02",
+        "SC-L-14.03",
+        "SC-L-14.04",
+        "SC-L-14.05"
+      ]
+    },
+    {
+      "id": "SC-L-14.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Цель и ограничения определены",
+      "parentId": "SC-L-14",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-14.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Варианты рассмотрены",
+      "parentId": "SC-L-14",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-14.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Маршрут и состав выбран",
+      "parentId": "SC-L-14",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-14.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Нужные подтверждения получены",
+      "parentId": "SC-L-14",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-14.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "План проверен путешественником",
+      "parentId": "SC-L-14",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-15",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Освоен прикладной личный навык",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть интерес; исходный уровень, цель, материалы",
+      "expectedResult": "Человек выполняет согласованное практическое упражнение",
+      "potentialRoles": [
+        "Учащийся",
+        "практик/наставник"
+      ],
+      "acceptanceCriteria": "Упражнение оценено по заранее согласованным критериям",
+      "exception": "Слишком сложный уровень: изменить упражнение",
+      "evidenceNote": "C R04; конкретный пакет H",
+      "priorityAndRecurrence": "A; серия",
+      "children": [
+        "SC-L-15.01",
+        "SC-L-15.02",
+        "SC-L-15.03",
+        "SC-L-15.04",
+        "SC-L-15.05",
+        "SC-L-15.06"
+      ]
+    },
+    {
+      "id": "SC-L-15.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Практическая цель выбрана",
+      "parentId": "SC-L-15",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-15.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Исходный уровень выяснен",
+      "parentId": "SC-L-15",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-15.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Способ обучения согласован",
+      "parentId": "SC-L-15",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-15.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Практика выполнена",
+      "parentId": "SC-L-15",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-15.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Обратная связь получена",
+      "parentId": "SC-L-15",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-15.06",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Навык проверен упражнением",
+      "parentId": "SC-L-15",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-16",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Языковая практика проведена",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть ситуация общения; язык, уровень, слот",
+      "expectedResult": "Проведена практика целевой ситуации с обратной связью",
+      "potentialRoles": [
+        "Участники практики",
+        "преподаватель при необходимости"
+      ],
+      "acceptanceCriteria": "Сессия и согласованный feedback состоялись",
+      "exception": "Не совпал формат: равный партнер не обязан преподавать",
+      "evidenceNote": "C R04; пакет H",
+      "priorityAndRecurrence": "A; регулярно",
+      "children": [
+        "SC-L-16.01",
+        "SC-L-16.02",
+        "SC-L-16.03",
+        "SC-L-16.04",
+        "SC-L-16.05"
+      ]
+    },
+    {
+      "id": "SC-L-16.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Ситуация общения выбрана",
+      "parentId": "SC-L-16",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-16.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Уровень и формат согласованы",
+      "parentId": "SC-L-16",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-16.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Участники и слот подтверждены",
+      "parentId": "SC-L-16",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-16.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Практика проведена",
+      "parentId": "SC-L-16",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-16.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Согласованная обратная связь передана",
+      "parentId": "SC-L-16",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-17",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Творческий результат создан",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть замысел; материал, формат, критерии, время",
+      "expectedResult": "Создан согласованный объект либо проверенный этап обучения",
+      "potentialRoles": [
+        "Автор",
+        "практик",
+        "партнеры"
+      ],
+      "acceptanceCriteria": "Результат сверяется с образцом/brief, не обещанием вкуса",
+      "exception": "Расхождение ожиданий: согласовать образец до продолжения",
+      "evidenceNote": "C R04,R05; пакет H",
+      "priorityAndRecurrence": "B; проект",
+      "children": [
+        "SC-L-17.01",
+        "SC-L-17.02",
+        "SC-L-17.03",
+        "SC-L-17.04",
+        "SC-L-17.05"
+      ]
+    },
+    {
+      "id": "SC-L-17.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Замысел и критерии согласованы",
+      "parentId": "SC-L-17",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-17.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Образец или план принят",
+      "parentId": "SC-L-17",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-17.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Материалы подготовлены",
+      "parentId": "SC-L-17",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-17.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Работа создана",
+      "parentId": "SC-L-17",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-17.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Результат рассмотрен и принят",
+      "parentId": "SC-L-17",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-18",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Совместное занятие состоялось",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть интерес/идея; границы общения, место/слот",
+      "expectedResult": "Участники добровольно согласовали и провели занятие",
+      "potentialRoles": [
+        "Равноправные участники",
+        "координатор при необходимости"
+      ],
+      "acceptanceCriteria": "Участие подтверждается сторонами без принудительной общей оценки",
+      "exception": "Нет взаимного комфорта: отказ без навязывания другого участника",
+      "evidenceNote": "H; не профессиональная услуга",
+      "priorityAndRecurrence": "B/G; разово/серия",
+      "children": [
+        "SC-L-18.01",
+        "SC-L-18.02",
+        "SC-L-18.03",
+        "SC-L-18.04",
+        "SC-L-18.05"
+      ]
+    },
+    {
+      "id": "SC-L-18.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Интерес и границы обозначены",
+      "parentId": "SC-L-18",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-18.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Формат выбран",
+      "parentId": "SC-L-18",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-18.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Взаимное желание участвовать подтверждено",
+      "parentId": "SC-L-18",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-18.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Договоренность о встрече согласована",
+      "parentId": "SC-L-18",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-18.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Занятие проведено",
+      "parentId": "SC-L-18",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-19",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Согласованный уход за животным оказан",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть животное; привычки, условия, длительность, контакты разрешенной помощи",
+      "expectedResult": "Выполнены согласованные действия ухода",
+      "potentialRoles": [
+        "Владелец",
+        "подготовленный помощник"
+      ],
+      "acceptanceCriteria": "Действия и передача подтверждены владельцем",
+      "exception": "Проблема состояния: действовать по согласованному плану, не ставить диагноз",
+      "evidenceNote": "H; необходим отдельный отраслевой source review",
+      "priorityAndRecurrence": "B/G; регулярно/поездка",
+      "children": [
+        "SC-L-19.01",
+        "SC-L-19.02",
+        "SC-L-19.03",
+        "SC-L-19.04",
+        "SC-L-19.05"
+      ]
+    },
+    {
+      "id": "SC-L-19.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Потребности животного описаны",
+      "parentId": "SC-L-19",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-19.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "План и границы ухода согласованы",
+      "parentId": "SC-L-19",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-19.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Условия доступа подтверждены",
+      "parentId": "SC-L-19",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-19.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Уход выполнен",
+      "parentId": "SC-L-19",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-19.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Отчет и возврат подтверждены",
+      "parentId": "SC-L-19",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-20",
+      "type": "scenario_result",
+      "level": 1,
+      "title": "Проверен выполнимый план личных дел",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "situationAndInputs": "Есть перегрузка; перечень обязательств, ограничения, личные приоритеты",
+      "expectedResult": "Выбран реалистичный план и проверен один цикл исполнения",
+      "potentialRoles": [
+        "Человек",
+        "немедицинский наставник/помощник при желании"
+      ],
+      "acceptanceCriteria": "Человек проверил выполнимость цикла, отклонения сохранены",
+      "exception": "План не подходит: пересмотр, без обещания здоровья/идеального баланса",
+      "evidenceNote": "H; не терапия и не медицинская рекомендация",
+      "priorityAndRecurrence": "B; цикл",
+      "children": [
+        "SC-L-20.01",
+        "SC-L-20.02",
+        "SC-L-20.03",
+        "SC-L-20.04",
+        "SC-L-20.05",
+        "SC-L-20.06"
+      ]
+    },
+    {
+      "id": "SC-L-20.01",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Обязательства собраны",
+      "parentId": "SC-L-20",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-20.02",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Личные приоритеты определены",
+      "parentId": "SC-L-20",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-20.03",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Объем и способы выполнения выбраны",
+      "parentId": "SC-L-20",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-20.04",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Цикл запланирован",
+      "parentId": "SC-L-20",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-20.05",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Пробный цикл выполнен",
+      "parentId": "SC-L-20",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "SC-L-20.06",
+      "type": "scenario_result",
+      "level": 2,
+      "title": "Корректировки выбраны человеком",
+      "parentId": "SC-L-20",
+      "templateVersion": "0.1",
+      "status": "draft",
+      "acceptanceCriteria": null,
+      "acceptanceStatus": "needs_explicit_review",
+      "source": "decomposition_in_existing_library"
+    }
+  ],
+  "edges": [
+    {
+      "from": "GOAL-BALANCE",
+      "to": "DOMAIN-LIFE",
+      "type": "framing",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "DOMAIN-LIFE",
+      "to": "NEED-L-HOME",
+      "type": "need_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-HOME",
+      "to": "SC-L-01",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-HOME",
+      "to": "SC-L-02",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-HOME",
+      "to": "SC-L-03",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-HOME",
+      "to": "SC-L-04",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-HOME",
+      "to": "SC-L-06",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-HOME",
+      "to": "SC-L-08",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-HOME",
+      "to": "SC-L-13",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "DOMAIN-LIFE",
+      "to": "NEED-L-TIME",
+      "type": "need_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-TIME",
+      "to": "SC-L-09",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-TIME",
+      "to": "SC-L-10",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-TIME",
+      "to": "SC-L-11",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-TIME",
+      "to": "SC-L-19",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-TIME",
+      "to": "SC-L-20",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "DOMAIN-LIFE",
+      "to": "NEED-L-MOVE",
+      "type": "need_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-MOVE",
+      "to": "SC-L-05",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-MOVE",
+      "to": "SC-L-07",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-MOVE",
+      "to": "SC-L-14",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "DOMAIN-LIFE",
+      "to": "NEED-L-SOCIAL",
+      "type": "need_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-SOCIAL",
+      "to": "SC-L-12",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-SOCIAL",
+      "to": "SC-L-18",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "DOMAIN-LIFE",
+      "to": "NEED-L-GROWTH",
+      "type": "need_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-GROWTH",
+      "to": "SC-L-15",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-GROWTH",
+      "to": "SC-L-16",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "NEED-L-GROWTH",
+      "to": "SC-L-17",
+      "type": "may_be_addressed_by",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "SC-L-01",
+      "to": "SC-L-01.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-01",
+      "to": "SC-L-01.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-01",
+      "to": "SC-L-01.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-01",
+      "to": "SC-L-01.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-01",
+      "to": "SC-L-01.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-02",
+      "to": "SC-L-02.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-02",
+      "to": "SC-L-02.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-02",
+      "to": "SC-L-02.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-02",
+      "to": "SC-L-02.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-02",
+      "to": "SC-L-02.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-03",
+      "to": "SC-L-03.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-03",
+      "to": "SC-L-03.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-03",
+      "to": "SC-L-03.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-03",
+      "to": "SC-L-03.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-03",
+      "to": "SC-L-03.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-04",
+      "to": "SC-L-04.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-04",
+      "to": "SC-L-04.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-04",
+      "to": "SC-L-04.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-04",
+      "to": "SC-L-04.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-04",
+      "to": "SC-L-04.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-05",
+      "to": "SC-L-05.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-05",
+      "to": "SC-L-05.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-05",
+      "to": "SC-L-05.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-05",
+      "to": "SC-L-05.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-05",
+      "to": "SC-L-05.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-05",
+      "to": "SC-L-05.06",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-06",
+      "to": "SC-L-06.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-06",
+      "to": "SC-L-06.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-06",
+      "to": "SC-L-06.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-06",
+      "to": "SC-L-06.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-06",
+      "to": "SC-L-06.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-07",
+      "to": "SC-L-07.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-07",
+      "to": "SC-L-07.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-07",
+      "to": "SC-L-07.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-07",
+      "to": "SC-L-07.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-07",
+      "to": "SC-L-07.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-08",
+      "to": "SC-L-08.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-08",
+      "to": "SC-L-08.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-08",
+      "to": "SC-L-08.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-08",
+      "to": "SC-L-08.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-08",
+      "to": "SC-L-08.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-09",
+      "to": "SC-L-09.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-09",
+      "to": "SC-L-09.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-09",
+      "to": "SC-L-09.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-09",
+      "to": "SC-L-09.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-09",
+      "to": "SC-L-09.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-10",
+      "to": "SC-L-10.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-10",
+      "to": "SC-L-10.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-10",
+      "to": "SC-L-10.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-10",
+      "to": "SC-L-10.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-10",
+      "to": "SC-L-10.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-11",
+      "to": "SC-L-11.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-11",
+      "to": "SC-L-11.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-11",
+      "to": "SC-L-11.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-11",
+      "to": "SC-L-11.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-11",
+      "to": "SC-L-11.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-11",
+      "to": "SC-L-11.06",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-12",
+      "to": "SC-L-12.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-12",
+      "to": "SC-L-12.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-12",
+      "to": "SC-L-12.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-12",
+      "to": "SC-L-12.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-12",
+      "to": "SC-L-12.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-12",
+      "to": "SC-L-12.06",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-13",
+      "to": "SC-L-13.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-13",
+      "to": "SC-L-13.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-13",
+      "to": "SC-L-13.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-13",
+      "to": "SC-L-13.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-13",
+      "to": "SC-L-13.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-13",
+      "to": "SC-L-13.06",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-14",
+      "to": "SC-L-14.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-14",
+      "to": "SC-L-14.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-14",
+      "to": "SC-L-14.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-14",
+      "to": "SC-L-14.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-14",
+      "to": "SC-L-14.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-15",
+      "to": "SC-L-15.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-15",
+      "to": "SC-L-15.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-15",
+      "to": "SC-L-15.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-15",
+      "to": "SC-L-15.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-15",
+      "to": "SC-L-15.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-15",
+      "to": "SC-L-15.06",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-16",
+      "to": "SC-L-16.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-16",
+      "to": "SC-L-16.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-16",
+      "to": "SC-L-16.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-16",
+      "to": "SC-L-16.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-16",
+      "to": "SC-L-16.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-17",
+      "to": "SC-L-17.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-17",
+      "to": "SC-L-17.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-17",
+      "to": "SC-L-17.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-17",
+      "to": "SC-L-17.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-17",
+      "to": "SC-L-17.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-18",
+      "to": "SC-L-18.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-18",
+      "to": "SC-L-18.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-18",
+      "to": "SC-L-18.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-18",
+      "to": "SC-L-18.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-18",
+      "to": "SC-L-18.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-19",
+      "to": "SC-L-19.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-19",
+      "to": "SC-L-19.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-19",
+      "to": "SC-L-19.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-19",
+      "to": "SC-L-19.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-19",
+      "to": "SC-L-19.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-20",
+      "to": "SC-L-20.01",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-20",
+      "to": "SC-L-20.02",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-20",
+      "to": "SC-L-20.03",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-20",
+      "to": "SC-L-20.04",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-20",
+      "to": "SC-L-20.05",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "from": "SC-L-20",
+      "to": "SC-L-20.06",
+      "type": "decomposes_to",
+      "status": "draft",
+      "required": "within_confirmed_scope",
+      "notExecutionOrder": true
+    },
+    {
+      "id": "H-LIFE-1",
+      "from": "SC-L-01",
+      "to": "SC-L-13",
+      "type": "supports",
+      "label": "Уборка может обеспечить часть готовности жилья",
+      "conditions": [
+        "Один объект и согласованные зоны/стандарт; приемка уборки не означает всей готовности",
+        "Подтверждены актуальность, сроки, вклад, права доступа и согласие соответствующих участников"
+      ],
+      "status": "proposed",
+      "autoCreateAlliance": false,
+      "causalityProven": false
+    },
+    {
+      "id": "H-LIFE-2",
+      "from": "SC-L-04",
+      "to": "SC-L-13",
+      "type": "supports",
+      "label": "Устраненная неисправность может обеспечить готовность жилья",
+      "conditions": [
+        "Именно эта неисправность входит в обязательный scope подготовки",
+        "Подтверждены актуальность, сроки, вклад, права доступа и согласие соответствующих участников"
+      ],
+      "status": "proposed",
+      "autoCreateAlliance": false,
+      "causalityProven": false
+    },
+    {
+      "id": "H-LIFE-3",
+      "from": "SC-L-03",
+      "to": "SC-L-05.06",
+      "type": "supports",
+      "label": "Сборка мебели может обеспечить часть обустройства",
+      "conditions": [
+        "То же изделие, место и согласованный состав переезда",
+        "Подтверждены актуальность, сроки, вклад, права доступа и согласие соответствующих участников"
+      ],
+      "status": "proposed",
+      "autoCreateAlliance": false,
+      "causalityProven": false
+    },
+    {
+      "id": "H-LIFE-4",
+      "from": "SC-L-07",
+      "to": "SC-L-06",
+      "type": "supports",
+      "label": "Вывоз лишнего может освободить пространство для организации",
+      "conditions": [
+        "Владелец подтвердил перечень и нужность освобождения места",
+        "Подтверждены актуальность, сроки, вклад, права доступа и согласие соответствующих участников"
+      ],
+      "status": "proposed",
+      "autoCreateAlliance": false,
+      "causalityProven": false
+    },
+    {
+      "id": "H-LIFE-5",
+      "from": "SC-L-16",
+      "to": "SC-L-14",
+      "type": "optional_support",
+      "label": "Практика языка может помочь подготовке поездки",
+      "conditions": [
+        "Путешественник сам выбрал языковую цель; практика не условие каждой поездки",
+        "Подтверждены актуальность, сроки, вклад, права доступа и согласие соответствующих участников"
+      ],
+      "status": "proposed",
+      "autoCreateAlliance": false,
+      "causalityProven": false
+    }
+  ]
+}
