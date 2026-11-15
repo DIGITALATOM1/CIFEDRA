@@ -1,10 +1,9 @@
 {
-  "schemaVersion": "0.1",
+  "schemaVersion": "0.2",
   "libraryId": "CIFEDRA-LIFE",
   "date": "2026-11-15",
   "status": "preparation_draft",
   "sourceMarkdown": "../cifedra-life-scenario-library-2026-11-15.md",
-  "humanNeedClassification": "product_hypothesis",
   "balance": {
     "dimensions": [
       "time",
@@ -31,41 +30,6 @@
       "type": "domain",
       "title": "LIFE",
       "status": "product_direction"
-    },
-    {
-      "id": "NEED-L-HOME",
-      "type": "need",
-      "title": "Безопасность и комфорт среды",
-      "status": "product_hypothesis",
-      "note": "Авторская классификация для навигации, не психологический стандарт"
-    },
-    {
-      "id": "NEED-L-TIME",
-      "type": "need",
-      "title": "Время и посильная повседневная нагрузка",
-      "status": "product_hypothesis",
-      "note": "Авторская классификация для навигации, не психологический стандарт"
-    },
-    {
-      "id": "NEED-L-MOVE",
-      "type": "need",
-      "title": "Мобильность и изменения в жизни",
-      "status": "product_hypothesis",
-      "note": "Авторская классификация для навигации, не психологический стандарт"
-    },
-    {
-      "id": "NEED-L-SOCIAL",
-      "type": "need",
-      "title": "Общение и принадлежность",
-      "status": "product_hypothesis",
-      "note": "Авторская классификация для навигации, не психологический стандарт"
-    },
-    {
-      "id": "NEED-L-GROWTH",
-      "type": "need",
-      "title": "Развитие и самовыражение",
-      "status": "product_hypothesis",
-      "note": "Авторская классификация для навигации, не психологический стандарт"
     },
     {
       "id": "SC-L-01",
@@ -1851,6 +1815,108 @@
       "acceptanceCriteria": null,
       "acceptanceStatus": "needs_explicit_review",
       "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "NEED-L-SUBSISTENCE",
+      "type": "human_need",
+      "title": "Базовое обеспечение",
+      "status": "research_construct_product_synthesis",
+      "sourceIds": [
+        "LF-TD"
+      ],
+      "note": "Питание и пригодное жилье; текущий каталог не покрывает это полностью",
+      "classificationStatus": "non_hierarchical_product_selection"
+    },
+    {
+      "id": "NEED-L-SECURITY",
+      "type": "human_need",
+      "title": "Безопасность",
+      "status": "research_construct_product_synthesis",
+      "sourceIds": [
+        "LF-TD"
+      ],
+      "note": "Защищенность в повседневной среде; бытовой сервис не гарантирует ее",
+      "classificationStatus": "non_hierarchical_product_selection"
+    },
+    {
+      "id": "NEED-L-RELATEDNESS",
+      "type": "human_need",
+      "title": "Близость и принадлежность",
+      "status": "research_construct_product_synthesis",
+      "sourceIds": [
+        "LF-SDT",
+        "LF-TD"
+      ],
+      "note": "Качественная связь с людьми; факт встречи не гарантирует близость",
+      "classificationStatus": "non_hierarchical_product_selection"
+    },
+    {
+      "id": "NEED-L-RESPECT",
+      "type": "human_need",
+      "title": "Уважение и признание",
+      "status": "research_construct_product_synthesis",
+      "sourceIds": [
+        "LF-TD"
+      ],
+      "note": "Уважительное отношение и признание; не сводится к рейтингу",
+      "classificationStatus": "non_hierarchical_product_selection"
+    },
+    {
+      "id": "NEED-L-AUTONOMY",
+      "type": "human_need",
+      "title": "Самоопределение и свобода выбора",
+      "status": "research_construct_product_synthesis",
+      "sourceIds": [
+        "LF-SDT"
+      ],
+      "note": "Согласие со своими действиями; не означает обязательной независимости",
+      "classificationStatus": "non_hierarchical_product_selection"
+    },
+    {
+      "id": "NEED-L-COMPETENCE",
+      "type": "human_need",
+      "title": "Компетентность и освоение",
+      "status": "research_construct_product_synthesis",
+      "sourceIds": [
+        "LF-SDT"
+      ],
+      "note": "Опыт способности справляться и развиваться",
+      "classificationStatus": "non_hierarchical_product_selection"
+    },
+    {
+      "id": "CTX-L-HOME",
+      "type": "life_context",
+      "title": "Безопасность и комфорт среды",
+      "status": "product_hypothesis",
+      "note": "Контекст применения, не базовая психологическая потребность"
+    },
+    {
+      "id": "CTX-L-TIME",
+      "type": "life_context",
+      "title": "Время и посильная повседневная нагрузка",
+      "status": "product_hypothesis",
+      "note": "Контекст применения, не базовая психологическая потребность"
+    },
+    {
+      "id": "CTX-L-MOVE",
+      "type": "life_context",
+      "title": "Мобильность и изменения в жизни",
+      "status": "product_hypothesis",
+      "note": "Контекст применения, не базовая психологическая потребность"
+    },
+    {
+      "id": "CTX-L-SOCIAL",
+      "type": "life_context",
+      "title": "Общение и принадлежность",
+      "status": "product_hypothesis",
+      "note": "Контекст применения, не базовая психологическая потребность"
+    },
+    {
+      "id": "CTX-L-GROWTH",
+      "type": "life_context",
+      "title": "Развитие и самовыражение",
+      "status": "product_hypothesis",
+      "note": "Контекст применения, не базовая психологическая потребность"
     }
   ],
   "edges": [
@@ -1858,181 +1924,6 @@
       "from": "GOAL-BALANCE",
       "to": "DOMAIN-LIFE",
       "type": "framing",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "DOMAIN-LIFE",
-      "to": "NEED-L-HOME",
-      "type": "need_context",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-HOME",
-      "to": "SC-L-01",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-HOME",
-      "to": "SC-L-02",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-HOME",
-      "to": "SC-L-03",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-HOME",
-      "to": "SC-L-04",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-HOME",
-      "to": "SC-L-06",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-HOME",
-      "to": "SC-L-08",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-HOME",
-      "to": "SC-L-13",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "DOMAIN-LIFE",
-      "to": "NEED-L-TIME",
-      "type": "need_context",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-TIME",
-      "to": "SC-L-09",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-TIME",
-      "to": "SC-L-10",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-TIME",
-      "to": "SC-L-11",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-TIME",
-      "to": "SC-L-19",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-TIME",
-      "to": "SC-L-20",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "DOMAIN-LIFE",
-      "to": "NEED-L-MOVE",
-      "type": "need_context",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-MOVE",
-      "to": "SC-L-05",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-MOVE",
-      "to": "SC-L-07",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-MOVE",
-      "to": "SC-L-14",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "DOMAIN-LIFE",
-      "to": "NEED-L-SOCIAL",
-      "type": "need_context",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-SOCIAL",
-      "to": "SC-L-12",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-SOCIAL",
-      "to": "SC-L-18",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "DOMAIN-LIFE",
-      "to": "NEED-L-GROWTH",
-      "type": "need_context",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-GROWTH",
-      "to": "SC-L-15",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-GROWTH",
-      "to": "SC-L-16",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-L-GROWTH",
-      "to": "SC-L-17",
-      "type": "may_be_addressed_by",
       "status": "proposed",
       "required": false
     },
@@ -2953,6 +2844,287 @@
       "status": "proposed",
       "autoCreateAlliance": false,
       "causalityProven": false
+    },
+    {
+      "from": "DOMAIN-LIFE",
+      "to": "NEED-L-SUBSISTENCE",
+      "type": "need_foundation",
+      "status": "research_informed_product_organization",
+      "required": false
+    },
+    {
+      "from": "DOMAIN-LIFE",
+      "to": "NEED-L-SECURITY",
+      "type": "need_foundation",
+      "status": "research_informed_product_organization",
+      "required": false
+    },
+    {
+      "from": "DOMAIN-LIFE",
+      "to": "NEED-L-RELATEDNESS",
+      "type": "need_foundation",
+      "status": "research_informed_product_organization",
+      "required": false
+    },
+    {
+      "from": "DOMAIN-LIFE",
+      "to": "NEED-L-RESPECT",
+      "type": "need_foundation",
+      "status": "research_informed_product_organization",
+      "required": false
+    },
+    {
+      "from": "DOMAIN-LIFE",
+      "to": "NEED-L-AUTONOMY",
+      "type": "need_foundation",
+      "status": "research_informed_product_organization",
+      "required": false
+    },
+    {
+      "from": "DOMAIN-LIFE",
+      "to": "NEED-L-COMPETENCE",
+      "type": "need_foundation",
+      "status": "research_informed_product_organization",
+      "required": false
+    },
+    {
+      "from": "NEED-L-SUBSISTENCE",
+      "to": "CTX-L-HOME",
+      "type": "candidate_application_context",
+      "status": "product_hypothesis",
+      "required": false,
+      "note": "Не означает удовлетворение потребности выполнением услуги"
+    },
+    {
+      "from": "NEED-L-SECURITY",
+      "to": "CTX-L-HOME",
+      "type": "candidate_application_context",
+      "status": "product_hypothesis",
+      "required": false,
+      "note": "Не означает удовлетворение потребности выполнением услуги"
+    },
+    {
+      "from": "NEED-L-SECURITY",
+      "to": "CTX-L-MOVE",
+      "type": "candidate_application_context",
+      "status": "product_hypothesis",
+      "required": false,
+      "note": "Не означает удовлетворение потребности выполнением услуги"
+    },
+    {
+      "from": "NEED-L-RELATEDNESS",
+      "to": "CTX-L-SOCIAL",
+      "type": "candidate_application_context",
+      "status": "product_hypothesis",
+      "required": false,
+      "note": "Не означает удовлетворение потребности выполнением услуги"
+    },
+    {
+      "from": "NEED-L-AUTONOMY",
+      "to": "CTX-L-TIME",
+      "type": "candidate_application_context",
+      "status": "product_hypothesis",
+      "required": false,
+      "note": "Не означает удовлетворение потребности выполнением услуги"
+    },
+    {
+      "from": "NEED-L-AUTONOMY",
+      "to": "CTX-L-MOVE",
+      "type": "candidate_application_context",
+      "status": "product_hypothesis",
+      "required": false,
+      "note": "Не означает удовлетворение потребности выполнением услуги"
+    },
+    {
+      "from": "NEED-L-COMPETENCE",
+      "to": "CTX-L-GROWTH",
+      "type": "candidate_application_context",
+      "status": "product_hypothesis",
+      "required": false,
+      "note": "Не означает удовлетворение потребности выполнением услуги"
+    },
+    {
+      "from": "CTX-L-HOME",
+      "to": "SC-L-01",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-HOME",
+      "to": "SC-L-02",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-HOME",
+      "to": "SC-L-03",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-HOME",
+      "to": "SC-L-04",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-HOME",
+      "to": "SC-L-06",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-HOME",
+      "to": "SC-L-08",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-HOME",
+      "to": "SC-L-13",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-TIME",
+      "to": "SC-L-09",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-TIME",
+      "to": "SC-L-10",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-TIME",
+      "to": "SC-L-11",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-TIME",
+      "to": "SC-L-19",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-TIME",
+      "to": "SC-L-20",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-MOVE",
+      "to": "SC-L-05",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-MOVE",
+      "to": "SC-L-07",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-MOVE",
+      "to": "SC-L-14",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-SOCIAL",
+      "to": "SC-L-12",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-SOCIAL",
+      "to": "SC-L-18",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-GROWTH",
+      "to": "SC-L-15",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-GROWTH",
+      "to": "SC-L-16",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    },
+    {
+      "from": "CTX-L-GROWTH",
+      "to": "SC-L-17",
+      "type": "candidate_scenario_for_context",
+      "status": "proposed",
+      "required": false
+    }
+  ],
+  "foundation": {
+    "kind": "research_informed_human_needs",
+    "sourceIds": [
+      "LF-SDT",
+      "LF-TD",
+      "LF-OECD"
+    ],
+    "sources": [
+      {
+        "id": "LF-SDT",
+        "url": "https://www.selfdeterminationtheory.org/SDT/documents/2000_RyanDeci_SDT.pdf"
+      },
+      {
+        "id": "LF-TD",
+        "url": "https://www.apa.org/pubs/journals/releases/psp-101-2-354.pdf"
+      },
+      {
+        "id": "LF-OECD",
+        "url": "https://www.oecd.org/en/publications/how-s-life-2024_90ba854a-en.html"
+      }
+    ],
+    "report": "../../research/cifedra-life-needs-work-demand-foundation-2026-11-15.md",
+    "notAValidatedUnifiedTheory": true,
+    "exclusiveToLife": false
+  },
+  "coverageGaps": [
+    {
+      "needId": "NEED-L-SUBSISTENCE",
+      "gap": "Нет сценария обеспечения питанием или доступным жильем; подготовка имеющегося жилья не заменяет их"
+    },
+    {
+      "needId": "NEED-L-SECURITY",
+      "gap": "Нет полного покрытия физической/социальной безопасности; бытовой ремонт только частный контекст"
+    },
+    {
+      "needId": "NEED-L-RESPECT",
+      "gap": "Нет явно описанного проверяемого сценария; нельзя автоматически заменить отзывами"
+    },
+    {
+      "kind": "wellbeing_conditions",
+      "gap": "Здоровье, отдых и восстановление требуют отдельных сценариев и границ; время/энергия остаются ограничениями"
     }
   ]
 }

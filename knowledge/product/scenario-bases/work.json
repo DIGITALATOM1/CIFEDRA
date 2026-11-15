@@ -1,10 +1,9 @@
 {
-  "schemaVersion": "0.1",
+  "schemaVersion": "0.2",
   "libraryId": "CIFEDRA-WORK",
   "date": "2026-11-15",
   "status": "preparation_draft",
   "sourceMarkdown": "../cifedra-work-scenario-library-2026-11-15.md",
-  "humanNeedClassification": "product_hypothesis",
   "balance": {
     "dimensions": [
       "time",
@@ -31,41 +30,6 @@
       "type": "domain",
       "title": "WORK",
       "status": "product_direction"
-    },
-    {
-      "id": "NEED-W-INCOME",
-      "type": "need",
-      "title": "Доход и карьерная самостоятельность",
-      "status": "product_hypothesis",
-      "note": "Авторская классификация для навигации, не психологический стандарт"
-    },
-    {
-      "id": "NEED-W-GROWTH",
-      "type": "need",
-      "title": "Компетентность и профессиональное развитие",
-      "status": "product_hypothesis",
-      "note": "Авторская классификация для навигации, не психологический стандарт"
-    },
-    {
-      "id": "NEED-W-QUALITY",
-      "type": "need",
-      "title": "Качество и управляемость работы",
-      "status": "product_hypothesis",
-      "note": "Авторская классификация для навигации, не психологический стандарт"
-    },
-    {
-      "id": "NEED-W-VALUE",
-      "type": "need",
-      "title": "Создание ценности и собственного дела",
-      "status": "product_hypothesis",
-      "note": "Авторская классификация для навигации, не психологический стандарт"
-    },
-    {
-      "id": "NEED-W-COOP",
-      "type": "need",
-      "title": "Сотрудничество и совместный вклад",
-      "status": "product_hypothesis",
-      "note": "Авторская классификация для навигации, не психологический стандарт"
     },
     {
       "id": "SC-W-01",
@@ -1823,6 +1787,175 @@
       "acceptanceCriteria": null,
       "acceptanceStatus": "needs_explicit_review",
       "source": "decomposition_in_existing_library"
+    },
+    {
+      "id": "STREAM-W-PERSONAL",
+      "type": "demand_stream",
+      "title": "Работа и карьера человека",
+      "status": "evidence_scope"
+    },
+    {
+      "id": "STREAM-W-BUSINESS",
+      "type": "demand_stream",
+      "title": "Запросы бизнеса на услуги",
+      "status": "evidence_scope"
+    },
+    {
+      "id": "REQ-W-JOB",
+      "type": "request_family",
+      "title": "Найти работу и улучшить доход",
+      "stream": "PERSONAL",
+      "status": "evidence_informed_product_group",
+      "sourceIds": [
+        "WK-IWIS",
+        "WK-IBEN"
+      ],
+      "signalType": "survey_preference",
+      "notGlobalRanking": true,
+      "mappingStatus": "candidate_scenarios_need_validation"
+    },
+    {
+      "id": "REQ-W-TERMS",
+      "type": "request_family",
+      "title": "Найти подходящие условия занятости",
+      "stream": "PERSONAL",
+      "status": "evidence_informed_product_group",
+      "sourceIds": [
+        "WK-IWIS",
+        "WK-IBEN"
+      ],
+      "signalType": "survey_preference",
+      "notGlobalRanking": true,
+      "mappingStatus": "candidate_scenarios_need_validation"
+    },
+    {
+      "id": "REQ-W-CAREER",
+      "type": "request_family",
+      "title": "Развить навыки и карьерную траекторию",
+      "stream": "PERSONAL",
+      "status": "evidence_informed_product_group",
+      "sourceIds": [
+        "WK-IWIS"
+      ],
+      "signalType": "survey_preference",
+      "notGlobalRanking": true,
+      "mappingStatus": "candidate_scenarios_need_validation"
+    },
+    {
+      "id": "REQ-W-DIGITAL",
+      "type": "request_family",
+      "title": "Создать или улучшить цифровой продукт",
+      "stream": "BUSINESS",
+      "status": "evidence_informed_product_group",
+      "sourceIds": [
+        "WK-U26"
+      ],
+      "signalType": "completed_work_earnings_by_skill",
+      "notGlobalRanking": true,
+      "mappingStatus": "candidate_scenarios_need_validation"
+    },
+    {
+      "id": "REQ-W-SALES",
+      "type": "request_family",
+      "title": "Привлекать клиентов и организовать продажи",
+      "stream": "BUSINESS",
+      "status": "evidence_informed_product_group",
+      "sourceIds": [
+        "WK-U26",
+        "WK-F26"
+      ],
+      "signalType": "completed_work_plus_search_interest",
+      "notGlobalRanking": true,
+      "mappingStatus": "candidate_scenarios_need_validation"
+    },
+    {
+      "id": "REQ-W-CREATIVE",
+      "type": "request_family",
+      "title": "Получить дизайн и визуальные материалы",
+      "stream": "BUSINESS",
+      "status": "evidence_informed_product_group",
+      "sourceIds": [
+        "WK-U26"
+      ],
+      "signalType": "completed_work_earnings_by_skill",
+      "notGlobalRanking": true,
+      "mappingStatus": "candidate_scenarios_need_validation"
+    },
+    {
+      "id": "REQ-W-OPS",
+      "type": "request_family",
+      "title": "Организовать операции, исследования и проекты",
+      "stream": "BUSINESS",
+      "status": "evidence_informed_product_group",
+      "sourceIds": [
+        "WK-U26"
+      ],
+      "signalType": "completed_work_earnings_by_skill",
+      "notGlobalRanking": true,
+      "mappingStatus": "candidate_scenarios_need_validation"
+    },
+    {
+      "id": "REQ-W-DATA",
+      "type": "request_family",
+      "title": "Получить аналитику и обработанные данные",
+      "stream": "BUSINESS",
+      "status": "evidence_informed_product_group",
+      "sourceIds": [
+        "WK-U26"
+      ],
+      "signalType": "completed_work_earnings_by_skill",
+      "notGlobalRanking": true,
+      "mappingStatus": "candidate_scenarios_need_validation"
+    },
+    {
+      "id": "REQ-W-PEOPLE",
+      "type": "request_family",
+      "title": "Найти специалистов и развить команду",
+      "stream": "BUSINESS",
+      "status": "evidence_informed_product_group",
+      "sourceIds": [
+        "WK-U25"
+      ],
+      "signalType": "historical_platform_demand",
+      "notGlobalRanking": true,
+      "mappingStatus": "candidate_scenarios_need_validation"
+    },
+    {
+      "id": "REQ-W-FINANCE",
+      "type": "request_family",
+      "title": "Подготовить финансовые и учетные материалы",
+      "stream": "BUSINESS",
+      "status": "evidence_informed_product_group",
+      "sourceIds": [
+        "WK-U25"
+      ],
+      "signalType": "historical_platform_demand",
+      "notGlobalRanking": true,
+      "mappingStatus": "candidate_scenarios_need_validation"
+    },
+    {
+      "id": "REQ-W-QUALITY",
+      "type": "request_family",
+      "title": "Проверить качество решения или продукта",
+      "stream": "BUSINESS",
+      "status": "evidence_informed_product_group",
+      "sourceIds": [
+        "WK-U26"
+      ],
+      "signalType": "indirect_skill_family_evidence",
+      "notGlobalRanking": true,
+      "mappingStatus": "candidate_scenarios_need_validation"
+    },
+    {
+      "id": "REQ-W-EXPLORE",
+      "type": "request_family",
+      "title": "Исследовать запуск, помещение, событие или партнерскую поставку",
+      "stream": "BUSINESS",
+      "status": "research_backlog",
+      "sourceIds": [],
+      "signalType": "product_hypothesis",
+      "notGlobalRanking": true,
+      "mappingStatus": "candidate_scenarios_need_validation"
     }
   ],
   "edges": [
@@ -1830,181 +1963,6 @@
       "from": "GOAL-BALANCE",
       "to": "DOMAIN-WORK",
       "type": "framing",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "DOMAIN-WORK",
-      "to": "NEED-W-INCOME",
-      "type": "need_context",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-INCOME",
-      "to": "SC-W-01",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-INCOME",
-      "to": "SC-W-02",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "DOMAIN-WORK",
-      "to": "NEED-W-GROWTH",
-      "type": "need_context",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-GROWTH",
-      "to": "SC-W-03",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-GROWTH",
-      "to": "SC-W-05",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "DOMAIN-WORK",
-      "to": "NEED-W-QUALITY",
-      "type": "need_context",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-QUALITY",
-      "to": "SC-W-08",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-QUALITY",
-      "to": "SC-W-12",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-QUALITY",
-      "to": "SC-W-13",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-QUALITY",
-      "to": "SC-W-14",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-QUALITY",
-      "to": "SC-W-15",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-QUALITY",
-      "to": "SC-W-16",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "DOMAIN-WORK",
-      "to": "NEED-W-VALUE",
-      "type": "need_context",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-VALUE",
-      "to": "SC-W-06",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-VALUE",
-      "to": "SC-W-07",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-VALUE",
-      "to": "SC-W-09",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-VALUE",
-      "to": "SC-W-10",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-VALUE",
-      "to": "SC-W-11",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-VALUE",
-      "to": "SC-W-17",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-VALUE",
-      "to": "SC-W-18",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "DOMAIN-WORK",
-      "to": "NEED-W-COOP",
-      "type": "need_context",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-COOP",
-      "to": "SC-W-04",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-COOP",
-      "to": "SC-W-19",
-      "type": "may_be_addressed_by",
-      "status": "proposed",
-      "required": false
-    },
-    {
-      "from": "NEED-W-COOP",
-      "to": "SC-W-20",
-      "type": "may_be_addressed_by",
       "status": "proposed",
       "required": false
     },
@@ -2901,6 +2859,314 @@
       "status": "proposed",
       "autoCreateAlliance": false,
       "causalityProven": false
+    },
+    {
+      "from": "DOMAIN-WORK",
+      "to": "STREAM-W-PERSONAL",
+      "type": "demand_segmentation",
+      "status": "evidence_scope",
+      "required": false
+    },
+    {
+      "from": "DOMAIN-WORK",
+      "to": "STREAM-W-BUSINESS",
+      "type": "demand_segmentation",
+      "status": "evidence_scope",
+      "required": false
+    },
+    {
+      "from": "STREAM-W-PERSONAL",
+      "to": "REQ-W-JOB",
+      "type": "request_group",
+      "status": "product_synthesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-JOB",
+      "to": "SC-W-01",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-JOB",
+      "to": "SC-W-02",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "STREAM-W-PERSONAL",
+      "to": "REQ-W-TERMS",
+      "type": "request_group",
+      "status": "product_synthesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-TERMS",
+      "to": "SC-W-01",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "STREAM-W-PERSONAL",
+      "to": "REQ-W-CAREER",
+      "type": "request_group",
+      "status": "product_synthesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-CAREER",
+      "to": "SC-W-03",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "STREAM-W-BUSINESS",
+      "to": "REQ-W-DIGITAL",
+      "type": "request_group",
+      "status": "product_synthesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-DIGITAL",
+      "to": "SC-W-07",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-DIGITAL",
+      "to": "SC-W-08",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "STREAM-W-BUSINESS",
+      "to": "REQ-W-SALES",
+      "type": "request_group",
+      "status": "product_synthesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-SALES",
+      "to": "SC-W-09",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-SALES",
+      "to": "SC-W-10",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "STREAM-W-BUSINESS",
+      "to": "REQ-W-CREATIVE",
+      "type": "request_group",
+      "status": "product_synthesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-CREATIVE",
+      "to": "SC-W-11",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "STREAM-W-BUSINESS",
+      "to": "REQ-W-OPS",
+      "type": "request_group",
+      "status": "product_synthesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-OPS",
+      "to": "SC-W-06",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-OPS",
+      "to": "SC-W-15",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-OPS",
+      "to": "SC-W-16",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "STREAM-W-BUSINESS",
+      "to": "REQ-W-DATA",
+      "type": "request_group",
+      "status": "product_synthesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-DATA",
+      "to": "SC-W-12",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "STREAM-W-BUSINESS",
+      "to": "REQ-W-PEOPLE",
+      "type": "request_group",
+      "status": "product_synthesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-PEOPLE",
+      "to": "SC-W-03",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-PEOPLE",
+      "to": "SC-W-04",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "STREAM-W-BUSINESS",
+      "to": "REQ-W-FINANCE",
+      "type": "request_group",
+      "status": "product_synthesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-FINANCE",
+      "to": "SC-W-13",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-FINANCE",
+      "to": "SC-W-14",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "STREAM-W-BUSINESS",
+      "to": "REQ-W-QUALITY",
+      "type": "request_group",
+      "status": "product_synthesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-QUALITY",
+      "to": "SC-W-05",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-QUALITY",
+      "to": "SC-W-08",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "STREAM-W-BUSINESS",
+      "to": "REQ-W-EXPLORE",
+      "type": "request_group",
+      "status": "product_synthesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-EXPLORE",
+      "to": "SC-W-17",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-EXPLORE",
+      "to": "SC-W-18",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-EXPLORE",
+      "to": "SC-W-19",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    },
+    {
+      "from": "REQ-W-EXPLORE",
+      "to": "SC-W-20",
+      "type": "candidate_scenario_for_request",
+      "status": "product_hypothesis",
+      "required": false
+    }
+  ],
+  "foundation": {
+    "kind": "observed_requests_and_work_preferences",
+    "sourceIds": [
+      "WK-IWIS",
+      "WK-IBEN",
+      "WK-U26",
+      "WK-F26",
+      "WK-U25"
+    ],
+    "sources": [
+      {
+        "id": "WK-IWIS",
+        "url": "https://hiringlab.indeed.com/2026/01/19/2025-indeed-workforce-insights-survey/"
+      },
+      {
+        "id": "WK-IBEN",
+        "url": "https://hiringlab.indeed.com/2025/12/04/classic-employer-benefits-are-a-strong-draw-for-us-job-seekers/"
+      },
+      {
+        "id": "WK-U26",
+        "url": "https://investors.upwork.com/node/12681/pdf"
+      },
+      {
+        "id": "WK-F26",
+        "url": "https://www.fiverr.com/resources/guides/reports/business-trends-index-june-2026"
+      },
+      {
+        "id": "WK-U25",
+        "url": "https://investors.upwork.com/news-releases/news-release-details/upwork-unveils-2025s-most-demand-skills"
+      }
+    ],
+    "report": "../../research/cifedra-life-needs-work-demand-foundation-2026-11-15.md",
+    "notGlobalRanking": true,
+    "selectedMarket": null
+  },
+  "coverageGaps": [
+    {
+      "requestId": "REQ-W-TERMS",
+      "gap": "Сценарий поиска частично применим; переговоры об условиях и сравнение benefits отдельно не описаны"
+    },
+    {
+      "requestId": "REQ-W-EXPLORE",
+      "gap": "Не подтвержден массовый спрос на конкретные составные пакеты"
+    },
+    {
+      "kind": "evidence_scope",
+      "gap": "Нет сравнимых абсолютных объемов для всех групп и выбранного рынка CIFEDRA; survey и покупки услуг различаются"
     }
   ]
 }

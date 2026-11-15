@@ -1,11 +1,6 @@
 flowchart TB
   GOAL_BALANCE["Устойчивая жизнь с возможностью выбирать"]
   DOMAIN_WORK["WORK"]
-  NEED_W_INCOME["Доход и карьерная самостоятельность"]
-  NEED_W_GROWTH["Компетентность и профессиональное развитие"]
-  NEED_W_QUALITY["Качество и управляемость работы"]
-  NEED_W_VALUE["Создание ценности и собственного дела"]
-  NEED_W_COOP["Сотрудничество и совместный вклад"]
   SC_W_01["Подготовлен поиск подходящей работы"]
   SC_W_02["Проведена подготовка к собеседованию"]
   SC_W_03["Подтвержден профессиональный навык"]
@@ -26,32 +21,58 @@ flowchart TB
   SC_W_18["Коммерческое помещение готово к согласованной передаче"]
   SC_W_19["Деловое мероприятие проведено"]
   SC_W_20["Партнерский вклад или поставка приняты"]
+  STREAM_W_PERSONAL["Работа и карьера человека"]
+  STREAM_W_BUSINESS["Запросы бизнеса на услуги"]
+  REQ_W_JOB["Найти работу и улучшить доход"]
+  REQ_W_TERMS["Найти подходящие условия занятости"]
+  REQ_W_CAREER["Развить навыки и карьерную траекторию"]
+  REQ_W_DIGITAL["Создать или улучшить цифровой продукт"]
+  REQ_W_SALES["Привлекать клиентов и организовать продажи"]
+  REQ_W_CREATIVE["Получить дизайн и визуальные материалы"]
+  REQ_W_OPS["Организовать операции, исследования и проекты"]
+  REQ_W_DATA["Получить аналитику и обработанные данные"]
+  REQ_W_PEOPLE["Найти специалистов и развить команду"]
+  REQ_W_FINANCE["Подготовить финансовые и учетные материалы"]
+  REQ_W_QUALITY["Проверить качество решения или продукта"]
+  REQ_W_EXPLORE["Исследовать запуск, помещение, событие или партнерскую поставку"]
   GOAL_BALANCE --> DOMAIN_WORK
-  DOMAIN_WORK --> NEED_W_INCOME
-  NEED_W_INCOME --> SC_W_01
-  NEED_W_INCOME --> SC_W_02
-  DOMAIN_WORK --> NEED_W_GROWTH
-  NEED_W_GROWTH --> SC_W_03
-  NEED_W_GROWTH --> SC_W_05
-  DOMAIN_WORK --> NEED_W_QUALITY
-  NEED_W_QUALITY --> SC_W_08
-  NEED_W_QUALITY --> SC_W_12
-  NEED_W_QUALITY --> SC_W_13
-  NEED_W_QUALITY --> SC_W_14
-  NEED_W_QUALITY --> SC_W_15
-  NEED_W_QUALITY --> SC_W_16
-  DOMAIN_WORK --> NEED_W_VALUE
-  NEED_W_VALUE --> SC_W_06
-  NEED_W_VALUE --> SC_W_07
-  NEED_W_VALUE --> SC_W_09
-  NEED_W_VALUE --> SC_W_10
-  NEED_W_VALUE --> SC_W_11
-  NEED_W_VALUE --> SC_W_17
-  NEED_W_VALUE --> SC_W_18
-  DOMAIN_WORK --> NEED_W_COOP
-  NEED_W_COOP --> SC_W_04
-  NEED_W_COOP --> SC_W_19
-  NEED_W_COOP --> SC_W_20
-  SC_W_05 -. "возможная связь" .-> SC_W_08
-  SC_W_07 -. "возможная связь" .-> SC_W_09
-  SC_W_18 -. "возможная связь" .-> SC_W_17
+  SC_W_05 -.-> SC_W_08
+  SC_W_07 -.-> SC_W_09
+  SC_W_18 -.-> SC_W_17
+  DOMAIN_WORK --> STREAM_W_PERSONAL
+  DOMAIN_WORK --> STREAM_W_BUSINESS
+  STREAM_W_PERSONAL --> REQ_W_JOB
+  REQ_W_JOB -.-> SC_W_01
+  REQ_W_JOB -.-> SC_W_02
+  STREAM_W_PERSONAL --> REQ_W_TERMS
+  REQ_W_TERMS -.-> SC_W_01
+  STREAM_W_PERSONAL --> REQ_W_CAREER
+  REQ_W_CAREER -.-> SC_W_03
+  STREAM_W_BUSINESS --> REQ_W_DIGITAL
+  REQ_W_DIGITAL -.-> SC_W_07
+  REQ_W_DIGITAL -.-> SC_W_08
+  STREAM_W_BUSINESS --> REQ_W_SALES
+  REQ_W_SALES -.-> SC_W_09
+  REQ_W_SALES -.-> SC_W_10
+  STREAM_W_BUSINESS --> REQ_W_CREATIVE
+  REQ_W_CREATIVE -.-> SC_W_11
+  STREAM_W_BUSINESS --> REQ_W_OPS
+  REQ_W_OPS -.-> SC_W_06
+  REQ_W_OPS -.-> SC_W_15
+  REQ_W_OPS -.-> SC_W_16
+  STREAM_W_BUSINESS --> REQ_W_DATA
+  REQ_W_DATA -.-> SC_W_12
+  STREAM_W_BUSINESS --> REQ_W_PEOPLE
+  REQ_W_PEOPLE -.-> SC_W_03
+  REQ_W_PEOPLE -.-> SC_W_04
+  STREAM_W_BUSINESS --> REQ_W_FINANCE
+  REQ_W_FINANCE -.-> SC_W_13
+  REQ_W_FINANCE -.-> SC_W_14
+  STREAM_W_BUSINESS --> REQ_W_QUALITY
+  REQ_W_QUALITY -.-> SC_W_05
+  REQ_W_QUALITY -.-> SC_W_08
+  STREAM_W_BUSINESS --> REQ_W_EXPLORE
+  REQ_W_EXPLORE -.-> SC_W_17
+  REQ_W_EXPLORE -.-> SC_W_18
+  REQ_W_EXPLORE -.-> SC_W_19
+  REQ_W_EXPLORE -.-> SC_W_20

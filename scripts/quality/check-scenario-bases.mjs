@@ -11,7 +11,32 @@ for (const domain of ['work', 'life']) {
   const children = scenarios.filter((node) => node.level === 2);
   assert.equal(roots.length, 20);
   assert.equal(children.length, domain === 'work' ? 103 : 106);
-  assert.equal(base.nodes.filter((node) => node.type === 'need').length, 5);
+  assert.equal(base.schemaVersion, '0.2');
+  assert.equal(base.nodes.filter((node) => node.type === 'need').length, 0);
+  const sources = new Set(base.foundation.sources.map((source) => source.id));
+  assert.ok(base.coverageGaps.length > 0);
+  if (domain === 'life') {
+    assert.equal(base.foundation.kind, 'research_informed_human_needs');
+    assert.equal(base.nodes.filter((node) => node.type === 'human_need').length, 6);
+    assert.equal(base.nodes.filter((node) => node.type === 'life_context').length, 5);
+  } else {
+    assert.equal(base.foundation.kind, 'observed_requests_and_work_preferences');
+    assert.equal(base.nodes.filter((node) => node.type === 'human_need').length, 0);
+    assert.equal(base.nodes.filter((node) => node.type === 'demand_stream').length, 2);
+    assert.equal(base.nodes.filter((node) => node.type === 'request_family').length, 12);
+    assert.equal(base.foundation.notGlobalRanking, true);
+  }
+  for (const node of base.nodes) {
+    for (const sourceId of node.sourceIds ?? []) {
+      assert.ok(sources.has(sourceId), `${domain}: unknown source ${sourceId}`);
+    }
+    if (node.type === 'human_need') assert.ok(node.sourceIds.length > 0);
+    if (node.type === 'request_family') {
+      assert.ok(['PERSONAL', 'BUSINESS'].includes(node.stream));
+      assert.equal(node.notGlobalRanking, true);
+      assert.ok(node.sourceIds.length > 0 || node.status === 'research_backlog');
+    }
+  }
   assert.equal(base.executionInstances.length, 0);
   assert.equal(base.alliances.length, 0);
   const prefix = domain === 'work' ? 'SC-W-' : 'SC-L-';

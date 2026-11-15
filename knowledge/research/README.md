@@ -5,6 +5,8 @@ notes, evidence synthesis и выводы для product gates.
 
 ## Active research
 
+- [Основания LIFE/WORK v0.2](./cifedra-life-needs-work-demand-foundation-2026-11-15.md) — SDT, Tay/Diener и OECD для LIFE; Indeed и данные платформ для WORK, с разделением типов evidence.
+
 - [Источники отбора сценариев WORK/LIFE](./cifedra-scenario-library-evidence-2026-11-15.md) — данные спроса отдельно от каталогов и гипотез; основания комплекта из 40 сценариев.
 
 - [Потребность, ЦА и выход на рынок, 2026-11-15](../product/cifedra-market-opportunity-audience-gtm-2026-11-15.md) — внешние сигналы, сравнение первых сегментов и план проверки коммерческой гипотезы.

@@ -1,11 +1,6 @@
 flowchart TB
   GOAL_BALANCE["Устойчивая жизнь с возможностью выбирать"]
   DOMAIN_LIFE["LIFE"]
-  NEED_L_HOME["Безопасность и комфорт среды"]
-  NEED_L_TIME["Время и посильная повседневная нагрузка"]
-  NEED_L_MOVE["Мобильность и изменения в жизни"]
-  NEED_L_SOCIAL["Общение и принадлежность"]
-  NEED_L_GROWTH["Развитие и самовыражение"]
   SC_L_01["Дом убран по согласованному стандарту"]
   SC_L_02["Жилье приведено в порядок после ремонта или события"]
   SC_L_03["Мебель собрана и проверена"]
@@ -26,33 +21,52 @@ flowchart TB
   SC_L_18["Совместное занятие состоялось"]
   SC_L_19["Согласованный уход за животным оказан"]
   SC_L_20["Проверен выполнимый план личных дел"]
+  NEED_L_SUBSISTENCE["Базовое обеспечение"]
+  NEED_L_SECURITY["Безопасность"]
+  NEED_L_RELATEDNESS["Близость и принадлежность"]
+  NEED_L_RESPECT["Уважение и признание"]
+  NEED_L_AUTONOMY["Самоопределение и свобода выбора"]
+  NEED_L_COMPETENCE["Компетентность и освоение"]
+  CTX_L_HOME["Безопасность и комфорт среды"]
+  CTX_L_TIME["Время и посильная повседневная нагрузка"]
+  CTX_L_MOVE["Мобильность и изменения в жизни"]
+  CTX_L_SOCIAL["Общение и принадлежность"]
+  CTX_L_GROWTH["Развитие и самовыражение"]
   GOAL_BALANCE --> DOMAIN_LIFE
-  DOMAIN_LIFE --> NEED_L_HOME
-  NEED_L_HOME --> SC_L_01
-  NEED_L_HOME --> SC_L_02
-  NEED_L_HOME --> SC_L_03
-  NEED_L_HOME --> SC_L_04
-  NEED_L_HOME --> SC_L_06
-  NEED_L_HOME --> SC_L_08
-  NEED_L_HOME --> SC_L_13
-  DOMAIN_LIFE --> NEED_L_TIME
-  NEED_L_TIME --> SC_L_09
-  NEED_L_TIME --> SC_L_10
-  NEED_L_TIME --> SC_L_11
-  NEED_L_TIME --> SC_L_19
-  NEED_L_TIME --> SC_L_20
-  DOMAIN_LIFE --> NEED_L_MOVE
-  NEED_L_MOVE --> SC_L_05
-  NEED_L_MOVE --> SC_L_07
-  NEED_L_MOVE --> SC_L_14
-  DOMAIN_LIFE --> NEED_L_SOCIAL
-  NEED_L_SOCIAL --> SC_L_12
-  NEED_L_SOCIAL --> SC_L_18
-  DOMAIN_LIFE --> NEED_L_GROWTH
-  NEED_L_GROWTH --> SC_L_15
-  NEED_L_GROWTH --> SC_L_16
-  NEED_L_GROWTH --> SC_L_17
-  SC_L_01 -. "возможная связь" .-> SC_L_13
-  SC_L_04 -. "возможная связь" .-> SC_L_13
-  SC_L_07 -. "возможная связь" .-> SC_L_06
-  SC_L_16 -. "возможная связь" .-> SC_L_14
+  SC_L_01 -.-> SC_L_13
+  SC_L_04 -.-> SC_L_13
+  SC_L_07 -.-> SC_L_06
+  SC_L_16 -.-> SC_L_14
+  DOMAIN_LIFE --> NEED_L_SUBSISTENCE
+  DOMAIN_LIFE --> NEED_L_SECURITY
+  DOMAIN_LIFE --> NEED_L_RELATEDNESS
+  DOMAIN_LIFE --> NEED_L_RESPECT
+  DOMAIN_LIFE --> NEED_L_AUTONOMY
+  DOMAIN_LIFE --> NEED_L_COMPETENCE
+  NEED_L_SUBSISTENCE -.-> CTX_L_HOME
+  NEED_L_SECURITY -.-> CTX_L_HOME
+  NEED_L_SECURITY -.-> CTX_L_MOVE
+  NEED_L_RELATEDNESS -.-> CTX_L_SOCIAL
+  NEED_L_AUTONOMY -.-> CTX_L_TIME
+  NEED_L_AUTONOMY -.-> CTX_L_MOVE
+  NEED_L_COMPETENCE -.-> CTX_L_GROWTH
+  CTX_L_HOME -.-> SC_L_01
+  CTX_L_HOME -.-> SC_L_02
+  CTX_L_HOME -.-> SC_L_03
+  CTX_L_HOME -.-> SC_L_04
+  CTX_L_HOME -.-> SC_L_06
+  CTX_L_HOME -.-> SC_L_08
+  CTX_L_HOME -.-> SC_L_13
+  CTX_L_TIME -.-> SC_L_09
+  CTX_L_TIME -.-> SC_L_10
+  CTX_L_TIME -.-> SC_L_11
+  CTX_L_TIME -.-> SC_L_19
+  CTX_L_TIME -.-> SC_L_20
+  CTX_L_MOVE -.-> SC_L_05
+  CTX_L_MOVE -.-> SC_L_07
+  CTX_L_MOVE -.-> SC_L_14
+  CTX_L_SOCIAL -.-> SC_L_12
+  CTX_L_SOCIAL -.-> SC_L_18
+  CTX_L_GROWTH -.-> SC_L_15
+  CTX_L_GROWTH -.-> SC_L_16
+  CTX_L_GROWTH -.-> SC_L_17
