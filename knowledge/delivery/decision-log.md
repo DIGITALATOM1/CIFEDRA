@@ -50,6 +50,16 @@ Product and delivery decisions фиксируются здесь. Architecture d
 | DEC-037 | 2026-07-26 | Three free work/Alliance cards with paid additional capacity is the first pricing hypothesis. | provisional | Must be tested against decomposition gaming, payer-side conflict and willingness to pay. | Product | Pricing experiment |
 | DEC-038 | 2026-11-12 | SUNLEO исключен из продукта и репозитория; дальнейшее проектирование и реализация ведутся только для CIFEDRA. | accepted | Явное решение владельца продукта; отдельный пилот размывал scope и не относится к целевой платформе Life / Work / Skills. | Владелец продукта | Always |
 
+## Позиционирование: 2026-11-15
+
+- `DEC-039`, accepted direction: владелец продукта поддержал формулировку
+  «CIFEDRA — сообщество естественного интеллекта»; дальнейшая структура требует
+  обсуждения. Это не утверждение новой taxonomy или изменения SRS/API.
+- Предложение входа через намерения «Помочь с делом / Разобраться вместе /
+  Научиться у человека» и использования LIFE/WORK как контекстов остается working.
+  Статус SKILLS, механики сообщества и момент возникновения союза не утверждены.
+- Основание и открытые вопросы: [фиксация позиционирования](../product/cifedra-natural-intelligence-positioning-2026-11-15.md).
+
 ## Open decisions
 
 | ID | Вопрос | Варианты | Рекомендуемый baseline | Owner | Deadline |
