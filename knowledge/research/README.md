@@ -5,6 +5,8 @@ notes, evidence synthesis и выводы для product gates.
 
 ## Active research
 
+- [Потребность, ЦА и выход на рынок, 2026-11-15](../product/cifedra-market-opportunity-audience-gtm-2026-11-15.md) — внешние сигналы, сравнение первых сегментов и план проверки коммерческой гипотезы.
+
 - [Комплект проверки L01 / W01 / S01](./cifedra-three-scenarios-validation-kit-2026-11-12.md) — скринеры, вопросы, evidence и proposed правила review; интервью не проведены.
 
 - [Исследование площадок и 15 кандидатов, 12 ноября 2026](./cifedra-marketplace-research-2026-11-12.md) — источники, ограничения, shortlist и статус P0.

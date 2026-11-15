@@ -19,6 +19,8 @@
 
 ## Актуальные рабочие документы
 
+Актуальная коммерческая оценка: [CIFEDRA: потребность, ЦА и выход на рынок](./product/cifedra-market-opportunity-audience-gtm-2026-11-15.md), 2026-11-15. Статус — гипотезы и desk research; PMF не подтвержден.
+
 | Документ | Назначение |
 | --- | --- |
 | [product/cifedra-user-story-map-mvp-2026-11-12.md](./product/cifedra-user-story-map-mvp-2026-11-12.md) | User Story Map клиентского MVP: backbone, истории, релизные срезы M0-M4 и трассировка на экраны/домены. |
